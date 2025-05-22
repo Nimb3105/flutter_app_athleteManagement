@@ -1,0 +1,14 @@
+name: flutter_modular
+packages:
+  - apps/*
+  - packages/*
+
+scripts:
+  get: |
+    melos bootstrap
+  clean: |
+    melos exec -- flutter clean
+  pub_get: |
+    melos exec -- flutter pub get
+  test: |
+    melos exec -- flutter test
