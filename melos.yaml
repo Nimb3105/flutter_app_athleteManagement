@@ -12,3 +12,6 @@ scripts:
     melos exec -- flutter pub get
   test: |
     melos exec -- flutter test
+  run:mobile:
+    run: melos exec --scope=mobile_app -- flutter run
+    description: Run the mobile_app module
