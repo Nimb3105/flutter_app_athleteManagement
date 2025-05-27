@@ -1,6 +1,5 @@
 // notification_repository.dart
 
-
 import 'dart:convert';
 
 import 'package:core/models/notification_reminder/notification.dart';
@@ -13,13 +12,17 @@ class NotificationRepository {
   NotificationRepository({required this.baseUrl});
 
   Future<Notification> createNotification(Notification notification) async {
-    debugPrint('POST $baseUrl/notifications, Body: ${jsonEncode(notification.toJson())}');
+    debugPrint(
+      'POST $baseUrl/notifications, Body: ${jsonEncode(notification.toJson())}',
+    );
     final response = await http.post(
       Uri.parse('$baseUrl/notifications'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(notification.toJson()),
     );
-    debugPrint('Phản hồi POST: Status ${response.statusCode}, Body: ${response.body}');
+    debugPrint(
+      'Phản hồi POST: Status ${response.statusCode}, Body: ${response.body}',
+    );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
@@ -41,7 +44,9 @@ class NotificationRepository {
       Uri.parse('$baseUrl/notifications/$id'),
       headers: {'Content-Type': 'application/json'},
     );
-    debugPrint('Phản hồi GET: Status ${response.statusCode}, Body: ${response.body}');
+    debugPrint(
+      'Phản hồi GET: Status ${response.statusCode}, Body: ${response.body}',
+    );
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
@@ -63,7 +68,9 @@ class NotificationRepository {
       Uri.parse('$baseUrl/notifications/user/$userId'),
       headers: {'Content-Type': 'application/json'},
     );
-    debugPrint('Phản hồi GET: Status ${response.statusCode}, Body: ${response.body}');
+    debugPrint(
+      'Phản hồi GET: Status ${response.statusCode}, Body: ${response.body}',
+    );
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
@@ -73,23 +80,34 @@ class NotificationRepository {
             .map((json) => Notification.fromJson(json as Map<String, dynamic>))
             .toList();
       } else {
-        debugPrint('Lỗi: Không tìm thấy danh sách "data" trong phản hồi: $data');
+        debugPrint(
+          'Lỗi: Không tìm thấy danh sách "data" trong phản hồi: $data',
+        );
         throw Exception('No valid "data" list found in response: $data');
       }
     } else {
-      debugPrint('Lỗi: Lấy danh sách thông báo thất bại: ${response.statusCode}');
+      debugPrint(
+        'Lỗi: Lấy danh sách thông báo thất bại: ${response.statusCode}',
+      );
       throw Exception('Failed to get notifications: ${response.statusCode}');
     }
   }
 
-  Future<Notification> updateNotification(String id, Notification notification) async {
-    debugPrint('PUT $baseUrl/notifications/$id, Body: ${jsonEncode(notification.toJson())}');
+  Future<Notification> updateNotification(
+    String id,
+    Notification notification,
+  ) async {
+    debugPrint(
+      'PUT $baseUrl/notifications/$id, Body: ${jsonEncode(notification.toJson())}',
+    );
     final response = await http.put(
       Uri.parse('$baseUrl/notifications/$id'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(notification.toJson()),
     );
-    debugPrint('Phản hồi PUT: Status ${response.statusCode}, Body: ${response.body}');
+    debugPrint(
+      'Phản hồi PUT: Status ${response.statusCode}, Body: ${response.body}',
+    );
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
@@ -100,7 +118,9 @@ class NotificationRepository {
         throw Exception('No valid "data" object found in response: $data');
       }
     } else {
-      debugPrint('Lỗi: Cập nhật thông báo thất bại: ${response.statusCode}, Body: ${response.body}');
+      debugPrint(
+        'Lỗi: Cập nhật thông báo thất bại: ${response.statusCode}, Body: ${response.body}',
+      );
       throw Exception('Failed to update notification: ${response.statusCode}');
     }
   }
@@ -111,7 +131,9 @@ class NotificationRepository {
       Uri.parse('$baseUrl/notifications/$id'),
       headers: {'Content-Type': 'application/json'},
     );
-    debugPrint('Phản hồi DELETE: Status ${response.statusCode}, Body: ${response.body}');
+    debugPrint(
+      'Phản hồi DELETE: Status ${response.statusCode}, Body: ${response.body}',
+    );
 
     if (response.statusCode != 200 && response.statusCode != 204) {
       debugPrint('Lỗi: Xóa thông báo thất bại: ${response.statusCode}');

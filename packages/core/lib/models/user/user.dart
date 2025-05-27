@@ -1,5 +1,3 @@
-
-
 import 'package:core/models/converters/converters.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -12,14 +10,14 @@ abstract class User with _$User {
     required String? id,
     required String gender,
     required String fullName,
-    required String hashPass,
+    required String password,
     required String email,
     required String phoneNumber,
     @UtcDateTimeConverter() required DateTime dateOfBirth,
     required String role,
     required String status,
     @UtcDateTimeConverter() required DateTime createdAt,
-    @UtcDateTimeConverter() required DateTime updatedAt, 
+    @UtcDateTimeConverter() required DateTime updatedAt,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

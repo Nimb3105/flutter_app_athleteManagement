@@ -12,10 +12,7 @@ class ExerciseInTrainingScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           exercise.name,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           overflow: TextOverflow.ellipsis,
         ),
         backgroundColor: Colors.blue.shade700,
@@ -27,10 +24,7 @@ class ExerciseInTrainingScreen extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Colors.blue.shade100,
-              Colors.white,
-            ],
+            colors: [Colors.blue.shade100, Colors.white],
           ),
         ),
         child: SafeArea(
@@ -41,11 +35,11 @@ class ExerciseInTrainingScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Media Section
-                  if (exercise.mediaUrl.isNotEmpty)
+                  if (exercise.gifUrl.isNotEmpty)
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12.0),
                       child: Image.network(
-                        ApiConstants.baseUrl + exercise.mediaUrl,
+                        ApiConstants.baseUrl + exercise.gifUrl,
                         height: 200,
                         width: double.infinity,
                         fit: BoxFit.cover,
@@ -85,10 +79,7 @@ class ExerciseInTrainingScreen extends StatelessWidget {
                       child: const Center(
                         child: Text(
                           'No media available',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 16,
-                          ),
+                          style: TextStyle(color: Colors.grey, fontSize: 16),
                         ),
                       ),
                     ),
@@ -116,29 +107,56 @@ class ExerciseInTrainingScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildDetailRow('Type', exercise.type),
-                          _buildDetailRow('Intensity', exercise.intensity),
+                          _buildDetailRow('BodyPart', exercise.bodyPart),
                           _buildDetailRow(
-                              'Duration', '${exercise.duration} min'),
-                          _buildDetailRow('Muscle', exercise.muscle),
-                          _buildDetailRow('Equipment', exercise.equipment),
-                          if (exercise.description.isNotEmpty) ...[
-                            const SizedBox(height: 16),
+                            'Equipment',
+                            exercise.equipment,
+                          ),
+                          _buildDetailRow('Target', exercise.target),
+
+                          if (exercise.secondaryMuscles.isNotEmpty) ...[
+                            const SizedBox(height: 8),
                             Text(
-                              'Description',
+                              'Secondary Muscles',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.blue.shade900,
                               ),
                             ),
+                            const SizedBox(height: 4),
+                            Wrap(
+                              spacing: 8.0,
+                              runSpacing: 4.0,
+                              children:
+                                  exercise.secondaryMuscles
+                                      .map(
+                                        (muscle) => Chip(label: Text(muscle)),
+                                      )
+                                      .toList(),
+                            ),
+                          ],
+
+                          if (exercise.instructions.isNotEmpty) ...[
                             const SizedBox(height: 8),
                             Text(
-                              exercise.description,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.black87,
+                              'Instructions',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue.shade900,
                               ),
+                            ),
+                            const SizedBox(height: 4),
+                            Wrap(
+                              spacing: 8.0,
+                              runSpacing: 4.0,
+                              children:
+                                  exercise.instructions
+                                      .map(
+                                        (instructions) => Chip(label: Text(instructions)),
+                                      )
+                                      .toList(),
                             ),
                           ],
                         ],
@@ -175,10 +193,7 @@ class ExerciseInTrainingScreen extends StatelessWidget {
           Expanded(
             child: Text(
               value,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.black87,
-              ),
+              style: const TextStyle(fontSize: 14, color: Colors.black87),
             ),
           ),
         ],

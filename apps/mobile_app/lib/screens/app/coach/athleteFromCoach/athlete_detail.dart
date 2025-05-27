@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
-import 'package:mobile_app/screens/app/coach/sports/sport_athlete_screen.dart';
+import 'package:mobile_app/screens/app/coach/sports/sport_user_screen.dart';
 import 'package:mobile_app/screens/app/coach/training/training_schedule_user_screen.dart';
 
 class AthleteDetail extends StatelessWidget {
@@ -20,26 +19,30 @@ class AthleteDetail extends StatelessWidget {
           create: (context) => SportRepository(baseUrl: ApiConstants.baseUrl),
         ),
         RepositoryProvider(
-          create: (context) => SportAthleteRepository(baseUrl: ApiConstants.baseUrl),
+          create:
+              (context) => SportUserRepository(baseUrl: ApiConstants.baseUrl),
         ),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => UserBloc(
-              userRepository: context.read<UserRepository>(),
-            )..add(GetUserById(athlete.userId)),
+            create:
+                (context) =>
+                    UserBloc(userRepository: context.read<UserRepository>())
+                      ..add(GetUserById(athlete.userId)),
           ),
           BlocProvider(
-            create: (context) => SportBloc(
-              sportRepository: context.read<SportRepository>(),
-            )..add(const GetAllSports()),
+            create:
+                (context) =>
+                    SportBloc(sportRepository: context.read<SportRepository>())
+                      ..add(const GetAllSports()),
           ),
           BlocProvider(
-            create: (context) => SportAthleteBloc(
-              sportAthleteRepository: context.read<SportAthleteRepository>(),
-              sportRepository: context.read<SportRepository>(),
-            )..add(SportAthleteEvent.getAllSportAthleteByUserId(athlete.userId)),
+            create:
+                (context) => SportUserBloc(
+                  sportUserRepository: context.read<SportUserRepository>(),
+                  sportRepository: context.read<SportRepository>(),
+                )..add(SportUserEvent.getAllSportUserByUserId(athlete.userId)),
           ),
         ],
         child: Scaffold(
@@ -91,7 +94,9 @@ class AthleteDetail extends StatelessWidget {
                       SizedBox(height: 16),
                       ElevatedButton.icon(
                         onPressed: () {
-                          context.read<UserBloc>().add(GetUserById(athlete.userId));
+                          context.read<UserBloc>().add(
+                            GetUserById(athlete.userId),
+                          );
                         },
                         icon: Icon(Icons.refresh),
                         label: Text('Thử lại'),
@@ -104,44 +109,44 @@ class AthleteDetail extends StatelessWidget {
             },
           ),
           floatingActionButton: Builder(
-            builder: (context) => FloatingActionButton.extended(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => MultiRepositoryProvider(
-                      providers: [
-                        RepositoryProvider.value(
-                          value: context.read<SportRepository>(),
-                        ),
-                        RepositoryProvider.value(
-                          value: context.read<SportAthleteRepository>(),
-                        ),
-                      ],
-                      child: MultiBlocProvider(
-                        providers: [
-                          BlocProvider.value(
-                            value: context.read<SportBloc>(),
-                          ),
-                          BlocProvider.value(
-                            value: context.read<SportAthleteBloc>(),
-                          ),
-                        ],
-                        child: SportAthleteScreen(athlete: athlete),
+            builder:
+                (context) => FloatingActionButton.extended(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder:
+                            (_) => MultiRepositoryProvider(
+                              providers: [
+                                RepositoryProvider.value(
+                                  value: context.read<SportRepository>(),
+                                ),
+                                RepositoryProvider.value(
+                                  value: context.read<SportUserRepository>(),
+                                ),
+                              ],
+                              child: MultiBlocProvider(
+                                providers: [
+                                  BlocProvider.value(
+                                    value: context.read<SportBloc>(),
+                                  ),
+                                  BlocProvider.value(
+                                    value: context.read<SportUserBloc>(),
+                                  ),
+                                ],
+                                child: SportUserScreen(athlete: athlete),
+                              ),
+                            ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              label: const Text('Thêm môn thể thao'),
-              icon: const Icon(Icons.sports),
-              backgroundColor: Theme.of(context).colorScheme.secondary,
-              elevation: 4,
-              tooltip: 'Thêm môn thể thao cho vận động viên',
-            ),
-            
+                    );
+                  },
+                  label: const Text('Thêm môn thể thao'),
+                  icon: const Icon(Icons.sports),
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  elevation: 4,
+                  tooltip: 'Thêm môn thể thao cho vận động viên',
+                ),
           ),
-          
         ),
       ),
     );
@@ -184,7 +189,9 @@ class AthleteDetail extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TrainingScheduleUserScreen(athlete: athlete),
+                      builder:
+                          (context) =>
+                              TrainingScheduleUserScreen(athlete: athlete),
                     ),
                   );
                 },
@@ -211,7 +218,11 @@ class AthleteDetailView extends StatelessWidget {
   final Athlete athlete;
   final User user;
 
-  const AthleteDetailView({super.key, required this.athlete, required this.user});
+  const AthleteDetailView({
+    super.key,
+    required this.athlete,
+    required this.user,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -252,17 +263,28 @@ class AthleteDetailView extends StatelessWidget {
             child: CircleAvatar(
               radius: 58,
               // ignore: deprecated_member_use
-              backgroundColor: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
+              backgroundColor: Theme.of(
+                context,
+              // ignore: deprecated_member_use
+              ).colorScheme.secondary.withOpacity(0.7),
               child: Text(
                 user.fullName.isNotEmpty ? user.fullName[0].toUpperCase() : '?',
-                style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white),
+                style: const TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
           const SizedBox(height: 16),
           Text(
             user.fullName.isEmpty ? 'Chưa cập nhật' : user.fullName,
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
           const SizedBox(height: 4),
           Container(
@@ -273,17 +295,35 @@ class AthleteDetailView extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
-              athlete.athleteType.isEmpty ? 'Chưa phân loại' : athlete.athleteType,
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white),
+              athlete.athleteType.isEmpty
+                  ? 'Chưa phân loại'
+                  : athlete.athleteType,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+              ),
             ),
           ),
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildInfoBadge(context, 'Email', user.email.isEmpty ? 'N/A' : user.email),
-              _buildInfoBadge(context, 'Giới tính', user.gender.isEmpty ? 'N/A' : user.gender),
-              _buildInfoBadge(context, 'Trạng thái', user.status.isEmpty ? 'N/A' : user.status),
+              _buildInfoBadge(
+                context,
+                'Email',
+                user.email.isEmpty ? 'N/A' : user.email,
+              ),
+              _buildInfoBadge(
+                context,
+                'Giới tính',
+                user.gender.isEmpty ? 'N/A' : user.gender,
+              ),
+              _buildInfoBadge(
+                context,
+                'Trạng thái',
+                user.status.isEmpty ? 'N/A' : user.status,
+              ),
             ],
           ),
         ],
@@ -295,9 +335,20 @@ class AthleteDetailView extends StatelessWidget {
     return Expanded(
       child: Column(
         children: [
-          Text(title, style: const TextStyle(fontSize: 12, color: Colors.white70)),
+          Text(
+            title,
+            style: const TextStyle(fontSize: 12, color: Colors.white70),
+          ),
           const SizedBox(height: 4),
-          Text(value, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white), overflow: TextOverflow.ellipsis),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+            overflow: TextOverflow.ellipsis,
+          ),
         ],
       ),
     );
@@ -315,24 +366,55 @@ class AthleteDetailView extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
             child: Row(
               children: [
-                Icon(Icons.person, color: Theme.of(context).colorScheme.primary),
+                Icon(
+                  Icons.person,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
                 const SizedBox(width: 8),
-                const Text('Thông tin cá nhân', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                const Text(
+                  'Thông tin cá nhân',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ],
             ),
           ),
           const Divider(),
-          _buildDetailItem(context, 'Số điện thoại', user.phoneNumber.isEmpty ? 'Chưa cập nhật' : user.phoneNumber, Icons.phone),
-          _buildDetailItem(context, 'Email', user.email.isEmpty ? 'Chưa cập nhật' : user.email, Icons.email),
-          _buildDetailItem(context, 'Giới tính', user.gender.isEmpty ? 'Chưa cập nhật' : user.gender, Icons.person_outline),
-          _buildDetailItem(context, 'Trạng thái', user.status.isEmpty ? 'Chưa cập nhật' : user.status, Icons.check_circle_outline),
+          _buildDetailItem(
+            context,
+            'Số điện thoại',
+            user.phoneNumber.isEmpty ? 'Chưa cập nhật' : user.phoneNumber,
+            Icons.phone,
+          ),
+          _buildDetailItem(
+            context,
+            'Email',
+            user.email.isEmpty ? 'Chưa cập nhật' : user.email,
+            Icons.email,
+          ),
+          _buildDetailItem(
+            context,
+            'Giới tính',
+            user.gender.isEmpty ? 'Chưa cập nhật' : user.gender,
+            Icons.person_outline,
+          ),
+          _buildDetailItem(
+            context,
+            'Trạng thái',
+            user.status.isEmpty ? 'Chưa cập nhật' : user.status,
+            Icons.check_circle_outline,
+          ),
           const SizedBox(height: 8),
         ],
       ),
     );
   }
 
-  Widget _buildDetailItem(BuildContext context, String title, String value, IconData icon) {
+  Widget _buildDetailItem(
+    BuildContext context,
+    String title,
+    String value,
+    IconData icon,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
@@ -342,14 +424,20 @@ class AthleteDetailView extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: TextStyle(fontSize: 14, color: Colors.grey[600])),
+              Text(
+                title,
+                style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+              ),
               const SizedBox(height: 2),
               Text(
                 value,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: value.contains('Chưa cập nhật') ? Colors.grey : Colors.black87,
+                  color:
+                      value.contains('Chưa cập nhật')
+                          ? Colors.grey
+                          : Colors.black87,
                 ),
               ),
             ],
@@ -366,7 +454,10 @@ class AthleteDetailView extends StatelessWidget {
         children: [
           Icon(Icons.sports, color: Theme.of(context).colorScheme.primary),
           const SizedBox(width: 8),
-          const Text('Môn thể thao', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const Text(
+            'Môn thể thao',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
         ],
       ),
     );
@@ -375,40 +466,49 @@ class AthleteDetailView extends StatelessWidget {
   Widget _buildSportsList(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: BlocBuilder<SportAthleteBloc, SportAthleteState>(
-        builder: (context, sportAthleteState) {
-          if (sportAthleteState is Sport_Athlete_Loading) {
-            return const Center(child: Padding(padding: EdgeInsets.all(16), child: CircularProgressIndicator()));
-          } else if (sportAthleteState is LoadedSportAthletes) {
-            final sportAthletes = sportAthleteState.sportAthletes;
-            final sports = sportAthleteState.sports;
-            if (sportAthletes.isEmpty) {
+      child: BlocBuilder<SportUserBloc, SportUserState>(
+        builder: (context, sportUserState) {
+          if (sportUserState is Sport_User_Loading) {
+            return const Center(
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: CircularProgressIndicator(),
+              ),
+            );
+          } else if (sportUserState is LoadedSportUsers) {
+            final sportUsers = sportUserState.sportUsers;
+            final sports = sportUserState.sports;
+            if (sportUsers.isEmpty) {
               return _buildEmptySportsList(context);
             }
             return Column(
-              children: sportAthletes.map((sportAthlete) {
-                final sport = sports[sportAthlete.sportId];
-                return _buildSportItem(
-                  context,
-                  sport?.name ?? 'Không tìm thấy môn thể thao (ID: ${sportAthlete.sportId})',
-                  sportAthlete.position,
-                );
-              }).toList(),
+              children:
+                  sportUsers.map((sportUser) {
+                    final sport = sports[sportUser.sportId];
+                    return _buildSportItem(
+                      context,
+                      sport?.name ??
+                          'Không tìm thấy môn thể thao (ID: ${sportUser.sportId})',
+                      sportUser.position,
+                    );
+                  }).toList(),
             );
-          } else if (sportAthleteState is Sport_Athlete_Error) {
+          } else if ( sportUserState is Sport_User_Error) {
             return Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(Icons.error_outline, size: 48, color: Colors.red[300]),
                   const SizedBox(height: 16),
-                  Text('Lỗi: ${sportAthleteState.message}'),
+                  Text('Lỗi: ${ sportUserState.message}'),
                   const SizedBox(height: 16),
                   ElevatedButton.icon(
                     onPressed: () {
-                      context.read<SportAthleteBloc>().add(
-                            SportAthleteEvent.getAllSportAthleteByUserId(athlete.userId),
-                          );
+                      context.read< SportUserBloc>().add(
+                         SportUserEvent.getAllSportUserByUserId(
+                          athlete.userId,
+                        ),
+                      );
                     },
                     icon: const Icon(Icons.refresh),
                     label: const Text('Thử lại'),
@@ -434,7 +534,10 @@ class AthleteDetailView extends StatelessWidget {
           children: [
             Icon(Icons.sports_soccer, size: 48, color: Colors.grey[400]),
             const SizedBox(height: 16),
-            const Text('Chưa có môn thể thao nào', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+            const Text(
+              'Chưa có môn thể thao nào',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
             const SizedBox(height: 8),
             Text(
               'Bấm nút "Thêm môn thể thao" để thêm môn thể thao cho vận động viên này',
@@ -443,42 +546,45 @@ class AthleteDetailView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Builder(
-              builder: (context) => ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => MultiRepositoryProvider(
-                        providers: [
-                          RepositoryProvider.value(
-                            value: context.read<SportRepository>(),
-                          ),
-                          RepositoryProvider.value(
-                            value: context.read<SportAthleteRepository>(),
-                          ),
-                        ],
-                        child: MultiBlocProvider(
-                          providers: [
-                            BlocProvider.value(
-                              value: context.read<SportBloc>(),
-                            ),
-                            BlocProvider.value(
-                              value: context.read<SportAthleteBloc>(),
-                            ),
-                          ],
-                          child: SportAthleteScreen(athlete: athlete),
+              builder:
+                  (context) => ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (_) => MultiRepositoryProvider(
+                                providers: [
+                                  RepositoryProvider.value(
+                                    value: context.read<SportRepository>(),
+                                  ),
+                                  RepositoryProvider.value(
+                                    value:
+                                        context.read< SportUserRepository>(),
+                                  ),
+                                ],
+                                child: MultiBlocProvider(
+                                  providers: [
+                                    BlocProvider.value(
+                                      value: context.read<SportBloc>(),
+                                    ),
+                                    BlocProvider.value(
+                                      value: context.read<SportUserBloc>(),
+                                    ),
+                                  ],
+                                  child: SportUserScreen(athlete: athlete),
+                                ),
+                              ),
                         ),
-                      ),
+                      );
+                    },
+                    icon: const Icon(Icons.add),
+                    label: const Text('Thêm ngay'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                      foregroundColor: Colors.white,
                     ),
-                  );
-                },
-                icon: const Icon(Icons.add),
-                label: const Text('Thêm ngay'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.secondary,
-                  foregroundColor: Colors.white,
-                ),
-              ),
+                  ),
             ),
           ],
         ),
@@ -496,7 +602,11 @@ class AthleteDetailView extends StatelessWidget {
     );
   }
 
-  Widget _buildSportItem(BuildContext context, String sportName, String position) {
+  Widget _buildSportItem(
+    BuildContext context,
+    String sportName,
+    String position,
+  ) {
     final List<IconData> sportIcons = [
       Icons.sports_soccer,
       Icons.sports_basketball,
@@ -514,15 +624,24 @@ class AthleteDetailView extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         leading: CircleAvatar(
           // ignore: deprecated_member_use
-          backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+          backgroundColor: Theme.of(
+            context,
+          // ignore: deprecated_member_use
+          ).colorScheme.primary.withOpacity(0.1),
           child: Icon(sportIcon, color: Theme.of(context).colorScheme.primary),
         ),
-        title: Text(sportName, style: const TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(
+          sportName,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 4),
-            Text('Vị trí: ${position.isEmpty ? 'Chưa xác định' : position}', style: const TextStyle(fontSize: 14)),
+            Text(
+              'Vị trí: ${position.isEmpty ? 'Chưa xác định' : position}',
+              style: const TextStyle(fontSize: 14),
+            ),
           ],
         ),
         trailing: IconButton(

@@ -1,4 +1,3 @@
-
 import 'package:core/models/user/user.dart';
 import 'package:core/repositories/user/user_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,7 +51,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<void> _onGetUserById(
-      GetUserById event, Emitter<UserState> emit) async {
+    GetUserById event,
+    Emitter<UserState> emit,
+  ) async {
     emit(const UserState.loading());
     try {
       final user = await userRepository.getUserById(event.id);
@@ -63,7 +64,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<void> _onGetUserByEmail(
-      GetUserByEmail event, Emitter<UserState> emit) async {
+    GetUserByEmail event,
+    Emitter<UserState> emit,
+  ) async {
     emit(const UserState.loading());
     try {
       final user = await userRepository.getUserByEmail(event.email);
@@ -74,7 +77,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<void> _onGetAllUsers(
-      GetAllUsers event, Emitter<UserState> emit) async {
+    GetAllUsers event,
+    Emitter<UserState> emit,
+  ) async {
     emit(const UserState.loading());
     try {
       final users = await userRepository.getAllUsers();

@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 import 'package:core/models/training/training_schedule_user.dart';
@@ -12,7 +10,8 @@ class TrainingScheduleUserRepository {
 
   // Create a new training schedule athlete
   Future<TrainingScheduleUser> createTrainingScheduleUser(
-      TrainingScheduleUser scheduleAthlete) async {
+    TrainingScheduleUser scheduleAthlete,
+  ) async {
     final response = await http.post(
       Uri.parse('$baseUrl/training-schedule-athletes'),
       headers: {'Content-Type': 'application/json'},
@@ -23,19 +22,20 @@ class TrainingScheduleUserRepository {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       if (data['data'] != null && data['data'] is Map<String, dynamic>) {
         return TrainingScheduleUser.fromJson(
-            data['data'] as Map<String, dynamic>);
+          data['data'] as Map<String, dynamic>,
+        );
       } else {
         throw Exception('No valid "data" object found in response: $data');
       }
     } else {
       throw Exception(
-          'Failed to create training schedule athlete: ${response.statusCode}');
+        'Failed to create training schedule athlete: ${response.statusCode}',
+      );
     }
   }
 
   // Get training schedule athlete by ID
-  Future<TrainingScheduleUser> getTrainingScheduleUserById(
-      String id) async {
+  Future<TrainingScheduleUser> getTrainingScheduleUserById(String id) async {
     final response = await http.get(
       Uri.parse('$baseUrl/training-schedule-athletes/$id'),
       headers: {'Content-Type': 'application/json'},
@@ -45,13 +45,15 @@ class TrainingScheduleUserRepository {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       if (data['data'] != null && data['data'] is Map<String, dynamic>) {
         return TrainingScheduleUser.fromJson(
-            data['data'] as Map<String, dynamic>);
+          data['data'] as Map<String, dynamic>,
+        );
       } else {
         throw Exception('No valid "data" object found in response: $data');
       }
     } else {
       throw Exception(
-          'Failed to get training schedule athlete: ${response.statusCode}');
+        'Failed to get training schedule athlete: ${response.statusCode}',
+      );
     }
   }
 
@@ -67,21 +69,26 @@ class TrainingScheduleUserRepository {
       if (data['data'] != null && data['data'] is List<dynamic>) {
         final List<dynamic> jsonList = data['data'];
         return jsonList
-            .map((json) =>
-                TrainingScheduleUser.fromJson(json as Map<String, dynamic>))
+            .map(
+              (json) =>
+                  TrainingScheduleUser.fromJson(json as Map<String, dynamic>),
+            )
             .toList();
       } else {
         throw Exception('No valid "data" list found in response: $data');
       }
     } else {
       throw Exception(
-          'Failed to get training schedule athletes: ${response.statusCode}');
+        'Failed to get training schedule athletes: ${response.statusCode}',
+      );
     }
   }
 
   // Update training schedule athlete
   Future<TrainingScheduleUser> updateTrainingScheduleUser(
-      String id, TrainingScheduleUser scheduleAthlete) async {
+    String id,
+    TrainingScheduleUser scheduleAthlete,
+  ) async {
     final response = await http.put(
       Uri.parse('$baseUrl/training-schedule-athletes/$id'),
       headers: {'Content-Type': 'application/json'},
@@ -92,13 +99,15 @@ class TrainingScheduleUserRepository {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       if (data['data'] != null && data['data'] is Map<String, dynamic>) {
         return TrainingScheduleUser.fromJson(
-            data['data'] as Map<String, dynamic>);
+          data['data'] as Map<String, dynamic>,
+        );
       } else {
         throw Exception('No valid "data" object found in response: $data');
       }
     } else {
       throw Exception(
-          'Failed to update training schedule athlete: ${response.statusCode}');
+        'Failed to update training schedule athlete: ${response.statusCode}',
+      );
     }
   }
 
@@ -111,13 +120,15 @@ class TrainingScheduleUserRepository {
 
     if (response.statusCode != 200 && response.statusCode != 204) {
       throw Exception(
-          'Failed to delete training schedule athlete: ${response.statusCode}');
+        'Failed to delete training schedule athlete: ${response.statusCode}',
+      );
     }
   }
 
   // Get all sport athletes by user ID
   Future<List<TrainingScheduleUser>> getAllTrainingScheduleUserByUserId(
-      String userId) async {
+    String userId,
+  ) async {
     final response = await http.get(
       Uri.parse('$baseUrl/training-schedule-athletes/user/$userId/all'),
       headers: {'Content-Type': 'application/json'},
@@ -136,7 +147,8 @@ class TrainingScheduleUserRepository {
           jsonList = decodedData['data'];
         } else {
           throw Exception(
-              'No valid "data" list found in response: $decodedData');
+            'No valid "data" list found in response: $decodedData',
+          );
         }
       } else {
         throw Exception('Unexpected response format: $decodedData');
@@ -152,7 +164,8 @@ class TrainingScheduleUserRepository {
       }).toList();
     } else {
       throw Exception(
-          'Failed to get sport athletes by user ID: ${response.statusCode}');
+        'Failed to get sport athletes by user ID: ${response.statusCode}',
+      );
     }
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:core/models/athlete/athlete.dart';
 import 'package:core/repositories/athlete/athlete_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,7 +32,7 @@ class AthleteBloc extends Bloc<AthleteEvent, AthleteState> {
   final AthleteRepository athleteRepository;
 
   AthleteBloc({required this.athleteRepository})
-      : super(const AthleteState.initial()) {
+    : super(const AthleteState.initial()) {
     on<_CreateAthlete>(_onCreateAthlete);
     on<_GetAthleteById>(_onGetAthleteById);
     on<_GetAthleteByUserId>(_onGetAthleteByUserId);
@@ -43,11 +42,14 @@ class AthleteBloc extends Bloc<AthleteEvent, AthleteState> {
   }
 
   Future<void> _onCreateAthlete(
-      _CreateAthlete event, Emitter<AthleteState> emit) async {
+    _CreateAthlete event,
+    Emitter<AthleteState> emit,
+  ) async {
     emit(const AthleteState.loading());
     try {
-      final createdAthlete =
-          await athleteRepository.createAthlete(event.athlete);
+      final createdAthlete = await athleteRepository.createAthlete(
+        event.athlete,
+      );
       emit(AthleteState.loadedAthlete(createdAthlete));
     } catch (e) {
       emit(AthleteState.error(e.toString()));
@@ -55,7 +57,9 @@ class AthleteBloc extends Bloc<AthleteEvent, AthleteState> {
   }
 
   Future<void> _onGetAthleteById(
-      _GetAthleteById event, Emitter<AthleteState> emit) async {
+    _GetAthleteById event,
+    Emitter<AthleteState> emit,
+  ) async {
     emit(const AthleteState.loading());
     try {
       final athlete = await athleteRepository.getAthleteById(event.id);
@@ -66,7 +70,9 @@ class AthleteBloc extends Bloc<AthleteEvent, AthleteState> {
   }
 
   Future<void> _onGetAthleteByUserId(
-      _GetAthleteByUserId event, Emitter<AthleteState> emit) async {
+    _GetAthleteByUserId event,
+    Emitter<AthleteState> emit,
+  ) async {
     emit(const AthleteState.loading());
     try {
       final athlete = await athleteRepository.getAthleteByUserId(event.userId);
@@ -77,7 +83,9 @@ class AthleteBloc extends Bloc<AthleteEvent, AthleteState> {
   }
 
   Future<void> _onGetAllAthletes(
-      _GetAllAthletes event, Emitter<AthleteState> emit) async {
+    _GetAllAthletes event,
+    Emitter<AthleteState> emit,
+  ) async {
     emit(const AthleteState.loading());
     try {
       final athletes = await athleteRepository.getAllAthletes();
@@ -88,11 +96,15 @@ class AthleteBloc extends Bloc<AthleteEvent, AthleteState> {
   }
 
   Future<void> _onUpdateAthlete(
-      _UpdateAthlete event, Emitter<AthleteState> emit) async {
+    _UpdateAthlete event,
+    Emitter<AthleteState> emit,
+  ) async {
     emit(const AthleteState.loading());
     try {
-      final updatedAthlete =
-          await athleteRepository.updateAthlete(event.id, event.athlete);
+      final updatedAthlete = await athleteRepository.updateAthlete(
+        event.id,
+        event.athlete,
+      );
       emit(AthleteState.loadedAthlete(updatedAthlete));
     } catch (e) {
       emit(AthleteState.error(e.toString()));
@@ -100,7 +112,9 @@ class AthleteBloc extends Bloc<AthleteEvent, AthleteState> {
   }
 
   Future<void> _onDeleteAthlete(
-      _DeleteAthlete event, Emitter<AthleteState> emit) async {
+    _DeleteAthlete event,
+    Emitter<AthleteState> emit,
+  ) async {
     emit(const AthleteState.loading());
     try {
       await athleteRepository.deleteAthlete(event.id);

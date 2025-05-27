@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 class TrainingExerciseCreateScreen extends StatelessWidget {
   final TrainingSchedule trainingSchedule;
 
-  const TrainingExerciseCreateScreen(
-      {super.key, required this.trainingSchedule});
+  const TrainingExerciseCreateScreen({
+    super.key,
+    required this.trainingSchedule,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +21,17 @@ class TrainingExerciseCreateScreen extends StatelessWidget {
           if (state is LoadedTrainingExercise) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                  content: Text('Training exercise added successfully')),
+                content: Text('Training exercise added successfully'),
+              ),
             );
-            context
-                .read<TrainingExerciseBloc>()
-                .add(GetAllTrainingExercisesByScheduleId(trainingSchedule.id!));
+            context.read<TrainingExerciseBloc>().add(
+              GetAllTrainingExercisesByScheduleId(trainingSchedule.id!),
+            );
             Navigator.of(context).pop();
           } else if (state is TrainingExercise_Error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error: ${state.message}')),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Error: ${state.message}')));
           }
         },
         child: BlocBuilder<ExerciseBloc, ExerciseState>(
@@ -84,7 +87,8 @@ class _TrainingExerciseCreateViewState
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save(); // Save form to trigger onSaved callbacks
       debugPrint(
-          'Form validated, order: $_order, exerciseId: $_selectedExerciseId');
+        'Form validated, order: $_order, exerciseId: $_selectedExerciseId',
+      );
 
       if (_selectedExerciseId == null) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -103,9 +107,9 @@ class _TrainingExerciseCreateViewState
       );
 
       debugPrint('Submitting TrainingExercise: $trainingExercise');
-      context
-          .read<TrainingExerciseBloc>()
-          .add(CreateTrainingExercise(trainingExercise));
+      context.read<TrainingExerciseBloc>().add(
+        CreateTrainingExercise(trainingExercise),
+      );
     } else {
       debugPrint('Form validation failed');
     }
@@ -127,21 +131,23 @@ class _TrainingExerciseCreateViewState
                 border: OutlineInputBorder(),
               ),
               value: _selectedExerciseId,
-              items: widget.exercises.map((Exercise exercise) {
-                return DropdownMenuItem<String>(
-                  value: exercise.id,
-                  child: Text(exercise.name),
-                );
-              }).toList(),
-              onChanged: widget.isLoading
-                  ? null
-                  : (String? newValue) {
-                      setState(() {
-                        _selectedExerciseId = newValue;
-                      });
-                    },
-              validator: (value) =>
-                  value == null ? 'Please select an exercise' : null,
+              items:
+                  widget.exercises.map((Exercise exercise) {
+                    return DropdownMenuItem<String>(
+                      value: exercise.id,
+                      child: Text(exercise.name),
+                    );
+                  }).toList(),
+              onChanged:
+                  widget.isLoading
+                      ? null
+                      : (String? newValue) {
+                        setState(() {
+                          _selectedExerciseId = newValue;
+                        });
+                      },
+              validator:
+                  (value) => value == null ? 'Please select an exercise' : null,
             ),
             const SizedBox(height: 16),
             TextFormField(
@@ -177,13 +183,14 @@ class _TrainingExerciseCreateViewState
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: widget.isLoading ? null : _submitForm,
-              child: widget.isLoading
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Text('Add Exercise'),
+              child:
+                  widget.isLoading
+                      ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                      : const Text('Add Exercise'),
             ),
           ],
         ),

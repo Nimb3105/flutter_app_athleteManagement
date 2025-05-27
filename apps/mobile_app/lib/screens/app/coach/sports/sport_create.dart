@@ -45,14 +45,14 @@ class _SportCreateFormState extends State<SportCreateForm> {
       body: BlocListener<SportBloc, SportState>(
         listener: (context, state) {
           if (state is Sport_Success) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Tạo bộ môn thành công')),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Tạo bộ môn thành công')));
             Navigator.pop(context);
           } else if (state is Sport_Error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Lỗi: ${state.message}')),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Lỗi: ${state.message}')));
           }
         },
         child: SingleChildScrollView(
@@ -86,14 +86,17 @@ class _SportCreateFormState extends State<SportCreateForm> {
                         FilledButton(
                           onPressed:
                               isLoading ? null : () => _submitForm(context),
-                          child: isLoading
-                              ? const SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(
-                                      strokeWidth: 2, color: Colors.white),
-                                )
-                              : const Text('Tạo bộ môn'),
+                          child:
+                              isLoading
+                                  ? const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                  : const Text('Tạo bộ môn'),
                         ),
                         TextButton(
                           onPressed: () {

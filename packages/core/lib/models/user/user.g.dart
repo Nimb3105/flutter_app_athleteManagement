@@ -10,7 +10,7 @@ _User _$UserFromJson(Map<String, dynamic> json) => _User(
   id: json['id'] as String?,
   gender: json['gender'] as String,
   fullName: json['fullName'] as String,
-  hashPass: json['hashPass'] as String,
+  password: json['password'] as String,
   email: json['email'] as String,
   phoneNumber: json['phoneNumber'] as String,
   dateOfBirth: const UtcDateTimeConverter().fromJson(
@@ -26,7 +26,7 @@ Map<String, dynamic> _$UserToJson(_User instance) => <String, dynamic>{
   'id': instance.id,
   'gender': instance.gender,
   'fullName': instance.fullName,
-  'hashPass': instance.hashPass,
+  'password': instance.password,
   'email': instance.email,
   'phoneNumber': instance.phoneNumber,
   'dateOfBirth': const UtcDateTimeConverter().toJson(instance.dateOfBirth),

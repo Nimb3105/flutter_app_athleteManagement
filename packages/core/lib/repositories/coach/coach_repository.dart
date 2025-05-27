@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 import 'package:core/models/coach/coach.dart';

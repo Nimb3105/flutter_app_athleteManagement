@@ -1,5 +1,3 @@
-
-
 import 'package:core/models/coach/coach.dart';
 import 'package:core/repositories/coach/coach_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,19 +17,19 @@ sealed class CoachEvent with _$CoachEvent {
 
 @freezed
 sealed class CoachState with _$CoachState {
-  const factory CoachState.initial() = _Initial;
-  const factory CoachState.loading() = _Loading;
-  const factory CoachState.loadedCoach(Coach coach) = _LoadedCoach;
-  const factory CoachState.loadedCoaches(List<Coach> coaches) = _LoadedCoaches;
-  const factory CoachState.error(String message) = _Error;
-  const factory CoachState.success(String message) = _Success;
+  const factory CoachState.initial() = Coach_Initial;
+  const factory CoachState.loading() = Coach_Loading;
+  const factory CoachState.loadedCoach(Coach coach) = LoadedCoach;
+  const factory CoachState.loadedCoaches(List<Coach> coaches) = LoadedCoaches;
+  const factory CoachState.error(String message) = Coach_Error;
+  const factory CoachState.success(String message) = Coach_Success;
 }
 
 class CoachBloc extends Bloc<CoachEvent, CoachState> {
   final CoachRepository coachRepository;
 
   CoachBloc({required this.coachRepository})
-      : super(const CoachState.initial()) {
+    : super(const CoachState.initial()) {
     on<_CreateCoach>(_onCreateCoach);
     on<_GetCoachById>(_onGetCoachById);
     on<_GetCoachByUserId>(_onGetCoachByUserId);
@@ -41,7 +39,9 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
   }
 
   Future<void> _onCreateCoach(
-      _CreateCoach event, Emitter<CoachState> emit) async {
+    _CreateCoach event,
+    Emitter<CoachState> emit,
+  ) async {
     emit(const CoachState.loading());
     try {
       final createdCoach = await coachRepository.createCoach(event.coach);
@@ -52,7 +52,9 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
   }
 
   Future<void> _onGetCoachById(
-      _GetCoachById event, Emitter<CoachState> emit) async {
+    _GetCoachById event,
+    Emitter<CoachState> emit,
+  ) async {
     emit(const CoachState.loading());
     try {
       final coach = await coachRepository.getCoachById(event.id);
@@ -63,7 +65,9 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
   }
 
   Future<void> _onGetCoachByUserId(
-      _GetCoachByUserId event, Emitter<CoachState> emit) async {
+    _GetCoachByUserId event,
+    Emitter<CoachState> emit,
+  ) async {
     emit(const CoachState.loading());
     try {
       final coach = await coachRepository.getCoachByUserId(event.userId);
@@ -74,7 +78,9 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
   }
 
   Future<void> _onGetAllCoaches(
-      _GetAllCoaches event, Emitter<CoachState> emit) async {
+    _GetAllCoaches event,
+    Emitter<CoachState> emit,
+  ) async {
     emit(const CoachState.loading());
     try {
       final coaches = await coachRepository.getAllCoaches();
@@ -85,11 +91,15 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
   }
 
   Future<void> _onUpdateCoach(
-      _UpdateCoach event, Emitter<CoachState> emit) async {
+    _UpdateCoach event,
+    Emitter<CoachState> emit,
+  ) async {
     emit(const CoachState.loading());
     try {
-      final updatedCoach =
-          await coachRepository.updateCoach(event.id, event.coach);
+      final updatedCoach = await coachRepository.updateCoach(
+        event.id,
+        event.coach,
+      );
       emit(CoachState.loadedCoach(updatedCoach));
     } catch (e) {
       emit(CoachState.error(e.toString()));
@@ -97,7 +107,9 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
   }
 
   Future<void> _onDeleteCoach(
-      _DeleteCoach event, Emitter<CoachState> emit) async {
+    _DeleteCoach event,
+    Emitter<CoachState> emit,
+  ) async {
     emit(const CoachState.loading());
     try {
       await coachRepository.deleteCoach(event.id);

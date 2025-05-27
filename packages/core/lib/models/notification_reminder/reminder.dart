@@ -1,5 +1,3 @@
-
-
 import 'package:core/models/converters/converters.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -21,5 +19,6 @@ abstract class Reminder with _$Reminder {
     @UtcDateTimeConverter() required DateTime updatedAt,
   }) = _Reminder;
 
-  factory Reminder.fromJson(Map<String, dynamic> json) => _$ReminderFromJson(json);
+  factory Reminder.fromJson(Map<String, dynamic> json) =>
+      _$ReminderFromJson(json);
 }

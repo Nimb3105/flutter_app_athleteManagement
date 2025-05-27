@@ -19,16 +19,17 @@ class TrainingScheduleUserCreateScreen extends StatelessWidget {
           if (state is LoadedTrainingScheduleUser) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                  content: Text('TrainingScheduleUser created successfully!')),
+                content: Text('TrainingScheduleUser created successfully!'),
+              ),
             );
-            context
-                .read<TrainingScheduleUserBloc>()
-                .add(GetAllTrainingScheduleUserByUserId(athlete.userId));
+            context.read<TrainingScheduleUserBloc>().add(
+              GetAllTrainingScheduleUserByUserId(athlete.userId),
+            );
             Navigator.of(context).pop();
           } else if (state is TrainingScheduleUser_Error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error: ${state.message}')),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Error: ${state.message}')));
           }
         },
         child: BlocBuilder<TrainingScheduleBloc, TrainingScheduleState>(
@@ -89,9 +90,9 @@ class _TrainingScheduleUserCreateViewState
     if (_formKey.currentState!.validate()) {
       final validationError = _validateForm();
       if (validationError != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(validationError)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(validationError)));
         return;
       }
 
@@ -103,9 +104,9 @@ class _TrainingScheduleUserCreateViewState
         updatedAt: null,
       );
 
-      context
-          .read<TrainingScheduleUserBloc>()
-          .add(CreateTrainingScheduleUser(scheduleAthlete));
+      context.read<TrainingScheduleUserBloc>().add(
+        CreateTrainingScheduleUser(scheduleAthlete),
+      );
     }
   }
 
@@ -123,25 +124,30 @@ class _TrainingScheduleUserCreateViewState
             DropdownButtonFormField<String>(
               decoration: const InputDecoration(labelText: 'Training Schedule'),
               value: _selectedScheduleId,
-              items: widget.schedules.map((TrainingSchedule schedule) {
-                return DropdownMenuItem<String>(
-                  value: schedule.id,
-                  child: Text(
-                    '${schedule.type} - ${DateFormat('yyyy-MM-dd').format(schedule.date)} '
-                    '(${DateFormat('HH:mm').format(schedule.startTime)} - '
-                    '${DateFormat('HH:mm').format(schedule.endTime)})',
-                  ),
-                );
-              }).toList(),
-              onChanged: widget.isLoading
-                  ? null
-                  : (String? newValue) {
-                      setState(() {
-                        _selectedScheduleId = newValue;
-                      });
-                    },
-              validator: (value) =>
-                  value == null ? 'Please select a training schedule' : null,
+              items:
+                  widget.schedules.map((TrainingSchedule schedule) {
+                    return DropdownMenuItem<String>(
+                      value: schedule.id,
+                      child: Text(
+                        '${schedule.type} - ${DateFormat('yyyy-MM-dd').format(schedule.date)} '
+                        '(${DateFormat('HH:mm').format(schedule.startTime)} - '
+                        '${DateFormat('HH:mm').format(schedule.endTime)})',
+                      ),
+                    );
+                  }).toList(),
+              onChanged:
+                  widget.isLoading
+                      ? null
+                      : (String? newValue) {
+                        setState(() {
+                          _selectedScheduleId = newValue;
+                        });
+                      },
+              validator:
+                  (value) =>
+                      value == null
+                          ? 'Please select a training schedule'
+                          : null,
             ),
             if (widget.schedules.isEmpty && !widget.isLoading) ...[
               const SizedBox(height: 16),
@@ -153,13 +159,14 @@ class _TrainingScheduleUserCreateViewState
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: widget.isLoading ? null : _submitForm,
-              child: widget.isLoading
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Text('Assign Schedule'),
+              child:
+                  widget.isLoading
+                      ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                      : const Text('Assign Schedule'),
             ),
           ],
         ),

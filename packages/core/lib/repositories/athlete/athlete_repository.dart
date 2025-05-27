@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 import 'package:core/models/athlete/athlete.dart';
@@ -65,7 +63,8 @@ class AthleteRepository {
       }
     } else {
       throw Exception(
-          'Failed to get athlete by user ID: ${response.statusCode}');
+        'Failed to get athlete by user ID: ${response.statusCode}',
+      );
     }
   }
 

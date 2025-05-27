@@ -1,4 +1,3 @@
-
 import 'package:core/models/training/exercise.dart';
 import 'package:core/repositories/training/exercise_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,7 +32,7 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
   final ExerciseRepository exerciseRepository;
 
   ExerciseBloc({required this.exerciseRepository})
-      : super(const ExerciseState.initial()) {
+    : super(const ExerciseState.initial()) {
     on<CreateExercise>(_onCreateExercise);
     on<GetExerciseById>(_onGetExerciseById);
     on<GetAllExercises>(_onGetAllExercises);
@@ -42,11 +41,14 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
   }
 
   Future<void> _onCreateExercise(
-      CreateExercise event, Emitter<ExerciseState> emit) async {
+    CreateExercise event,
+    Emitter<ExerciseState> emit,
+  ) async {
     emit(const ExerciseState.loading());
     try {
-      final createdExercise =
-          await exerciseRepository.createExercise(event.exercise);
+      final createdExercise = await exerciseRepository.createExercise(
+        event.exercise,
+      );
       emit(ExerciseState.loadedExercise(createdExercise));
     } catch (e) {
       emit(ExerciseState.error(e.toString()));
@@ -54,7 +56,9 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
   }
 
   Future<void> _onGetExerciseById(
-      GetExerciseById event, Emitter<ExerciseState> emit) async {
+    GetExerciseById event,
+    Emitter<ExerciseState> emit,
+  ) async {
     emit(const ExerciseState.loading());
     try {
       final exercise = await exerciseRepository.getExerciseById(event.id);
@@ -65,7 +69,9 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
   }
 
   Future<void> _onGetAllExercises(
-      GetAllExercises event, Emitter<ExerciseState> emit) async {
+    GetAllExercises event,
+    Emitter<ExerciseState> emit,
+  ) async {
     emit(const ExerciseState.loading());
     try {
       final exercises = await exerciseRepository.getAllExercises();
@@ -76,11 +82,15 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
   }
 
   Future<void> _onUpdateExercise(
-      UpdateExercise event, Emitter<ExerciseState> emit) async {
+    UpdateExercise event,
+    Emitter<ExerciseState> emit,
+  ) async {
     emit(const ExerciseState.loading());
     try {
-      final updatedExercise =
-          await exerciseRepository.updateExercise(event.id, event.exercise);
+      final updatedExercise = await exerciseRepository.updateExercise(
+        event.id,
+        event.exercise,
+      );
       emit(ExerciseState.loadedExercise(updatedExercise));
     } catch (e) {
       emit(ExerciseState.error(e.toString()));
@@ -88,7 +98,9 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
   }
 
   Future<void> _onDeleteExercise(
-      DeleteExercise event, Emitter<ExerciseState> emit) async {
+    DeleteExercise event,
+    Emitter<ExerciseState> emit,
+  ) async {
     emit(const ExerciseState.loading());
     try {
       await exerciseRepository.deleteExercise(event.id);

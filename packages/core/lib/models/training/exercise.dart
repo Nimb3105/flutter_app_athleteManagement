@@ -1,5 +1,3 @@
-
-
 import 'package:core/models/converters/converters.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -11,14 +9,12 @@ abstract class Exercise with _$Exercise {
   const factory Exercise({
     required String? id,
     required String name,
-    required String type,
-    required String intensity,
-    required int duration,
-    required String description,
+    required String bodyPart,
+    required String target,
+    required List<String> secondaryMuscles,
+    required List<String> instructions,
     required String equipment,
-    required String muscle,
-    required String mediaUrl,
-    @UtcDateTimeConverter() required DateTime? createdDate,
+    required String gifUrl,
     @UtcDateTimeConverter() required DateTime? createdAt,
     @UtcDateTimeConverter() required DateTime? updatedAt,
   }) = _Exercise;

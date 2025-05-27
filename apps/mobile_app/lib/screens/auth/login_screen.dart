@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -14,11 +13,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController emailController =
-      TextEditingController(text: "tai1@gmail.com");
+  final TextEditingController emailController = TextEditingController(
+    text: "tai1@gmail.com",
+  );
 
-  final TextEditingController passwordController =
-      TextEditingController(text: "123");
+  final TextEditingController passwordController = TextEditingController(
+    text: "123",
+  );
 
   final storage = const FlutterSecureStorage();
   bool isPasswordVisible = false;
@@ -36,19 +37,14 @@ class _LoginScreenState extends State<LoginScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return BlocProvider(
-      create: (context) => UserBloc(
-        userRepository: widget.userRepository,
-      ),
+      create: (context) => UserBloc(userRepository: widget.userRepository),
       child: Scaffold(
         body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                Colors.blue.shade100,
-                Colors.white,
-              ],
+              colors: [Colors.blue.shade100, Colors.white],
             ),
           ),
           child: SafeArea(
@@ -216,58 +212,63 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         builder: (context, state) {
                           return ElevatedButton(
-                            onPressed: state is User_Loading
-                                ? null
-                                : () {
-                                    if (emailController.text.isEmpty ||
-                                        passwordController.text.isEmpty) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content:
-                                              Text('Please fill all fields'),
-                                          backgroundColor: Colors.orange,
-                                        ),
-                                      );
-                                      return;
-                                    }
-
-                                    context.read<UserBloc>().add(
-                                          UserEvent.login(
-                                            emailController.text.trim(),
-                                            passwordController.text.trim(),
+                            onPressed:
+                                state is User_Loading
+                                    ? null
+                                    : () {
+                                      if (emailController.text.isEmpty ||
+                                          passwordController.text.isEmpty) {
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                              'Please fill all fields',
+                                            ),
+                                            backgroundColor: Colors.orange,
                                           ),
                                         );
-                                  },
+                                        return;
+                                      }
+
+                                      context.read<UserBloc>().add(
+                                        UserEvent.login(
+                                          emailController.text.trim(),
+                                          passwordController.text.trim(),
+                                        ),
+                                      );
+                                    },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blue,
                               foregroundColor: Colors.white,
                               elevation: 3,
                               minimumSize: const Size(double.infinity, 50),
                             ),
-                            child: state is User_Loading
-                                ? const Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        height: 20,
-                                        width: 20,
-                                        child: CircularProgressIndicator(
-                                          color: Colors.white,
-                                          strokeWidth: 2,
+                            child:
+                                state is User_Loading
+                                    ? const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: 20,
+                                          width: 20,
+                                          child: CircularProgressIndicator(
+                                            color: Colors.white,
+                                            strokeWidth: 2,
+                                          ),
                                         ),
+                                        SizedBox(width: 16),
+                                        Text('Logging in...'),
+                                      ],
+                                    )
+                                    : const Text(
+                                      'SIGN IN',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                      SizedBox(width: 16),
-                                      Text('Logging in...'),
-                                    ],
-                                  )
-                                : const Text(
-                                    'SIGN IN',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
                                     ),
-                                  ),
                           );
                         },
                       ),

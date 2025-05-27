@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 import 'package:core/models/training/training_schedule.dart';
@@ -12,7 +10,8 @@ class TrainingScheduleRepository {
 
   // Create a new training schedule
   Future<TrainingSchedule> createTrainingSchedule(
-      TrainingSchedule schedule) async {
+    TrainingSchedule schedule,
+  ) async {
     final response = await http.post(
       Uri.parse('$baseUrl/training-schedules'),
       headers: {'Content-Type': 'application/json'},
@@ -28,7 +27,8 @@ class TrainingScheduleRepository {
       }
     } else {
       throw Exception(
-          'Failed to create training schedule: ${response.statusCode}');
+        'Failed to create training schedule: ${response.statusCode}',
+      );
     }
   }
 
@@ -48,7 +48,8 @@ class TrainingScheduleRepository {
       }
     } else {
       throw Exception(
-          'Failed to get training schedule: ${response.statusCode}');
+        'Failed to get training schedule: ${response.statusCode}',
+      );
     }
   }
 
@@ -64,21 +65,25 @@ class TrainingScheduleRepository {
       if (data['data'] != null && data['data'] is List<dynamic>) {
         final List<dynamic> jsonList = data['data'];
         return jsonList
-            .map((json) =>
-                TrainingSchedule.fromJson(json as Map<String, dynamic>))
+            .map(
+              (json) => TrainingSchedule.fromJson(json as Map<String, dynamic>),
+            )
             .toList();
       } else {
         throw Exception('No valid "data" list found in response: $data');
       }
     } else {
       throw Exception(
-          'Failed to get training schedules: ${response.statusCode}');
+        'Failed to get training schedules: ${response.statusCode}',
+      );
     }
   }
 
   // Update training schedule
   Future<TrainingSchedule> updateTrainingSchedule(
-      String id, TrainingSchedule schedule) async {
+    String id,
+    TrainingSchedule schedule,
+  ) async {
     final response = await http.put(
       Uri.parse('$baseUrl/training-schedules/$id'),
       headers: {'Content-Type': 'application/json'},
@@ -94,7 +99,8 @@ class TrainingScheduleRepository {
       }
     } else {
       throw Exception(
-          'Failed to update training schedule: ${response.statusCode}');
+        'Failed to update training schedule: ${response.statusCode}',
+      );
     }
   }
 
@@ -107,7 +113,8 @@ class TrainingScheduleRepository {
 
     if (response.statusCode != 200 && response.statusCode != 204) {
       throw Exception(
-          'Failed to delete training schedule: ${response.statusCode}');
+        'Failed to delete training schedule: ${response.statusCode}',
+      );
     }
   }
 }

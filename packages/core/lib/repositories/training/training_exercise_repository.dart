@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 import 'package:core/models/training/training_exercise.dart';
@@ -11,7 +9,9 @@ class TrainingExerciseRepository {
   TrainingExerciseRepository({required this.baseUrl});
 
   // Create a new training exercise
-  Future<TrainingExercise> createTrainingExercise(TrainingExercise trainingExercise) async {
+  Future<TrainingExercise> createTrainingExercise(
+    TrainingExercise trainingExercise,
+  ) async {
     final response = await http.post(
       Uri.parse('$baseUrl/training-exercises'),
       headers: {'Content-Type': 'application/json'},
@@ -26,7 +26,9 @@ class TrainingExerciseRepository {
         throw Exception('No valid "data" object found in response: $data');
       }
     } else {
-      throw Exception('Failed to create training exercise: ${response.statusCode}');
+      throw Exception(
+        'Failed to create training exercise: ${response.statusCode}',
+      );
     }
   }
 
@@ -45,7 +47,9 @@ class TrainingExerciseRepository {
         throw Exception('No valid "data" object found in response: $data');
       }
     } else {
-      throw Exception('Failed to get training exercise: ${response.statusCode}');
+      throw Exception(
+        'Failed to get training exercise: ${response.statusCode}',
+      );
     }
   }
 
@@ -61,18 +65,25 @@ class TrainingExerciseRepository {
       if (data['data'] != null && data['data'] is List<dynamic>) {
         final List<dynamic> jsonList = data['data'];
         return jsonList
-            .map((json) => TrainingExercise.fromJson(json as Map<String, dynamic>))
+            .map(
+              (json) => TrainingExercise.fromJson(json as Map<String, dynamic>),
+            )
             .toList();
       } else {
         throw Exception('No valid "data" list found in response: $data');
       }
     } else {
-      throw Exception('Failed to get training exercises: ${response.statusCode}');
+      throw Exception(
+        'Failed to get training exercises: ${response.statusCode}',
+      );
     }
   }
 
   // Update training exercise
-  Future<TrainingExercise> updateTrainingExercise(String id, TrainingExercise trainingExercise) async {
+  Future<TrainingExercise> updateTrainingExercise(
+    String id,
+    TrainingExercise trainingExercise,
+  ) async {
     final response = await http.put(
       Uri.parse('$baseUrl/training-exercises/$id'),
       headers: {'Content-Type': 'application/json'},
@@ -87,7 +98,9 @@ class TrainingExerciseRepository {
         throw Exception('No valid "data" object found in response: $data');
       }
     } else {
-      throw Exception('Failed to update training exercise: ${response.statusCode}');
+      throw Exception(
+        'Failed to update training exercise: ${response.statusCode}',
+      );
     }
   }
 
@@ -99,12 +112,15 @@ class TrainingExerciseRepository {
     );
 
     if (response.statusCode != 200 && response.statusCode != 204) {
-      throw Exception('Failed to delete training exercise: ${response.statusCode}');
+      throw Exception(
+        'Failed to delete training exercise: ${response.statusCode}',
+      );
     }
   }
 
   Future<List<TrainingExercise>> getAllTrainingExerciseByScheduleId(
-      String scheduleId) async {
+    String scheduleId,
+  ) async {
     final response = await http.get(
       Uri.parse('$baseUrl/training-exercises/schedule/$scheduleId/all'),
       headers: {'Content-Type': 'application/json'},
@@ -123,7 +139,8 @@ class TrainingExerciseRepository {
           jsonList = decodedData['data'];
         } else {
           throw Exception(
-              'No valid "data" list found in response: $decodedData');
+            'No valid "data" list found in response: $decodedData',
+          );
         }
       } else {
         throw Exception('Unexpected response format: $decodedData');
@@ -139,7 +156,8 @@ class TrainingExerciseRepository {
       }).toList();
     } else {
       throw Exception(
-          'Failed to get sport athletes by user ID: ${response.statusCode}');
+        'Failed to get sport athletes by user ID: ${response.statusCode}',
+      );
     }
   }
 }

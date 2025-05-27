@@ -1,5 +1,3 @@
-
-
 import 'package:core/models/converters/converters.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -21,5 +19,6 @@ abstract class Notification with _$Notification {
     @UtcDateTimeConverter() required DateTime updatedAt,
   }) = _Notification;
 
-  factory Notification.fromJson(Map<String, dynamic> json) => _$NotificationFromJson(json);
+  factory Notification.fromJson(Map<String, dynamic> json) =>
+      _$NotificationFromJson(json);
 }

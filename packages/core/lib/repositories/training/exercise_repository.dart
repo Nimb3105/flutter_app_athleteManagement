@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:core/models/training/exercise.dart';
@@ -11,7 +10,6 @@ class ExerciseRepository {
 
   // Create a new exercise
   Future<Exercise> createExercise(Exercise exercise) async {
-
     final response = await http.post(
       Uri.parse('$baseUrl/exercises'),
       headers: {'Content-Type': 'application/json'},

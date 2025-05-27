@@ -20,21 +20,22 @@ class CoachHomeApp extends StatelessWidget {
           create: (context) => UserRepository(baseUrl: ApiConstants.baseUrl),
         ),
         RepositoryProvider(
-          create: (context) =>
-              ExerciseRepository(baseUrl: ApiConstants.baseUrl),
+          create:
+              (context) => ExerciseRepository(baseUrl: ApiConstants.baseUrl),
         ),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => AthleteBloc(
-              athleteRepository: context.read<AthleteRepository>(),
-            )..add(const AthleteEvent.getAllAthletes()),
+            create:
+                (context) => AthleteBloc(
+                  athleteRepository: context.read<AthleteRepository>(),
+                )..add(const AthleteEvent.getAllAthletes()),
           ),
           BlocProvider(
-            create: (context) => UserBloc(
-              userRepository: context.read<UserRepository>(),
-            ),
+            create:
+                (context) =>
+                    UserBloc(userRepository: context.read<UserRepository>()),
           ),
         ],
         child: MaterialApp(
@@ -57,7 +58,8 @@ class CoachHomeApp extends StatelessWidget {
             cardTheme: CardTheme(
               elevation: 2,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
+                borderRadius: BorderRadius.circular(16),
+              ),
               color: Colors.white,
             ),
             fontFamily: 'Roboto',
@@ -65,7 +67,8 @@ class CoachHomeApp extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
             floatingActionButtonTheme: const FloatingActionButtonThemeData(
@@ -93,9 +96,12 @@ class CoachHomePage extends StatelessWidget {
             Icon(Icons.sports_kabaddi, size: 28),
             SizedBox(width: 12),
             Expanded(
-                child: Text('Home',
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                    overflow: TextOverflow.ellipsis)),
+              child: Text(
+                'Home',
+                style: TextStyle(fontWeight: FontWeight.w600),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ],
         ),
         elevation: 0,
@@ -103,9 +109,9 @@ class CoachHomePage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
-              context
-                  .read<AthleteBloc>()
-                  .add(const AthleteEvent.getAllAthletes());
+              context.read<AthleteBloc>().add(
+                const AthleteEvent.getAllAthletes(),
+              );
             },
             tooltip: 'Làm mới danh sách',
           ),
@@ -114,7 +120,8 @@ class CoachHomePage extends StatelessWidget {
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                    content: Text('Tính năng tìm kiếm đang phát triển')),
+                  content: Text('Tính năng tìm kiếm đang phát triển'),
+                ),
               );
             },
             tooltip: 'Tìm kiếm',
@@ -183,9 +190,7 @@ class CoachHomePage extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => const ExerciseScreen(),
-                ),
+                MaterialPageRoute(builder: (context) => const ExerciseScreen()),
               );
             },
           ),
@@ -203,16 +208,16 @@ class CoachHomePage extends StatelessWidget {
           Text(
             'Danh sách vận động viên',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: const Color(0xFF1E3A8A),
-                ),
+              fontWeight: FontWeight.bold,
+              color: const Color(0xFF1E3A8A),
+            ),
           ),
           const SizedBox(height: 4),
           Text(
             'Theo dõi và quản lý thông tin chi tiết của vận động viên',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.grey[600],
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
           ),
         ],
       ),
@@ -240,11 +245,7 @@ class CoachHomePage extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
-            Icons.error_outline,
-            color: Colors.redAccent,
-            size: 48,
-          ),
+          const Icon(Icons.error_outline, color: Colors.redAccent, size: 48),
           const SizedBox(height: 16),
           Text(
             'Đã xảy ra lỗi',
@@ -298,6 +299,14 @@ class _AthleteListViewState extends State<AthleteListView> {
     _fetchUserFullNames();
   }
 
+  // @override
+  // void didUpdateWidget(covariant AthleteListView oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+  //   if (oldWidget.athletes != widget.athletes) {
+  //     _fetchUserFullNames();
+  //   }
+  // }
+
   void _fetchUserFullNames() {
     final userBloc = context.read<UserBloc>();
     for (final athlete in widget.athletes) {
@@ -306,6 +315,15 @@ class _AthleteListViewState extends State<AthleteListView> {
       }
     }
   }
+
+  // void _fetchUserFullNames() {
+  //   final userBloc = context.read<UserBloc>();
+  //   for (final athlete in widget.athletes) {
+  //     if (!_userFullNames.containsKey(athlete.userId)) {
+  //       userBloc.add(GetUserById(athlete.userId));
+  //     }
+  //   }
+  // }
 
   Color _getTypeColor(String type) {
     return _athleteTypeColors[type] ?? Colors.blueGrey;
@@ -318,11 +336,7 @@ class _AthleteListViewState extends State<AthleteListView> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.people_outline,
-              size: 64,
-              color: Colors.grey[400],
-            ),
+            Icon(Icons.people_outline, size: 64, color: Colors.grey[400]),
             const SizedBox(height: 16),
             Text(
               'Chưa có vận động viên nào',
@@ -335,9 +349,7 @@ class _AthleteListViewState extends State<AthleteListView> {
             const SizedBox(height: 8),
             Text(
               'Danh sách vận động viên sẽ hiển thị ở đây',
-              style: TextStyle(
-                color: Colors.grey[600],
-              ),
+              style: TextStyle(color: Colors.grey[600]),
             ),
           ],
         ),
@@ -359,9 +371,11 @@ class _AthleteListViewState extends State<AthleteListView> {
         itemBuilder: (context, index) {
           final athlete = widget.athletes[index];
           // ignore: unnecessary_null_comparison
-          final fullName = athlete.userId != null
-              ? _userFullNames[athlete.userId] ?? 'Đang tải...'
-              : 'Không có thông tin';
+          final fullName =
+              // ignore: unnecessary_null_comparison
+              athlete.userId != null
+                  ? _userFullNames[athlete.userId] ?? 'Đang tải...'
+                  : 'Không có thông tin';
           final athleteType = athlete.athleteType;
 
           return Card(
@@ -403,13 +417,13 @@ class _AthleteListViewState extends State<AthleteListView> {
                                 ),
                                 decoration: BoxDecoration(
                                   color: _getTypeColor(athleteType)
-                                      // ignore: deprecated_member_use
-                                      .withOpacity(0.1),
+                                  // ignore: deprecated_member_use
+                                  .withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
                                     color: _getTypeColor(athleteType)
-                                        // ignore: deprecated_member_use
-                                        .withOpacity(0.5),
+                                    // ignore: deprecated_member_use
+                                    .withOpacity(0.5),
                                     width: 1,
                                   ),
                                 ),

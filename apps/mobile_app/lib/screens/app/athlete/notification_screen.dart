@@ -14,9 +14,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: BlocProvider(
-        create: (context) => NotificationBloc(
-          notificationRepository: NotificationRepository(baseUrl: ApiConstants.baseUrl),
-        ),
+        create:
+            (context) => NotificationBloc(
+              notificationRepository: NotificationRepository(
+                baseUrl: ApiConstants.baseUrl,
+              ),
+            ),
         child: const HomePage(),
       ),
     );
@@ -39,15 +42,21 @@ class _HomePageState extends State<HomePage> {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
       debugPrint('Timer: Gọi GetNotificationsByUserId cho userId: $testUserId');
-      context.read<NotificationBloc>().add(const GetNotificationsByUserId(testUserId));
+      context.read<NotificationBloc>().add(
+        const GetNotificationsByUserId(testUserId),
+      );
     });
   }
 
   @override
   void initState() {
     super.initState();
-    debugPrint('Khởi tạo: Gọi GetNotificationsByUserId cho userId: $testUserId');
-    context.read<NotificationBloc>().add(const GetNotificationsByUserId(testUserId));
+    debugPrint(
+      'Khởi tạo: Gọi GetNotificationsByUserId cho userId: $testUserId',
+    );
+    context.read<NotificationBloc>().add(
+      const GetNotificationsByUserId(testUserId),
+    );
     _startTimer();
   }
 
@@ -70,20 +79,29 @@ class _HomePageState extends State<HomePage> {
               builder: (context, state) {
                 int unreadCount = 0;
                 if (state is LoadedNotifications) {
-                  unreadCount = state.notifications.where((n) => n.status == 'Unread').length;
+                  unreadCount =
+                      state.notifications
+                          .where((n) => n.status == 'Unread')
+                          .length;
                   debugPrint('Số thông báo Unread: $unreadCount');
                 }
                 debugPrint('Trạng thái chuông: ${state.runtimeType}');
                 return InkWell(
                   onTap: () {
-                    debugPrint('Nhấn chuông: Chuyển _showNotifications = ${_showNotifications ? 'false' : 'true'}');
+                    debugPrint(
+                      'Nhấn chuông: Chuyển _showNotifications = ${_showNotifications ? 'false' : 'true'}',
+                    );
                     setState(() {
                       _showNotifications = !_showNotifications;
                     });
                     if (_showNotifications) {
-                      debugPrint('Tạm dừng Timer và gửi MarkNotificationsAsRead');
+                      debugPrint(
+                        'Tạm dừng Timer và gửi MarkNotificationsAsRead',
+                      );
                       _timer?.cancel(); // Tạm dừng Timer
-                      context.read<NotificationBloc>().add(const MarkNotificationsAsRead(testUserId));
+                      context.read<NotificationBloc>().add(
+                        const MarkNotificationsAsRead(testUserId),
+                      );
                       // Khởi động lại Timer sau 2 giây
                       Future.delayed(const Duration(seconds: 2), _startTimer);
                     }
@@ -124,38 +142,53 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: _showNotifications
-          ? BlocBuilder<NotificationBloc, NotificationState>(
-              builder: (context, state) {
-                debugPrint('Trạng thái thân trang: ${state.runtimeType}');
-                if (state is Notification_Initial) {
-                  return const Center(child: Text('Nhấn vào chuông để xem thông báo'));
-                } else if (state is Notification_Loading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state is LoadedNotification) {
-                  return Center(child: Text('Thông báo: ${state.notification.content}'));
-                } else if (state is LoadedNotifications) {
-                  return ListView.builder(
-                    itemCount: state.notifications.length,
-                    itemBuilder: (context, index) {
-                      final notification = state.notifications[index];
-                      return ListTile(
-                        title: Text(notification.content),
-                        subtitle: Text('Loại: ${notification.type} | Trạng thái: ${notification.status}'),
-                        trailing: Text(notification.sentDate.toLocal().toString().split('.')[0]),
-                      );
-                    },
-                  );
-                } else if (state is Notification_Success) {
-                  return Center(child: Text(state.message));
-                } else if (state is Notification_Error) {
-                  return Center(child: Text('Lỗi: ${state.message}'));
-                } else {
-                  return const Center(child: Text('Trạng thái không xác định'));
-                }
-              },
-            )
-          : const Center(child: Text('Chào mừng đến với trang chủ vận động viên')),
+      body:
+          _showNotifications
+              ? BlocBuilder<NotificationBloc, NotificationState>(
+                builder: (context, state) {
+                  debugPrint('Trạng thái thân trang: ${state.runtimeType}');
+                  if (state is Notification_Initial) {
+                    return const Center(
+                      child: Text('Nhấn vào chuông để xem thông báo'),
+                    );
+                  } else if (state is Notification_Loading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is LoadedNotification) {
+                    return Center(
+                      child: Text('Thông báo: ${state.notification.content}'),
+                    );
+                  } else if (state is LoadedNotifications) {
+                    return ListView.builder(
+                      itemCount: state.notifications.length,
+                      itemBuilder: (context, index) {
+                        final notification = state.notifications[index];
+                        return ListTile(
+                          title: Text(notification.content),
+                          subtitle: Text(
+                            'Loại: ${notification.type} | Trạng thái: ${notification.status}',
+                          ),
+                          trailing: Text(
+                            notification.sentDate.toLocal().toString().split(
+                              '.',
+                            )[0],
+                          ),
+                        );
+                      },
+                    );
+                  } else if (state is Notification_Success) {
+                    return Center(child: Text(state.message));
+                  } else if (state is Notification_Error) {
+                    return Center(child: Text('Lỗi: ${state.message}'));
+                  } else {
+                    return const Center(
+                      child: Text('Trạng thái không xác định'),
+                    );
+                  }
+                },
+              )
+              : const Center(
+                child: Text('Chào mừng đến với trang chủ vận động viên'),
+              ),
     );
   }
 }

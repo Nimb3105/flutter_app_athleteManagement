@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 import 'package:core/models/user/user.dart';
@@ -126,10 +124,7 @@ class UserRepository {
     final response = await http.post(
       Uri.parse('$baseUrl/login'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'email': email,
-        'password': password,
-      }),
+      body: jsonEncode({'email': email, 'password': password}),
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -140,7 +135,9 @@ class UserRepository {
         throw Exception('No valid "token" found in response: $data');
       }
     } else {
-      throw Exception('Failed to login: ${response.statusCode} - ${response.body}');
+      throw Exception(
+        'Failed to login: ${response.statusCode} - ${response.body}',
+      );
     }
   }
 }

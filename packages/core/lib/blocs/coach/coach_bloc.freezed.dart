@@ -457,8 +457,8 @@ $CoachStateCopyWith(CoachState _, $Res Function(CoachState) __);
 /// @nodoc
 
 
-class _Initial implements CoachState {
-  const _Initial();
+class Coach_Initial implements CoachState {
+  const Coach_Initial();
   
 
 
@@ -468,7 +468,7 @@ class _Initial implements CoachState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Coach_Initial);
 }
 
 
@@ -489,8 +489,8 @@ String toString() {
 /// @nodoc
 
 
-class _Loading implements CoachState {
-  const _Loading();
+class Coach_Loading implements CoachState {
+  const Coach_Loading();
   
 
 
@@ -500,7 +500,7 @@ class _Loading implements CoachState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Coach_Loading);
 }
 
 
@@ -521,8 +521,8 @@ String toString() {
 /// @nodoc
 
 
-class _LoadedCoach implements CoachState {
-  const _LoadedCoach(this.coach);
+class LoadedCoach implements CoachState {
+  const LoadedCoach(this.coach);
   
 
  final  Coach coach;
@@ -531,13 +531,13 @@ class _LoadedCoach implements CoachState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$LoadedCoachCopyWith<_LoadedCoach> get copyWith => __$LoadedCoachCopyWithImpl<_LoadedCoach>(this, _$identity);
+$LoadedCoachCopyWith<LoadedCoach> get copyWith => _$LoadedCoachCopyWithImpl<LoadedCoach>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoadedCoach&&(identical(other.coach, coach) || other.coach == coach));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedCoach&&(identical(other.coach, coach) || other.coach == coach));
 }
 
 
@@ -553,8 +553,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCoachCopyWith<$Res> implements $CoachStateCopyWith<$Res> {
-  factory _$LoadedCoachCopyWith(_LoadedCoach value, $Res Function(_LoadedCoach) _then) = __$LoadedCoachCopyWithImpl;
+abstract mixin class $LoadedCoachCopyWith<$Res> implements $CoachStateCopyWith<$Res> {
+  factory $LoadedCoachCopyWith(LoadedCoach value, $Res Function(LoadedCoach) _then) = _$LoadedCoachCopyWithImpl;
 @useResult
 $Res call({
  Coach coach
@@ -565,17 +565,17 @@ $CoachCopyWith<$Res> get coach;
 
 }
 /// @nodoc
-class __$LoadedCoachCopyWithImpl<$Res>
-    implements _$LoadedCoachCopyWith<$Res> {
-  __$LoadedCoachCopyWithImpl(this._self, this._then);
+class _$LoadedCoachCopyWithImpl<$Res>
+    implements $LoadedCoachCopyWith<$Res> {
+  _$LoadedCoachCopyWithImpl(this._self, this._then);
 
-  final _LoadedCoach _self;
-  final $Res Function(_LoadedCoach) _then;
+  final LoadedCoach _self;
+  final $Res Function(LoadedCoach) _then;
 
 /// Create a copy of CoachState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? coach = null,}) {
-  return _then(_LoadedCoach(
+  return _then(LoadedCoach(
 null == coach ? _self.coach : coach // ignore: cast_nullable_to_non_nullable
 as Coach,
   ));
@@ -596,8 +596,8 @@ $CoachCopyWith<$Res> get coach {
 /// @nodoc
 
 
-class _LoadedCoaches implements CoachState {
-  const _LoadedCoaches(final  List<Coach> coaches): _coaches = coaches;
+class LoadedCoaches implements CoachState {
+  const LoadedCoaches(final  List<Coach> coaches): _coaches = coaches;
   
 
  final  List<Coach> _coaches;
@@ -612,13 +612,13 @@ class _LoadedCoaches implements CoachState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$LoadedCoachesCopyWith<_LoadedCoaches> get copyWith => __$LoadedCoachesCopyWithImpl<_LoadedCoaches>(this, _$identity);
+$LoadedCoachesCopyWith<LoadedCoaches> get copyWith => _$LoadedCoachesCopyWithImpl<LoadedCoaches>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoadedCoaches&&const DeepCollectionEquality().equals(other._coaches, _coaches));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedCoaches&&const DeepCollectionEquality().equals(other._coaches, _coaches));
 }
 
 
@@ -634,8 +634,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCoachesCopyWith<$Res> implements $CoachStateCopyWith<$Res> {
-  factory _$LoadedCoachesCopyWith(_LoadedCoaches value, $Res Function(_LoadedCoaches) _then) = __$LoadedCoachesCopyWithImpl;
+abstract mixin class $LoadedCoachesCopyWith<$Res> implements $CoachStateCopyWith<$Res> {
+  factory $LoadedCoachesCopyWith(LoadedCoaches value, $Res Function(LoadedCoaches) _then) = _$LoadedCoachesCopyWithImpl;
 @useResult
 $Res call({
  List<Coach> coaches
@@ -646,17 +646,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$LoadedCoachesCopyWithImpl<$Res>
-    implements _$LoadedCoachesCopyWith<$Res> {
-  __$LoadedCoachesCopyWithImpl(this._self, this._then);
+class _$LoadedCoachesCopyWithImpl<$Res>
+    implements $LoadedCoachesCopyWith<$Res> {
+  _$LoadedCoachesCopyWithImpl(this._self, this._then);
 
-  final _LoadedCoaches _self;
-  final $Res Function(_LoadedCoaches) _then;
+  final LoadedCoaches _self;
+  final $Res Function(LoadedCoaches) _then;
 
 /// Create a copy of CoachState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? coaches = null,}) {
-  return _then(_LoadedCoaches(
+  return _then(LoadedCoaches(
 null == coaches ? _self._coaches : coaches // ignore: cast_nullable_to_non_nullable
 as List<Coach>,
   ));
@@ -668,8 +668,8 @@ as List<Coach>,
 /// @nodoc
 
 
-class _Error implements CoachState {
-  const _Error(this.message);
+class Coach_Error implements CoachState {
+  const Coach_Error(this.message);
   
 
  final  String message;
@@ -678,13 +678,13 @@ class _Error implements CoachState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
+$Coach_ErrorCopyWith<Coach_Error> get copyWith => _$Coach_ErrorCopyWithImpl<Coach_Error>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Error&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Coach_Error&&(identical(other.message, message) || other.message == message));
 }
 
 
@@ -700,8 +700,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res> implements $CoachStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
+abstract mixin class $Coach_ErrorCopyWith<$Res> implements $CoachStateCopyWith<$Res> {
+  factory $Coach_ErrorCopyWith(Coach_Error value, $Res Function(Coach_Error) _then) = _$Coach_ErrorCopyWithImpl;
 @useResult
 $Res call({
  String message
@@ -712,17 +712,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(this._self, this._then);
+class _$Coach_ErrorCopyWithImpl<$Res>
+    implements $Coach_ErrorCopyWith<$Res> {
+  _$Coach_ErrorCopyWithImpl(this._self, this._then);
 
-  final _Error _self;
-  final $Res Function(_Error) _then;
+  final Coach_Error _self;
+  final $Res Function(Coach_Error) _then;
 
 /// Create a copy of CoachState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
-  return _then(_Error(
+  return _then(Coach_Error(
 null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -734,8 +734,8 @@ as String,
 /// @nodoc
 
 
-class _Success implements CoachState {
-  const _Success(this.message);
+class Coach_Success implements CoachState {
+  const Coach_Success(this.message);
   
 
  final  String message;
@@ -744,13 +744,13 @@ class _Success implements CoachState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$SuccessCopyWith<_Success> get copyWith => __$SuccessCopyWithImpl<_Success>(this, _$identity);
+$Coach_SuccessCopyWith<Coach_Success> get copyWith => _$Coach_SuccessCopyWithImpl<Coach_Success>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Coach_Success&&(identical(other.message, message) || other.message == message));
 }
 
 
@@ -766,8 +766,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class _$SuccessCopyWith<$Res> implements $CoachStateCopyWith<$Res> {
-  factory _$SuccessCopyWith(_Success value, $Res Function(_Success) _then) = __$SuccessCopyWithImpl;
+abstract mixin class $Coach_SuccessCopyWith<$Res> implements $CoachStateCopyWith<$Res> {
+  factory $Coach_SuccessCopyWith(Coach_Success value, $Res Function(Coach_Success) _then) = _$Coach_SuccessCopyWithImpl;
 @useResult
 $Res call({
  String message
@@ -778,17 +778,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$SuccessCopyWithImpl<$Res>
-    implements _$SuccessCopyWith<$Res> {
-  __$SuccessCopyWithImpl(this._self, this._then);
+class _$Coach_SuccessCopyWithImpl<$Res>
+    implements $Coach_SuccessCopyWith<$Res> {
+  _$Coach_SuccessCopyWithImpl(this._self, this._then);
 
-  final _Success _self;
-  final $Res Function(_Success) _then;
+  final Coach_Success _self;
+  final $Res Function(Coach_Success) _then;
 
 /// Create a copy of CoachState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
-  return _then(_Success(
+  return _then(Coach_Success(
 null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
   ));

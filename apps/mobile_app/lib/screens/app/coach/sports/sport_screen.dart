@@ -12,8 +12,10 @@ class SportScreen extends StatelessWidget {
     return RepositoryProvider.value(
       value: sportRepository,
       child: BlocProvider(
-        create: (_) => SportBloc(sportRepository: sportRepository)
-          ..add(const SportEvent.getAllSports()),
+        create:
+            (_) =>
+                SportBloc(sportRepository: sportRepository)
+                  ..add(const SportEvent.getAllSports()),
         child: const SportScaffold(),
       ),
     );
@@ -38,14 +40,14 @@ class SportScaffold extends StatelessWidget {
       body: BlocListener<SportBloc, SportState>(
         listener: (context, state) {
           if (state is Sport_Success) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
             context.read<SportBloc>().add(const SportEvent.getAllSports());
           } else if (state is Sport_Error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Lỗi: ${state.message}')),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Lỗi: ${state.message}')));
           }
         },
         child: BlocBuilder<SportBloc, SportState>(
@@ -67,13 +69,14 @@ class SportScaffold extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => RepositoryProvider.value(
-                value: context.read<SportRepository>(),
-                child: BlocProvider.value(
-                  value: context.read<SportBloc>(),
-                  child: const SportCreateForm(),
-                ),
-              ),
+              builder:
+                  (_) => RepositoryProvider.value(
+                    value: context.read<SportRepository>(),
+                    child: BlocProvider.value(
+                      value: context.read<SportBloc>(),
+                      child: const SportCreateForm(),
+                    ),
+                  ),
             ),
           );
         },
@@ -102,8 +105,9 @@ class SportListView extends StatelessWidget {
       itemBuilder: (context, index) {
         final sport = sports[index];
         return Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           elevation: 2,
           child: ListTile(
             leading: const Icon(Icons.sports, color: Colors.blue),

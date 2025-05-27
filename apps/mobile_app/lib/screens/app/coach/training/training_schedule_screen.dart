@@ -10,11 +10,12 @@ class TrainingScheduleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TrainingScheduleBloc(
-        trainingScheduleRepository: TrainingScheduleRepository(
-          baseUrl: ApiConstants.baseUrl,
-        ),
-      )..add(const GetAllTrainingSchedules()),
+      create:
+          (context) => TrainingScheduleBloc(
+            trainingScheduleRepository: TrainingScheduleRepository(
+              baseUrl: ApiConstants.baseUrl,
+            ),
+          )..add(const GetAllTrainingSchedules()),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Danh sách lịch tập'),
@@ -23,9 +24,9 @@ class TrainingScheduleScreen extends StatelessWidget {
         body: BlocListener<TrainingScheduleBloc, TrainingScheduleState>(
           listener: (context, state) {
             if (state is TrainingSchedule_Success) {
-              context
-                  .read<TrainingScheduleBloc>()
-                  .add(const GetAllTrainingSchedules());
+              context.read<TrainingScheduleBloc>().add(
+                const GetAllTrainingSchedules(),
+              );
             }
           },
           child: BlocBuilder<TrainingScheduleBloc, TrainingScheduleState>(
@@ -49,9 +50,9 @@ class TrainingScheduleScreen extends StatelessWidget {
                       const SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: () {
-                          context
-                              .read<TrainingScheduleBloc>()
-                              .add(const GetAllTrainingSchedules());
+                          context.read<TrainingScheduleBloc>().add(
+                            const GetAllTrainingSchedules(),
+                          );
                         },
                         child: const Text('Retry'),
                       ),
@@ -64,21 +65,23 @@ class TrainingScheduleScreen extends StatelessWidget {
           ),
         ),
         floatingActionButton: Builder(
-          builder: (context) => FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (routeContext) => BlocProvider.value(
-                    value: context.read<TrainingScheduleBloc>(),
-                    child: const TrainingScheduleCreate(),
-                  ),
-                ),
-              );
-            },
-            tooltip: 'Create New Schedule',
-            child: const Icon(Icons.add),
-          ),
+          builder:
+              (context) => FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (routeContext) => BlocProvider.value(
+                            value: context.read<TrainingScheduleBloc>(),
+                            child: const TrainingScheduleCreate(),
+                          ),
+                    ),
+                  );
+                },
+                tooltip: 'Create New Schedule',
+                child: const Icon(Icons.add),
+              ),
         ),
       ),
     );
@@ -131,8 +134,9 @@ class TrainingScheduleScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      TrainingExerciseScreen(trainingSchedule: schedule),
+                  builder:
+                      (context) =>
+                          TrainingExerciseScreen(trainingSchedule: schedule),
                 ),
               );
             },

@@ -112,10 +112,10 @@ as File,
 
 
 class DeleteImage implements ImageEvent {
-  const DeleteImage(this.filename);
+  const DeleteImage(this.fileUrl);
   
 
- final  String filename;
+ final  String fileUrl;
 
 /// Create a copy of ImageEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -127,16 +127,16 @@ $DeleteImageCopyWith<DeleteImage> get copyWith => _$DeleteImageCopyWithImpl<Dele
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeleteImage&&(identical(other.filename, filename) || other.filename == filename));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeleteImage&&(identical(other.fileUrl, fileUrl) || other.fileUrl == fileUrl));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,filename);
+int get hashCode => Object.hash(runtimeType,fileUrl);
 
 @override
 String toString() {
-  return 'ImageEvent.deleteImage(filename: $filename)';
+  return 'ImageEvent.deleteImage(fileUrl: $fileUrl)';
 }
 
 
@@ -147,7 +147,7 @@ abstract mixin class $DeleteImageCopyWith<$Res> implements $ImageEventCopyWith<$
   factory $DeleteImageCopyWith(DeleteImage value, $Res Function(DeleteImage) _then) = _$DeleteImageCopyWithImpl;
 @useResult
 $Res call({
- String filename
+ String fileUrl
 });
 
 
@@ -164,9 +164,9 @@ class _$DeleteImageCopyWithImpl<$Res>
 
 /// Create a copy of ImageEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? filename = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? fileUrl = null,}) {
   return _then(DeleteImage(
-null == filename ? _self.filename : filename // ignore: cast_nullable_to_non_nullable
+null == fileUrl ? _self.fileUrl : fileUrl // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -272,10 +272,10 @@ String toString() {
 
 
 class Image_Success implements ImageState {
-  const Image_Success(this.message);
+  const Image_Success(this.fileUrl);
   
 
- final  String message;
+ final  String fileUrl;
 
 /// Create a copy of ImageState
 /// with the given fields replaced by the non-null parameter values.
@@ -287,16 +287,16 @@ $Image_SuccessCopyWith<Image_Success> get copyWith => _$Image_SuccessCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Image_Success&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Image_Success&&(identical(other.fileUrl, fileUrl) || other.fileUrl == fileUrl));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,message);
+int get hashCode => Object.hash(runtimeType,fileUrl);
 
 @override
 String toString() {
-  return 'ImageState.success(message: $message)';
+  return 'ImageState.success(fileUrl: $fileUrl)';
 }
 
 
@@ -307,7 +307,7 @@ abstract mixin class $Image_SuccessCopyWith<$Res> implements $ImageStateCopyWith
   factory $Image_SuccessCopyWith(Image_Success value, $Res Function(Image_Success) _then) = _$Image_SuccessCopyWithImpl;
 @useResult
 $Res call({
- String message
+ String fileUrl
 });
 
 
@@ -324,9 +324,9 @@ class _$Image_SuccessCopyWithImpl<$Res>
 
 /// Create a copy of ImageState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? fileUrl = null,}) {
   return _then(Image_Success(
-null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+null == fileUrl ? _self.fileUrl : fileUrl // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

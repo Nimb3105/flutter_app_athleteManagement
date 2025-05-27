@@ -13,21 +13,23 @@ class TrainingExerciseScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => TrainingExerciseBloc(
-            trainingExerciseRepository: TrainingExerciseRepository(
-              baseUrl: ApiConstants.baseUrl,
-            ),
-            exerciseRepository: ExerciseRepository(
-              baseUrl: ApiConstants.baseUrl,
-            ),
-          )..add(GetAllTrainingExercisesByScheduleId(trainingSchedule.id!)),
+          create:
+              (context) => TrainingExerciseBloc(
+                trainingExerciseRepository: TrainingExerciseRepository(
+                  baseUrl: ApiConstants.baseUrl,
+                ),
+                exerciseRepository: ExerciseRepository(
+                  baseUrl: ApiConstants.baseUrl,
+                ),
+              )..add(GetAllTrainingExercisesByScheduleId(trainingSchedule.id!)),
         ),
         BlocProvider(
-          create: (context) => ExerciseBloc(
-            exerciseRepository: ExerciseRepository(
-              baseUrl: ApiConstants.baseUrl,
-            ),
-          ),
+          create:
+              (context) => ExerciseBloc(
+                exerciseRepository: ExerciseRepository(
+                  baseUrl: ApiConstants.baseUrl,
+                ),
+              ),
         ),
       ],
       child: Scaffold(
@@ -39,9 +41,9 @@ class TrainingExerciseScreen extends StatelessWidget {
           listener: (context, state) {
             if (state is TrainingExercise_Error) {
               debugPrint('TrainingExerciseBloc Error: ${state.message}');
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Lỗi: ${state.message}')),
-              );
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text('Lỗi: ${state.message}')));
             }
           },
           child: BlocBuilder<TrainingExerciseBloc, TrainingExerciseState>(
@@ -74,9 +76,10 @@ class TrainingExerciseScreen extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () {
                           context.read<TrainingExerciseBloc>().add(
-                                GetAllTrainingExercisesByScheduleId(
-                                    trainingSchedule.id!),
-                              );
+                            GetAllTrainingExercisesByScheduleId(
+                              trainingSchedule.id!,
+                            ),
+                          );
                         },
                         child: const Text('Thử lại'),
                       ),
@@ -96,30 +99,32 @@ class TrainingExerciseScreen extends StatelessWidget {
           ),
         ),
         floatingActionButton: Builder(
-          builder: (context) => FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (routeContext) => MultiBlocProvider(
-                    providers: [
-                      BlocProvider.value(
-                        value: context.read<TrainingExerciseBloc>(),
-                      ),
-                      BlocProvider.value(
-                        value: context.read<ExerciseBloc>(),
-                      ),
-                    ],
-                    child: TrainingExerciseCreateScreen(
-                      trainingSchedule: trainingSchedule,
+          builder:
+              (context) => FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (routeContext) => MultiBlocProvider(
+                            providers: [
+                              BlocProvider.value(
+                                value: context.read<TrainingExerciseBloc>(),
+                              ),
+                              BlocProvider.value(
+                                value: context.read<ExerciseBloc>(),
+                              ),
+                            ],
+                            child: TrainingExerciseCreateScreen(
+                              trainingSchedule: trainingSchedule,
+                            ),
+                          ),
                     ),
-                  ),
-                ),
-              );
-            },
-            tooltip: 'Thêm bài tập',
-            child: const Icon(Icons.add),
-          ),
+                  );
+                },
+                tooltip: 'Thêm bài tập',
+                child: const Icon(Icons.add),
+              ),
         ),
       ),
     );
@@ -169,7 +174,8 @@ class TrainingExerciseScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ExerciseInTrainingScreen(exercise: exercise),
+                    builder:
+                        (_) => ExerciseInTrainingScreen(exercise: exercise),
                   ),
                 );
               } else {

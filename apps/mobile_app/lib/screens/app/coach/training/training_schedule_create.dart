@@ -35,7 +35,7 @@ class _TrainingScheduleCreateViewState
     'Scheduled',
     'In Progress',
     'Completed',
-    'Cancelled'
+    'Cancelled',
   ];
 
   @override
@@ -99,9 +99,9 @@ class _TrainingScheduleCreateViewState
     if (_formKey.currentState!.validate()) {
       final validationError = _validateForm();
       if (validationError != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(validationError)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(validationError)));
         return;
       }
 
@@ -119,30 +119,30 @@ class _TrainingScheduleCreateViewState
         updatedAt: null,
       );
 
-      context
-          .read<TrainingScheduleBloc>()
-          .add(CreateTrainingSchedule(schedule));
+      context.read<TrainingScheduleBloc>().add(
+        CreateTrainingSchedule(schedule),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Create Training Schedule'),
-      ),
+      appBar: AppBar(title: const Text('Create Training Schedule')),
       body: BlocConsumer<TrainingScheduleBloc, TrainingScheduleState>(
         listener: (context, state) {
           if (state is LoadedTrainingSchedule) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('TrainingSchedule created successfully!')),
             );
-            context.read<TrainingScheduleBloc>().add(const GetAllTrainingSchedules());
+            context.read<TrainingScheduleBloc>().add(
+              const GetAllTrainingSchedules(),
+            );
             Navigator.of(context).pop();
           } else if (state is TrainingSchedule_Error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error: ${state.message}')),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Error: ${state.message}')));
           }
         },
         builder: (context, state) {
@@ -186,57 +186,63 @@ class _TrainingScheduleCreateViewState
                   DropdownButtonFormField<String>(
                     decoration: const InputDecoration(labelText: 'Status'),
                     value: _selectedStatus,
-                    items: _statusOptions.map((String status) {
-                      return DropdownMenuItem<String>(
-                        value: status,
-                        child: Text(status),
-                      );
-                    }).toList(),
-                    onChanged: isLoading
-                        ? null
-                        : (String? newValue) {
-                            setState(() {
-                              _selectedStatus = newValue;
-                            });
-                          },
-                    validator: (value) =>
-                        value == null ? 'Please select a status' : null,
+                    items:
+                        _statusOptions.map((String status) {
+                          return DropdownMenuItem<String>(
+                            value: status,
+                            child: Text(status),
+                          );
+                        }).toList(),
+                    onChanged:
+                        isLoading
+                            ? null
+                            : (String? newValue) {
+                              setState(() {
+                                _selectedStatus = newValue;
+                              });
+                            },
+                    validator:
+                        (value) =>
+                            value == null ? 'Please select a status' : null,
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _locationController,
                     decoration: const InputDecoration(labelText: 'Location'),
-                    validator: (value) =>
-                        value!.isEmpty ? 'Please enter a location' : null,
+                    validator:
+                        (value) =>
+                            value!.isEmpty ? 'Please enter a location' : null,
                     enabled: !isLoading,
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _typeController,
                     decoration: const InputDecoration(labelText: 'Type'),
-                    validator: (value) =>
-                        value!.isEmpty ? 'Please enter a type' : null,
+                    validator:
+                        (value) =>
+                            value!.isEmpty ? 'Please enter a type' : null,
                     enabled: !isLoading,
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _notesController,
                     decoration: const InputDecoration(labelText: 'Notes'),
-                    validator: (value) =>
-                        value!.isEmpty ? 'Please enter notes' : null,
+                    validator:
+                        (value) => value!.isEmpty ? 'Please enter notes' : null,
                     enabled: !isLoading,
                   ),
                   const SizedBox(height: 16),
                   const SizedBox(height: 24),
                   ElevatedButton(
                     onPressed: isLoading ? null : _submitForm,
-                    child: isLoading
-                        ? const SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          )
-                        : const Text('Create Schedule'),
+                    child:
+                        isLoading
+                            ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                            : const Text('Create Schedule'),
                   ),
                 ],
               ),

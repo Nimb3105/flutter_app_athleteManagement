@@ -12,99 +12,104 @@ class TrainingScheduleUserScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TrainingScheduleUserBloc(
-        trainingScheduleUserRepository: TrainingScheduleUserRepository(
-          baseUrl: ApiConstants.baseUrl, // Thay bằng baseUrl thực tế
-        ),
-        trainingScheduleRepository: TrainingScheduleRepository(
-          baseUrl: ApiConstants.baseUrl, // Thay bằng baseUrl thực tế
-        ),
-      )..add(GetAllTrainingScheduleUserByUserId(athlete.userId)),
-      child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Training Schedules'),
-            backgroundColor: Theme.of(context).primaryColor,
-          ),
-          body:
-              BlocBuilder<TrainingScheduleUserBloc, TrainingScheduleUserState>(
-            builder: (context, state) {
-              if (state is TrainingScheduleUser_Initial) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is TrainingScheduleUser_Loading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is LoadedTrainingScheduleUser) {
-                return const Center(
-                  child: Text('Single schedule loaded (not expected here)'),
-                );
-              } else if (state is LoadedTrainingScheduleUsers) {
-                return _buildScheduleList(
-                  context,
-                  state.scheduleAthletes,
-                  state.trainingSchedules,
-                );
-              } else if (state is TrainingScheduleUser_Error) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Error: ${state.message}',
-                        style: const TextStyle(color: Colors.red, fontSize: 16),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: () {
-                          context.read<TrainingScheduleUserBloc>().add(
-                                GetAllTrainingScheduleUserByUserId(
-                                    athlete.userId),
-                              );
-                        },
-                        child: const Text('Retry'),
-                      ),
-                    ],
-                  ),
-                );
-              } else if (state is TrainingScheduleUser_Success) {
-                return Center(
-                  child: Text(
-                    state.message,
-                    style: const TextStyle(color: Colors.green, fontSize: 16),
-                  ),
-                );
-              }
-              return const Center(child: Text('Unknown state'));
-            },
-          ),
-          floatingActionButton: Builder(
-            builder: (context) => FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (routeContext) => MultiBlocProvider(
-                      providers: [
-                        BlocProvider.value(
-                          value: context.read<TrainingScheduleUserBloc>(),
-                        ),
-                        BlocProvider(
-                          create: (context) => TrainingScheduleBloc(
-                            trainingScheduleRepository:
-                                TrainingScheduleRepository(
-                              baseUrl: ApiConstants.baseUrl,
-                            ),
-                          )..add(const GetAllTrainingSchedules()),
-                        ),
-                      ],
-                      child: TrainingScheduleUserCreateScreen(athlete: athlete),
-                    ),
-                  ),
-                );
-              },
-              tooltip: 'Create New Schedule',
-              child: const Icon(Icons.add),
+      create:
+          (context) => TrainingScheduleUserBloc(
+            trainingScheduleUserRepository: TrainingScheduleUserRepository(
+              baseUrl: ApiConstants.baseUrl, // Thay bằng baseUrl thực tế
             ),
-          )),
+            trainingScheduleRepository: TrainingScheduleRepository(
+              baseUrl: ApiConstants.baseUrl, // Thay bằng baseUrl thực tế
+            ),
+          )..add(GetAllTrainingScheduleUserByUserId(athlete.userId)),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Training Schedules'),
+          backgroundColor: Theme.of(context).primaryColor,
+        ),
+        body: BlocBuilder<TrainingScheduleUserBloc, TrainingScheduleUserState>(
+          builder: (context, state) {
+            if (state is TrainingScheduleUser_Initial) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is TrainingScheduleUser_Loading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is LoadedTrainingScheduleUser) {
+              return const Center(
+                child: Text('Single schedule loaded (not expected here)'),
+              );
+            } else if (state is LoadedTrainingScheduleUsers) {
+              return _buildScheduleList(
+                context,
+                state.scheduleAthletes,
+                state.trainingSchedules,
+              );
+            } else if (state is TrainingScheduleUser_Error) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Error: ${state.message}',
+                      style: const TextStyle(color: Colors.red, fontSize: 16),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () {
+                        context.read<TrainingScheduleUserBloc>().add(
+                          GetAllTrainingScheduleUserByUserId(athlete.userId),
+                        );
+                      },
+                      child: const Text('Retry'),
+                    ),
+                  ],
+                ),
+              );
+            } else if (state is TrainingScheduleUser_Success) {
+              return Center(
+                child: Text(
+                  state.message,
+                  style: const TextStyle(color: Colors.green, fontSize: 16),
+                ),
+              );
+            }
+            return const Center(child: Text('Unknown state'));
+          },
+        ),
+        floatingActionButton: Builder(
+          builder:
+              (context) => FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (routeContext) => MultiBlocProvider(
+                            providers: [
+                              BlocProvider.value(
+                                value: context.read<TrainingScheduleUserBloc>(),
+                              ),
+                              BlocProvider(
+                                create:
+                                    (context) => TrainingScheduleBloc(
+                                      trainingScheduleRepository:
+                                          TrainingScheduleRepository(
+                                            baseUrl: ApiConstants.baseUrl,
+                                          ),
+                                    )..add(const GetAllTrainingSchedules()),
+                              ),
+                            ],
+                            child: TrainingScheduleUserCreateScreen(
+                              athlete: athlete,
+                            ),
+                          ),
+                    ),
+                  );
+                },
+                tooltip: 'Create New Schedule',
+                child: const Icon(Icons.add),
+              ),
+        ),
+      ),
     );
   }
 
@@ -130,9 +135,7 @@ class TrainingScheduleUserScreen extends StatelessWidget {
         final schedule = trainingSchedules[scheduleAthlete.scheduleId];
 
         if (schedule == null) {
-          return const ListTile(
-            title: Text('Schedule not found'),
-          );
+          return const ListTile(title: Text('Schedule not found'));
         }
 
         return Card(
@@ -163,8 +166,9 @@ class TrainingScheduleUserScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      TrainingExerciseScreen(trainingSchedule: schedule),
+                  builder:
+                      (context) =>
+                          TrainingExerciseScreen(trainingSchedule: schedule),
                 ),
               );
             },
