@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
+import 'package:mobile_app/screens/app/coach/nutrition_plan/nutrition_plan_list_screen.dart';
 import 'package:mobile_app/screens/app/coach/sports/sport_user_screen.dart';
 import 'package:mobile_app/screens/app/coach/training/training_schedule_user_screen.dart';
 
@@ -10,143 +11,148 @@ class AthleteDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
+    // return MultiRepositoryProvider(
+    //   providers: [
+    //     RepositoryProvider(
+    //       create: (context) => UserRepository(baseUrl: ApiConstants.baseUrl),
+    //     ),
+    //     RepositoryProvider(
+    //       create: (context) => SportRepository(baseUrl: ApiConstants.baseUrl),
+    //     ),
+    //     RepositoryProvider(
+    //       create:
+    //           (context) => SportUserRepository(baseUrl: ApiConstants.baseUrl),
+    //     ),
+    //   ],
+    //   child:
+    return MultiBlocProvider(
       providers: [
-        RepositoryProvider(
-          create: (context) => UserRepository(baseUrl: ApiConstants.baseUrl),
-        ),
-        RepositoryProvider(
-          create: (context) => SportRepository(baseUrl: ApiConstants.baseUrl),
-        ),
-        RepositoryProvider(
+        BlocProvider(
           create:
-              (context) => SportUserRepository(baseUrl: ApiConstants.baseUrl),
+              (context) =>
+                  UserBloc(userRepository: RepositoryProvider.of(context))
+                    ..add(GetUserById(athlete.userId)),
+        ),
+        BlocProvider(
+          create:
+              (context) =>
+                  SportBloc(sportRepository: RepositoryProvider.of(context))
+                    ..add(const GetAllSports()),
+        ),
+        BlocProvider(
+          create:
+              (context) => SportUserBloc(
+                sportUserRepository: RepositoryProvider.of(context),
+                sportRepository: RepositoryProvider.of(context),
+              )..add(SportUserEvent.getAllSportUserByUserId(athlete.userId)),
+        ),
+        BlocProvider(
+          create:
+              (context) => NutritionPlanBloc(
+                nutritionPlanRepository: RepositoryProvider.of(context),
+              )..add(
+                NutritionPlanEvent.getNutritionPlansByUserId(athlete.userId),
+              ),
         ),
       ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create:
-                (context) =>
-                    UserBloc(userRepository: context.read<UserRepository>())
-                      ..add(GetUserById(athlete.userId)),
-          ),
-          BlocProvider(
-            create:
-                (context) =>
-                    SportBloc(sportRepository: context.read<SportRepository>())
-                      ..add(const GetAllSports()),
-          ),
-          BlocProvider(
-            create:
-                (context) => SportUserBloc(
-                  sportUserRepository: context.read<SportUserRepository>(),
-                  sportRepository: context.read<SportRepository>(),
-                )..add(SportUserEvent.getAllSportUserByUserId(athlete.userId)),
-          ),
-        ],
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Chi tiết Vận Động Viên'),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.edit),
-                tooltip: 'Chỉnh sửa thông tin',
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Chi tiết Vận Động Viên'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.edit),
+              tooltip: 'Chỉnh sửa thông tin',
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Tính năng đang phát triển')),
+                );
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.more_vert),
+              tooltip: 'Thêm tùy chọn',
+              onPressed: () => _showOptionsMenu(context),
+            ),
+          ],
+        ),
+        body: BlocBuilder<UserBloc, UserState>(
+          builder: (context, userState) {
+            if (userState is User_Loading) {
+              return const Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(height: 16),
+                    Text('Đang tải thông tin vận động viên...'),
+                  ],
+                ),
+              );
+            } else if (userState is LoadedUser) {
+              return AthleteDetailView(athlete: athlete, user: userState.user);
+            } else if (userState is User_Error) {
+              return Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.error_outline, size: 48, color: Colors.red),
+                    SizedBox(height: 16),
+                    Text('Lỗi: ${userState.message}'),
+                    SizedBox(height: 16),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        context.read<UserBloc>().add(
+                          GetUserById(athlete.userId),
+                        );
+                      },
+                      icon: Icon(Icons.refresh),
+                      label: Text('Thử lại'),
+                    ),
+                  ],
+                ),
+              );
+            }
+            return const Center(child: Text('Đang khởi tạo...'));
+          },
+        ),
+        floatingActionButton: Builder(
+          builder:
+              (context) => FloatingActionButton.extended(
                 onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Tính năng đang phát triển')),
-                  );
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.more_vert),
-                tooltip: 'Thêm tùy chọn',
-                onPressed: () => _showOptionsMenu(context),
-              ),
-            ],
-          ),
-          body: BlocBuilder<UserBloc, UserState>(
-            builder: (context, userState) {
-              if (userState is User_Loading) {
-                return const Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      CircularProgressIndicator(),
-                      SizedBox(height: 16),
-                      Text('Đang tải thông tin vận động viên...'),
-                    ],
-                  ),
-                );
-              } else if (userState is LoadedUser) {
-                return AthleteDetailView(
-                  athlete: athlete,
-                  user: userState.user,
-                );
-              } else if (userState is User_Error) {
-                return Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.error_outline, size: 48, color: Colors.red),
-                      SizedBox(height: 16),
-                      Text('Lỗi: ${userState.message}'),
-                      SizedBox(height: 16),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          context.read<UserBloc>().add(
-                            GetUserById(athlete.userId),
-                          );
-                        },
-                        icon: Icon(Icons.refresh),
-                        label: Text('Thử lại'),
-                      ),
-                    ],
-                  ),
-                );
-              }
-              return const Center(child: Text('Đang khởi tạo...'));
-            },
-          ),
-          floatingActionButton: Builder(
-            builder:
-                (context) => FloatingActionButton.extended(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder:
-                            (_) => MultiRepositoryProvider(
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (_) => MultiRepositoryProvider(
+                            providers: [
+                              RepositoryProvider.value(
+                                value: context.read<SportRepository>(),
+                              ),
+                              RepositoryProvider.value(
+                                value: context.read<SportUserRepository>(),
+                              ),
+                            ],
+                            child: MultiBlocProvider(
                               providers: [
-                                RepositoryProvider.value(
-                                  value: context.read<SportRepository>(),
+                                BlocProvider.value(
+                                  value: context.read<SportBloc>(),
                                 ),
-                                RepositoryProvider.value(
-                                  value: context.read<SportUserRepository>(),
+                                BlocProvider.value(
+                                  value: context.read<SportUserBloc>(),
                                 ),
                               ],
-                              child: MultiBlocProvider(
-                                providers: [
-                                  BlocProvider.value(
-                                    value: context.read<SportBloc>(),
-                                  ),
-                                  BlocProvider.value(
-                                    value: context.read<SportUserBloc>(),
-                                  ),
-                                ],
-                                child: SportUserScreen(athlete: athlete),
-                              ),
+                              child: SportUserScreen(athlete: athlete),
                             ),
-                      ),
-                    );
-                  },
-                  label: const Text('Thêm môn thể thao'),
-                  icon: const Icon(Icons.sports),
-                  backgroundColor: Theme.of(context).colorScheme.secondary,
-                  elevation: 4,
-                  tooltip: 'Thêm môn thể thao cho vận động viên',
-                ),
-          ),
+                          ),
+                    ),
+                  );
+                },
+                label: const Text('Thêm môn thể thao'),
+                icon: const Icon(Icons.sports),
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                elevation: 4,
+                tooltip: 'Thêm môn thể thao cho vận động viên',
+              ),
         ),
       ),
     );
@@ -170,6 +176,21 @@ class AthleteDetail extends StatelessWidget {
                   'Tùy chọn',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.dining_sharp),
+                title: const Text('Kế hoạch dinh duỡng'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) =>
+                              NutritionPlanListScreen(athlete: athlete),
+                    ),
+                  );
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.history),
@@ -265,7 +286,7 @@ class AthleteDetailView extends StatelessWidget {
               // ignore: deprecated_member_use
               backgroundColor: Theme.of(
                 context,
-              // ignore: deprecated_member_use
+                // ignore: deprecated_member_use
               ).colorScheme.secondary.withOpacity(0.7),
               child: Text(
                 user.fullName.isNotEmpty ? user.fullName[0].toUpperCase() : '?',
@@ -493,21 +514,19 @@ class AthleteDetailView extends StatelessWidget {
                     );
                   }).toList(),
             );
-          } else if ( sportUserState is Sport_User_Error) {
+          } else if (sportUserState is Sport_User_Error) {
             return Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(Icons.error_outline, size: 48, color: Colors.red[300]),
                   const SizedBox(height: 16),
-                  Text('Lỗi: ${ sportUserState.message}'),
+                  Text('Lỗi: ${sportUserState.message}'),
                   const SizedBox(height: 16),
                   ElevatedButton.icon(
                     onPressed: () {
-                      context.read< SportUserBloc>().add(
-                         SportUserEvent.getAllSportUserByUserId(
-                          athlete.userId,
-                        ),
+                      context.read<SportUserBloc>().add(
+                        SportUserEvent.getAllSportUserByUserId(athlete.userId),
                       );
                     },
                     icon: const Icon(Icons.refresh),
@@ -559,8 +578,7 @@ class AthleteDetailView extends StatelessWidget {
                                     value: context.read<SportRepository>(),
                                   ),
                                   RepositoryProvider.value(
-                                    value:
-                                        context.read< SportUserRepository>(),
+                                    value: context.read<SportUserRepository>(),
                                   ),
                                 ],
                                 child: MultiBlocProvider(
@@ -626,7 +644,7 @@ class AthleteDetailView extends StatelessWidget {
           // ignore: deprecated_member_use
           backgroundColor: Theme.of(
             context,
-          // ignore: deprecated_member_use
+            // ignore: deprecated_member_use
           ).colorScheme.primary.withOpacity(0.1),
           child: Icon(sportIcon, color: Theme.of(context).colorScheme.primary),
         ),

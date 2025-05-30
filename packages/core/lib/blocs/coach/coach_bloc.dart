@@ -10,7 +10,10 @@ sealed class CoachEvent with _$CoachEvent {
   const factory CoachEvent.createCoach(Coach coach) = _CreateCoach;
   const factory CoachEvent.getCoachById(String id) = _GetCoachById;
   const factory CoachEvent.getCoachByUserId(String userId) = _GetCoachByUserId;
-  const factory CoachEvent.getAllCoaches() = _GetAllCoaches;
+  const factory CoachEvent.getAllCoaches({
+    @Default(1) int page,
+    @Default(10) int limit,
+  }) = GetAllCoaches;
   const factory CoachEvent.updateCoach(String id, Coach coach) = _UpdateCoach;
   const factory CoachEvent.deleteCoach(String id) = _DeleteCoach;
 }
@@ -20,7 +23,12 @@ sealed class CoachState with _$CoachState {
   const factory CoachState.initial() = Coach_Initial;
   const factory CoachState.loading() = Coach_Loading;
   const factory CoachState.loadedCoach(Coach coach) = LoadedCoach;
-  const factory CoachState.loadedCoaches(List<Coach> coaches) = LoadedCoaches;
+  const factory CoachState.loadedCoaches(
+    List<Coach> coaches,
+    int currentPage,
+    int limit,
+    bool hasMore,
+  ) = LoadedCoaches;
   const factory CoachState.error(String message) = Coach_Error;
   const factory CoachState.success(String message) = Coach_Success;
 }
@@ -33,7 +41,7 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
     on<_CreateCoach>(_onCreateCoach);
     on<_GetCoachById>(_onGetCoachById);
     on<_GetCoachByUserId>(_onGetCoachByUserId);
-    on<_GetAllCoaches>(_onGetAllCoaches);
+    on<GetAllCoaches>(_onGetAllCoaches);
     on<_UpdateCoach>(_onUpdateCoach);
     on<_DeleteCoach>(_onDeleteCoach);
   }
@@ -78,13 +86,23 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
   }
 
   Future<void> _onGetAllCoaches(
-    _GetAllCoaches event,
+    GetAllCoaches event,
     Emitter<CoachState> emit,
   ) async {
     emit(const CoachState.loading());
     try {
-      final coaches = await coachRepository.getAllCoaches();
-      emit(CoachState.loadedCoaches(coaches));
+      final result = await coachRepository.getAllCoaches(
+        page: event.page,
+        limit: event.limit,
+      );
+      emit(
+        CoachState.loadedCoaches(
+          result['coaches'] as List<Coach>,
+          event.page,
+          event.limit,
+          result['hasMore'] as bool,
+        ),
+      );
     } catch (e) {
       emit(CoachState.error(e.toString()));
     }

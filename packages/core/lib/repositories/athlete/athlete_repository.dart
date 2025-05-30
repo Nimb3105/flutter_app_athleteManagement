@@ -69,9 +69,9 @@ class AthleteRepository {
   }
 
   // Get all athletes
-  Future<List<Athlete>> getAllAthletes() async {
+  Future<Map<String,dynamic>> getAllAthletes({int page = 1, int limit = 10}) async {
     final response = await http.get(
-      Uri.parse('$baseUrl/athletes'),
+      Uri.parse('$baseUrl/athletes?page=$page&limit=$limit'),
       headers: {'Content-Type': 'application/json'},
     );
 
@@ -79,9 +79,13 @@ class AthleteRepository {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       if (data['data'] != null && data['data'] is List<dynamic>) {
         final List<dynamic> jsonList = data['data'];
-        return jsonList
-            .map((json) => Athlete.fromJson(json as Map<String, dynamic>))
-            .toList();
+        final totalCount = data['totalCount'] as int? ?? 0;
+        final athletes =
+            jsonList
+                .map((json) => Athlete.fromJson(json as Map<String, dynamic>))
+                .toList();
+        final hasMore = (page * limit) < totalCount;
+        return {'athletes': athletes, 'hasMore': hasMore};
       } else {
         throw Exception('No valid "data" list found in response: $data');
       }

@@ -11,7 +11,10 @@ sealed class AthleteEvent with _$AthleteEvent {
   const factory AthleteEvent.getAthleteById(String id) = _GetAthleteById;
   const factory AthleteEvent.getAthleteByUserId(String userId) =
       _GetAthleteByUserId;
-  const factory AthleteEvent.getAllAthletes() = _GetAllAthletes;
+  const factory AthleteEvent.getAllAthletes({
+    @Default(1) int page,
+    @Default(10) int limit,
+  }) = _GetAllAthletes;
   const factory AthleteEvent.updateAthlete(String id, Athlete athlete) =
       _UpdateAthlete;
   const factory AthleteEvent.deleteAthlete(String id) = _DeleteAthlete;
@@ -22,8 +25,12 @@ sealed class AthleteState with _$AthleteState {
   const factory AthleteState.initial() = Athlete_Initial;
   const factory AthleteState.loading() = Athlete_Loading;
   const factory AthleteState.loadedAthlete(Athlete athlete) = LoadedAthlete;
-  const factory AthleteState.loadedAthletes(List<Athlete> athletes) =
-      LoadedAthletes;
+  const factory AthleteState.loadedAthletes(
+    List<Athlete> athletes,
+    int currentPage,
+    int limit,
+    bool hasMore,
+  ) = LoadedAthletes;
   const factory AthleteState.error(String message) = Athlete_Error;
   const factory AthleteState.success(String message) = Athlete_Success;
 }
@@ -88,8 +95,18 @@ class AthleteBloc extends Bloc<AthleteEvent, AthleteState> {
   ) async {
     emit(const AthleteState.loading());
     try {
-      final athletes = await athleteRepository.getAllAthletes();
-      emit(AthleteState.loadedAthletes(athletes));
+      final result = await athleteRepository.getAllAthletes(
+        page: event.page,
+        limit: event.limit,
+      );
+      emit(
+        AthleteState.loadedAthletes(
+          result['athletes'] as List<Athlete>,
+          event.page,
+          event.limit,
+          result['hasMore'] as bool,
+        ),
+      );
     } catch (e) {
       emit(AthleteState.error(e.toString()));
     }

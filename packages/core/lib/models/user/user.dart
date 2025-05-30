@@ -10,6 +10,7 @@ abstract class User with _$User {
     required String? id,
     required String gender,
     required String fullName,
+    required String imageUrl,
     required String password,
     required String email,
     required String phoneNumber,

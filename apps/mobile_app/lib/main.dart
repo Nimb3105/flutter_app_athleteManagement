@@ -1,22 +1,45 @@
-import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:core/core.dart';
 import 'package:mobile_app/screens/auth/login_screen.dart';
 
 void main() {
-  final userRepository = UserRepository(baseUrl: ApiConstants.baseUrl);
-
-  runApp(MyApp(userRepository: userRepository));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final UserRepository userRepository;
-
-  const MyApp({super.key, required this.userRepository});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<UserBloc>(
-      create: (_) => UserBloc(userRepository: userRepository),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<UserRepository>(
+          create: (_) => UserRepository(baseUrl: ApiConstants.baseUrl),
+        ),
+        RepositoryProvider<ExerciseRepository>(
+          create: (_) => ExerciseRepository(baseUrl: ApiConstants.baseUrl),
+        ),
+        RepositoryProvider<CoachAthleteRepository>(
+          create: (_) => CoachAthleteRepository(baseUrl: ApiConstants.baseUrl),
+        ),
+        RepositoryProvider<NutritionPlanRepository>(
+          create: (_) => NutritionPlanRepository(baseUrl: ApiConstants.baseUrl),
+        ),
+        RepositoryProvider<PlanFoodRepository>(
+          create: (_) => PlanFoodRepository(baseUrl: ApiConstants.baseUrl),
+        ),
+        RepositoryProvider<FoodRepository>(
+          create: (_) => FoodRepository(baseUrl: ApiConstants.baseUrl),
+        ),
+        RepositoryProvider<SportRepository>(
+          create: (_) => SportRepository(baseUrl: ApiConstants.baseUrl),
+        ),
+        RepositoryProvider<SportUserRepository>(
+          create: (_) => SportUserRepository(baseUrl: ApiConstants.baseUrl),
+        ),
+
+        // Thêm các repository khác nếu cần
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -46,7 +69,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: LoginScreen(userRepository: userRepository),
+        home: const LoginScreen(),
       ),
     );
   }

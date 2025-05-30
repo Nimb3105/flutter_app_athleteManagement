@@ -1,4 +1,4 @@
-import 'package:admin_dashboard/dashboard_screen.dart';
+import 'package:admin_dashboard/home/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
 
@@ -54,6 +54,14 @@ class MyApp extends StatelessWidget {
 
         RepositoryProvider(
           create: (_) => FoodRepository(baseUrl: ApiConstants.baseUrl),
+        ),
+        
+        RepositoryProvider(
+          create: (_) => NutritionPlanRepository(baseUrl: ApiConstants.baseUrl),
+        ),
+
+        RepositoryProvider(
+          create: (_) => PlanFoodRepository(baseUrl: ApiConstants.baseUrl),
         ),
       ],
       child: MaterialApp(

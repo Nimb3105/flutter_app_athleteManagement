@@ -4,9 +4,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mobile_app/screens/app/coach/coach_home.dart';
 
 class LoginScreen extends StatefulWidget {
-  final UserRepository userRepository;
 
-  const LoginScreen({super.key, required this.userRepository});
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -37,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return BlocProvider(
-      create: (context) => UserBloc(userRepository: widget.userRepository),
+      create: (context) => UserBloc( userRepository: RepositoryProvider.of<UserRepository>(context),),
       child: Scaffold(
         body: Container(
           decoration: BoxDecoration(

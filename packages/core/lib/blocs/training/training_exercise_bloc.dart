@@ -1,7 +1,7 @@
-import 'package:core/models/training/exercise.dart';
-import 'package:core/models/training/training_exercise.dart';
-import 'package:core/repositories/training/exercise_repository.dart';
-import 'package:core/repositories/training/training_exercise_repository.dart';
+import 'package:core/models/exercise/exercise.dart';
+import 'package:core/models/training_schedule/training_exercise.dart';
+import 'package:core/repositories/exercise/exercise_repository.dart';
+import 'package:core/repositories/training_schedule/training_exercise_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

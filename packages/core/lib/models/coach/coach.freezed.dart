@@ -16,7 +16,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Coach {
 
- String? get id; String get userId; String get experience; String get specialization; String get level;@UtcDateTimeConverter() DateTime get createdAt;@UtcDateTimeConverter() DateTime get updatedAt;
+ String? get id; String get userId; String get experience;//required String specialization,
+ String get level;@UtcDateTimeConverter() DateTime get createdAt;@UtcDateTimeConverter() DateTime get updatedAt;
 /// Create a copy of Coach
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +30,16 @@ $CoachCopyWith<Coach> get copyWith => _$CoachCopyWithImpl<Coach>(this as Coach, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Coach&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.specialization, specialization) || other.specialization == specialization)&&(identical(other.level, level) || other.level == level)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Coach&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.level, level) || other.level == level)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,experience,specialization,level,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,userId,experience,level,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Coach(id: $id, userId: $userId, experience: $experience, specialization: $specialization, level: $level, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Coach(id: $id, userId: $userId, experience: $experience, level: $level, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -49,7 +50,7 @@ abstract mixin class $CoachCopyWith<$Res>  {
   factory $CoachCopyWith(Coach value, $Res Function(Coach) _then) = _$CoachCopyWithImpl;
 @useResult
 $Res call({
- String? id, String userId, String experience, String specialization, String level,@UtcDateTimeConverter() DateTime createdAt,@UtcDateTimeConverter() DateTime updatedAt
+ String? id, String userId, String experience, String level,@UtcDateTimeConverter() DateTime createdAt,@UtcDateTimeConverter() DateTime updatedAt
 });
 
 
@@ -66,12 +67,11 @@ class _$CoachCopyWithImpl<$Res>
 
 /// Create a copy of Coach
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? userId = null,Object? experience = null,Object? specialization = null,Object? level = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? userId = null,Object? experience = null,Object? level = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,experience: null == experience ? _self.experience : experience // ignore: cast_nullable_to_non_nullable
-as String,specialization: null == specialization ? _self.specialization : specialization // ignore: cast_nullable_to_non_nullable
 as String,level: null == level ? _self.level : level // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -86,13 +86,13 @@ as DateTime,
 @JsonSerializable()
 
 class _Coach implements Coach {
-  const _Coach({required this.id, required this.userId, required this.experience, required this.specialization, required this.level, @UtcDateTimeConverter() required this.createdAt, @UtcDateTimeConverter() required this.updatedAt});
+  const _Coach({required this.id, required this.userId, required this.experience, required this.level, @UtcDateTimeConverter() required this.createdAt, @UtcDateTimeConverter() required this.updatedAt});
   factory _Coach.fromJson(Map<String, dynamic> json) => _$CoachFromJson(json);
 
 @override final  String? id;
 @override final  String userId;
 @override final  String experience;
-@override final  String specialization;
+//required String specialization,
 @override final  String level;
 @override@UtcDateTimeConverter() final  DateTime createdAt;
 @override@UtcDateTimeConverter() final  DateTime updatedAt;
@@ -110,16 +110,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Coach&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.specialization, specialization) || other.specialization == specialization)&&(identical(other.level, level) || other.level == level)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Coach&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.level, level) || other.level == level)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,experience,specialization,level,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,userId,experience,level,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Coach(id: $id, userId: $userId, experience: $experience, specialization: $specialization, level: $level, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Coach(id: $id, userId: $userId, experience: $experience, level: $level, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -130,7 +130,7 @@ abstract mixin class _$CoachCopyWith<$Res> implements $CoachCopyWith<$Res> {
   factory _$CoachCopyWith(_Coach value, $Res Function(_Coach) _then) = __$CoachCopyWithImpl;
 @override @useResult
 $Res call({
- String? id, String userId, String experience, String specialization, String level,@UtcDateTimeConverter() DateTime createdAt,@UtcDateTimeConverter() DateTime updatedAt
+ String? id, String userId, String experience, String level,@UtcDateTimeConverter() DateTime createdAt,@UtcDateTimeConverter() DateTime updatedAt
 });
 
 
@@ -147,12 +147,11 @@ class __$CoachCopyWithImpl<$Res>
 
 /// Create a copy of Coach
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? userId = null,Object? experience = null,Object? specialization = null,Object? level = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? userId = null,Object? experience = null,Object? level = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_Coach(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,experience: null == experience ? _self.experience : experience // ignore: cast_nullable_to_non_nullable
-as String,specialization: null == specialization ? _self.specialization : specialization // ignore: cast_nullable_to_non_nullable
 as String,level: null == level ? _self.level : level // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable

@@ -1,175 +1,232 @@
-// packages/core/test/core_test.dart
+import 'package:core/models/athlete/achievement/achievement.dart';
+import 'package:core/models/athlete/injury/injury.dart';
+import 'package:core/models/athlete/health/medical_history.dart';
+import 'package:core/models/athlete/progress/progress.dart';
+import 'package:core/models/coach/coach_certification.dart';
+import 'package:core/models/feedback/feedback.dart';
+import 'package:core/models/athlete/health/health.dart';
+import 'package:core/models/match_schedule/match_schedule.dart';
+import 'package:core/models/match_schedule/user_match.dart';
+import 'package:core/models/message_group/group.dart';
+import 'package:core/models/message_group/group_member.dart';
+import 'package:core/models/message_group/message.dart';
+import 'package:core/models/performance/performance.dart';
+import 'package:core/models/team/team.dart';
+import 'package:core/models/team/team_member.dart';
+import 'package:core/models/tournament/tournament.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:bloc_test/bloc_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:core/core.dart'; // Import barrel file từ core
+import 'package:core/core.dart';
+import 'package:core/repositories/bass_repository.dart';
 
-// Import file mock được tạo bởi mockito
-import 'core_test.mocks.dart';
-
-@GenerateMocks([UserRepository])
 void main() {
-  group('Core Tests', () {
-    // Kiểm thử UserBloc
-    group('UserBloc', () {
-      late UserBloc userBloc;
-      late MockUserRepository mockUserRepository;
+  const baseUrl = ApiConstants.baseUrl;
 
-      setUp(() {
-        mockUserRepository = MockUserRepository();
-        userBloc = UserBloc(userRepository: mockUserRepository);
-      });
+  // Danh sách tất cả 31 model
+  final modelNames = [
+    'Achievement',
+    'Athlete',
+    'CoachCertification',
+    'Coach',
+    'CoachAthlete',
+    'Exercise',
+    'Feedback',
+    'Food',
+    'Group',
+    'GroupMember',
+    'Health',
+    'Injury',
+    'MatchSchedule',
+    'MedicalHistory',
+    'Message',
+    'Notification',
+    'NutritionPlan',
+    'Performance',
+    'PlanFood',
+    'Progress',
+    'Reminder',
+    'SportUser',
+    'Sport',
+    'Team',
+    'TeamMember',
+    'Tournament',
+    'TrainingExercise',
+    'TrainingSchedule',
+    'TrainingScheduleUser',
+    'User',
+    'UserMatch',
+  ];
 
-      tearDown(() {
-        userBloc.close();
-      });
+  // Ánh xạ tên model sang lớp model
+  final modelTypeMap = {
+    'Achievement': Achievement,
+    'Athlete': Athlete,
+    'CoachCertification': CoachCertification,
+    'Coach': Coach,
+    'CoachAthlete': CoachAthlete,
+    'Exercise': Exercise,
+    'Feedback': Feedback,
+    'Food': Food,
+    'Group': Group,
+    'GroupMember': GroupMember,
+    'Health': Health,
+    'Injury': Injury,
+    'MatchSchedule': MatchSchedule,
+    'MedicalHistory': MedicalHistory,
+    'Message': Message,
+    'Notification': Notification,
+    'NutritionPlan': NutritionPlan,
+    'Performance': Performance,
+    'PlanFood': PlanFood,
+    'Progress': Progress,
+    'Reminder': Reminder,
+    'SportUser': SportUser,
+    'Sport': Sport,
+    'Team': Team,
+    'TeamMember': TeamMember,
+    'Tournament': Tournament,
+    'TrainingExercise': TrainingExercise,
+    'TrainingSchedule': TrainingSchedule,
+    'TrainingScheduleUser': TrainingScheduleUser,
+    'User': User,
+    'UserMatch': UserMatch,
+  };
 
-      test('initial state is User_Initial', () {
-        expect(userBloc.state, equals(const User_Initial()));
-      });
+  // Ánh xạ endpoint đặc biệt (nếu khác với <modelName>s)
+  final endpointMap = {
+    'MatchSchedule': 'match-schedules',
+    'MedicalHistory': 'medical-historys',
+    'NutritionPlan': 'nutrition-plans',
+    'TrainingExercise': 'training-exercises',
+    'TrainingSchedule': 'training-schedules',
+    'TrainingScheduleUser': 'training-schedule-users',
+    'CoachCertification': 'coach-certifications',
+    'CoachAthlete': 'coach-athletes',
+    'SportUser': 'sport-users',
+    'TeamMember': 'team-members',
+    'UserMatch': 'user-matchs',
+    'nutritionPlan': 'nutrition-plans',
+    'PlanFood': 'plan-foods',
+    'GroupMember': 'group-members',
+    'Progress': 'progresses',
+    'Health': 'health-records',
+  };
 
-      blocTest<UserBloc, UserState>(
-        'emits [User_Loading, LoadedUser] when GetUserById succeeds',
-        setUp: () {
-          when(mockUserRepository.getUserById(any)).thenAnswer(
-            (_) async => User(
-              id: '1',
-              gender: 'nam',
-              fullName: 'phungthientai',
-              password: '123',
-              email: 'tai@gmail.com',
-              phoneNumber: '123546789',
-              dateOfBirth: DateTime(2025, 5, 23, 12, 23, 13),
-              role: 'admin',
-              status: 'active',
-              createdAt: DateTime(2025, 5, 23, 12, 23, 13),
-              updatedAt: DateTime(2025, 5, 23, 12, 23, 13),
-            ),
+  group('API Tests - getAll for All Models', () {
+    for (var modelName in modelNames) {
+      test('Lấy danh sách $modelName', () async {
+        final modelType = modelTypeMap[modelName];
+        if (modelType == null) {
+          fail('Model $modelName chưa được định nghĩa trong modelTypeMap');
+        }
+
+        // Tạo endpoint
+        final endpoint =
+            endpointMap[modelName] ?? '${modelName.toLowerCase()}s';
+
+        // Tạo repository với fromJson/toJson
+        final repo = BaseRepository(
+          baseUrl: baseUrl,
+          endpoint: endpoint,
+          fromJson: (json) => _invokeFromJson(modelType, json),
+          toJson: (obj) => _invokeToJson(modelType, obj),
+        );
+
+        try {
+          final results = await repo.getAll();
+          expect(
+            results,
+            isNotEmpty,
+            reason: 'Danh sách $modelName không được rỗng',
           );
-        },
-        build: () => userBloc,
-        act: (bloc) => bloc.add(GetUserById('1')),
-        expect:
-            () => [
-              const User_Loading(),
-              LoadedUser(
-                User(
-                  id: '1',
-                  gender: 'nam',
-                  fullName: 'phungthientai',
-                  password: '123',
-                  email: 'tai@gmail.com',
-                  phoneNumber: '123546789',
-                  dateOfBirth: DateTime(2025, 5, 23, 12, 23, 13),
-                  role: 'admin',
-                  status: 'active',
-                  createdAt: DateTime(2025, 5, 23, 12, 23, 13),
-                  updatedAt: DateTime(2025, 5, 23, 12, 23, 13),
-                ),
-              ),
-            ],
-      );
-
-      blocTest<UserBloc, UserState>(
-        'emits [User_Loading, User_Error] when GetUserById fails',
-        setUp: () {
-          when(
-            mockUserRepository.getUserById(any),
-          ).thenThrow(Exception('Failed to fetch user'));
-        },
-        build: () => userBloc,
-        act: (bloc) => bloc.add(GetUserById('1')),
-        expect:
-            () => [
-              const User_Loading(),
-              const User_Error('Exception: Failed to fetch user'),
-            ],
-      );
-
-      blocTest<UserBloc, UserState>(
-        'emits [User_Loading, LoggedIn] when Login succeeds',
-        setUp: () {
-          when(
-            mockUserRepository.login(any, any),
-          ).thenAnswer((_) async => 'mock_token');
-        },
-        build: () => userBloc,
-        act: (bloc) => bloc.add(Login('tai@gmail.com', '123')),
-        expect: () => [const User_Loading(), const LoggedIn('mock_token')],
-      );
-
-      blocTest<UserBloc, UserState>(
-        'emits [User_Loading, User_Error] when Login fails',
-        setUp: () {
-          when(
-            mockUserRepository.login(any, any),
-          ).thenThrow(Exception('Invalid credentials'));
-        },
-        build: () => userBloc,
-        act: (bloc) => bloc.add(Login('tai@gmail.com', '123')),
-        expect:
-            () => [
-              const User_Loading(),
-              const User_Error('Exception: Invalid credentials'),
-            ],
-      );
-    });
-
-    // Kiểm thử model User
-    group('User Model', () {
-      test('User can be created with correct properties', () {
-        final user = User(
-          id: '1',
-          gender: 'nam',
-          fullName: 'phungthientai',
-          password: '123',
-          email: 'tai@gmail.com',
-          phoneNumber: '123546789',
-          dateOfBirth: DateTime(2025, 5, 23, 12, 23, 13),
-          role: 'admin',
-          status: 'active',
-          createdAt: DateTime(2025, 5, 23, 12, 23, 13),
-          updatedAt: DateTime(2025, 5, 23, 12, 23, 13),
-        );
-        expect(user.id, '1');
-        expect(user.fullName, 'phungthientai'); // Sửa lỗi từ 'Test User'
-        expect(user.email, 'tai@gmail.com');
+          print(
+            '$modelName: Thành công ✅ — Lấy được ${results.length} phần tử.',
+          );
+          if (results.isNotEmpty) {
+            print(
+              'Dữ liệu mẫu: ${results.take(2).map((e) => (e as dynamic).toJson()).toList()}',
+            );
+          }
+        } catch (e) {
+          fail('Lỗi khi gọi getAll cho $modelName: $e');
+        }
       });
-
-      test('User equality works correctly', () {
-        final date = DateTime(2025, 5, 23);
-        final user1 = User(
-          id: '1',
-          gender: 'nam',
-          fullName: 'phungthientai',
-          password: '123',
-          email: 'tai@gmail.com',
-          phoneNumber: '123546789',
-          dateOfBirth: date,
-          role: 'admin',
-          status: 'active',
-          createdAt: date,
-          updatedAt: date,
-        );
-        final user2 = User(
-          id: '1',
-          gender: 'nam',
-          fullName: 'phungthientai',
-          password: '123',
-          email: 'tai@gmail.com',
-          phoneNumber: '123546789',
-          dateOfBirth: date,
-          role: 'admin',
-          status: 'active',
-          createdAt: date,
-          updatedAt: date,
-        );
-        expect(
-          user1,
-          equals(user2),
-        ); // Hai user có cùng thuộc tính nên bằng nhau
-      });
-    });
+    }
   });
+}
+
+// Gọi fromJson của model
+dynamic _invokeFromJson(Type modelType, Map<String, dynamic> json) {
+  if (modelType == Achievement) return Achievement.fromJson(json);
+  if (modelType == Athlete) return Athlete.fromJson(json);
+  if (modelType == CoachCertification) return CoachCertification.fromJson(json);
+  if (modelType == Coach) return Coach.fromJson(json);
+  if (modelType == CoachAthlete) return CoachAthlete.fromJson(json);
+  if (modelType == Exercise) return Exercise.fromJson(json);
+  if (modelType == Feedback) return Feedback.fromJson(json);
+  if (modelType == Food) return Food.fromJson(json);
+  if (modelType == Group) return Group.fromJson(json);
+  if (modelType == GroupMember) return GroupMember.fromJson(json);
+  if (modelType == Health) return Health.fromJson(json);
+  if (modelType == Injury) return Injury.fromJson(json);
+  if (modelType == MatchSchedule) return MatchSchedule.fromJson(json);
+  if (modelType == MedicalHistory) return MedicalHistory.fromJson(json);
+  if (modelType == Message) return Message.fromJson(json);
+  if (modelType == Notification) return Notification.fromJson(json);
+  if (modelType == NutritionPlan) return NutritionPlan.fromJson(json);
+  if (modelType == Performance) return Performance.fromJson(json);
+  if (modelType == PlanFood) return PlanFood.fromJson(json);
+  if (modelType == Progress) return Progress.fromJson(json);
+  if (modelType == Reminder) return Reminder.fromJson(json);
+  if (modelType == SportUser) return SportUser.fromJson(json);
+  if (modelType == Sport) return Sport.fromJson(json);
+  if (modelType == Team) return Team.fromJson(json);
+  if (modelType == TeamMember) return TeamMember.fromJson(json);
+  if (modelType == Tournament) return Tournament.fromJson(json);
+  if (modelType == TrainingExercise) return TrainingExercise.fromJson(json);
+  if (modelType == TrainingSchedule) return TrainingSchedule.fromJson(json);
+  if (modelType == TrainingScheduleUser)
+    return TrainingScheduleUser.fromJson(json);
+  if (modelType == User) return User.fromJson(json);
+  if (modelType == UserMatch) return UserMatch.fromJson(json);
+  throw Exception(
+    'Model $modelType chưa được định nghĩa trong _invokeFromJson',
+  );
+}
+
+// Gọi toJson của model
+Map<String, dynamic> _invokeToJson(Type modelType, dynamic obj) {
+  if (modelType == Achievement) return (obj as Achievement).toJson();
+  if (modelType == Athlete) return (obj as Athlete).toJson();
+  if (modelType == CoachCertification)
+    return (obj as CoachCertification).toJson();
+  if (modelType == Coach) return (obj as Coach).toJson();
+  if (modelType == CoachAthlete) return (obj as CoachAthlete).toJson();
+  if (modelType == Exercise) return (obj as Exercise).toJson();
+  if (modelType == Feedback) return (obj as Feedback).toJson();
+  if (modelType == Food) return (obj as Food).toJson();
+  if (modelType == Group) return (obj as Group).toJson();
+  if (modelType == GroupMember) return (obj as GroupMember).toJson();
+  if (modelType == Health) return (obj as Health).toJson();
+  if (modelType == Injury) return (obj as Injury).toJson();
+  if (modelType == MatchSchedule) return (obj as MatchSchedule).toJson();
+  if (modelType == MedicalHistory) return (obj as MedicalHistory).toJson();
+  if (modelType == Message) return (obj as Message).toJson();
+  if (modelType == Notification) return (obj as Notification).toJson();
+  if (modelType == NutritionPlan) return (obj as NutritionPlan).toJson();
+  if (modelType == Performance) return (obj as Performance).toJson();
+  if (modelType == PlanFood) return (obj as PlanFood).toJson();
+  if (modelType == Progress) return (obj as Progress).toJson();
+  if (modelType == Reminder) return (obj as Reminder).toJson();
+  if (modelType == SportUser) return (obj as SportUser).toJson();
+  if (modelType == Sport) return (obj as Sport).toJson();
+  if (modelType == Team) return (obj as Team).toJson();
+  if (modelType == TeamMember) return (obj as TeamMember).toJson();
+  if (modelType == Tournament) return (obj as Tournament).toJson();
+  if (modelType == TrainingExercise) return (obj as TrainingExercise).toJson();
+  if (modelType == TrainingSchedule) return (obj as TrainingSchedule).toJson();
+  if (modelType == TrainingScheduleUser)
+    return (obj as TrainingScheduleUser).toJson();
+  if (modelType == User) return (obj as User).toJson();
+  if (modelType == UserMatch) return (obj as UserMatch).toJson();
+  throw Exception('Model $modelType chưa được định nghĩa trong _invokeToJson');
 }

@@ -191,9 +191,7 @@ class SportUserRepository {
             decodedData['data'] is List<dynamic>) {
           jsonList = decodedData['data'];
         } else {
-          throw Exception(
-            'No valid "data" list found in response: $decodedData',
-          );
+          jsonList = [];
         }
       } else {
         throw Exception('Unexpected response format: $decodedData');
@@ -209,7 +207,7 @@ class SportUserRepository {
       }).toList();
     } else {
       throw Exception(
-        'Failed to get sport athletes by user ID: ${response.statusCode}',
+        'Failed to get sport user by user ID: ${response.statusCode}',
       );
     }
   }

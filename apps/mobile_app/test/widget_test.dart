@@ -7,15 +7,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:core/core.dart';
 
 import 'package:mobile_app/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    final userRepository = UserRepository(baseUrl: ApiConstants.baseUrl);
-    await tester.pumpWidget(MyApp(userRepository: userRepository));
+    await tester.pumpWidget(MyApp());
     await tester.pumpAndSettle(); // Đảm bảo trạng thái đã cập nhật
 
     // Verify that our counter starts at 0.

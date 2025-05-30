@@ -1,7 +1,7 @@
-import 'package:core/models/training/training_schedule.dart';
-import 'package:core/models/training/training_schedule_user.dart';
-import 'package:core/repositories/training/training_schedule_repository.dart';
-import 'package:core/repositories/training/training_schedule_user_repository.dart';
+import 'package:core/models/training_schedule/training_schedule.dart';
+import 'package:core/models/training_schedule/training_schedule_user.dart';
+import 'package:core/repositories/training_schedule/training_schedule_repository.dart';
+import 'package:core/repositories/training_schedule/training_schedule_user_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
