@@ -11,7 +11,7 @@ abstract class Achievement with _$Achievement {
     required String userId,
     required String title,
     required String description,
-    @UtcDateTimeConverter() required date,
+    @UtcDateTimeConverter() required DateTime date,
     @UtcDateTimeConverter() required DateTime createdAt,
     @UtcDateTimeConverter() required DateTime updatedAt,
   }) = _Achievement;

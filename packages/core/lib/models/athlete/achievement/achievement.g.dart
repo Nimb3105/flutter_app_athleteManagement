@@ -11,7 +11,7 @@ _Achievement _$AchievementFromJson(Map<String, dynamic> json) => _Achievement(
   userId: json['userId'] as String,
   title: json['title'] as String,
   description: json['description'] as String,
-  date: json['date'],
+  date: const UtcDateTimeConverter().fromJson(json['date'] as String),
   createdAt: const UtcDateTimeConverter().fromJson(json['createdAt'] as String),
   updatedAt: const UtcDateTimeConverter().fromJson(json['updatedAt'] as String),
 );
@@ -22,7 +22,7 @@ Map<String, dynamic> _$AchievementToJson(_Achievement instance) =>
       'userId': instance.userId,
       'title': instance.title,
       'description': instance.description,
-      'date': instance.date,
+      'date': const UtcDateTimeConverter().toJson(instance.date),
       'createdAt': const UtcDateTimeConverter().toJson(instance.createdAt),
       'updatedAt': const UtcDateTimeConverter().toJson(instance.updatedAt),
     };

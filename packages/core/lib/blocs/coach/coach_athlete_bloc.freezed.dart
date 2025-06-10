@@ -395,6 +395,72 @@ as String,
 }
 
 /// @nodoc
+
+
+class GetAllByAthleteId implements CoachAthleteEvent {
+  const GetAllByAthleteId(this.athleteId);
+  
+
+ final  String athleteId;
+
+/// Create a copy of CoachAthleteEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetAllByAthleteIdCopyWith<GetAllByAthleteId> get copyWith => _$GetAllByAthleteIdCopyWithImpl<GetAllByAthleteId>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetAllByAthleteId&&(identical(other.athleteId, athleteId) || other.athleteId == athleteId));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,athleteId);
+
+@override
+String toString() {
+  return 'CoachAthleteEvent.getAllByAthleteId(athleteId: $athleteId)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GetAllByAthleteIdCopyWith<$Res> implements $CoachAthleteEventCopyWith<$Res> {
+  factory $GetAllByAthleteIdCopyWith(GetAllByAthleteId value, $Res Function(GetAllByAthleteId) _then) = _$GetAllByAthleteIdCopyWithImpl;
+@useResult
+$Res call({
+ String athleteId
+});
+
+
+
+
+}
+/// @nodoc
+class _$GetAllByAthleteIdCopyWithImpl<$Res>
+    implements $GetAllByAthleteIdCopyWith<$Res> {
+  _$GetAllByAthleteIdCopyWithImpl(this._self, this._then);
+
+  final GetAllByAthleteId _self;
+  final $Res Function(GetAllByAthleteId) _then;
+
+/// Create a copy of CoachAthleteEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? athleteId = null,}) {
+  return _then(GetAllByAthleteId(
+null == athleteId ? _self.athleteId : athleteId // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$CoachAthleteState {
 
 

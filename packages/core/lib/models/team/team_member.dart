@@ -10,6 +10,7 @@ abstract class TeamMember with _$TeamMember {
     required String? id,
     required String userId,
     required String teamId,
+     @UtcDateTimeConverter() required DateTime dateJoined,
     @UtcDateTimeConverter() required DateTime createdAt,
     @UtcDateTimeConverter() required DateTime updatedAt,
   }) = _TeamMember;

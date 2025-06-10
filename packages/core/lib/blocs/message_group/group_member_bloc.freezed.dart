@@ -186,8 +186,8 @@ as String,
 /// @nodoc
 
 
-class _GetGroupMemberByUserId implements GroupMemberEvent {
-  const _GetGroupMemberByUserId(this.userId);
+class _GetGroupMembersByUserId implements GroupMemberEvent {
+  const _GetGroupMembersByUserId(this.userId);
   
 
  final  String userId;
@@ -196,13 +196,13 @@ class _GetGroupMemberByUserId implements GroupMemberEvent {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$GetGroupMemberByUserIdCopyWith<_GetGroupMemberByUserId> get copyWith => __$GetGroupMemberByUserIdCopyWithImpl<_GetGroupMemberByUserId>(this, _$identity);
+_$GetGroupMembersByUserIdCopyWith<_GetGroupMembersByUserId> get copyWith => __$GetGroupMembersByUserIdCopyWithImpl<_GetGroupMembersByUserId>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GetGroupMemberByUserId&&(identical(other.userId, userId) || other.userId == userId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GetGroupMembersByUserId&&(identical(other.userId, userId) || other.userId == userId));
 }
 
 
@@ -211,15 +211,15 @@ int get hashCode => Object.hash(runtimeType,userId);
 
 @override
 String toString() {
-  return 'GroupMemberEvent.getGroupMemberByUserId(userId: $userId)';
+  return 'GroupMemberEvent.getGroupMembersByUserId(userId: $userId)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$GetGroupMemberByUserIdCopyWith<$Res> implements $GroupMemberEventCopyWith<$Res> {
-  factory _$GetGroupMemberByUserIdCopyWith(_GetGroupMemberByUserId value, $Res Function(_GetGroupMemberByUserId) _then) = __$GetGroupMemberByUserIdCopyWithImpl;
+abstract mixin class _$GetGroupMembersByUserIdCopyWith<$Res> implements $GroupMemberEventCopyWith<$Res> {
+  factory _$GetGroupMembersByUserIdCopyWith(_GetGroupMembersByUserId value, $Res Function(_GetGroupMembersByUserId) _then) = __$GetGroupMembersByUserIdCopyWithImpl;
 @useResult
 $Res call({
  String userId
@@ -230,17 +230,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$GetGroupMemberByUserIdCopyWithImpl<$Res>
-    implements _$GetGroupMemberByUserIdCopyWith<$Res> {
-  __$GetGroupMemberByUserIdCopyWithImpl(this._self, this._then);
+class __$GetGroupMembersByUserIdCopyWithImpl<$Res>
+    implements _$GetGroupMembersByUserIdCopyWith<$Res> {
+  __$GetGroupMembersByUserIdCopyWithImpl(this._self, this._then);
 
-  final _GetGroupMemberByUserId _self;
-  final $Res Function(_GetGroupMemberByUserId) _then;
+  final _GetGroupMembersByUserId _self;
+  final $Res Function(_GetGroupMembersByUserId) _then;
 
 /// Create a copy of GroupMemberEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? userId = null,}) {
-  return _then(_GetGroupMemberByUserId(
+  return _then(_GetGroupMembersByUserId(
 null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -633,7 +633,7 @@ $GroupMemberCopyWith<$Res> get groupMember {
 
 
 class LoadedGroupMembers implements GroupMemberState {
-  const LoadedGroupMembers(final  List<GroupMember> groupMembers, this.currentPage, this.limit, this.hasMore): _groupMembers = groupMembers;
+  const LoadedGroupMembers(final  List<GroupMember> groupMembers, this.currentPage, this.limit, this.hasMore, {final  Map<String, Group>? groups}): _groupMembers = groupMembers,_groups = groups;
   
 
  final  List<GroupMember> _groupMembers;
@@ -646,6 +646,15 @@ class LoadedGroupMembers implements GroupMemberState {
  final  int currentPage;
  final  int limit;
  final  bool hasMore;
+ final  Map<String, Group>? _groups;
+ Map<String, Group>? get groups {
+  final value = _groups;
+  if (value == null) return null;
+  if (_groups is EqualUnmodifiableMapView) return _groups;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(value);
+}
+
 
 /// Create a copy of GroupMemberState
 /// with the given fields replaced by the non-null parameter values.
@@ -657,16 +666,16 @@ $LoadedGroupMembersCopyWith<LoadedGroupMembers> get copyWith => _$LoadedGroupMem
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedGroupMembers&&const DeepCollectionEquality().equals(other._groupMembers, _groupMembers)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedGroupMembers&&const DeepCollectionEquality().equals(other._groupMembers, _groupMembers)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore)&&const DeepCollectionEquality().equals(other._groups, _groups));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_groupMembers),currentPage,limit,hasMore);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_groupMembers),currentPage,limit,hasMore,const DeepCollectionEquality().hash(_groups));
 
 @override
 String toString() {
-  return 'GroupMemberState.loadedGroupMembers(groupMembers: $groupMembers, currentPage: $currentPage, limit: $limit, hasMore: $hasMore)';
+  return 'GroupMemberState.loadedGroupMembers(groupMembers: $groupMembers, currentPage: $currentPage, limit: $limit, hasMore: $hasMore, groups: $groups)';
 }
 
 
@@ -677,7 +686,7 @@ abstract mixin class $LoadedGroupMembersCopyWith<$Res> implements $GroupMemberSt
   factory $LoadedGroupMembersCopyWith(LoadedGroupMembers value, $Res Function(LoadedGroupMembers) _then) = _$LoadedGroupMembersCopyWithImpl;
 @useResult
 $Res call({
- List<GroupMember> groupMembers, int currentPage, int limit, bool hasMore
+ List<GroupMember> groupMembers, int currentPage, int limit, bool hasMore, Map<String, Group>? groups
 });
 
 
@@ -694,13 +703,14 @@ class _$LoadedGroupMembersCopyWithImpl<$Res>
 
 /// Create a copy of GroupMemberState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? groupMembers = null,Object? currentPage = null,Object? limit = null,Object? hasMore = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? groupMembers = null,Object? currentPage = null,Object? limit = null,Object? hasMore = null,Object? groups = freezed,}) {
   return _then(LoadedGroupMembers(
 null == groupMembers ? _self._groupMembers : groupMembers // ignore: cast_nullable_to_non_nullable
 as List<GroupMember>,null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
 as int,null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
 as int,null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,groups: freezed == groups ? _self._groups : groups // ignore: cast_nullable_to_non_nullable
+as Map<String, Group>?,
   ));
 }
 

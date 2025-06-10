@@ -4,7 +4,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'notification_bloc.dart';
+part of 'custom_notification_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,7 +13,7 @@ part of 'notification_bloc.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$NotificationEvent implements DiagnosticableTreeMixin {
+mixin _$CustomNotificationEvent implements DiagnosticableTreeMixin {
 
 
 
@@ -21,13 +21,13 @@ mixin _$NotificationEvent implements DiagnosticableTreeMixin {
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
-    ..add(DiagnosticsProperty('type', 'NotificationEvent'))
+    ..add(DiagnosticsProperty('type', 'CustomNotificationEvent'))
     ;
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationEvent);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CustomNotificationEvent);
 }
 
 
@@ -36,28 +36,28 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'NotificationEvent()';
+  return 'CustomNotificationEvent()';
 }
 
 
 }
 
 /// @nodoc
-class $NotificationEventCopyWith<$Res>  {
-$NotificationEventCopyWith(NotificationEvent _, $Res Function(NotificationEvent) __);
+class $CustomNotificationEventCopyWith<$Res>  {
+$CustomNotificationEventCopyWith(CustomNotificationEvent _, $Res Function(CustomNotificationEvent) __);
 }
 
 
 /// @nodoc
 
 
-class CreateNotification with DiagnosticableTreeMixin implements NotificationEvent {
+class CreateNotification with DiagnosticableTreeMixin implements CustomNotificationEvent {
   const CreateNotification(this.notification);
   
 
- final  Notification notification;
+ final  CustomNotification notification;
 
-/// Create a copy of NotificationEvent
+/// Create a copy of CustomNotificationEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -67,7 +67,7 @@ $CreateNotificationCopyWith<CreateNotification> get copyWith => _$CreateNotifica
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
-    ..add(DiagnosticsProperty('type', 'NotificationEvent.createNotification'))
+    ..add(DiagnosticsProperty('type', 'CustomNotificationEvent.createNotification'))
     ..add(DiagnosticsProperty('notification', notification));
 }
 
@@ -82,22 +82,22 @@ int get hashCode => Object.hash(runtimeType,notification);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'NotificationEvent.createNotification(notification: $notification)';
+  return 'CustomNotificationEvent.createNotification(notification: $notification)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $CreateNotificationCopyWith<$Res> implements $NotificationEventCopyWith<$Res> {
+abstract mixin class $CreateNotificationCopyWith<$Res> implements $CustomNotificationEventCopyWith<$Res> {
   factory $CreateNotificationCopyWith(CreateNotification value, $Res Function(CreateNotification) _then) = _$CreateNotificationCopyWithImpl;
 @useResult
 $Res call({
- Notification notification
+ CustomNotification notification
 });
 
 
-$NotificationCopyWith<$Res> get notification;
+$CustomNotificationCopyWith<$Res> get notification;
 
 }
 /// @nodoc
@@ -108,22 +108,22 @@ class _$CreateNotificationCopyWithImpl<$Res>
   final CreateNotification _self;
   final $Res Function(CreateNotification) _then;
 
-/// Create a copy of NotificationEvent
+/// Create a copy of CustomNotificationEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? notification = null,}) {
   return _then(CreateNotification(
 null == notification ? _self.notification : notification // ignore: cast_nullable_to_non_nullable
-as Notification,
+as CustomNotification,
   ));
 }
 
-/// Create a copy of NotificationEvent
+/// Create a copy of CustomNotificationEvent
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$NotificationCopyWith<$Res> get notification {
+$CustomNotificationCopyWith<$Res> get notification {
   
-  return $NotificationCopyWith<$Res>(_self.notification, (value) {
+  return $CustomNotificationCopyWith<$Res>(_self.notification, (value) {
     return _then(_self.copyWith(notification: value));
   });
 }
@@ -132,13 +132,13 @@ $NotificationCopyWith<$Res> get notification {
 /// @nodoc
 
 
-class GetNotificationById with DiagnosticableTreeMixin implements NotificationEvent {
+class GetNotificationById with DiagnosticableTreeMixin implements CustomNotificationEvent {
   const GetNotificationById(this.id);
   
 
  final  String id;
 
-/// Create a copy of NotificationEvent
+/// Create a copy of CustomNotificationEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -148,7 +148,7 @@ $GetNotificationByIdCopyWith<GetNotificationById> get copyWith => _$GetNotificat
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
-    ..add(DiagnosticsProperty('type', 'NotificationEvent.getNotificationById'))
+    ..add(DiagnosticsProperty('type', 'CustomNotificationEvent.getNotificationById'))
     ..add(DiagnosticsProperty('id', id));
 }
 
@@ -163,14 +163,14 @@ int get hashCode => Object.hash(runtimeType,id);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'NotificationEvent.getNotificationById(id: $id)';
+  return 'CustomNotificationEvent.getNotificationById(id: $id)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $GetNotificationByIdCopyWith<$Res> implements $NotificationEventCopyWith<$Res> {
+abstract mixin class $GetNotificationByIdCopyWith<$Res> implements $CustomNotificationEventCopyWith<$Res> {
   factory $GetNotificationByIdCopyWith(GetNotificationById value, $Res Function(GetNotificationById) _then) = _$GetNotificationByIdCopyWithImpl;
 @useResult
 $Res call({
@@ -189,7 +189,7 @@ class _$GetNotificationByIdCopyWithImpl<$Res>
   final GetNotificationById _self;
   final $Res Function(GetNotificationById) _then;
 
-/// Create a copy of NotificationEvent
+/// Create a copy of CustomNotificationEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? id = null,}) {
   return _then(GetNotificationById(
@@ -204,13 +204,13 @@ as String,
 /// @nodoc
 
 
-class GetNotificationsByUserId with DiagnosticableTreeMixin implements NotificationEvent {
+class GetNotificationsByUserId with DiagnosticableTreeMixin implements CustomNotificationEvent {
   const GetNotificationsByUserId(this.userId);
   
 
  final  String userId;
 
-/// Create a copy of NotificationEvent
+/// Create a copy of CustomNotificationEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -220,7 +220,7 @@ $GetNotificationsByUserIdCopyWith<GetNotificationsByUserId> get copyWith => _$Ge
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
-    ..add(DiagnosticsProperty('type', 'NotificationEvent.getNotificationsByUserId'))
+    ..add(DiagnosticsProperty('type', 'CustomNotificationEvent.getNotificationsByUserId'))
     ..add(DiagnosticsProperty('userId', userId));
 }
 
@@ -235,14 +235,14 @@ int get hashCode => Object.hash(runtimeType,userId);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'NotificationEvent.getNotificationsByUserId(userId: $userId)';
+  return 'CustomNotificationEvent.getNotificationsByUserId(userId: $userId)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $GetNotificationsByUserIdCopyWith<$Res> implements $NotificationEventCopyWith<$Res> {
+abstract mixin class $GetNotificationsByUserIdCopyWith<$Res> implements $CustomNotificationEventCopyWith<$Res> {
   factory $GetNotificationsByUserIdCopyWith(GetNotificationsByUserId value, $Res Function(GetNotificationsByUserId) _then) = _$GetNotificationsByUserIdCopyWithImpl;
 @useResult
 $Res call({
@@ -261,7 +261,7 @@ class _$GetNotificationsByUserIdCopyWithImpl<$Res>
   final GetNotificationsByUserId _self;
   final $Res Function(GetNotificationsByUserId) _then;
 
-/// Create a copy of NotificationEvent
+/// Create a copy of CustomNotificationEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? userId = null,}) {
   return _then(GetNotificationsByUserId(
@@ -276,14 +276,14 @@ as String,
 /// @nodoc
 
 
-class UpdateNotification with DiagnosticableTreeMixin implements NotificationEvent {
+class UpdateNotification with DiagnosticableTreeMixin implements CustomNotificationEvent {
   const UpdateNotification(this.id, this.notification);
   
 
  final  String id;
- final  Notification notification;
+ final  CustomNotification notification;
 
-/// Create a copy of NotificationEvent
+/// Create a copy of CustomNotificationEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -293,7 +293,7 @@ $UpdateNotificationCopyWith<UpdateNotification> get copyWith => _$UpdateNotifica
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
-    ..add(DiagnosticsProperty('type', 'NotificationEvent.updateNotification'))
+    ..add(DiagnosticsProperty('type', 'CustomNotificationEvent.updateNotification'))
     ..add(DiagnosticsProperty('id', id))..add(DiagnosticsProperty('notification', notification));
 }
 
@@ -308,22 +308,22 @@ int get hashCode => Object.hash(runtimeType,id,notification);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'NotificationEvent.updateNotification(id: $id, notification: $notification)';
+  return 'CustomNotificationEvent.updateNotification(id: $id, notification: $notification)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $UpdateNotificationCopyWith<$Res> implements $NotificationEventCopyWith<$Res> {
+abstract mixin class $UpdateNotificationCopyWith<$Res> implements $CustomNotificationEventCopyWith<$Res> {
   factory $UpdateNotificationCopyWith(UpdateNotification value, $Res Function(UpdateNotification) _then) = _$UpdateNotificationCopyWithImpl;
 @useResult
 $Res call({
- String id, Notification notification
+ String id, CustomNotification notification
 });
 
 
-$NotificationCopyWith<$Res> get notification;
+$CustomNotificationCopyWith<$Res> get notification;
 
 }
 /// @nodoc
@@ -334,23 +334,23 @@ class _$UpdateNotificationCopyWithImpl<$Res>
   final UpdateNotification _self;
   final $Res Function(UpdateNotification) _then;
 
-/// Create a copy of NotificationEvent
+/// Create a copy of CustomNotificationEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? notification = null,}) {
   return _then(UpdateNotification(
 null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,null == notification ? _self.notification : notification // ignore: cast_nullable_to_non_nullable
-as Notification,
+as CustomNotification,
   ));
 }
 
-/// Create a copy of NotificationEvent
+/// Create a copy of CustomNotificationEvent
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$NotificationCopyWith<$Res> get notification {
+$CustomNotificationCopyWith<$Res> get notification {
   
-  return $NotificationCopyWith<$Res>(_self.notification, (value) {
+  return $CustomNotificationCopyWith<$Res>(_self.notification, (value) {
     return _then(_self.copyWith(notification: value));
   });
 }
@@ -359,13 +359,13 @@ $NotificationCopyWith<$Res> get notification {
 /// @nodoc
 
 
-class DeleteNotification with DiagnosticableTreeMixin implements NotificationEvent {
+class DeleteNotification with DiagnosticableTreeMixin implements CustomNotificationEvent {
   const DeleteNotification(this.id);
   
 
  final  String id;
 
-/// Create a copy of NotificationEvent
+/// Create a copy of CustomNotificationEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -375,7 +375,7 @@ $DeleteNotificationCopyWith<DeleteNotification> get copyWith => _$DeleteNotifica
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
-    ..add(DiagnosticsProperty('type', 'NotificationEvent.deleteNotification'))
+    ..add(DiagnosticsProperty('type', 'CustomNotificationEvent.deleteNotification'))
     ..add(DiagnosticsProperty('id', id));
 }
 
@@ -390,14 +390,14 @@ int get hashCode => Object.hash(runtimeType,id);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'NotificationEvent.deleteNotification(id: $id)';
+  return 'CustomNotificationEvent.deleteNotification(id: $id)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $DeleteNotificationCopyWith<$Res> implements $NotificationEventCopyWith<$Res> {
+abstract mixin class $DeleteNotificationCopyWith<$Res> implements $CustomNotificationEventCopyWith<$Res> {
   factory $DeleteNotificationCopyWith(DeleteNotification value, $Res Function(DeleteNotification) _then) = _$DeleteNotificationCopyWithImpl;
 @useResult
 $Res call({
@@ -416,7 +416,7 @@ class _$DeleteNotificationCopyWithImpl<$Res>
   final DeleteNotification _self;
   final $Res Function(DeleteNotification) _then;
 
-/// Create a copy of NotificationEvent
+/// Create a copy of CustomNotificationEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? id = null,}) {
   return _then(DeleteNotification(
@@ -431,13 +431,13 @@ as String,
 /// @nodoc
 
 
-class MarkNotificationsAsRead with DiagnosticableTreeMixin implements NotificationEvent {
+class MarkNotificationsAsRead with DiagnosticableTreeMixin implements CustomNotificationEvent {
   const MarkNotificationsAsRead(this.userId);
   
 
  final  String userId;
 
-/// Create a copy of NotificationEvent
+/// Create a copy of CustomNotificationEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -447,7 +447,7 @@ $MarkNotificationsAsReadCopyWith<MarkNotificationsAsRead> get copyWith => _$Mark
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
-    ..add(DiagnosticsProperty('type', 'NotificationEvent.markNotificationsAsRead'))
+    ..add(DiagnosticsProperty('type', 'CustomNotificationEvent.markNotificationsAsRead'))
     ..add(DiagnosticsProperty('userId', userId));
 }
 
@@ -462,14 +462,14 @@ int get hashCode => Object.hash(runtimeType,userId);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'NotificationEvent.markNotificationsAsRead(userId: $userId)';
+  return 'CustomNotificationEvent.markNotificationsAsRead(userId: $userId)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $MarkNotificationsAsReadCopyWith<$Res> implements $NotificationEventCopyWith<$Res> {
+abstract mixin class $MarkNotificationsAsReadCopyWith<$Res> implements $CustomNotificationEventCopyWith<$Res> {
   factory $MarkNotificationsAsReadCopyWith(MarkNotificationsAsRead value, $Res Function(MarkNotificationsAsRead) _then) = _$MarkNotificationsAsReadCopyWithImpl;
 @useResult
 $Res call({
@@ -488,7 +488,7 @@ class _$MarkNotificationsAsReadCopyWithImpl<$Res>
   final MarkNotificationsAsRead _self;
   final $Res Function(MarkNotificationsAsRead) _then;
 
-/// Create a copy of NotificationEvent
+/// Create a copy of CustomNotificationEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? userId = null,}) {
   return _then(MarkNotificationsAsRead(
@@ -501,7 +501,81 @@ as String,
 }
 
 /// @nodoc
-mixin _$NotificationState implements DiagnosticableTreeMixin {
+
+
+class GetAllCustomNotifications with DiagnosticableTreeMixin implements CustomNotificationEvent {
+  const GetAllCustomNotifications({this.page = 1, this.limit = 10});
+  
+
+@JsonKey() final  int page;
+@JsonKey() final  int limit;
+
+/// Create a copy of CustomNotificationEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetAllCustomNotificationsCopyWith<GetAllCustomNotifications> get copyWith => _$GetAllCustomNotificationsCopyWithImpl<GetAllCustomNotifications>(this, _$identity);
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'CustomNotificationEvent.getAllCustomNotifications'))
+    ..add(DiagnosticsProperty('page', page))..add(DiagnosticsProperty('limit', limit));
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetAllCustomNotifications&&(identical(other.page, page) || other.page == page)&&(identical(other.limit, limit) || other.limit == limit));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,page,limit);
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'CustomNotificationEvent.getAllCustomNotifications(page: $page, limit: $limit)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GetAllCustomNotificationsCopyWith<$Res> implements $CustomNotificationEventCopyWith<$Res> {
+  factory $GetAllCustomNotificationsCopyWith(GetAllCustomNotifications value, $Res Function(GetAllCustomNotifications) _then) = _$GetAllCustomNotificationsCopyWithImpl;
+@useResult
+$Res call({
+ int page, int limit
+});
+
+
+
+
+}
+/// @nodoc
+class _$GetAllCustomNotificationsCopyWithImpl<$Res>
+    implements $GetAllCustomNotificationsCopyWith<$Res> {
+  _$GetAllCustomNotificationsCopyWithImpl(this._self, this._then);
+
+  final GetAllCustomNotifications _self;
+  final $Res Function(GetAllCustomNotifications) _then;
+
+/// Create a copy of CustomNotificationEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? page = null,Object? limit = null,}) {
+  return _then(GetAllCustomNotifications(
+page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
+as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+/// @nodoc
+mixin _$CustomNotificationState implements DiagnosticableTreeMixin {
 
 
 
@@ -509,13 +583,13 @@ mixin _$NotificationState implements DiagnosticableTreeMixin {
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
-    ..add(DiagnosticsProperty('type', 'NotificationState'))
+    ..add(DiagnosticsProperty('type', 'CustomNotificationState'))
     ;
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationState);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CustomNotificationState);
 }
 
 
@@ -524,22 +598,22 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'NotificationState()';
+  return 'CustomNotificationState()';
 }
 
 
 }
 
 /// @nodoc
-class $NotificationStateCopyWith<$Res>  {
-$NotificationStateCopyWith(NotificationState _, $Res Function(NotificationState) __);
+class $CustomNotificationStateCopyWith<$Res>  {
+$CustomNotificationStateCopyWith(CustomNotificationState _, $Res Function(CustomNotificationState) __);
 }
 
 
 /// @nodoc
 
 
-class Notification_Initial with DiagnosticableTreeMixin implements NotificationState {
+class Notification_Initial with DiagnosticableTreeMixin implements CustomNotificationState {
   const Notification_Initial();
   
 
@@ -550,7 +624,7 @@ class Notification_Initial with DiagnosticableTreeMixin implements NotificationS
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
-    ..add(DiagnosticsProperty('type', 'NotificationState.initial'))
+    ..add(DiagnosticsProperty('type', 'CustomNotificationState.initial'))
     ;
 }
 
@@ -565,7 +639,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'NotificationState.initial()';
+  return 'CustomNotificationState.initial()';
 }
 
 
@@ -577,7 +651,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 /// @nodoc
 
 
-class Notification_Loading with DiagnosticableTreeMixin implements NotificationState {
+class Notification_Loading with DiagnosticableTreeMixin implements CustomNotificationState {
   const Notification_Loading();
   
 
@@ -588,7 +662,7 @@ class Notification_Loading with DiagnosticableTreeMixin implements NotificationS
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
-    ..add(DiagnosticsProperty('type', 'NotificationState.loading'))
+    ..add(DiagnosticsProperty('type', 'CustomNotificationState.loading'))
     ;
 }
 
@@ -603,7 +677,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'NotificationState.loading()';
+  return 'CustomNotificationState.loading()';
 }
 
 
@@ -615,13 +689,13 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 /// @nodoc
 
 
-class LoadedNotification with DiagnosticableTreeMixin implements NotificationState {
+class LoadedNotification with DiagnosticableTreeMixin implements CustomNotificationState {
   const LoadedNotification(this.notification);
   
 
- final  Notification notification;
+ final  CustomNotification notification;
 
-/// Create a copy of NotificationState
+/// Create a copy of CustomNotificationState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -631,7 +705,7 @@ $LoadedNotificationCopyWith<LoadedNotification> get copyWith => _$LoadedNotifica
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
-    ..add(DiagnosticsProperty('type', 'NotificationState.loadedNotification'))
+    ..add(DiagnosticsProperty('type', 'CustomNotificationState.loadedNotification'))
     ..add(DiagnosticsProperty('notification', notification));
 }
 
@@ -646,22 +720,22 @@ int get hashCode => Object.hash(runtimeType,notification);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'NotificationState.loadedNotification(notification: $notification)';
+  return 'CustomNotificationState.loadedNotification(notification: $notification)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $LoadedNotificationCopyWith<$Res> implements $NotificationStateCopyWith<$Res> {
+abstract mixin class $LoadedNotificationCopyWith<$Res> implements $CustomNotificationStateCopyWith<$Res> {
   factory $LoadedNotificationCopyWith(LoadedNotification value, $Res Function(LoadedNotification) _then) = _$LoadedNotificationCopyWithImpl;
 @useResult
 $Res call({
- Notification notification
+ CustomNotification notification
 });
 
 
-$NotificationCopyWith<$Res> get notification;
+$CustomNotificationCopyWith<$Res> get notification;
 
 }
 /// @nodoc
@@ -672,22 +746,22 @@ class _$LoadedNotificationCopyWithImpl<$Res>
   final LoadedNotification _self;
   final $Res Function(LoadedNotification) _then;
 
-/// Create a copy of NotificationState
+/// Create a copy of CustomNotificationState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? notification = null,}) {
   return _then(LoadedNotification(
 null == notification ? _self.notification : notification // ignore: cast_nullable_to_non_nullable
-as Notification,
+as CustomNotification,
   ));
 }
 
-/// Create a copy of NotificationState
+/// Create a copy of CustomNotificationState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$NotificationCopyWith<$Res> get notification {
+$CustomNotificationCopyWith<$Res> get notification {
   
-  return $NotificationCopyWith<$Res>(_self.notification, (value) {
+  return $CustomNotificationCopyWith<$Res>(_self.notification, (value) {
     return _then(_self.copyWith(notification: value));
   });
 }
@@ -696,19 +770,19 @@ $NotificationCopyWith<$Res> get notification {
 /// @nodoc
 
 
-class LoadedNotifications with DiagnosticableTreeMixin implements NotificationState {
-  const LoadedNotifications(final  List<Notification> notifications): _notifications = notifications;
+class LoadedNotifications with DiagnosticableTreeMixin implements CustomNotificationState {
+  const LoadedNotifications(final  List<CustomNotification> notifications): _notifications = notifications;
   
 
- final  List<Notification> _notifications;
- List<Notification> get notifications {
+ final  List<CustomNotification> _notifications;
+ List<CustomNotification> get notifications {
   if (_notifications is EqualUnmodifiableListView) return _notifications;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_notifications);
 }
 
 
-/// Create a copy of NotificationState
+/// Create a copy of CustomNotificationState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -718,7 +792,7 @@ $LoadedNotificationsCopyWith<LoadedNotifications> get copyWith => _$LoadedNotifi
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
-    ..add(DiagnosticsProperty('type', 'NotificationState.loadedNotifications'))
+    ..add(DiagnosticsProperty('type', 'CustomNotificationState.loadedNotifications'))
     ..add(DiagnosticsProperty('notifications', notifications));
 }
 
@@ -733,18 +807,18 @@ int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'NotificationState.loadedNotifications(notifications: $notifications)';
+  return 'CustomNotificationState.loadedNotifications(notifications: $notifications)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $LoadedNotificationsCopyWith<$Res> implements $NotificationStateCopyWith<$Res> {
+abstract mixin class $LoadedNotificationsCopyWith<$Res> implements $CustomNotificationStateCopyWith<$Res> {
   factory $LoadedNotificationsCopyWith(LoadedNotifications value, $Res Function(LoadedNotifications) _then) = _$LoadedNotificationsCopyWithImpl;
 @useResult
 $Res call({
- List<Notification> notifications
+ List<CustomNotification> notifications
 });
 
 
@@ -759,12 +833,12 @@ class _$LoadedNotificationsCopyWithImpl<$Res>
   final LoadedNotifications _self;
   final $Res Function(LoadedNotifications) _then;
 
-/// Create a copy of NotificationState
+/// Create a copy of CustomNotificationState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? notifications = null,}) {
   return _then(LoadedNotifications(
 null == notifications ? _self._notifications : notifications // ignore: cast_nullable_to_non_nullable
-as List<Notification>,
+as List<CustomNotification>,
   ));
 }
 
@@ -774,13 +848,13 @@ as List<Notification>,
 /// @nodoc
 
 
-class Notification_Success with DiagnosticableTreeMixin implements NotificationState {
+class Notification_Success with DiagnosticableTreeMixin implements CustomNotificationState {
   const Notification_Success(this.message);
   
 
  final  String message;
 
-/// Create a copy of NotificationState
+/// Create a copy of CustomNotificationState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -790,7 +864,7 @@ $Notification_SuccessCopyWith<Notification_Success> get copyWith => _$Notificati
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
-    ..add(DiagnosticsProperty('type', 'NotificationState.success'))
+    ..add(DiagnosticsProperty('type', 'CustomNotificationState.success'))
     ..add(DiagnosticsProperty('message', message));
 }
 
@@ -805,14 +879,14 @@ int get hashCode => Object.hash(runtimeType,message);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'NotificationState.success(message: $message)';
+  return 'CustomNotificationState.success(message: $message)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $Notification_SuccessCopyWith<$Res> implements $NotificationStateCopyWith<$Res> {
+abstract mixin class $Notification_SuccessCopyWith<$Res> implements $CustomNotificationStateCopyWith<$Res> {
   factory $Notification_SuccessCopyWith(Notification_Success value, $Res Function(Notification_Success) _then) = _$Notification_SuccessCopyWithImpl;
 @useResult
 $Res call({
@@ -831,7 +905,7 @@ class _$Notification_SuccessCopyWithImpl<$Res>
   final Notification_Success _self;
   final $Res Function(Notification_Success) _then;
 
-/// Create a copy of NotificationState
+/// Create a copy of CustomNotificationState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
   return _then(Notification_Success(
@@ -846,13 +920,13 @@ as String,
 /// @nodoc
 
 
-class Notification_Error with DiagnosticableTreeMixin implements NotificationState {
+class Notification_Error with DiagnosticableTreeMixin implements CustomNotificationState {
   const Notification_Error(this.message);
   
 
  final  String message;
 
-/// Create a copy of NotificationState
+/// Create a copy of CustomNotificationState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -862,7 +936,7 @@ $Notification_ErrorCopyWith<Notification_Error> get copyWith => _$Notification_E
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
-    ..add(DiagnosticsProperty('type', 'NotificationState.error'))
+    ..add(DiagnosticsProperty('type', 'CustomNotificationState.error'))
     ..add(DiagnosticsProperty('message', message));
 }
 
@@ -877,14 +951,14 @@ int get hashCode => Object.hash(runtimeType,message);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'NotificationState.error(message: $message)';
+  return 'CustomNotificationState.error(message: $message)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $Notification_ErrorCopyWith<$Res> implements $NotificationStateCopyWith<$Res> {
+abstract mixin class $Notification_ErrorCopyWith<$Res> implements $CustomNotificationStateCopyWith<$Res> {
   factory $Notification_ErrorCopyWith(Notification_Error value, $Res Function(Notification_Error) _then) = _$Notification_ErrorCopyWithImpl;
 @useResult
 $Res call({
@@ -903,12 +977,96 @@ class _$Notification_ErrorCopyWithImpl<$Res>
   final Notification_Error _self;
   final $Res Function(Notification_Error) _then;
 
-/// Create a copy of NotificationState
+/// Create a copy of CustomNotificationState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
   return _then(Notification_Error(
 null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class LoadedCustomNotification with DiagnosticableTreeMixin implements CustomNotificationState {
+  const LoadedCustomNotification(final  List<CustomNotification> customNotifications, this.curentPage, this.limit, this.hasMore): _customNotifications = customNotifications;
+  
+
+ final  List<CustomNotification> _customNotifications;
+ List<CustomNotification> get customNotifications {
+  if (_customNotifications is EqualUnmodifiableListView) return _customNotifications;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_customNotifications);
+}
+
+ final  int curentPage;
+ final  int limit;
+ final  bool hasMore;
+
+/// Create a copy of CustomNotificationState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$LoadedCustomNotificationCopyWith<LoadedCustomNotification> get copyWith => _$LoadedCustomNotificationCopyWithImpl<LoadedCustomNotification>(this, _$identity);
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'CustomNotificationState.loadedCustomNotifications'))
+    ..add(DiagnosticsProperty('customNotifications', customNotifications))..add(DiagnosticsProperty('curentPage', curentPage))..add(DiagnosticsProperty('limit', limit))..add(DiagnosticsProperty('hasMore', hasMore));
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedCustomNotification&&const DeepCollectionEquality().equals(other._customNotifications, _customNotifications)&&(identical(other.curentPage, curentPage) || other.curentPage == curentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_customNotifications),curentPage,limit,hasMore);
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'CustomNotificationState.loadedCustomNotifications(customNotifications: $customNotifications, curentPage: $curentPage, limit: $limit, hasMore: $hasMore)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $LoadedCustomNotificationCopyWith<$Res> implements $CustomNotificationStateCopyWith<$Res> {
+  factory $LoadedCustomNotificationCopyWith(LoadedCustomNotification value, $Res Function(LoadedCustomNotification) _then) = _$LoadedCustomNotificationCopyWithImpl;
+@useResult
+$Res call({
+ List<CustomNotification> customNotifications, int curentPage, int limit, bool hasMore
+});
+
+
+
+
+}
+/// @nodoc
+class _$LoadedCustomNotificationCopyWithImpl<$Res>
+    implements $LoadedCustomNotificationCopyWith<$Res> {
+  _$LoadedCustomNotificationCopyWithImpl(this._self, this._then);
+
+  final LoadedCustomNotification _self;
+  final $Res Function(LoadedCustomNotification) _then;
+
+/// Create a copy of CustomNotificationState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? customNotifications = null,Object? curentPage = null,Object? limit = null,Object? hasMore = null,}) {
+  return _then(LoadedCustomNotification(
+null == customNotifications ? _self._customNotifications : customNotifications // ignore: cast_nullable_to_non_nullable
+as List<CustomNotification>,null == curentPage ? _self.curentPage : curentPage // ignore: cast_nullable_to_non_nullable
+as int,null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
+as int,null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

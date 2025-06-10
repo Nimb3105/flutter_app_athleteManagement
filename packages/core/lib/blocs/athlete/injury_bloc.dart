@@ -1,4 +1,3 @@
-
 import 'package:core/models/athlete/injury/injury.dart';
 import 'package:core/repositories/athlete/injury_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,12 +9,14 @@ part 'injury_bloc.freezed.dart';
 sealed class InjuryEvent with _$InjuryEvent {
   const factory InjuryEvent.createInjury(Injury injury) = _CreateInjury;
   const factory InjuryEvent.getInjuryById(String id) = _GetInjuryById;
-  const factory InjuryEvent.getInjuryByUserId(String userId) = _GetInjuryByUserId;
+  const factory InjuryEvent.getInjuryByUserId(String userId) =
+      _GetInjuryByUserId;
   const factory InjuryEvent.getAllInjuries({
     @Default(1) int page,
     @Default(10) int limit,
   }) = _GetAllInjuries;
-  const factory InjuryEvent.updateInjury(String id, Injury injury) = _UpdateInjury;
+  const factory InjuryEvent.updateInjury(String id, Injury injury) =
+      _UpdateInjury;
   const factory InjuryEvent.deleteInjury(String id) = _DeleteInjury;
 }
 
@@ -38,7 +39,7 @@ class InjuryBloc extends Bloc<InjuryEvent, InjuryState> {
   final InjuryRepository injuryRepository;
 
   InjuryBloc({required this.injuryRepository})
-      : super(const InjuryState.initial()) {
+    : super(const InjuryState.initial()) {
     on<_CreateInjury>(_onCreateInjury);
     on<_GetInjuryById>(_onGetInjuryById);
     on<_GetInjuryByUserId>(_onGetInjuryByUserId);
@@ -79,8 +80,9 @@ class InjuryBloc extends Bloc<InjuryEvent, InjuryState> {
   ) async {
     emit(const InjuryState.loading());
     try {
-      final injury = await injuryRepository.getInjuryByUserId(event.userId);
-      emit(InjuryState.loadedInjury(injury));
+      final result = await injuryRepository.getInjuryByUserId(event.userId);
+      final injuries = result['injury'] as List<Injury>? ?? [];
+      emit(InjuryState.loadedInjuries(injuries, 1, injuries.length, false));
     } catch (e) {
       emit(InjuryState.error(e.toString()));
     }

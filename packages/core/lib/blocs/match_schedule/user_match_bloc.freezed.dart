@@ -633,7 +633,7 @@ $UserMatchCopyWith<$Res> get userMatch {
 
 
 class LoadedUserMatches implements UserMatchState {
-  const LoadedUserMatches(final  List<UserMatch> userMatches, this.currentPage, this.limit, this.hasMore): _userMatches = userMatches;
+  const LoadedUserMatches(final  List<UserMatch> userMatches, this.currentPage, this.limit, this.hasMore, {final  Map<String, MatchSchedule>? matchSchedules, final  Map<String, Tournament>? tournaments}): _userMatches = userMatches,_matchSchedules = matchSchedules,_tournaments = tournaments;
   
 
  final  List<UserMatch> _userMatches;
@@ -646,6 +646,24 @@ class LoadedUserMatches implements UserMatchState {
  final  int currentPage;
  final  int limit;
  final  bool hasMore;
+ final  Map<String, MatchSchedule>? _matchSchedules;
+ Map<String, MatchSchedule>? get matchSchedules {
+  final value = _matchSchedules;
+  if (value == null) return null;
+  if (_matchSchedules is EqualUnmodifiableMapView) return _matchSchedules;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(value);
+}
+
+ final  Map<String, Tournament>? _tournaments;
+ Map<String, Tournament>? get tournaments {
+  final value = _tournaments;
+  if (value == null) return null;
+  if (_tournaments is EqualUnmodifiableMapView) return _tournaments;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(value);
+}
+
 
 /// Create a copy of UserMatchState
 /// with the given fields replaced by the non-null parameter values.
@@ -657,16 +675,16 @@ $LoadedUserMatchesCopyWith<LoadedUserMatches> get copyWith => _$LoadedUserMatche
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedUserMatches&&const DeepCollectionEquality().equals(other._userMatches, _userMatches)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedUserMatches&&const DeepCollectionEquality().equals(other._userMatches, _userMatches)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore)&&const DeepCollectionEquality().equals(other._matchSchedules, _matchSchedules)&&const DeepCollectionEquality().equals(other._tournaments, _tournaments));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_userMatches),currentPage,limit,hasMore);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_userMatches),currentPage,limit,hasMore,const DeepCollectionEquality().hash(_matchSchedules),const DeepCollectionEquality().hash(_tournaments));
 
 @override
 String toString() {
-  return 'UserMatchState.loadedUserMatches(userMatches: $userMatches, currentPage: $currentPage, limit: $limit, hasMore: $hasMore)';
+  return 'UserMatchState.loadedUserMatches(userMatches: $userMatches, currentPage: $currentPage, limit: $limit, hasMore: $hasMore, matchSchedules: $matchSchedules, tournaments: $tournaments)';
 }
 
 
@@ -677,7 +695,7 @@ abstract mixin class $LoadedUserMatchesCopyWith<$Res> implements $UserMatchState
   factory $LoadedUserMatchesCopyWith(LoadedUserMatches value, $Res Function(LoadedUserMatches) _then) = _$LoadedUserMatchesCopyWithImpl;
 @useResult
 $Res call({
- List<UserMatch> userMatches, int currentPage, int limit, bool hasMore
+ List<UserMatch> userMatches, int currentPage, int limit, bool hasMore, Map<String, MatchSchedule>? matchSchedules, Map<String, Tournament>? tournaments
 });
 
 
@@ -694,13 +712,15 @@ class _$LoadedUserMatchesCopyWithImpl<$Res>
 
 /// Create a copy of UserMatchState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? userMatches = null,Object? currentPage = null,Object? limit = null,Object? hasMore = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? userMatches = null,Object? currentPage = null,Object? limit = null,Object? hasMore = null,Object? matchSchedules = freezed,Object? tournaments = freezed,}) {
   return _then(LoadedUserMatches(
 null == userMatches ? _self._userMatches : userMatches // ignore: cast_nullable_to_non_nullable
 as List<UserMatch>,null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
 as int,null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
 as int,null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,matchSchedules: freezed == matchSchedules ? _self._matchSchedules : matchSchedules // ignore: cast_nullable_to_non_nullable
+as Map<String, MatchSchedule>?,tournaments: freezed == tournaments ? _self._tournaments : tournaments // ignore: cast_nullable_to_non_nullable
+as Map<String, Tournament>?,
   ));
 }
 

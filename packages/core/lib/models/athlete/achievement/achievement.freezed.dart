@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Achievement {
 
- String? get id; String get userId; String get title; String get description;@UtcDateTimeConverter() dynamic get date;@UtcDateTimeConverter() DateTime get createdAt;@UtcDateTimeConverter() DateTime get updatedAt;
+ String? get id; String get userId; String get title; String get description;@UtcDateTimeConverter() DateTime get date;@UtcDateTimeConverter() DateTime get createdAt;@UtcDateTimeConverter() DateTime get updatedAt;
 /// Create a copy of Achievement
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,12 +29,12 @@ $AchievementCopyWith<Achievement> get copyWith => _$AchievementCopyWithImpl<Achi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Achievement&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.date, date)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Achievement&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.date, date) || other.date == date)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,title,description,const DeepCollectionEquality().hash(date),createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,userId,title,description,date,createdAt,updatedAt);
 
 @override
 String toString() {
@@ -49,7 +49,7 @@ abstract mixin class $AchievementCopyWith<$Res>  {
   factory $AchievementCopyWith(Achievement value, $Res Function(Achievement) _then) = _$AchievementCopyWithImpl;
 @useResult
 $Res call({
- String? id, String userId, String title, String description,@UtcDateTimeConverter() dynamic date,@UtcDateTimeConverter() DateTime createdAt,@UtcDateTimeConverter() DateTime updatedAt
+ String? id, String userId, String title, String description,@UtcDateTimeConverter() DateTime date,@UtcDateTimeConverter() DateTime createdAt,@UtcDateTimeConverter() DateTime updatedAt
 });
 
 
@@ -66,14 +66,14 @@ class _$AchievementCopyWithImpl<$Res>
 
 /// Create a copy of Achievement
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? userId = null,Object? title = null,Object? description = null,Object? date = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? userId = null,Object? title = null,Object? description = null,Object? date = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,date: freezed == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
-as dynamic,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as DateTime,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
@@ -93,7 +93,7 @@ class _Achievement implements Achievement {
 @override final  String userId;
 @override final  String title;
 @override final  String description;
-@override@UtcDateTimeConverter() final  dynamic date;
+@override@UtcDateTimeConverter() final  DateTime date;
 @override@UtcDateTimeConverter() final  DateTime createdAt;
 @override@UtcDateTimeConverter() final  DateTime updatedAt;
 
@@ -110,12 +110,12 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Achievement&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.date, date)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Achievement&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.date, date) || other.date == date)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,title,description,const DeepCollectionEquality().hash(date),createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,userId,title,description,date,createdAt,updatedAt);
 
 @override
 String toString() {
@@ -130,7 +130,7 @@ abstract mixin class _$AchievementCopyWith<$Res> implements $AchievementCopyWith
   factory _$AchievementCopyWith(_Achievement value, $Res Function(_Achievement) _then) = __$AchievementCopyWithImpl;
 @override @useResult
 $Res call({
- String? id, String userId, String title, String description,@UtcDateTimeConverter() dynamic date,@UtcDateTimeConverter() DateTime createdAt,@UtcDateTimeConverter() DateTime updatedAt
+ String? id, String userId, String title, String description,@UtcDateTimeConverter() DateTime date,@UtcDateTimeConverter() DateTime createdAt,@UtcDateTimeConverter() DateTime updatedAt
 });
 
 
@@ -147,14 +147,14 @@ class __$AchievementCopyWithImpl<$Res>
 
 /// Create a copy of Achievement
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? userId = null,Object? title = null,Object? description = null,Object? date = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? userId = null,Object? title = null,Object? description = null,Object? date = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_Achievement(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,date: freezed == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
-as dynamic,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as DateTime,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));

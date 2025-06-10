@@ -25,10 +25,16 @@ sealed class UserState with _$UserState {
   const factory UserState.error(String message) = User_Error;
   const factory UserState.success(String message) = User_Success;
   const factory UserState.loggedIn(String token) = LoggedIn;
+  const factory UserState.loadedMultipleUsers(
+    Map<String, User> users,
+    Map<String, String> errors,
+  ) = LoadedMultipleUsers;
 }
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository userRepository;
+  final Map<String, User> _users = {}; // Lưu trữ users đã tải
+  final Map<String, String> _errors = {}; // Lưu trữ lỗi theo userId
 
   UserBloc({required this.userRepository}) : super(const UserState.initial()) {
     on<CreateUser>(_onCreateUser);
@@ -57,9 +63,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(const UserState.loading());
     try {
       final user = await userRepository.getUserById(event.id);
-      emit(UserState.loadedUser(user));
+      _users[event.id] = user; // Lưu user vào map
+      emit(UserState.loadedMultipleUsers(Map.from(_users), Map.from(_errors)));
     } catch (e) {
-      emit(UserState.error(e.toString()));
+      _errors[event.id] = e.toString(); // Lưu lỗi vào map
+      emit(UserState.loadedMultipleUsers(Map.from(_users), Map.from(_errors)));
     }
   }
 

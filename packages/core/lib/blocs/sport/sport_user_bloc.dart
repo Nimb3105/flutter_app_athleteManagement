@@ -1,4 +1,3 @@
-
 import 'package:core/models/sport/sport.dart';
 import 'package:core/models/sport/sport_user.dart';
 import 'package:core/repositories/sport/sport_athlete_repository.dart';
@@ -10,11 +9,9 @@ part 'sport_user_bloc.freezed.dart';
 
 @freezed
 sealed class SportUserEvent with _$SportUserEvent {
-  const factory SportUserEvent.createSportUser(
-    SportUser sportUser,
-  ) = _CreateSportUser;
-  const factory SportUserEvent.getSportUserById(String id) =
-      _GetSportUserById;
+  const factory SportUserEvent.createSportUser(SportUser sportUser) =
+      _CreateSportUser;
+  const factory SportUserEvent.getSportUserById(String id) = _GetSportUserById;
   const factory SportUserEvent.getSportUserUserId(String userId) =
       _GetSportUserByUserId;
   const factory SportUserEvent.getAllSportUserByUserId(String userId) =
@@ -22,33 +19,37 @@ sealed class SportUserEvent with _$SportUserEvent {
   const factory SportUserEvent.getSportUserBySportId(String sportId) =
       _GetSportUserBySportId;
   const factory SportUserEvent.getAllSportUsers() = _GetAllSportUsers;
-  const factory SportUserEvent.updateSportUser(
-    String id,
-    SportUser sportUser,
-  ) = _UpdateSportUser;
-  const factory SportUserEvent.deleteSportUser(String id) =
-      _DeleteSportUser;
+  const factory SportUserEvent.updateSportUser(String id, SportUser sportUser) =
+      _UpdateSportUser;
+  const factory SportUserEvent.deleteSportUser(String id) = _DeleteSportUser;
 }
 
 @freezed
 sealed class SportUserState with _$SportUserState {
   const factory SportUserState.initial() = Sport_User_Initial;
   const factory SportUserState.loading() = Sport_User_Loading;
-  const factory SportUserState.loadedSportUser(
-    SportUser sportUser,
-  ) = LoadedSportUser;
+  const factory SportUserState.loadedSportUser(SportUser sportUser) =
+      LoadedSportUser;
   const factory SportUserState.loadedSportUsers(
     List<SportUser> sportUsers,
     Map<String, Sport> sports, // Thêm Map<int, Sport> vào trạng thái
   ) = LoadedSportUsers;
   const factory SportUserState.error(String message) = Sport_User_Error;
-  const factory SportUserState.success(String message) =
-      Sport_User_Success;
+  const factory SportUserState.success(String message) = Sport_User_Success;
+  const factory SportUserState.loadedMultipleSportUsers(
+    Map<String, List<SportUser>> sportUsers,
+    Map<String, Sport> sports,
+    Map<String, String> errors,
+  ) = LoadedMultipleSportUsers;
 }
 
 class SportUserBloc extends Bloc<SportUserEvent, SportUserState> {
   final SportUserRepository sportUserRepository;
   final SportRepository sportRepository;
+  final Map<String, List<SportUser>> _sportUsers =
+      {}; // Lưu trữ sportUsers theo userId
+  final Map<String, Sport> _sports = {}; // Lưu trữ sports theo sportId
+  final Map<String, String> _errors = {}; // Lưu trữ lỗi theo userId
 
   SportUserBloc({
     required this.sportUserRepository,
@@ -70,8 +71,9 @@ class SportUserBloc extends Bloc<SportUserEvent, SportUserState> {
   ) async {
     emit(const SportUserState.loading());
     try {
-      final createdSportUser = await sportUserRepository
-          .createSportUser(event.sportUser);
+      final createdSportUser = await sportUserRepository.createSportUser(
+        event.sportUser,
+      );
       emit(const Sport_User_Success('gán môn thể thao kèm vị trí'));
       emit(SportUserState.loadedSportUser(createdSportUser));
     } catch (e) {
@@ -85,9 +87,7 @@ class SportUserBloc extends Bloc<SportUserEvent, SportUserState> {
   ) async {
     emit(const SportUserState.loading());
     try {
-      final sportUser = await sportUserRepository.getSportUserById(
-        event.id,
-      );
+      final sportUser = await sportUserRepository.getSportUserById(event.id);
       emit(SportUserState.loadedSportUser(sportUser));
     } catch (e) {
       emit(SportUserState.error(e.toString()));
@@ -115,16 +115,32 @@ class SportUserBloc extends Bloc<SportUserEvent, SportUserState> {
   ) async {
     emit(const SportUserState.loading());
     try {
-      final sportUsers = await sportUserRepository
-          .getAllSportUsersByUserId(event.userId);
-      final Map<String, Sport> sports = {};
+      final sportUsers = await sportUserRepository.getAllSportUsersByUserId(
+        event.userId,
+      );
+      _sportUsers[event.userId] = sportUsers; // Lưu sportUsers theo userId
       for (var sportUser in sportUsers) {
-        final sport = await sportRepository.getSportById(sportUser.sportId);
-        sports[sportUser.sportId] = sport;
+        if (!_sports.containsKey(sportUser.sportId)) {
+          final sport = await sportRepository.getSportById(sportUser.sportId);
+          _sports[sportUser.sportId] = sport;
+        }
       }
-      emit(SportUserState.loadedSportUsers(sportUsers, sports));
+      emit(
+        SportUserState.loadedMultipleSportUsers(
+          Map.from(_sportUsers),
+          Map.from(_sports),
+          Map.from(_errors),
+        ),
+      );
     } catch (e) {
-      emit(SportUserState.error(e.toString()));
+      _errors[event.userId] = e.toString(); // Lưu lỗi theo userId
+      emit(
+        SportUserState.loadedMultipleSportUsers(
+          Map.from(_sportUsers),
+          Map.from(_sports),
+          Map.from(_errors),
+        ),
+      );
     }
   }
 
@@ -157,8 +173,10 @@ class SportUserBloc extends Bloc<SportUserEvent, SportUserState> {
   ) async {
     emit(const SportUserState.loading());
     try {
-      final updatedSportUser = await sportUserRepository
-          .updateSportUser(event.id, event.sportUser);
+      final updatedSportUser = await sportUserRepository.updateSportUser(
+        event.id,
+        event.sportUser,
+      );
       emit(SportUserState.loadedSportUser(updatedSportUser));
     } catch (e) {
       emit(SportUserState.error(e.toString()));
@@ -172,9 +190,7 @@ class SportUserBloc extends Bloc<SportUserEvent, SportUserState> {
     emit(const SportUserState.loading());
     try {
       await sportUserRepository.deleteSportUser(event.id);
-      emit(
-        const SportUserState.success('Sport user deleted successfully'),
-      );
+      emit(const SportUserState.success('Sport user deleted successfully'));
     } catch (e) {
       emit(SportUserState.error(e.toString()));
     }

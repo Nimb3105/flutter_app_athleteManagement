@@ -393,6 +393,74 @@ as String,
 }
 
 /// @nodoc
+
+
+class GetAllReminders implements ReminderEvent {
+  const GetAllReminders({this.page = 1, this.limit = 10});
+  
+
+@JsonKey() final  int page;
+@JsonKey() final  int limit;
+
+/// Create a copy of ReminderEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetAllRemindersCopyWith<GetAllReminders> get copyWith => _$GetAllRemindersCopyWithImpl<GetAllReminders>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetAllReminders&&(identical(other.page, page) || other.page == page)&&(identical(other.limit, limit) || other.limit == limit));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,page,limit);
+
+@override
+String toString() {
+  return 'ReminderEvent.getAllReminders(page: $page, limit: $limit)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GetAllRemindersCopyWith<$Res> implements $ReminderEventCopyWith<$Res> {
+  factory $GetAllRemindersCopyWith(GetAllReminders value, $Res Function(GetAllReminders) _then) = _$GetAllRemindersCopyWithImpl;
+@useResult
+$Res call({
+ int page, int limit
+});
+
+
+
+
+}
+/// @nodoc
+class _$GetAllRemindersCopyWithImpl<$Res>
+    implements $GetAllRemindersCopyWith<$Res> {
+  _$GetAllRemindersCopyWithImpl(this._self, this._then);
+
+  final GetAllReminders _self;
+  final $Res Function(GetAllReminders) _then;
+
+/// Create a copy of ReminderEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? page = null,Object? limit = null,}) {
+  return _then(GetAllReminders(
+page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
+as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$ReminderState {
 
 
@@ -759,6 +827,84 @@ class _$Reminder_ErrorCopyWithImpl<$Res>
   return _then(Reminder_Error(
 null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class LoadedAllReminders implements ReminderState {
+  const LoadedAllReminders(final  List<Reminder> reminders, this.currentPage, this.limit, this.hasMore): _reminders = reminders;
+  
+
+ final  List<Reminder> _reminders;
+ List<Reminder> get reminders {
+  if (_reminders is EqualUnmodifiableListView) return _reminders;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_reminders);
+}
+
+ final  int currentPage;
+ final  int limit;
+ final  bool hasMore;
+
+/// Create a copy of ReminderState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$LoadedAllRemindersCopyWith<LoadedAllReminders> get copyWith => _$LoadedAllRemindersCopyWithImpl<LoadedAllReminders>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedAllReminders&&const DeepCollectionEquality().equals(other._reminders, _reminders)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_reminders),currentPage,limit,hasMore);
+
+@override
+String toString() {
+  return 'ReminderState.loadedAllReminders(reminders: $reminders, currentPage: $currentPage, limit: $limit, hasMore: $hasMore)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $LoadedAllRemindersCopyWith<$Res> implements $ReminderStateCopyWith<$Res> {
+  factory $LoadedAllRemindersCopyWith(LoadedAllReminders value, $Res Function(LoadedAllReminders) _then) = _$LoadedAllRemindersCopyWithImpl;
+@useResult
+$Res call({
+ List<Reminder> reminders, int currentPage, int limit, bool hasMore
+});
+
+
+
+
+}
+/// @nodoc
+class _$LoadedAllRemindersCopyWithImpl<$Res>
+    implements $LoadedAllRemindersCopyWith<$Res> {
+  _$LoadedAllRemindersCopyWithImpl(this._self, this._then);
+
+  final LoadedAllReminders _self;
+  final $Res Function(LoadedAllReminders) _then;
+
+/// Create a copy of ReminderState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? reminders = null,Object? currentPage = null,Object? limit = null,Object? hasMore = null,}) {
+  return _then(LoadedAllReminders(
+null == reminders ? _self._reminders : reminders // ignore: cast_nullable_to_non_nullable
+as List<Reminder>,null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
+as int,null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
+as int,null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

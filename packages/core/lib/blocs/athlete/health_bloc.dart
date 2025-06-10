@@ -1,4 +1,3 @@
-
 import 'package:core/models/athlete/health/health.dart';
 import 'package:core/repositories/athlete/health_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,12 +9,14 @@ part 'health_bloc.freezed.dart';
 sealed class HealthEvent with _$HealthEvent {
   const factory HealthEvent.createHealth(Health health) = _CreateHealth;
   const factory HealthEvent.getHealthById(String id) = _GetHealthById;
-  const factory HealthEvent.getHealthByUserId(String userId) = _GetHealthByUserId;
+  const factory HealthEvent.getHealthByUserId(String userId) =
+      _GetHealthByUserId;
   const factory HealthEvent.getAllHealthRecords({
     @Default(1) int page,
     @Default(10) int limit,
   }) = _GetAllHealthRecords;
-  const factory HealthEvent.updateHealth(String id, Health health) = _UpdateHealth;
+  const factory HealthEvent.updateHealth(String id, Health health) =
+      _UpdateHealth;
   const factory HealthEvent.deleteHealth(String id) = _DeleteHealth;
 }
 
@@ -38,7 +39,7 @@ class HealthBloc extends Bloc<HealthEvent, HealthState> {
   final HealthRepository healthRepository;
 
   HealthBloc({required this.healthRepository})
-      : super(const HealthState.initial()) {
+    : super(const HealthState.initial()) {
     on<_CreateHealth>(_onCreateHealth);
     on<_GetHealthById>(_onGetHealthById);
     on<_GetHealthByUserId>(_onGetHealthByUserId);
@@ -79,8 +80,16 @@ class HealthBloc extends Bloc<HealthEvent, HealthState> {
   ) async {
     emit(const HealthState.loading());
     try {
-      final health = await healthRepository.getHealthByUserId(event.userId);
-      emit(HealthState.loadedHealth(health));
+      final result = await healthRepository.getHealthByUserId(event.userId);
+      final healthRecords = result['healthRecords'] as List<Health>? ?? [];
+      emit(
+        HealthState.loadedHealthRecords(
+          healthRecords,
+          1,
+          healthRecords.length,
+          false,
+        ),
+      );
     } catch (e) {
       emit(HealthState.error(e.toString()));
     }

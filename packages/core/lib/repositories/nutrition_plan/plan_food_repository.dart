@@ -47,7 +47,10 @@ class PlanFoodRepository {
   }
 
   // Get all plan foods
-  Future<List<PlanFood>> getAllPlanFoods({int page = 1, int limit = 10}) async {
+  Future<Map<String, dynamic>> getAllPlanFoods({
+    int page = 1,
+    int limit = 10,
+  }) async {
     final response = await http.get(
       Uri.parse('$baseUrl/plan-foods?page=$page&limit=$limit'),
       headers: {'Content-Type': 'application/json'},
@@ -57,9 +60,13 @@ class PlanFoodRepository {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       if (data['data'] != null && data['data'] is List<dynamic>) {
         final List<dynamic> jsonList = data['data'];
-        return jsonList
-            .map((json) => PlanFood.fromJson(json as Map<String, dynamic>))
-            .toList();
+        final totalCount = data['totalCount'] as int? ?? 0;
+        final planFoods =
+            jsonList
+                .map((json) => PlanFood.fromJson(json as Map<String, dynamic>))
+                .toList();
+        final hasMore = (page * limit) < totalCount;
+        return {'planFoods': planFoods, 'hasMore': hasMore};
       } else {
         throw Exception('No valid "data" list found in response: $data');
       }
@@ -86,7 +93,9 @@ class PlanFoodRepository {
         throw Exception('No valid "data" list found in response: $data');
       }
     } else {
-      throw Exception('Failed to get plan foods by nutrition plan ID: ${response.statusCode}');
+      throw Exception(
+        'Failed to get plan foods by nutrition plan ID: ${response.statusCode}',
+      );
     }
   }
 

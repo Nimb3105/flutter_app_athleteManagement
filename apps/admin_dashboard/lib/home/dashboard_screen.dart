@@ -2,6 +2,7 @@ import 'package:admin_dashboard/athlete_management/athlete_list_screen.dart';
 import 'package:admin_dashboard/coach_management/coach_list_screen.dart';
 import 'package:admin_dashboard/exercise_management/exercise_list_screen.dart';
 import 'package:admin_dashboard/food_management/food_list_screen.dart';
+import 'package:admin_dashboard/notification_reminder_management/notification_reminder_list_screen.dart';
 import 'package:admin_dashboard/nutrition_plan_management/nutrition_plan_list_screen.dart';
 import 'package:admin_dashboard/sport_management/sport_list_screen.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +84,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
               title: Text("Quản lý kế hoach dinh dưỡng"),
               onTap: () {
                 Navigator.pop(context); // Close the drawer
-                _updateBody(const NutritionPlanListScreen(), "Quản lý kế hoạch dinh dưỡng");
+                _updateBody(
+                  const NutritionPlanListScreen(),
+                  "Quản lý kế hoạch dinh dưỡng",
+                );
               },
             ),
             ListTile(
@@ -100,6 +104,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
               onTap: () {
                 Navigator.pop(context); // Close the drawer
                 _updateBody(const ExerciseListScreen(), "Quản lý bài tập");
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.notifications),
+              title: Text("Quản lý thông báo"),
+              onTap: () {
+                Navigator.pop(context); // Close the drawer
+                _updateBody(
+                  const NotificationReminderListScreen(),
+                  "Quản lý thông báo",
+                );
               },
             ),
             ListTile(

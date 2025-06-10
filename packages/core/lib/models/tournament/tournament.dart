@@ -14,7 +14,7 @@ abstract class Tournament with _$Tournament {
     required String organizer,
     required String level,
     @UtcDateTimeConverter() required DateTime startDate,
-   @UtcDateTimeConverter()  required DateTime endDate,
+    @UtcDateTimeConverter() required DateTime endDate,
     @UtcDateTimeConverter() required DateTime createdAt,
     @UtcDateTimeConverter() required DateTime updatedAt,
   }) = _Tournament;

@@ -13,7 +13,7 @@ class TrainingScheduleUserRepository {
     TrainingScheduleUser scheduleAthlete,
   ) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/training-schedule-athletes'),
+      Uri.parse('$baseUrl/training-schedule-users'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(scheduleAthlete.toJson()),
     );
@@ -37,7 +37,7 @@ class TrainingScheduleUserRepository {
   // Get training schedule athlete by ID
   Future<TrainingScheduleUser> getTrainingScheduleUserById(String id) async {
     final response = await http.get(
-      Uri.parse('$baseUrl/training-schedule-athletes/$id'),
+      Uri.parse('$baseUrl/training-schedule-users/$id'),
       headers: {'Content-Type': 'application/json'},
     );
 
@@ -60,7 +60,7 @@ class TrainingScheduleUserRepository {
   // Get all training schedule athletes
   Future<List<TrainingScheduleUser>> getAllTrainingScheduleUsers() async {
     final response = await http.get(
-      Uri.parse('$baseUrl/training-schedule-athletes'),
+      Uri.parse('$baseUrl/training-schedule-users'),
       headers: {'Content-Type': 'application/json'},
     );
 
@@ -90,7 +90,7 @@ class TrainingScheduleUserRepository {
     TrainingScheduleUser scheduleAthlete,
   ) async {
     final response = await http.put(
-      Uri.parse('$baseUrl/training-schedule-athletes/$id'),
+      Uri.parse('$baseUrl/training-schedule-users/$id'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(scheduleAthlete.toJson()),
     );
@@ -114,7 +114,7 @@ class TrainingScheduleUserRepository {
   // Delete training schedule athlete
   Future<void> deleteTrainingScheduleUser(String id) async {
     final response = await http.delete(
-      Uri.parse('$baseUrl/training-schedule-athletes/$id'),
+      Uri.parse('$baseUrl/training-schedule-users/$id'),
       headers: {'Content-Type': 'application/json'},
     );
 
@@ -130,7 +130,7 @@ class TrainingScheduleUserRepository {
     String userId,
   ) async {
     final response = await http.get(
-      Uri.parse('$baseUrl/training-schedule-athletes/user/$userId/all'),
+      Uri.parse('$baseUrl/training-schedule-users/user/$userId/all'),
       headers: {'Content-Type': 'application/json'},
     );
 

@@ -48,7 +48,7 @@ class InjuryRepository {
   }
 
   // Get injury by user ID
-  Future<Injury> getInjuryByUserId(String userId) async {
+  Future<Map<String, dynamic>> getInjuryByUserId(String userId) async {
     final response = await http.get(
       Uri.parse('$baseUrl/injurys/user/$userId'),
       headers: {'Content-Type': 'application/json'},
@@ -56,18 +56,40 @@ class InjuryRepository {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
-      if (data['data'] != null && data['data'] is Map<String, dynamic>) {
-        return Injury.fromJson(data['data'] as Map<String, dynamic>);
+      if (data['data'] != null) {
+        // Kiểm tra nếu data['data'] là một đối tượng
+        if (data['data'] is Map<String, dynamic>) {
+          final injury = Injury.fromJson(data['data'] as Map<String, dynamic>);
+          return {
+            'injury': [injury],
+          }; // Trả về danh sách chứa một Injury
+        }
+        // Nếu API sau này trả về danh sách, bạn có thể giữ logic này để tương thích
+        else if (data['data'] is List<dynamic>) {
+          final List<dynamic> jsonList = data['data'];
+          final injuries =
+              jsonList
+                  .map((json) => Injury.fromJson(json as Map<String, dynamic>))
+                  .toList();
+          return {'injury': injuries};
+        } else {
+          return {'injury': []}; // Trả về danh sách rỗng nếu không hợp lệ
+        }
       } else {
-        throw Exception('No valid "data" object found in response: $data');
+        return {'injury': []}; // Trả về danh sách rỗng nếu data là null
       }
     } else {
-      throw Exception('Failed to get injury by user ID: ${response.statusCode}');
+      throw Exception(
+        'Failed to get injury by user ID: ${response.statusCode}',
+      );
     }
   }
 
   // Get all injuries
-  Future<Map<String, dynamic>> getAllInjuries({int page = 1, int limit = 10}) async {
+  Future<Map<String, dynamic>> getAllInjuries({
+    int page = 1,
+    int limit = 10,
+  }) async {
     final response = await http.get(
       Uri.parse('$baseUrl/injurys?page=$page&limit=$limit'),
       headers: {'Content-Type': 'application/json'},
@@ -78,9 +100,10 @@ class InjuryRepository {
       if (data['data'] != null && data['data'] is List<dynamic>) {
         final List<dynamic> jsonList = data['data'];
         final totalCount = data['totalCount'] as int? ?? 0;
-        final injuries = jsonList
-            .map((json) => Injury.fromJson(json as Map<String, dynamic>))
-            .toList();
+        final injuries =
+            jsonList
+                .map((json) => Injury.fromJson(json as Map<String, dynamic>))
+                .toList();
         final hasMore = (page * limit) < totalCount;
         return {'injuries': injuries, 'hasMore': hasMore};
       } else {

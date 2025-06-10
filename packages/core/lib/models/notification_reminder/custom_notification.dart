@@ -1,12 +1,12 @@
 import 'package:core/models/converters/converters.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'notification.freezed.dart';
-part 'notification.g.dart';
+part 'custom_notification.freezed.dart';
+part 'custom_notification.g.dart';
 
 @freezed
-abstract class Notification with _$Notification {
-  const factory Notification({
+abstract class CustomNotification with _$CustomNotification {
+  const factory CustomNotification({
     required String? id,
     required String? userId,
     required String? scheduleId,
@@ -17,8 +17,8 @@ abstract class Notification with _$Notification {
     required String content,
     @UtcDateTimeConverter() required DateTime createdAt,
     @UtcDateTimeConverter() required DateTime updatedAt,
-  }) = _Notification;
+  }) = _CustomNotification;
 
-  factory Notification.fromJson(Map<String, dynamic> json) =>
-      _$NotificationFromJson(json);
+  factory CustomNotification.fromJson(Map<String, dynamic> json) =>
+      _$CustomNotificationFromJson(json);
 }

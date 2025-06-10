@@ -48,7 +48,7 @@ class UserMatchRepository {
   }
 
   // Get user match by user ID
-  Future<UserMatch> getUserMatchByUserId(String userId) async {
+  Future<Map<String,dynamic>> getUserMatchByUserId(String userId) async {
     final response = await http.get(
       Uri.parse('$baseUrl/user-matchs/user/$userId'),
       headers: {'Content-Type': 'application/json'},
@@ -56,18 +56,46 @@ class UserMatchRepository {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
-      if (data['data'] != null && data['data'] is Map<String, dynamic>) {
-        return UserMatch.fromJson(data['data'] as Map<String, dynamic>);
+      if (data['data'] != null) {
+        // Kiểm tra nếu data['data'] là một đối tượng
+        if (data['data'] is Map<String, dynamic>) {
+          final userMatches = UserMatch.fromJson(
+            data['data'] as Map<String, dynamic>,
+          );
+          return {
+            'userMatches': [userMatches],
+          }; // Trả về danh sách chứa một Achievement
+        }
+        // Kiểm tra nếu data['data'] là một danh sách
+        else if (data['data'] is List<dynamic>) {
+          final List<dynamic> jsonList = data['data'];
+          final userMatches =
+              jsonList
+                  .map(
+                    (json) =>
+                        UserMatch.fromJson(json as Map<String, dynamic>),
+                  )
+                  .toList();
+          return {'userMatches': userMatches};
+        } else {
+          return {'userMatches': []}; // Trả về danh sách rỗng nếu không hợp lệ
+        }
       } else {
-        throw Exception('No valid "data" object found in response: $data');
+        return {'userMatches': []}; // Trả về danh sách rỗng nếu data là null
       }
     } else {
-      throw Exception('Failed to get user match by user ID: ${response.statusCode}');
+      throw Exception(
+        'Failed to get achievement by user ID: ${response.statusCode}',
+      );
     }
+
   }
 
   // Get all user matches
-  Future<Map<String, dynamic>> getAllUserMatches({int page = 1, int limit = 10}) async {
+  Future<Map<String, dynamic>> getAllUserMatches({
+    int page = 1,
+    int limit = 10,
+  }) async {
     final response = await http.get(
       Uri.parse('$baseUrl/user-matchs?page=$page&limit=$limit'),
       headers: {'Content-Type': 'application/json'},
@@ -78,9 +106,10 @@ class UserMatchRepository {
       if (data['data'] != null && data['data'] is List<dynamic>) {
         final List<dynamic> jsonList = data['data'];
         final totalCount = data['totalCount'] as int? ?? 0;
-        final userMatches = jsonList
-            .map((json) => UserMatch.fromJson(json as Map<String, dynamic>))
-            .toList();
+        final userMatches =
+            jsonList
+                .map((json) => UserMatch.fromJson(json as Map<String, dynamic>))
+                .toList();
         final hasMore = (page * limit) < totalCount;
         return {'userMatches': userMatches, 'hasMore': hasMore};
       } else {

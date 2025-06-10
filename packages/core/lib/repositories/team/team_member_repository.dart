@@ -65,7 +65,9 @@ class TeamMemberRepository {
         throw Exception('No valid "data" list found in response: $data');
       }
     } else {
-      throw Exception('Failed to get team members by team ID: ${response.statusCode}');
+      throw Exception(
+        'Failed to get team members by team ID: ${response.statusCode}',
+      );
     }
   }
 
@@ -87,12 +89,17 @@ class TeamMemberRepository {
         throw Exception('No valid "data" list found in response: $data');
       }
     } else {
-      throw Exception('Failed to get team members by user ID: ${response.statusCode}');
+      throw Exception(
+        'Failed to get team members by user ID: ${response.statusCode}',
+      );
     }
   }
 
   // Get all team members
-  Future<Map<String, dynamic>> getAllTeamMembers({int page = 1, int limit = 10}) async {
+  Future<Map<String, dynamic>> getAllTeamMembers({
+    int page = 1,
+    int limit = 10,
+  }) async {
     final response = await http.get(
       Uri.parse('$baseUrl/team-members?page=$page&limit=$limit'),
       headers: {'Content-Type': 'application/json'},
@@ -103,9 +110,12 @@ class TeamMemberRepository {
       if (data['data'] != null && data['data'] is List<dynamic>) {
         final List<dynamic> jsonList = data['data'];
         final totalCount = data['totalCount'] as int? ?? 0;
-        final teamMembers = jsonList
-            .map((json) => TeamMember.fromJson(json as Map<String, dynamic>))
-            .toList();
+        final teamMembers =
+            jsonList
+                .map(
+                  (json) => TeamMember.fromJson(json as Map<String, dynamic>),
+                )
+                .toList();
         final hasMore = (page * limit) < totalCount;
         return {'teamMembers': teamMembers, 'hasMore': hasMore};
       } else {

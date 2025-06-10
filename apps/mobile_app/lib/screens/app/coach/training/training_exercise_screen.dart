@@ -21,6 +21,7 @@ class TrainingExerciseScreen extends StatelessWidget {
                 exerciseRepository: ExerciseRepository(
                   baseUrl: ApiConstants.baseUrl,
                 ),
+                trainingScheduleRepository: RepositoryProvider.of(context),
               )..add(GetAllTrainingExercisesByScheduleId(trainingSchedule.id!)),
         ),
         BlocProvider(
@@ -60,7 +61,7 @@ class TrainingExerciseScreen extends StatelessWidget {
                 return _buildExerciseList(
                   context,
                   state.trainingExercises,
-                  state.exercises,
+                  state.exercises!,
                 );
               } else if (state is TrainingExercise_Error) {
                 return Center(

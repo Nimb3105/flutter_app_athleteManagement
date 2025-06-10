@@ -4,34 +4,20 @@ import 'package:flutter/material.dart';
 class TrainingExerciseCreateScreen extends StatelessWidget {
   final TrainingSchedule trainingSchedule;
 
-  const TrainingExerciseCreateScreen({
-    super.key,
-    required this.trainingSchedule,
-  });
+  const TrainingExerciseCreateScreen({super.key, required this.trainingSchedule});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Training Exercise'),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
+      appBar: AppBar(title: const Text('Add Training Exercise'), backgroundColor: Theme.of(context).primaryColor),
       body: BlocListener<TrainingExerciseBloc, TrainingExerciseState>(
         listener: (context, state) {
           if (state is LoadedTrainingExercise) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Training exercise added successfully'),
-              ),
-            );
-            context.read<TrainingExerciseBloc>().add(
-              GetAllTrainingExercisesByScheduleId(trainingSchedule.id!),
-            );
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Training exercise added successfully')));
+            context.read<TrainingExerciseBloc>().add(GetAllTrainingExercisesByScheduleId(trainingSchedule.id!));
             Navigator.of(context).pop();
           } else if (state is TrainingExercise_Error) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text('Error: ${state.message}')));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: ${state.message}')));
           }
         },
         child: BlocBuilder<ExerciseBloc, ExerciseState>(
@@ -43,11 +29,7 @@ class TrainingExerciseCreateScreen extends StatelessWidget {
               exercises = state.exercises;
             }
 
-            return _TrainingExerciseCreateView(
-              trainingSchedule: trainingSchedule,
-              exercises: exercises,
-              isLoading: isLoading,
-            );
+            return _TrainingExerciseCreateView(trainingSchedule: trainingSchedule, exercises: exercises, isLoading: isLoading);
           },
         ),
       ),
@@ -55,24 +37,60 @@ class TrainingExerciseCreateScreen extends StatelessWidget {
   }
 }
 
-class _TrainingExerciseCreateView extends StatefulWidget {
+class _TrainingExerciseCreateView extends StatelessWidget {
   final TrainingSchedule trainingSchedule;
   final List<Exercise> exercises;
   final bool isLoading;
 
-  const _TrainingExerciseCreateView({
-    required this.trainingSchedule,
-    required this.exercises,
-    required this.isLoading,
-  });
+  const _TrainingExerciseCreateView({required this.trainingSchedule, required this.exercises, required this.isLoading});
 
   @override
-  State<_TrainingExerciseCreateView> createState() =>
-      _TrainingExerciseCreateViewState();
+  Widget build(BuildContext context) {
+    return BlocBuilder<ExerciseBloc, ExerciseState>(
+      builder: (context, state) {
+        if (state is Exercise_Loading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is LoadedExercises) {
+          return _buildForm(context, state.exercises);
+        } else if (state is Exercise_Error) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Lỗi khi tải bài tập: ${state.message}', style: const TextStyle(color: Colors.red, fontSize: 16)),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    context.read<ExerciseBloc>().add(const GetAllExercises());
+                  },
+                  child: const Text('Thử lại'),
+                ),
+              ],
+            ),
+          );
+        }
+        return const Center(child: Text('Vui lòng chờ...'));
+      },
+    );
+  }
+
+  Widget _buildForm(BuildContext context, List<Exercise> exercises) {
+    return _TrainingExerciseCreateViewStateful(trainingSchedule: trainingSchedule, exercises: exercises, isLoading: false);
+  }
 }
 
-class _TrainingExerciseCreateViewState
-    extends State<_TrainingExerciseCreateView> {
+class _TrainingExerciseCreateViewStateful extends StatefulWidget {
+  final TrainingSchedule trainingSchedule;
+  final List<Exercise> exercises;
+  final bool isLoading;
+
+  const _TrainingExerciseCreateViewStateful({required this.trainingSchedule, required this.exercises, required this.isLoading});
+
+  @override
+  State<_TrainingExerciseCreateViewStateful> createState() => _TrainingExerciseCreateViewState();
+}
+
+class _TrainingExerciseCreateViewState extends State<_TrainingExerciseCreateViewStateful> {
   final _formKey = GlobalKey<FormState>();
   String? _selectedExerciseId;
   int? _order;
@@ -80,25 +98,20 @@ class _TrainingExerciseCreateViewState
   @override
   void initState() {
     super.initState();
+    // Nếu có bài tập, chọn bài tập đầu tiên làm mặc định
     context.read<ExerciseBloc>().add(const GetAllExercises());
   }
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save(); // Save form to trigger onSaved callbacks
-      debugPrint(
-        'Form validated, order: $_order, exerciseId: $_selectedExerciseId',
-      );
-
+      _formKey.currentState!.save();
       if (_selectedExerciseId == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please select an exercise')),
-        );
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Vui lòng chọn bài tập')));
         return;
       }
 
       final trainingExercise = TrainingExercise(
-        id: null, // Let backend assign ID
+        id: null,
         scheduleId: widget.trainingSchedule.id!,
         exerciseId: _selectedExerciseId!,
         order: _order!,
@@ -106,17 +119,15 @@ class _TrainingExerciseCreateViewState
         updatedAt: DateTime.now().toUtc(),
       );
 
-      debugPrint('Submitting TrainingExercise: $trainingExercise');
-      context.read<TrainingExerciseBloc>().add(
-        CreateTrainingExercise(trainingExercise),
-      );
-    } else {
-      debugPrint('Form validation failed');
+      context.read<TrainingExerciseBloc>().add(CreateTrainingExercise(trainingExercise));
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('Exercises: ${widget.exercises.map((e) => e.id).toList()}');
+    debugPrint('Selected Exercise ID: $_selectedExerciseId');
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Form(
@@ -126,18 +137,14 @@ class _TrainingExerciseCreateViewState
           children: [
             const SizedBox(height: 16),
             DropdownButtonFormField<String>(
-              decoration: const InputDecoration(
-                labelText: 'Exercise',
-                border: OutlineInputBorder(),
-              ),
+              decoration: const InputDecoration(labelText: 'Bài tập', border: OutlineInputBorder()),
               value: _selectedExerciseId,
               items:
-                  widget.exercises.map((Exercise exercise) {
-                    return DropdownMenuItem<String>(
-                      value: exercise.id,
-                      child: Text(exercise.name),
-                    );
-                  }).toList(),
+                  widget.exercises.isNotEmpty
+                      ? widget.exercises.map((Exercise exercise) {
+                        return DropdownMenuItem<String>(value: exercise.id, child: Text(exercise.name));
+                      }).toList()
+                      : [],
               onChanged:
                   widget.isLoading
                       ? null
@@ -146,51 +153,33 @@ class _TrainingExerciseCreateViewState
                           _selectedExerciseId = newValue;
                         });
                       },
-              validator:
-                  (value) => value == null ? 'Please select an exercise' : null,
+              validator: (value) => value == null ? 'Vui lòng chọn bài tập' : null,
             ),
             const SizedBox(height: 16),
             TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Order',
-                border: OutlineInputBorder(),
-              ),
+              decoration: const InputDecoration(labelText: 'Thứ tự', border: OutlineInputBorder()),
               keyboardType: TextInputType.number,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter the order';
+                  return 'Vui lòng nhập thứ tự';
                 }
                 if (int.tryParse(value) == null) {
-                  return 'Please enter a valid number';
+                  return 'Vui lòng nhập số hợp lệ';
                 }
                 if (int.parse(value) <= 0) {
-                  return 'Order must be greater than 0';
+                  return 'Thứ tự phải lớn hơn 0';
                 }
                 return null;
               },
               onSaved: (value) {
                 _order = int.parse(value!);
-                debugPrint('Order saved: $_order');
               },
             ),
-            if (widget.exercises.isEmpty && !widget.isLoading) ...[
-              const SizedBox(height: 16),
-              const Text(
-                'No exercises available',
-                style: TextStyle(color: Colors.red, fontSize: 16),
-              ),
-            ],
+            if (widget.exercises.isEmpty && !widget.isLoading) ...[const SizedBox(height: 16), const Text('Không có bài tập nào', style: TextStyle(color: Colors.red, fontSize: 16))],
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: widget.isLoading ? null : _submitForm,
-              child:
-                  widget.isLoading
-                      ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                      : const Text('Add Exercise'),
+              child: widget.isLoading ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)) : const Text('Thêm bài tập'),
             ),
           ],
         ),

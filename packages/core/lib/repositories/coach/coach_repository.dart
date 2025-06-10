@@ -11,7 +11,7 @@ class CoachRepository {
   // Create a new coach
   Future<Coach> createCoach(Coach coach) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/coaches'),
+      Uri.parse('$baseUrl/coachs'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(coach.toJson()),
     );
@@ -31,7 +31,7 @@ class CoachRepository {
   // Get coach by ID
   Future<Coach> getCoachById(String id) async {
     final response = await http.get(
-      Uri.parse('$baseUrl/coaches/$id'),
+      Uri.parse('$baseUrl/coachs/$id'),
       headers: {'Content-Type': 'application/json'},
     );
 
@@ -50,7 +50,7 @@ class CoachRepository {
   // Get coach by user ID
   Future<Coach> getCoachByUserId(String userId) async {
     final response = await http.get(
-      Uri.parse('$baseUrl/coaches/user/$userId'),
+      Uri.parse('$baseUrl/coachs/user/$userId'),
       headers: {'Content-Type': 'application/json'},
     );
 
@@ -72,7 +72,7 @@ class CoachRepository {
     int limit = 10,
   }) async {
     final response = await http.get(
-      Uri.parse('$baseUrl/coaches?page=$page&limit=$limit'),
+      Uri.parse('$baseUrl/coachs?page=$page&limit=$limit'),
       headers: {'Content-Type': 'application/json'},
     );
 
@@ -98,7 +98,7 @@ class CoachRepository {
   // Update coach
   Future<Coach> updateCoach(String id, Coach coach) async {
     final response = await http.put(
-      Uri.parse('$baseUrl/coaches/$id'),
+      Uri.parse('$baseUrl/coachs/$id'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(coach.toJson()),
     );
@@ -118,7 +118,7 @@ class CoachRepository {
   // Delete coach
   Future<void> deleteCoach(String id) async {
     final response = await http.delete(
-      Uri.parse('$baseUrl/coaches/$id'),
+      Uri.parse('$baseUrl/coachs/$id'),
       headers: {'Content-Type': 'application/json'},
     );
 

@@ -1,149 +1,184 @@
-// notification_bloc.dart
-
-import 'package:core/models/notification_reminder/notification.dart';
-import 'package:core/repositories/notification_reminder/notification_repository.dart';
+import 'package:core/models/notification_reminder/custom_notification.dart';
+import 'package:core/repositories/notification_reminder/custom_notification_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'notification_bloc.freezed.dart';
+part 'custom_notification_bloc.freezed.dart';
 
 @freezed
-sealed class NotificationEvent with _$NotificationEvent {
-  const factory NotificationEvent.createNotification(
-    Notification notification,
+sealed class CustomNotificationEvent with _$CustomNotificationEvent {
+  const factory CustomNotificationEvent.createNotification(
+    CustomNotification notification,
   ) = CreateNotification;
-  const factory NotificationEvent.getNotificationById(String id) =
+  const factory CustomNotificationEvent.getNotificationById(String id) =
       GetNotificationById;
-  const factory NotificationEvent.getNotificationsByUserId(String userId) =
-      GetNotificationsByUserId;
-  const factory NotificationEvent.updateNotification(
+  const factory CustomNotificationEvent.getNotificationsByUserId(
+    String userId,
+  ) = GetNotificationsByUserId;
+  const factory CustomNotificationEvent.updateNotification(
     String id,
-    Notification notification,
+    CustomNotification notification,
   ) = UpdateNotification;
-  const factory NotificationEvent.deleteNotification(String id) =
+  const factory CustomNotificationEvent.deleteNotification(String id) =
       DeleteNotification;
-  const factory NotificationEvent.markNotificationsAsRead(String userId) =
+  const factory CustomNotificationEvent.markNotificationsAsRead(String userId) =
       MarkNotificationsAsRead;
+  const factory CustomNotificationEvent.getAllCustomNotifications({
+    @Default(1) int page,
+    @Default(10) int limit,
+  }) = GetAllCustomNotifications;
 }
 
 @freezed
-sealed class NotificationState with _$NotificationState {
-  const factory NotificationState.initial() = Notification_Initial;
-  const factory NotificationState.loading() = Notification_Loading;
-  const factory NotificationState.loadedNotification(
-    Notification notification,
+sealed class CustomNotificationState with _$CustomNotificationState {
+  const factory CustomNotificationState.initial() = Notification_Initial;
+  const factory CustomNotificationState.loading() = Notification_Loading;
+  const factory CustomNotificationState.loadedNotification(
+    CustomNotification notification,
   ) = LoadedNotification;
-  const factory NotificationState.loadedNotifications(
-    List<Notification> notifications,
+  const factory CustomNotificationState.loadedNotifications(
+    List<CustomNotification> notifications,
   ) = LoadedNotifications;
-  const factory NotificationState.success(String message) =
+  const factory CustomNotificationState.success(String message) =
       Notification_Success;
-  const factory NotificationState.error(String message) = Notification_Error;
+  const factory CustomNotificationState.error(String message) =
+      Notification_Error;
+  const factory CustomNotificationState.loadedCustomNotifications(
+    List<CustomNotification> customNotifications,
+    int curentPage,
+    int limit,
+    bool hasMore,
+  ) = LoadedCustomNotification;
 }
 
-class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
-  final NotificationRepository notificationRepository;
+class CustomNotificationBloc
+    extends Bloc<CustomNotificationEvent, CustomNotificationState> {
+  final CustomNotificationRepository notificationRepository;
 
-  NotificationBloc({required this.notificationRepository})
-    : super(const NotificationState.initial()) {
+  CustomNotificationBloc({required this.notificationRepository})
+    : super(const CustomNotificationState.initial()) {
     on<CreateNotification>(_onCreateNotification);
     on<GetNotificationById>(_onGetNotificationById);
     on<GetNotificationsByUserId>(_onGetNotificationsByUserId);
     on<UpdateNotification>(_onUpdateNotification);
     on<DeleteNotification>(_onDeleteNotification);
     on<MarkNotificationsAsRead>(_onMarkNotificationsAsRead);
+    on<GetAllCustomNotifications>(_onGetAllCustomNotifications);
+  }
+
+  Future<void> _onGetAllCustomNotifications(
+    GetAllCustomNotifications event,
+    Emitter<CustomNotificationState> emit,
+  ) async {
+    emit(const CustomNotificationState.loading());
+    try {
+      final result = await notificationRepository.getAllNotification(
+        page: event.page,
+        limit: event.limit,
+      );
+      emit(
+        CustomNotificationState.loadedCustomNotifications(
+          result['notifications'] as List<CustomNotification>,
+          event.page,
+          event.limit,
+          result['hasMore'] as bool,
+        ),
+      );
+    } catch (e) {
+      emit(CustomNotificationState.error(e.toString()));
+    }
   }
 
   Future<void> _onCreateNotification(
     CreateNotification event,
-    Emitter<NotificationState> emit,
+    Emitter<CustomNotificationState> emit,
   ) async {
     debugPrint('Xử lý CreateNotification');
-    emit(const NotificationState.loading());
+    emit(const CustomNotificationState.loading());
     try {
       final createdNotification = await notificationRepository
           .createNotification(event.notification);
-      emit(NotificationState.loadedNotification(createdNotification));
+      emit(CustomNotificationState.loadedNotification(createdNotification));
     } catch (e) {
       debugPrint('Lỗi tạo thông báo: $e');
-      emit(NotificationState.error(e.toString()));
+      emit(CustomNotificationState.error(e.toString()));
     }
   }
 
   Future<void> _onGetNotificationById(
     GetNotificationById event,
-    Emitter<NotificationState> emit,
+    Emitter<CustomNotificationState> emit,
   ) async {
     debugPrint('Xử lý GetNotificationById: ${event.id}');
-    emit(const NotificationState.loading());
+    emit(const CustomNotificationState.loading());
     try {
       final notification = await notificationRepository.getNotificationById(
         event.id,
       );
-      emit(NotificationState.loadedNotification(notification));
+      emit(CustomNotificationState.loadedNotification(notification));
     } catch (e) {
       debugPrint('Lỗi lấy thông báo: $e');
-      emit(NotificationState.error(e.toString()));
+      emit(CustomNotificationState.error(e.toString()));
     }
   }
 
   Future<void> _onGetNotificationsByUserId(
     GetNotificationsByUserId event,
-    Emitter<NotificationState> emit,
+    Emitter<CustomNotificationState> emit,
   ) async {
     debugPrint('Xử lý GetNotificationsByUserId: ${event.userId}');
-    emit(const NotificationState.loading());
+    emit(const CustomNotificationState.loading());
     try {
       final notifications = await notificationRepository
           .getNotificationsByUserId(event.userId);
       debugPrint('Lấy được ${notifications.length} thông báo');
-      emit(NotificationState.loadedNotifications(notifications));
+      emit(CustomNotificationState.loadedNotifications(notifications));
     } catch (e) {
       debugPrint('Lỗi lấy thông báo: $e');
-      emit(NotificationState.error(e.toString()));
+      emit(CustomNotificationState.error(e.toString()));
     }
   }
 
   Future<void> _onUpdateNotification(
     UpdateNotification event,
-    Emitter<NotificationState> emit,
+    Emitter<CustomNotificationState> emit,
   ) async {
     debugPrint('Xử lý UpdateNotification: ${event.id}');
-    emit(const NotificationState.loading());
+    emit(const CustomNotificationState.loading());
     try {
       final updatedNotification = await notificationRepository
           .updateNotification(event.id, event.notification);
-      emit(NotificationState.loadedNotification(updatedNotification));
+      emit(CustomNotificationState.loadedNotification(updatedNotification));
     } catch (e) {
       debugPrint('Lỗi cập nhật thông báo: $e');
-      emit(NotificationState.error(e.toString()));
+      emit(CustomNotificationState.error(e.toString()));
     }
   }
 
   Future<void> _onDeleteNotification(
     DeleteNotification event,
-    Emitter<NotificationState> emit,
+    Emitter<CustomNotificationState> emit,
   ) async {
     debugPrint('Xử lý DeleteNotification: ${event.id}');
-    emit(const NotificationState.loading());
+    emit(const CustomNotificationState.loading());
     try {
       await notificationRepository.deleteNotification(event.id);
-      emit(const NotificationState.success('Thông báo đã được xóa'));
+      emit(const CustomNotificationState.success('Thông báo đã được xóa'));
     } catch (e) {
       debugPrint('Lỗi xóa thông báo: $e');
-      emit(NotificationState.error(e.toString()));
+      emit(CustomNotificationState.error(e.toString()));
     }
   }
 
   Future<void> _onMarkNotificationsAsRead(
     MarkNotificationsAsRead event,
-    Emitter<NotificationState> emit,
+    Emitter<CustomNotificationState> emit,
   ) async {
     debugPrint('Xử lý MarkNotificationsAsRead cho userId: ${event.userId}');
-    emit(const NotificationState.loading());
+    emit(const CustomNotificationState.loading());
     try {
-      List<Notification> notifications;
+      List<CustomNotification> notifications;
       final currentState = state;
       debugPrint('Trạng thái hiện tại: ${currentState.runtimeType}');
       if (currentState is LoadedNotifications) {
@@ -163,7 +198,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
 
       if (unreadNotifications.isEmpty) {
         debugPrint('Không có thông báo Unread, emit LoadedNotifications');
-        emit(NotificationState.loadedNotifications(notifications));
+        emit(CustomNotificationState.loadedNotifications(notifications));
         return;
       }
 
@@ -190,11 +225,13 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
       debugPrint('Lấy lại danh sách thông báo sau khi cập nhật');
       final updatedNotifications = await notificationRepository
           .getNotificationsByUserId(event.userId);
-      emit(NotificationState.loadedNotifications(updatedNotifications));
+      emit(CustomNotificationState.loadedNotifications(updatedNotifications));
     } catch (e) {
       debugPrint('Lỗi tổng thể khi cập nhật trạng thái thông báo: $e');
       emit(
-        NotificationState.error('Lỗi khi cập nhật trạng thái thông báo: $e'),
+        CustomNotificationState.error(
+          'Lỗi khi cập nhật trạng thái thông báo: $e',
+        ),
       );
     }
   }

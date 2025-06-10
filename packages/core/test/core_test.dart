@@ -1,19 +1,4 @@
-import 'package:core/models/athlete/achievement/achievement.dart';
-import 'package:core/models/athlete/injury/injury.dart';
-import 'package:core/models/athlete/health/medical_history.dart';
-import 'package:core/models/athlete/progress/progress.dart';
-import 'package:core/models/coach/coach_certification.dart';
-import 'package:core/models/feedback/feedback.dart';
-import 'package:core/models/athlete/health/health.dart';
-import 'package:core/models/match_schedule/match_schedule.dart';
-import 'package:core/models/match_schedule/user_match.dart';
-import 'package:core/models/message_group/group.dart';
-import 'package:core/models/message_group/group_member.dart';
-import 'package:core/models/message_group/message.dart';
-import 'package:core/models/performance/performance.dart';
-import 'package:core/models/team/team.dart';
-import 'package:core/models/team/team_member.dart';
-import 'package:core/models/tournament/tournament.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:core/core.dart';
 import 'package:core/repositories/bass_repository.dart';
@@ -73,7 +58,7 @@ void main() {
     'MatchSchedule': MatchSchedule,
     'MedicalHistory': MedicalHistory,
     'Message': Message,
-    'Notification': Notification,
+    'Notification': CustomNotification,
     'NutritionPlan': NutritionPlan,
     'Performance': Performance,
     'PlanFood': PlanFood,
@@ -138,13 +123,17 @@ void main() {
             isNotEmpty,
             reason: 'Danh sách $modelName không được rỗng',
           );
-          print(
+          if (kDebugMode) {
+            print(
             '$modelName: Thành công ✅ — Lấy được ${results.length} phần tử.',
           );
+          }
           if (results.isNotEmpty) {
-            print(
+            if (kDebugMode) {
+              print(
               'Dữ liệu mẫu: ${results.take(2).map((e) => (e as dynamic).toJson()).toList()}',
             );
+            }
           }
         } catch (e) {
           fail('Lỗi khi gọi getAll cho $modelName: $e');
@@ -171,7 +160,7 @@ dynamic _invokeFromJson(Type modelType, Map<String, dynamic> json) {
   if (modelType == MatchSchedule) return MatchSchedule.fromJson(json);
   if (modelType == MedicalHistory) return MedicalHistory.fromJson(json);
   if (modelType == Message) return Message.fromJson(json);
-  if (modelType == Notification) return Notification.fromJson(json);
+  if (modelType == CustomNotification) return CustomNotification.fromJson(json);
   if (modelType == NutritionPlan) return NutritionPlan.fromJson(json);
   if (modelType == Performance) return Performance.fromJson(json);
   if (modelType == PlanFood) return PlanFood.fromJson(json);
@@ -184,8 +173,9 @@ dynamic _invokeFromJson(Type modelType, Map<String, dynamic> json) {
   if (modelType == Tournament) return Tournament.fromJson(json);
   if (modelType == TrainingExercise) return TrainingExercise.fromJson(json);
   if (modelType == TrainingSchedule) return TrainingSchedule.fromJson(json);
-  if (modelType == TrainingScheduleUser)
+  if (modelType == TrainingScheduleUser) {
     return TrainingScheduleUser.fromJson(json);
+  }
   if (modelType == User) return User.fromJson(json);
   if (modelType == UserMatch) return UserMatch.fromJson(json);
   throw Exception(
@@ -197,8 +187,9 @@ dynamic _invokeFromJson(Type modelType, Map<String, dynamic> json) {
 Map<String, dynamic> _invokeToJson(Type modelType, dynamic obj) {
   if (modelType == Achievement) return (obj as Achievement).toJson();
   if (modelType == Athlete) return (obj as Athlete).toJson();
-  if (modelType == CoachCertification)
+  if (modelType == CoachCertification) {
     return (obj as CoachCertification).toJson();
+  }
   if (modelType == Coach) return (obj as Coach).toJson();
   if (modelType == CoachAthlete) return (obj as CoachAthlete).toJson();
   if (modelType == Exercise) return (obj as Exercise).toJson();
@@ -211,7 +202,7 @@ Map<String, dynamic> _invokeToJson(Type modelType, dynamic obj) {
   if (modelType == MatchSchedule) return (obj as MatchSchedule).toJson();
   if (modelType == MedicalHistory) return (obj as MedicalHistory).toJson();
   if (modelType == Message) return (obj as Message).toJson();
-  if (modelType == Notification) return (obj as Notification).toJson();
+  if (modelType == CustomNotification) return (obj as CustomNotification).toJson();
   if (modelType == NutritionPlan) return (obj as NutritionPlan).toJson();
   if (modelType == Performance) return (obj as Performance).toJson();
   if (modelType == PlanFood) return (obj as PlanFood).toJson();
@@ -224,8 +215,9 @@ Map<String, dynamic> _invokeToJson(Type modelType, dynamic obj) {
   if (modelType == Tournament) return (obj as Tournament).toJson();
   if (modelType == TrainingExercise) return (obj as TrainingExercise).toJson();
   if (modelType == TrainingSchedule) return (obj as TrainingSchedule).toJson();
-  if (modelType == TrainingScheduleUser)
+  if (modelType == TrainingScheduleUser) {
     return (obj as TrainingScheduleUser).toJson();
+  }
   if (modelType == User) return (obj as User).toJson();
   if (modelType == UserMatch) return (obj as UserMatch).toJson();
   throw Exception('Model $modelType chưa được định nghĩa trong _invokeToJson');

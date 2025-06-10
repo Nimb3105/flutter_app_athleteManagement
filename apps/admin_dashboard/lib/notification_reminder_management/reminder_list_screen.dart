@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
 
-class NutritionPlanListScreen extends StatelessWidget {
-  const NutritionPlanListScreen({super.key});
+class ReminderListScreen extends StatelessWidget {
+  const ReminderListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,31 +10,23 @@ class NutritionPlanListScreen extends StatelessWidget {
       providers: [
         BlocProvider(
           create:
-              (context) => NutritionPlanBloc(
-                nutritionPlanRepository: RepositoryProvider.of(context),
-              )..add(
-                const NutritionPlanEvent.getAllNutritionPlans(
-                  page: 1,
-                  limit: 10,
-                ),
-              ),
+              (context) => ReminderBloc(
+                reminderRepository: RepositoryProvider.of(context),
+              )..add(const ReminderEvent.getAllReminders(page: 1, limit: 10)),
         ),
       ],
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: BlocConsumer<NutritionPlanBloc, NutritionPlanState>(
+        child: BlocConsumer<ReminderBloc, ReminderState>(
           listener: (context, state) {
-            if (state is NutritionPlan_Success) {
+            if (state is Reminder_Success) {
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(SnackBar(content: Text(state.message)));
-              context.read<NutritionPlanBloc>().add(
-                const NutritionPlanEvent.getAllNutritionPlans(
-                  page: 1,
-                  limit: 10,
-                ),
+              context.read<ReminderBloc>().add(
+                const ReminderEvent.getAllReminders(page: 1, limit: 10),
               ); // Refresh danh sách sau khi xóa
-            } else if (state is NutritionPlan_Error) {
+            } else if (state is Reminder_Error) {
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(SnackBar(content: Text('Lỗi: ${state.message}')));
@@ -43,12 +35,12 @@ class NutritionPlanListScreen extends StatelessWidget {
           builder: (context, state) {
             int currentPage = 1;
             bool hasMore = true;
-            List<NutritionPlan> nutritionPlans = [];
+            List<Reminder> reminders = [];
 
-            if (state is LoadedNutritionPlans) {
+            if (state is LoadedAllReminders) {
               currentPage = state.currentPage;
               hasMore = state.hasMore;
-              nutritionPlans = state.nutritionPlans;
+              reminders = state.reminders;
             }
 
             return Column(
@@ -60,19 +52,25 @@ class NutritionPlanListScreen extends StatelessWidget {
                       columns: const [
                         DataColumn(
                           label: Text(
-                            'Tên kế hoach dinh dưỡng',
+                            'Nội dung',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                         DataColumn(
                           label: Text(
-                            'Ngày tạo',
+                            'Trạng thái',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                         DataColumn(
                           label: Text(
-                            'Ngày cập nhật',
+                            'Thời gian nhắc nhở',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Text(
+                            'Ngày nhắc nhở',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -84,40 +82,35 @@ class NutritionPlanListScreen extends StatelessWidget {
                         ),
                       ],
                       rows:
-                          nutritionPlans.isEmpty &&
-                                  state is! NutritionPlan_Loading
+                          reminders.isEmpty && state is! Reminder_Loading
                               ? [
                                 const DataRow(
                                   cells: [
                                     DataCell(
                                       Center(
-                                        child: Text(
-                                          'không có kế hoạch dinh dưỡng nào',
-                                        ),
+                                        child: Text('Không có nhắc nhở nào'),
                                       ),
                                     ),
+                                    DataCell(SizedBox.shrink()),
                                     DataCell(SizedBox.shrink()),
                                     DataCell(SizedBox.shrink()),
                                     DataCell(SizedBox.shrink()),
                                   ],
                                 ),
                               ]
-                              : nutritionPlans.map((nutritionPlan) {
+                              : reminders.map((reminder) {
                                 return DataRow(
                                   cells: [
-                                    DataCell(Text(nutritionPlan.name)),
+                                    DataCell(Text(reminder.content)),
+                                    DataCell(Text(reminder.status)),
                                     DataCell(
                                       Text(
-                                        formatUtcToLocal(
-                                          nutritionPlan.createdAt,
-                                        ),
+                                        formatUtcToLocal(reminder.reminderTime),
                                       ),
                                     ),
                                     DataCell(
                                       Text(
-                                        formatUtcToLocal(
-                                          nutritionPlan.updatedAt,
-                                        ),
+                                        formatUtcToLocal(reminder.reminderDate),
                                       ),
                                     ),
                                     DataCell(
@@ -154,7 +147,7 @@ class NutritionPlanListScreen extends StatelessWidget {
                                             ),
                                             tooltip: 'Xóa',
                                             onPressed: () {
-                                              if (nutritionPlan.id != null) {
+                                              if (reminder.id != null) {
                                                 showDialog(
                                                   context: context,
                                                   builder:
@@ -163,7 +156,7 @@ class NutritionPlanListScreen extends StatelessWidget {
                                                           'Xác nhận xóa',
                                                         ),
                                                         content: Text(
-                                                          'Bạn có chắc muốn xóa món ăn ${nutritionPlan.name}?',
+                                                          'Bạn có chắc muốn xóa nhắc nhở "${reminder.content}"?',
                                                         ),
                                                         actions: [
                                                           TextButton(
@@ -180,11 +173,11 @@ class NutritionPlanListScreen extends StatelessWidget {
                                                             onPressed: () {
                                                               context
                                                                   .read<
-                                                                    NutritionPlanBloc
+                                                                    ReminderBloc
                                                                   >()
                                                                   .add(
-                                                                    NutritionPlanEvent.deleteNutritionPlan(
-                                                                      nutritionPlan
+                                                                    ReminderEvent.deleteReminder(
+                                                                      reminder
                                                                           .id!,
                                                                     ),
                                                                   );
@@ -215,14 +208,13 @@ class NutritionPlanListScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (state is NutritionPlan_Loading)
+                if (state is Reminder_Loading)
                   const Center(child: CircularProgressIndicator()),
-                if (state is NutritionPlan_Initial)
+                if (state is Reminder_Initial)
                   const Center(child: Text('Khởi tạo...')),
-                if (state is LoadedNutritionPlan)
-                  const Center(child: Text('Không hiển thị món ăn đơn')),
-                if (state is! NutritionPlan_Loading &&
-                    state is! NutritionPlan_Initial)
+                if (state is LoadedReminder)
+                  const Center(child: Text('Không hiển thị nhắc nhở đơn')),
+                if (state is! Reminder_Loading && state is! Reminder_Initial)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Row(
@@ -232,8 +224,8 @@ class NutritionPlanListScreen extends StatelessWidget {
                           onPressed:
                               currentPage > 1
                                   ? () {
-                                    context.read<NutritionPlanBloc>().add(
-                                      NutritionPlanEvent.getAllNutritionPlans(
+                                    context.read<ReminderBloc>().add(
+                                      ReminderEvent.getAllReminders(
                                         page: currentPage - 1,
                                         limit: 10,
                                       ),
@@ -249,8 +241,8 @@ class NutritionPlanListScreen extends StatelessWidget {
                           onPressed:
                               hasMore
                                   ? () {
-                                    context.read<NutritionPlanBloc>().add(
-                                      NutritionPlanEvent.getAllNutritionPlans(
+                                    context.read<ReminderBloc>().add(
+                                      ReminderEvent.getAllReminders(
                                         page: currentPage + 1,
                                         limit: 10,
                                       ),

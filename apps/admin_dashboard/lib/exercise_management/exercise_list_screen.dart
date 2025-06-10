@@ -58,6 +58,24 @@ class ExerciseListScreen extends StatelessWidget {
                         ),
                         DataColumn(
                           label: Text(
+                            'Thiết bị',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Text(
+                            'Vị trí cơ thể',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Text(
+                            'Cơ bắp',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Text(
                             'Ngày tạo',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
@@ -88,6 +106,9 @@ class ExerciseListScreen extends StatelessWidget {
                                     DataCell(SizedBox.shrink()),
                                     DataCell(SizedBox.shrink()),
                                     DataCell(SizedBox.shrink()),
+                                    DataCell(SizedBox.shrink()),
+                                    DataCell(SizedBox.shrink()),
+                                    DataCell(SizedBox.shrink()),
                                   ],
                                 ),
                               ]
@@ -95,6 +116,9 @@ class ExerciseListScreen extends StatelessWidget {
                                 return DataRow(
                                   cells: [
                                     DataCell(Text(exercise.name)),
+                                    DataCell(Text(exercise.equipment)),
+                                    DataCell(Text(exercise.bodyPart)),
+                                    DataCell(Text(exercise.target)),
                                     DataCell(
                                       Text(
                                         formatUtcToLocal(exercise.createdAt),

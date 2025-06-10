@@ -1,6 +1,8 @@
-
+// group_member_bloc.dart
 import 'package:core/models/message_group/group_member.dart';
+import 'package:core/models/message_group/group.dart';
 import 'package:core/repositories/message_group/group_member_repository.dart';
+import 'package:core/repositories/message_group/group_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -8,40 +10,52 @@ part 'group_member_bloc.freezed.dart';
 
 @freezed
 sealed class GroupMemberEvent with _$GroupMemberEvent {
-  const factory GroupMemberEvent.createGroupMember(GroupMember groupMember) = _CreateGroupMember;
-  const factory GroupMemberEvent.getGroupMemberById(String id) = _GetGroupMemberById;
-  const factory GroupMemberEvent.getGroupMemberByUserId(String userId) = _GetGroupMemberByUserId;
+  const factory GroupMemberEvent.createGroupMember(GroupMember groupMember) =
+      _CreateGroupMember;
+  const factory GroupMemberEvent.getGroupMemberById(String id) =
+      _GetGroupMemberById;
+  const factory GroupMemberEvent.getGroupMembersByUserId(String userId) =
+      _GetGroupMembersByUserId;
   const factory GroupMemberEvent.getAllGroupMembers({
     @Default(1) int page,
     @Default(10) int limit,
   }) = _GetAllGroupMembers;
-  const factory GroupMemberEvent.updateGroupMember(String id, GroupMember groupMember) = _UpdateGroupMember;
-  const factory GroupMemberEvent.deleteGroupMember(String id) = _DeleteGroupMember;
+  const factory GroupMemberEvent.updateGroupMember(
+    String id,
+    GroupMember groupMember,
+  ) = _UpdateGroupMember;
+  const factory GroupMemberEvent.deleteGroupMember(String id) =
+      _DeleteGroupMember;
 }
 
 @freezed
 sealed class GroupMemberState with _$GroupMemberState {
   const factory GroupMemberState.initial() = GroupMember_Initial;
   const factory GroupMemberState.loading() = GroupMember_Loading;
-  const factory GroupMemberState.loadedGroupMember(GroupMember groupMember) = LoadedGroupMember;
+  const factory GroupMemberState.loadedGroupMember(GroupMember groupMember) =
+      LoadedGroupMember;
   const factory GroupMemberState.loadedGroupMembers(
     List<GroupMember> groupMembers,
     int currentPage,
     int limit,
-    bool hasMore,
-  ) = LoadedGroupMembers;
+    bool hasMore, {
+    Map<String, Group>? groups,
+  }) = LoadedGroupMembers;
   const factory GroupMemberState.error(String message) = GroupMember_Error;
   const factory GroupMemberState.success(String message) = GroupMember_Success;
 }
 
 class GroupMemberBloc extends Bloc<GroupMemberEvent, GroupMemberState> {
   final GroupMemberRepository groupMemberRepository;
+  final GroupRepository groupRepository;
 
-  GroupMemberBloc({required this.groupMemberRepository})
-      : super(const GroupMemberState.initial()) {
+  GroupMemberBloc({
+    required this.groupMemberRepository,
+    required this.groupRepository,
+  }) : super(const GroupMemberState.initial()) {
     on<_CreateGroupMember>(_onCreateGroupMember);
     on<_GetGroupMemberById>(_onGetGroupMemberById);
-    on<_GetGroupMemberByUserId>(_onGetGroupMemberByUserId);
+    on<_GetGroupMembersByUserId>(_onGetGroupMembersByUserId);
     on<_GetAllGroupMembers>(_onGetAllGroupMembers);
     on<_UpdateGroupMember>(_onUpdateGroupMember);
     on<_DeleteGroupMember>(_onDeleteGroupMember);
@@ -53,7 +67,9 @@ class GroupMemberBloc extends Bloc<GroupMemberEvent, GroupMemberState> {
   ) async {
     emit(const GroupMemberState.loading());
     try {
-      final createdGroupMember = await groupMemberRepository.createGroupMember(event.groupMember);
+      final createdGroupMember = await groupMemberRepository.createGroupMember(
+        event.groupMember,
+      );
       emit(GroupMemberState.loadedGroupMember(createdGroupMember));
     } catch (e) {
       emit(GroupMemberState.error(e.toString()));
@@ -66,21 +82,38 @@ class GroupMemberBloc extends Bloc<GroupMemberEvent, GroupMemberState> {
   ) async {
     emit(const GroupMemberState.loading());
     try {
-      final groupMember = await groupMemberRepository.getGroupMemberById(event.id);
+      final groupMember = await groupMemberRepository.getGroupMemberById(
+        event.id,
+      );
       emit(GroupMemberState.loadedGroupMember(groupMember));
     } catch (e) {
       emit(GroupMemberState.error(e.toString()));
     }
   }
 
-  Future<void> _onGetGroupMemberByUserId(
-    _GetGroupMemberByUserId event,
+  Future<void> _onGetGroupMembersByUserId(
+    _GetGroupMembersByUserId event,
     Emitter<GroupMemberState> emit,
   ) async {
     emit(const GroupMemberState.loading());
     try {
-      final groupMember = await groupMemberRepository.getGroupMemberByUserId(event.userId);
-      emit(GroupMemberState.loadedGroupMember(groupMember));
+      final groupMembers = await groupMemberRepository.getGroupMemberByUserId(
+        event.userId,
+      );
+      final groups = <String, Group>{};
+      for (var groupMember in groupMembers) {
+        final group = await groupRepository.getGroupById(groupMember.groupId);
+        groups[groupMember.groupId] = group;
+      }
+      emit(
+        GroupMemberState.loadedGroupMembers(
+          groupMembers,
+          1,
+          groupMembers.length,
+          false,
+          groups: groups,
+        ),
+      );
     } catch (e) {
       emit(GroupMemberState.error(e.toString()));
     }
@@ -96,12 +129,19 @@ class GroupMemberBloc extends Bloc<GroupMemberEvent, GroupMemberState> {
         page: event.page,
         limit: event.limit,
       );
+      final groupMembers = result['groupMembers'] as List<GroupMember>;
+      final groups = <String, Group>{};
+      for (var groupMember in groupMembers) {
+        final group = await groupRepository.getGroupById(groupMember.groupId);
+        groups[groupMember.groupId] = group;
+      }
       emit(
         GroupMemberState.loadedGroupMembers(
-          result['groupMembers'] as List<GroupMember>,
+          groupMembers,
           event.page,
           event.limit,
           result['hasMore'] as bool,
+          groups: groups,
         ),
       );
     } catch (e) {

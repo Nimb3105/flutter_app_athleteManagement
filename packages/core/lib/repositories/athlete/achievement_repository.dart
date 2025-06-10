@@ -48,7 +48,7 @@ class AchievementRepository {
   }
 
   // Get achievement by user ID
-  Future<Achievement> getAchievementByUserId(String userId) async {
+  Future<Map<String, dynamic>> getAchievementByUserId(String userId) async {
     final response = await http.get(
       Uri.parse('$baseUrl/achievements/user/$userId'),
       headers: {'Content-Type': 'application/json'},
@@ -56,18 +56,45 @@ class AchievementRepository {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
-      if (data['data'] != null && data['data'] is Map<String, dynamic>) {
-        return Achievement.fromJson(data['data'] as Map<String, dynamic>);
+      if (data['data'] != null) {
+        // Kiểm tra nếu data['data'] là một đối tượng
+        if (data['data'] is Map<String, dynamic>) {
+          final achievement = Achievement.fromJson(
+            data['data'] as Map<String, dynamic>,
+          );
+          return {
+            'achievement': [achievement],
+          }; // Trả về danh sách chứa một Achievement
+        }
+        // Kiểm tra nếu data['data'] là một danh sách
+        else if (data['data'] is List<dynamic>) {
+          final List<dynamic> jsonList = data['data'];
+          final achievements =
+              jsonList
+                  .map(
+                    (json) =>
+                        Achievement.fromJson(json as Map<String, dynamic>),
+                  )
+                  .toList();
+          return {'achievement': achievements};
+        } else {
+          return {'achievement': []}; // Trả về danh sách rỗng nếu không hợp lệ
+        }
       } else {
-        throw Exception('No valid "data" object found in response: $data');
+        return {'achievement': []}; // Trả về danh sách rỗng nếu data là null
       }
     } else {
-      throw Exception('Failed to get achievement by user ID: ${response.statusCode}');
+      throw Exception(
+        'Failed to get achievement by user ID: ${response.statusCode}',
+      );
     }
   }
 
   // Get all achievements
-  Future<Map<String, dynamic>> getAllAchievements({int page = 1, int limit = 10}) async {
+  Future<Map<String, dynamic>> getAllAchievements({
+    int page = 1,
+    int limit = 10,
+  }) async {
     final response = await http.get(
       Uri.parse('$baseUrl/achievements?page=$page&limit=$limit'),
       headers: {'Content-Type': 'application/json'},
@@ -78,9 +105,12 @@ class AchievementRepository {
       if (data['data'] != null && data['data'] is List<dynamic>) {
         final List<dynamic> jsonList = data['data'];
         final totalCount = data['totalCount'] as int? ?? 0;
-        final achievements = jsonList
-            .map((json) => Achievement.fromJson(json as Map<String, dynamic>))
-            .toList();
+        final achievements =
+            jsonList
+                .map(
+                  (json) => Achievement.fromJson(json as Map<String, dynamic>),
+                )
+                .toList();
         final hasMore = (page * limit) < totalCount;
         return {'achievements': achievements, 'hasMore': hasMore};
       } else {
@@ -92,7 +122,10 @@ class AchievementRepository {
   }
 
   // Update achievement
-  Future<Achievement> updateAchievement(String id, Achievement achievement) async {
+  Future<Achievement> updateAchievement(
+    String id,
+    Achievement achievement,
+  ) async {
     final response = await http.put(
       Uri.parse('$baseUrl/achievements/$id'),
       headers: {'Content-Type': 'application/json'},

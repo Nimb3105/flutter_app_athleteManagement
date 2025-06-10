@@ -669,7 +669,7 @@ as List<TrainingExercise>,
 
 
 class LoadedTrainingExercisesWithExercises implements TrainingExerciseState {
-  const LoadedTrainingExercisesWithExercises(final  List<TrainingExercise> trainingExercises, final  Map<String, Exercise> exercises): _trainingExercises = trainingExercises,_exercises = exercises;
+  const LoadedTrainingExercisesWithExercises(final  List<TrainingExercise> trainingExercises, {final  Map<String, TrainingSchedule>? traininngSchedules, final  Map<String, Exercise>? exercises}): _trainingExercises = trainingExercises,_traininngSchedules = traininngSchedules,_exercises = exercises;
   
 
  final  List<TrainingExercise> _trainingExercises;
@@ -679,11 +679,22 @@ class LoadedTrainingExercisesWithExercises implements TrainingExerciseState {
   return EqualUnmodifiableListView(_trainingExercises);
 }
 
- final  Map<String, Exercise> _exercises;
- Map<String, Exercise> get exercises {
+ final  Map<String, TrainingSchedule>? _traininngSchedules;
+ Map<String, TrainingSchedule>? get traininngSchedules {
+  final value = _traininngSchedules;
+  if (value == null) return null;
+  if (_traininngSchedules is EqualUnmodifiableMapView) return _traininngSchedules;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(value);
+}
+
+ final  Map<String, Exercise>? _exercises;
+ Map<String, Exercise>? get exercises {
+  final value = _exercises;
+  if (value == null) return null;
   if (_exercises is EqualUnmodifiableMapView) return _exercises;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableMapView(_exercises);
+  return EqualUnmodifiableMapView(value);
 }
 
 
@@ -697,16 +708,16 @@ $LoadedTrainingExercisesWithExercisesCopyWith<LoadedTrainingExercisesWithExercis
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedTrainingExercisesWithExercises&&const DeepCollectionEquality().equals(other._trainingExercises, _trainingExercises)&&const DeepCollectionEquality().equals(other._exercises, _exercises));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedTrainingExercisesWithExercises&&const DeepCollectionEquality().equals(other._trainingExercises, _trainingExercises)&&const DeepCollectionEquality().equals(other._traininngSchedules, _traininngSchedules)&&const DeepCollectionEquality().equals(other._exercises, _exercises));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_trainingExercises),const DeepCollectionEquality().hash(_exercises));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_trainingExercises),const DeepCollectionEquality().hash(_traininngSchedules),const DeepCollectionEquality().hash(_exercises));
 
 @override
 String toString() {
-  return 'TrainingExerciseState.loadedTrainingExercisesWithExercises(trainingExercises: $trainingExercises, exercises: $exercises)';
+  return 'TrainingExerciseState.loadedTrainingExercisesWithExercises(trainingExercises: $trainingExercises, traininngSchedules: $traininngSchedules, exercises: $exercises)';
 }
 
 
@@ -717,7 +728,7 @@ abstract mixin class $LoadedTrainingExercisesWithExercisesCopyWith<$Res> impleme
   factory $LoadedTrainingExercisesWithExercisesCopyWith(LoadedTrainingExercisesWithExercises value, $Res Function(LoadedTrainingExercisesWithExercises) _then) = _$LoadedTrainingExercisesWithExercisesCopyWithImpl;
 @useResult
 $Res call({
- List<TrainingExercise> trainingExercises, Map<String, Exercise> exercises
+ List<TrainingExercise> trainingExercises, Map<String, TrainingSchedule>? traininngSchedules, Map<String, Exercise>? exercises
 });
 
 
@@ -734,11 +745,12 @@ class _$LoadedTrainingExercisesWithExercisesCopyWithImpl<$Res>
 
 /// Create a copy of TrainingExerciseState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? trainingExercises = null,Object? exercises = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? trainingExercises = null,Object? traininngSchedules = freezed,Object? exercises = freezed,}) {
   return _then(LoadedTrainingExercisesWithExercises(
 null == trainingExercises ? _self._trainingExercises : trainingExercises // ignore: cast_nullable_to_non_nullable
-as List<TrainingExercise>,null == exercises ? _self._exercises : exercises // ignore: cast_nullable_to_non_nullable
-as Map<String, Exercise>,
+as List<TrainingExercise>,traininngSchedules: freezed == traininngSchedules ? _self._traininngSchedules : traininngSchedules // ignore: cast_nullable_to_non_nullable
+as Map<String, TrainingSchedule>?,exercises: freezed == exercises ? _self._exercises : exercises // ignore: cast_nullable_to_non_nullable
+as Map<String, Exercise>?,
   ));
 }
 

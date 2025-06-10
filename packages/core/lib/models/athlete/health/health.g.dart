@@ -13,6 +13,7 @@ _Health _$HealthFromJson(Map<String, dynamic> json) => _Health(
   weight: (json['weight'] as num).toDouble(),
   bmi: (json['bmi'] as num).toDouble(),
   bloodType: json['bloodType'] as String,
+  date: const UtcDateTimeConverter().fromJson(json['date'] as String),
   createdAt: const UtcDateTimeConverter().fromJson(json['createdAt'] as String),
   updatedAt: const UtcDateTimeConverter().fromJson(json['updatedAt'] as String),
 );
@@ -24,6 +25,7 @@ Map<String, dynamic> _$HealthToJson(_Health instance) => <String, dynamic>{
   'weight': instance.weight,
   'bmi': instance.bmi,
   'bloodType': instance.bloodType,
+  'date': const UtcDateTimeConverter().toJson(instance.date),
   'createdAt': const UtcDateTimeConverter().toJson(instance.createdAt),
   'updatedAt': const UtcDateTimeConverter().toJson(instance.updatedAt),
 };

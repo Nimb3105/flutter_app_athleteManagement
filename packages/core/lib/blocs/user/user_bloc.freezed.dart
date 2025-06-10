@@ -931,4 +931,84 @@ as String,
 
 }
 
+/// @nodoc
+
+
+class LoadedMultipleUsers implements UserState {
+  const LoadedMultipleUsers(final  Map<String, User> users, final  Map<String, String> errors): _users = users,_errors = errors;
+  
+
+ final  Map<String, User> _users;
+ Map<String, User> get users {
+  if (_users is EqualUnmodifiableMapView) return _users;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_users);
+}
+
+ final  Map<String, String> _errors;
+ Map<String, String> get errors {
+  if (_errors is EqualUnmodifiableMapView) return _errors;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_errors);
+}
+
+
+/// Create a copy of UserState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$LoadedMultipleUsersCopyWith<LoadedMultipleUsers> get copyWith => _$LoadedMultipleUsersCopyWithImpl<LoadedMultipleUsers>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedMultipleUsers&&const DeepCollectionEquality().equals(other._users, _users)&&const DeepCollectionEquality().equals(other._errors, _errors));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_users),const DeepCollectionEquality().hash(_errors));
+
+@override
+String toString() {
+  return 'UserState.loadedMultipleUsers(users: $users, errors: $errors)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $LoadedMultipleUsersCopyWith<$Res> implements $UserStateCopyWith<$Res> {
+  factory $LoadedMultipleUsersCopyWith(LoadedMultipleUsers value, $Res Function(LoadedMultipleUsers) _then) = _$LoadedMultipleUsersCopyWithImpl;
+@useResult
+$Res call({
+ Map<String, User> users, Map<String, String> errors
+});
+
+
+
+
+}
+/// @nodoc
+class _$LoadedMultipleUsersCopyWithImpl<$Res>
+    implements $LoadedMultipleUsersCopyWith<$Res> {
+  _$LoadedMultipleUsersCopyWithImpl(this._self, this._then);
+
+  final LoadedMultipleUsers _self;
+  final $Res Function(LoadedMultipleUsers) _then;
+
+/// Create a copy of UserState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? users = null,Object? errors = null,}) {
+  return _then(LoadedMultipleUsers(
+null == users ? _self._users : users // ignore: cast_nullable_to_non_nullable
+as Map<String, User>,null == errors ? _self._errors : errors // ignore: cast_nullable_to_non_nullable
+as Map<String, String>,
+  ));
+}
+
+
+}
+
 // dart format on

@@ -130,7 +130,7 @@ class TrainingExerciseRepository {
       final dynamic decodedData = jsonDecode(response.body);
       List<dynamic> jsonList;
 
-      // Kiểm tra xem dữ liệu trả về là List hay Map
+      // Check if the response is a List or a Map
       if (decodedData is List<dynamic>) {
         jsonList = decodedData;
       } else if (decodedData is Map<String, dynamic>) {
@@ -138,15 +138,19 @@ class TrainingExerciseRepository {
             decodedData['data'] is List<dynamic>) {
           jsonList = decodedData['data'];
         } else {
-          throw Exception(
-            'No valid "data" list found in response: $decodedData',
-          );
+          // Handle null or invalid data by returning an empty list
+          return [];
         }
       } else {
         throw Exception('Unexpected response format: $decodedData');
       }
 
-      // Ánh xạ danh sách JSON thành List<SportAthlete>
+      // Return empty list if data is empty
+      if (jsonList.isEmpty) {
+        return [];
+      }
+
+      // Map the JSON list to List<TrainingExercise>
       return jsonList.map((json) {
         if (json is Map<String, dynamic>) {
           return TrainingExercise.fromJson(json);
@@ -156,7 +160,7 @@ class TrainingExerciseRepository {
       }).toList();
     } else {
       throw Exception(
-        'Failed to get sport athletes by user ID: ${response.statusCode}',
+        'Failed to get training exercises by schedule ID: ${response.statusCode}',
       );
     }
   }

@@ -1,3 +1,4 @@
+import 'package:core/core.dart';
 import 'package:core/models/exercise/exercise.dart';
 import 'package:core/models/training_schedule/training_exercise.dart';
 import 'package:core/repositories/exercise/exercise_repository.dart';
@@ -38,9 +39,10 @@ sealed class TrainingExerciseState with _$TrainingExerciseState {
     List<TrainingExercise> trainingExercises,
   ) = LoadedTrainingExercises;
   const factory TrainingExerciseState.loadedTrainingExercisesWithExercises(
-    List<TrainingExercise> trainingExercises,
-    Map<String, Exercise> exercises,
-  ) = LoadedTrainingExercisesWithExercises;
+    List<TrainingExercise> trainingExercises, {
+    Map<String, TrainingSchedule>? traininngSchedules,
+    Map<String, Exercise>? exercises,
+  }) = LoadedTrainingExercisesWithExercises;
   const factory TrainingExerciseState.error(String message) =
       TrainingExercise_Error;
   const factory TrainingExerciseState.success(String message) =
@@ -51,10 +53,12 @@ class TrainingExerciseBloc
     extends Bloc<TrainingExerciseEvent, TrainingExerciseState> {
   final TrainingExerciseRepository trainingExerciseRepository;
   final ExerciseRepository exerciseRepository;
+  final TrainingScheduleRepository trainingScheduleRepository;
 
   TrainingExerciseBloc({
     required this.trainingExerciseRepository,
     required this.exerciseRepository,
+    required this.trainingScheduleRepository,
   }) : super(const TrainingExerciseState.initial()) {
     on<CreateTrainingExercise>(_onCreateTrainingExercise);
     on<GetTrainingExerciseById>(_onGetTrainingExerciseById);
@@ -152,16 +156,21 @@ class TrainingExerciseBloc
       final trainingExercises = await trainingExerciseRepository
           .getAllTrainingExerciseByScheduleId(event.scheduleId);
       final Map<String, Exercise> exercises = {};
+      final Map<String, TrainingSchedule> trainingSchedules = {};
       for (var trainingExercise in trainingExercises) {
         final exercise = await exerciseRepository.getExerciseById(
           trainingExercise.exerciseId,
         );
         exercises[trainingExercise.exerciseId] = exercise;
+        final trainingSchedule = await trainingScheduleRepository
+            .getTrainingScheduleById(trainingExercise.scheduleId);
+        trainingSchedules[trainingExercise.scheduleId] = trainingSchedule;
       }
       emit(
         TrainingExerciseState.loadedTrainingExercisesWithExercises(
           trainingExercises,
-          exercises,
+          traininngSchedules: trainingSchedules,
+          exercises: exercises,
         ),
       );
     } catch (e) {

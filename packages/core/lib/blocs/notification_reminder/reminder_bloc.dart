@@ -15,6 +15,7 @@ sealed class ReminderEvent with _$ReminderEvent {
   const factory ReminderEvent.updateReminder(String id, Reminder reminder) =
       UpdateReminder;
   const factory ReminderEvent.deleteReminder(String id) = DeleteReminder;
+  const factory ReminderEvent.getAllReminders({@Default(1) int page, @Default(10) int limit}) = GetAllReminders;
 }
 
 @freezed
@@ -27,6 +28,12 @@ sealed class ReminderState with _$ReminderState {
       LoadedReminders;
   const factory ReminderState.success(String message) = Reminder_Success;
   const factory ReminderState.error(String message) = Reminder_Error;
+  const factory ReminderState.loadedAllReminders(
+    List<Reminder> reminders,
+    int currentPage,
+    int limit,
+    bool hasMore,
+  ) = LoadedAllReminders;
 }
 
 class ReminderBloc extends Bloc<ReminderEvent, ReminderState> {
@@ -39,6 +46,22 @@ class ReminderBloc extends Bloc<ReminderEvent, ReminderState> {
     on<GetRemindersByUserId>(_onGetRemindersByUserId);
     on<UpdateReminder>(_onUpdateReminder);
     on<DeleteReminder>(_onDeleteReminder);
+     on<GetAllReminders>(_onGetAllReminders);
+  }
+
+   Future<void> _onGetAllReminders(GetAllReminders event, Emitter<ReminderState> emit) async {
+    emit(const ReminderState.loading());
+    try {
+      final result = await reminderRepository.getAllReminders(page: event.page, limit: event.limit);
+      emit(ReminderState.loadedAllReminders(
+        result['reminders'] as List<Reminder>,
+        event.page,
+        event.limit,
+        result['hasMore'] as bool,
+      ));
+    } catch (e) {
+      emit(ReminderState.error(e.toString()));
+    }
   }
 
   Future<void> _onCreateReminder(

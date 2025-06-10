@@ -115,10 +115,7 @@ class SportUserRepository {
   }
 
   // Update sport athlete
-  Future<SportUser> updateSportUser(
-    String id,
-    SportUser sportUser,
-  ) async {
+  Future<SportUser> updateSportUser(String id, SportUser sportUser) async {
     final response = await http.put(
       Uri.parse('$baseUrl/sport-users/$id'),
       headers: {'Content-Type': 'application/json'},

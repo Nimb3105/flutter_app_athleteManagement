@@ -15,8 +15,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: BlocProvider(
         create:
-            (context) => NotificationBloc(
-              notificationRepository: NotificationRepository(
+            (context) => CustomNotificationBloc(
+              notificationRepository: CustomNotificationRepository(
                 baseUrl: ApiConstants.baseUrl,
               ),
             ),
@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
       debugPrint('Timer: Gọi GetNotificationsByUserId cho userId: $testUserId');
-      context.read<NotificationBloc>().add(
+      context.read<CustomNotificationBloc>().add(
         const GetNotificationsByUserId(testUserId),
       );
     });
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
     debugPrint(
       'Khởi tạo: Gọi GetNotificationsByUserId cho userId: $testUserId',
     );
-    context.read<NotificationBloc>().add(
+    context.read<CustomNotificationBloc>().add(
       const GetNotificationsByUserId(testUserId),
     );
     _startTimer();
@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             const Text('Trang chủ vận động viên'),
             const SizedBox(width: 8),
-            BlocBuilder<NotificationBloc, NotificationState>(
+            BlocBuilder<CustomNotificationBloc, CustomNotificationState>(
               builder: (context, state) {
                 int unreadCount = 0;
                 if (state is LoadedNotifications) {
@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                         'Tạm dừng Timer và gửi MarkNotificationsAsRead',
                       );
                       _timer?.cancel(); // Tạm dừng Timer
-                      context.read<NotificationBloc>().add(
+                      context.read<CustomNotificationBloc>().add(
                         const MarkNotificationsAsRead(testUserId),
                       );
                       // Khởi động lại Timer sau 2 giây
@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body:
           _showNotifications
-              ? BlocBuilder<NotificationBloc, NotificationState>(
+              ? BlocBuilder<CustomNotificationBloc, CustomNotificationState>(
                 builder: (context, state) {
                   debugPrint('Trạng thái thân trang: ${state.runtimeType}');
                   if (state is Notification_Initial) {

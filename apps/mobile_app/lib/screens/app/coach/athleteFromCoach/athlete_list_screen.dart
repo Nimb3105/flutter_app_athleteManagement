@@ -1,4 +1,3 @@
-
 // import 'package:flutter/material.dart';
 // import 'package:core/core.dart';
 // import 'package:mobile_app/screens/app/coach/athleteFromCoach/athlete_detail.dart';
@@ -231,7 +230,6 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
 import 'package:mobile_app/screens/app/coach/athleteFromCoach/athlete_detail.dart';
@@ -293,7 +291,11 @@ class _AthleteListViewState extends State<AthleteListView> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.people_outline, size: 64, color: Colors.grey[400]),
+                    Icon(
+                      Icons.people_outline,
+                      size: 64,
+                      color: Colors.grey[400],
+                    ),
                     const SizedBox(height: 16),
                     Text(
                       'Chưa có vận động viên nào',
@@ -317,7 +319,8 @@ class _AthleteListViewState extends State<AthleteListView> {
               itemCount: state.athletes.length,
               itemBuilder: (context, index) {
                 final athlete = state.athletes[index];
-                final fullName = _userFullNames[athlete.userId] ?? 'Đang tải...';
+                final fullName =
+                    _userFullNames[athlete.userId] ?? 'Đang tải...';
                 final athleteType = athlete.athleteType;
 
                 return Card(
@@ -359,11 +362,17 @@ class _AthleteListViewState extends State<AthleteListView> {
                                       ),
                                       decoration: BoxDecoration(
                                         // ignore: deprecated_member_use
-                                        color: _getTypeColor(athleteType).withOpacity(0.1),
+                                        color: _getTypeColor(
+                                          athleteType,
+                                        // ignore: deprecated_member_use
+                                        ).withOpacity(0.1),
                                         borderRadius: BorderRadius.circular(12),
                                         border: Border.all(
                                           // ignore: deprecated_member_use
-                                          color: _getTypeColor(athleteType).withOpacity(0.5),
+                                          color: _getTypeColor(
+                                            athleteType,
+                                          // ignore: deprecated_member_use
+                                          ).withOpacity(0.5),
                                           width: 1,
                                         ),
                                       ),
@@ -412,7 +421,11 @@ class _AthleteListViewState extends State<AthleteListView> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.error_outline, color: Colors.redAccent, size: 48),
+                  const Icon(
+                    Icons.error_outline,
+                    color: Colors.redAccent,
+                    size: 48,
+                  ),
                   const SizedBox(height: 16),
                   Text(
                     'Đã xảy ra lỗi',
@@ -431,7 +444,9 @@ class _AthleteListViewState extends State<AthleteListView> {
                   const SizedBox(height: 24),
                   ElevatedButton.icon(
                     onPressed: () {
-                      context.read<AthleteBloc>().add(const AthleteEvent.getAllAthletes());
+                      context.read<AthleteBloc>().add(
+                        const AthleteEvent.getAllAthletes(),
+                      );
                     },
                     icon: const Icon(Icons.refresh),
                     label: const Text('Thử lại'),

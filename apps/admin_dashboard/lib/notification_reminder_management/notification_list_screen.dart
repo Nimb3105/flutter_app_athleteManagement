@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
 
-class NutritionPlanListScreen extends StatelessWidget {
-  const NutritionPlanListScreen({super.key});
+class CustomNotificationListScreen extends StatelessWidget {
+  const CustomNotificationListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,10 +10,10 @@ class NutritionPlanListScreen extends StatelessWidget {
       providers: [
         BlocProvider(
           create:
-              (context) => NutritionPlanBloc(
-                nutritionPlanRepository: RepositoryProvider.of(context),
+              (context) => CustomNotificationBloc(
+                notificationRepository: RepositoryProvider.of(context),
               )..add(
-                const NutritionPlanEvent.getAllNutritionPlans(
+                const CustomNotificationEvent.getAllCustomNotifications(
                   page: 1,
                   limit: 10,
                 ),
@@ -22,19 +22,19 @@ class NutritionPlanListScreen extends StatelessWidget {
       ],
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: BlocConsumer<NutritionPlanBloc, NutritionPlanState>(
+        child: BlocConsumer<CustomNotificationBloc, CustomNotificationState>(
           listener: (context, state) {
-            if (state is NutritionPlan_Success) {
+            if (state is Notification_Success) {
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(SnackBar(content: Text(state.message)));
-              context.read<NutritionPlanBloc>().add(
-                const NutritionPlanEvent.getAllNutritionPlans(
+              context.read<CustomNotificationBloc>().add(
+                const CustomNotificationEvent.getAllCustomNotifications(
                   page: 1,
                   limit: 10,
                 ),
               ); // Refresh danh sách sau khi xóa
-            } else if (state is NutritionPlan_Error) {
+            } else if (state is Notification_Error) {
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(SnackBar(content: Text('Lỗi: ${state.message}')));
@@ -43,12 +43,12 @@ class NutritionPlanListScreen extends StatelessWidget {
           builder: (context, state) {
             int currentPage = 1;
             bool hasMore = true;
-            List<NutritionPlan> nutritionPlans = [];
+            List<CustomNotification> notifications = [];
 
-            if (state is LoadedNutritionPlans) {
-              currentPage = state.currentPage;
+            if (state is LoadedCustomNotification) {
+              currentPage = state.curentPage;
               hasMore = state.hasMore;
-              nutritionPlans = state.nutritionPlans;
+              notifications = state.customNotifications;
             }
 
             return Column(
@@ -60,19 +60,19 @@ class NutritionPlanListScreen extends StatelessWidget {
                       columns: const [
                         DataColumn(
                           label: Text(
-                            'Tên kế hoach dinh dưỡng',
+                            'Nội dung',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                         DataColumn(
                           label: Text(
-                            'Ngày tạo',
+                            'Trạng thái',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                         DataColumn(
                           label: Text(
-                            'Ngày cập nhật',
+                            'Ngày gửi',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -84,16 +84,14 @@ class NutritionPlanListScreen extends StatelessWidget {
                         ),
                       ],
                       rows:
-                          nutritionPlans.isEmpty &&
-                                  state is! NutritionPlan_Loading
+                          notifications.isEmpty &&
+                                  state is! Notification_Loading
                               ? [
                                 const DataRow(
                                   cells: [
                                     DataCell(
                                       Center(
-                                        child: Text(
-                                          'không có kế hoạch dinh dưỡng nào',
-                                        ),
+                                        child: Text('Không có thông báo nào'),
                                       ),
                                     ),
                                     DataCell(SizedBox.shrink()),
@@ -102,22 +100,14 @@ class NutritionPlanListScreen extends StatelessWidget {
                                   ],
                                 ),
                               ]
-                              : nutritionPlans.map((nutritionPlan) {
+                              : notifications.map((notification) {
                                 return DataRow(
                                   cells: [
-                                    DataCell(Text(nutritionPlan.name)),
+                                    DataCell(Text(notification.content)),
+                                    DataCell(Text(notification.status)),
                                     DataCell(
                                       Text(
-                                        formatUtcToLocal(
-                                          nutritionPlan.createdAt,
-                                        ),
-                                      ),
-                                    ),
-                                    DataCell(
-                                      Text(
-                                        formatUtcToLocal(
-                                          nutritionPlan.updatedAt,
-                                        ),
+                                        formatUtcToLocal(notification.sentDate),
                                       ),
                                     ),
                                     DataCell(
@@ -126,7 +116,7 @@ class NutritionPlanListScreen extends StatelessWidget {
                                         children: [
                                           IconButton(
                                             icon: const Icon(
-                                              Icons.edit,
+                                              Icons.check_circle,
                                               color: Color.fromARGB(
                                                 255,
                                                 174,
@@ -134,18 +124,25 @@ class NutritionPlanListScreen extends StatelessWidget {
                                                 186,
                                               ),
                                             ),
-                                            tooltip: 'Sửa',
-                                            onPressed: () {
-                                              ScaffoldMessenger.of(
-                                                context,
-                                              ).showSnackBar(
-                                                const SnackBar(
-                                                  content: Text(
-                                                    'Chức năng sửa đang được phát triển',
-                                                  ),
-                                                ),
-                                              );
-                                            },
+                                            tooltip: 'Đánh dấu đã đọc',
+                                            onPressed:
+                                                notification.status == 'Unread'
+                                                    ? () {
+                                                      if (notification.userId !=
+                                                          null) {
+                                                        context
+                                                            .read<
+                                                              CustomNotificationBloc
+                                                            >()
+                                                            .add(
+                                                              CustomNotificationEvent.markNotificationsAsRead(
+                                                                notification
+                                                                    .userId!,
+                                                              ),
+                                                            );
+                                                      }
+                                                    }
+                                                    : null,
                                           ),
                                           IconButton(
                                             icon: const Icon(
@@ -154,7 +151,7 @@ class NutritionPlanListScreen extends StatelessWidget {
                                             ),
                                             tooltip: 'Xóa',
                                             onPressed: () {
-                                              if (nutritionPlan.id != null) {
+                                              if (notification.id != null) {
                                                 showDialog(
                                                   context: context,
                                                   builder:
@@ -163,7 +160,7 @@ class NutritionPlanListScreen extends StatelessWidget {
                                                           'Xác nhận xóa',
                                                         ),
                                                         content: Text(
-                                                          'Bạn có chắc muốn xóa món ăn ${nutritionPlan.name}?',
+                                                          'Bạn có chắc muốn xóa thông báo "${notification.content}"?',
                                                         ),
                                                         actions: [
                                                           TextButton(
@@ -180,11 +177,11 @@ class NutritionPlanListScreen extends StatelessWidget {
                                                             onPressed: () {
                                                               context
                                                                   .read<
-                                                                    NutritionPlanBloc
+                                                                    CustomNotificationBloc
                                                                   >()
                                                                   .add(
-                                                                    NutritionPlanEvent.deleteNutritionPlan(
-                                                                      nutritionPlan
+                                                                    CustomNotificationEvent.deleteNotification(
+                                                                      notification
                                                                           .id!,
                                                                     ),
                                                                   );
@@ -215,14 +212,14 @@ class NutritionPlanListScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (state is NutritionPlan_Loading)
+                if (state is Notification_Loading)
                   const Center(child: CircularProgressIndicator()),
-                if (state is NutritionPlan_Initial)
+                if (state is Notification_Initial)
                   const Center(child: Text('Khởi tạo...')),
-                if (state is LoadedNutritionPlan)
-                  const Center(child: Text('Không hiển thị món ăn đơn')),
-                if (state is! NutritionPlan_Loading &&
-                    state is! NutritionPlan_Initial)
+                if (state is LoadedNotification)
+                  const Center(child: Text('Không hiển thị thông báo đơn')),
+                if (state is! Notification_Loading &&
+                    state is! Notification_Initial)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Row(
@@ -232,8 +229,8 @@ class NutritionPlanListScreen extends StatelessWidget {
                           onPressed:
                               currentPage > 1
                                   ? () {
-                                    context.read<NutritionPlanBloc>().add(
-                                      NutritionPlanEvent.getAllNutritionPlans(
+                                    context.read<CustomNotificationBloc>().add(
+                                      CustomNotificationEvent.getAllCustomNotifications(
                                         page: currentPage - 1,
                                         limit: 10,
                                       ),
@@ -249,8 +246,8 @@ class NutritionPlanListScreen extends StatelessWidget {
                           onPressed:
                               hasMore
                                   ? () {
-                                    context.read<NutritionPlanBloc>().add(
-                                      NutritionPlanEvent.getAllNutritionPlans(
+                                    context.read<CustomNotificationBloc>().add(
+                                      CustomNotificationEvent.getAllCustomNotifications(
                                         page: currentPage + 1,
                                         limit: 10,
                                       ),

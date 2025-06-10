@@ -633,7 +633,7 @@ $PlanFoodCopyWith<$Res> get planFood {
 
 
 class LoadedPlanFoods implements PlanFoodState {
-  const LoadedPlanFoods(final  List<PlanFood> planFoods, this.currentPage, this.limit, this.hasMore): _planFoods = planFoods;
+  const LoadedPlanFoods(final  List<PlanFood> planFoods, this.currentPage, this.limit, this.hasMore, {final  Map<String, NutritionPlan>? nutritionPlans, final  Map<String, Food>? foods}): _planFoods = planFoods,_nutritionPlans = nutritionPlans,_foods = foods;
   
 
  final  List<PlanFood> _planFoods;
@@ -646,6 +646,24 @@ class LoadedPlanFoods implements PlanFoodState {
  final  int currentPage;
  final  int limit;
  final  bool hasMore;
+ final  Map<String, NutritionPlan>? _nutritionPlans;
+ Map<String, NutritionPlan>? get nutritionPlans {
+  final value = _nutritionPlans;
+  if (value == null) return null;
+  if (_nutritionPlans is EqualUnmodifiableMapView) return _nutritionPlans;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(value);
+}
+
+ final  Map<String, Food>? _foods;
+ Map<String, Food>? get foods {
+  final value = _foods;
+  if (value == null) return null;
+  if (_foods is EqualUnmodifiableMapView) return _foods;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(value);
+}
+
 
 /// Create a copy of PlanFoodState
 /// with the given fields replaced by the non-null parameter values.
@@ -657,16 +675,16 @@ $LoadedPlanFoodsCopyWith<LoadedPlanFoods> get copyWith => _$LoadedPlanFoodsCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedPlanFoods&&const DeepCollectionEquality().equals(other._planFoods, _planFoods)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedPlanFoods&&const DeepCollectionEquality().equals(other._planFoods, _planFoods)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore)&&const DeepCollectionEquality().equals(other._nutritionPlans, _nutritionPlans)&&const DeepCollectionEquality().equals(other._foods, _foods));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_planFoods),currentPage,limit,hasMore);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_planFoods),currentPage,limit,hasMore,const DeepCollectionEquality().hash(_nutritionPlans),const DeepCollectionEquality().hash(_foods));
 
 @override
 String toString() {
-  return 'PlanFoodState.loadedPlanFoods(planFoods: $planFoods, currentPage: $currentPage, limit: $limit, hasMore: $hasMore)';
+  return 'PlanFoodState.loadedPlanFoods(planFoods: $planFoods, currentPage: $currentPage, limit: $limit, hasMore: $hasMore, nutritionPlans: $nutritionPlans, foods: $foods)';
 }
 
 
@@ -677,7 +695,7 @@ abstract mixin class $LoadedPlanFoodsCopyWith<$Res> implements $PlanFoodStateCop
   factory $LoadedPlanFoodsCopyWith(LoadedPlanFoods value, $Res Function(LoadedPlanFoods) _then) = _$LoadedPlanFoodsCopyWithImpl;
 @useResult
 $Res call({
- List<PlanFood> planFoods, int currentPage, int limit, bool hasMore
+ List<PlanFood> planFoods, int currentPage, int limit, bool hasMore, Map<String, NutritionPlan>? nutritionPlans, Map<String, Food>? foods
 });
 
 
@@ -694,13 +712,15 @@ class _$LoadedPlanFoodsCopyWithImpl<$Res>
 
 /// Create a copy of PlanFoodState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? planFoods = null,Object? currentPage = null,Object? limit = null,Object? hasMore = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? planFoods = null,Object? currentPage = null,Object? limit = null,Object? hasMore = null,Object? nutritionPlans = freezed,Object? foods = freezed,}) {
   return _then(LoadedPlanFoods(
 null == planFoods ? _self._planFoods : planFoods // ignore: cast_nullable_to_non_nullable
 as List<PlanFood>,null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
 as int,null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
 as int,null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,nutritionPlans: freezed == nutritionPlans ? _self._nutritionPlans : nutritionPlans // ignore: cast_nullable_to_non_nullable
+as Map<String, NutritionPlan>?,foods: freezed == foods ? _self._foods : foods // ignore: cast_nullable_to_non_nullable
+as Map<String, Food>?,
   ));
 }
 

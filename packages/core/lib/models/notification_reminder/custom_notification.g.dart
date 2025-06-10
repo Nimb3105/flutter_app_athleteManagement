@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'notification.dart';
+part of 'custom_notification.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_Notification _$NotificationFromJson(
+_CustomNotification _$CustomNotificationFromJson(
   Map<String, dynamic> json,
-) => _Notification(
+) => _CustomNotification(
   id: json['id'] as String?,
   userId: json['userId'] as String?,
   scheduleId: json['scheduleId'] as String?,
@@ -21,7 +21,7 @@ _Notification _$NotificationFromJson(
   updatedAt: const UtcDateTimeConverter().fromJson(json['updatedAt'] as String),
 );
 
-Map<String, dynamic> _$NotificationToJson(_Notification instance) =>
+Map<String, dynamic> _$CustomNotificationToJson(_CustomNotification instance) =>
     <String, dynamic>{
       'id': instance.id,
       'userId': instance.userId,

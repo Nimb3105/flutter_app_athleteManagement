@@ -7,6 +7,30 @@ class ReminderRepository {
   final String baseUrl;
 
   ReminderRepository({required this.baseUrl});
+  
+  Future<Map<String, dynamic>> getAllReminders({int page = 1, int limit = 10}) async {
+    
+    final response = await http.get(
+      Uri.parse('$baseUrl/reminders?page=$page&limit=$limit'),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      if (data['data'] != null && data['data'] is List<dynamic>) {
+        final List<dynamic> jsonList = data['data'];
+        final totalCount = data['totalCount'] as int? ?? 0;
+        final reminders = jsonList.map((json) => Reminder.fromJson(json as Map<String, dynamic>)).toList();
+        final hasMore = (page * limit) < totalCount;
+        return {'reminders': reminders, 'hasMore': hasMore};
+      } else {
+        throw Exception('No valid "data" list found in response: $data');
+      }
+    } else {
+      throw Exception('Failed to get reminders: ${response.statusCode}');
+    }
+  }
+
 
   // Create a new reminder
   Future<Reminder> createReminder(Reminder reminder) async {

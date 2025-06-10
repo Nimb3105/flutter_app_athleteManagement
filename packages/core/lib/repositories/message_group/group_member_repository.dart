@@ -48,7 +48,7 @@ class GroupMemberRepository {
   }
 
   // Get group member by user ID
-  Future<GroupMember> getGroupMemberByUserId(String userId) async {
+  Future<List<GroupMember>> getGroupMemberByUserId(String userId) async {
     final response = await http.get(
       Uri.parse('$baseUrl/group-members/user/$userId'),
       headers: {'Content-Type': 'application/json'},
@@ -56,14 +56,17 @@ class GroupMemberRepository {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
-      if (data['data'] != null && data['data'] is Map<String, dynamic>) {
-        return GroupMember.fromJson(data['data'] as Map<String, dynamic>);
+      if (data['data'] != null && data['data'] is List<dynamic>) {
+        final List<dynamic> jsonList = data['data'];
+        return jsonList
+            .map((json) => GroupMember.fromJson(json as Map<String, dynamic>))
+            .toList();
       } else {
-        throw Exception('No valid "data" object found in response: $data');
+        throw Exception('No valid "data" list found in response: $data');
       }
     } else {
       throw Exception(
-        'Failed to get group member by user ID: ${response.statusCode}',
+        'Failed to get team members by user ID: ${response.statusCode}',
       );
     }
   }

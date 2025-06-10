@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Health {
 
- String? get id; String get userId; double get height; double get weight; double get bmi; String get bloodType;@UtcDateTimeConverter() DateTime get createdAt;@UtcDateTimeConverter() DateTime get updatedAt;
+ String? get id; String get userId; double get height; double get weight; double get bmi; String get bloodType;@UtcDateTimeConverter() DateTime get date;@UtcDateTimeConverter() DateTime get createdAt;@UtcDateTimeConverter() DateTime get updatedAt;
 /// Create a copy of Health
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $HealthCopyWith<Health> get copyWith => _$HealthCopyWithImpl<Health>(this as Hea
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Health&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.height, height) || other.height == height)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.bmi, bmi) || other.bmi == bmi)&&(identical(other.bloodType, bloodType) || other.bloodType == bloodType)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Health&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.height, height) || other.height == height)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.bmi, bmi) || other.bmi == bmi)&&(identical(other.bloodType, bloodType) || other.bloodType == bloodType)&&(identical(other.date, date) || other.date == date)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,height,weight,bmi,bloodType,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,userId,height,weight,bmi,bloodType,date,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Health(id: $id, userId: $userId, height: $height, weight: $weight, bmi: $bmi, bloodType: $bloodType, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Health(id: $id, userId: $userId, height: $height, weight: $weight, bmi: $bmi, bloodType: $bloodType, date: $date, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $HealthCopyWith<$Res>  {
   factory $HealthCopyWith(Health value, $Res Function(Health) _then) = _$HealthCopyWithImpl;
 @useResult
 $Res call({
- String? id, String userId, double height, double weight, double bmi, String bloodType,@UtcDateTimeConverter() DateTime createdAt,@UtcDateTimeConverter() DateTime updatedAt
+ String? id, String userId, double height, double weight, double bmi, String bloodType,@UtcDateTimeConverter() DateTime date,@UtcDateTimeConverter() DateTime createdAt,@UtcDateTimeConverter() DateTime updatedAt
 });
 
 
@@ -66,7 +66,7 @@ class _$HealthCopyWithImpl<$Res>
 
 /// Create a copy of Health
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? userId = null,Object? height = null,Object? weight = null,Object? bmi = null,Object? bloodType = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? userId = null,Object? height = null,Object? weight = null,Object? bmi = null,Object? bloodType = null,Object? date = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -74,7 +74,8 @@ as String,height: null == height ? _self.height : height // ignore: cast_nullabl
 as double,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
 as double,bmi: null == bmi ? _self.bmi : bmi // ignore: cast_nullable_to_non_nullable
 as double,bloodType: null == bloodType ? _self.bloodType : bloodType // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as DateTime,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
@@ -87,7 +88,7 @@ as DateTime,
 @JsonSerializable()
 
 class _Health implements Health {
-  const _Health({required this.id, required this.userId, required this.height, required this.weight, required this.bmi, required this.bloodType, @UtcDateTimeConverter() required this.createdAt, @UtcDateTimeConverter() required this.updatedAt});
+  const _Health({required this.id, required this.userId, required this.height, required this.weight, required this.bmi, required this.bloodType, @UtcDateTimeConverter() required this.date, @UtcDateTimeConverter() required this.createdAt, @UtcDateTimeConverter() required this.updatedAt});
   factory _Health.fromJson(Map<String, dynamic> json) => _$HealthFromJson(json);
 
 @override final  String? id;
@@ -96,6 +97,7 @@ class _Health implements Health {
 @override final  double weight;
 @override final  double bmi;
 @override final  String bloodType;
+@override@UtcDateTimeConverter() final  DateTime date;
 @override@UtcDateTimeConverter() final  DateTime createdAt;
 @override@UtcDateTimeConverter() final  DateTime updatedAt;
 
@@ -112,16 +114,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Health&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.height, height) || other.height == height)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.bmi, bmi) || other.bmi == bmi)&&(identical(other.bloodType, bloodType) || other.bloodType == bloodType)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Health&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.height, height) || other.height == height)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.bmi, bmi) || other.bmi == bmi)&&(identical(other.bloodType, bloodType) || other.bloodType == bloodType)&&(identical(other.date, date) || other.date == date)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,height,weight,bmi,bloodType,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,userId,height,weight,bmi,bloodType,date,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Health(id: $id, userId: $userId, height: $height, weight: $weight, bmi: $bmi, bloodType: $bloodType, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Health(id: $id, userId: $userId, height: $height, weight: $weight, bmi: $bmi, bloodType: $bloodType, date: $date, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -132,7 +134,7 @@ abstract mixin class _$HealthCopyWith<$Res> implements $HealthCopyWith<$Res> {
   factory _$HealthCopyWith(_Health value, $Res Function(_Health) _then) = __$HealthCopyWithImpl;
 @override @useResult
 $Res call({
- String? id, String userId, double height, double weight, double bmi, String bloodType,@UtcDateTimeConverter() DateTime createdAt,@UtcDateTimeConverter() DateTime updatedAt
+ String? id, String userId, double height, double weight, double bmi, String bloodType,@UtcDateTimeConverter() DateTime date,@UtcDateTimeConverter() DateTime createdAt,@UtcDateTimeConverter() DateTime updatedAt
 });
 
 
@@ -149,7 +151,7 @@ class __$HealthCopyWithImpl<$Res>
 
 /// Create a copy of Health
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? userId = null,Object? height = null,Object? weight = null,Object? bmi = null,Object? bloodType = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? userId = null,Object? height = null,Object? weight = null,Object? bmi = null,Object? bloodType = null,Object? date = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_Health(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -157,7 +159,8 @@ as String,height: null == height ? _self.height : height // ignore: cast_nullabl
 as double,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
 as double,bmi: null == bmi ? _self.bmi : bmi // ignore: cast_nullable_to_non_nullable
 as double,bloodType: null == bloodType ? _self.bloodType : bloodType // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as DateTime,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));

@@ -699,7 +699,7 @@ $TeamMemberCopyWith<$Res> get teamMember {
 
 
 class LoadedTeamMembers implements TeamMemberState {
-  const LoadedTeamMembers(final  List<TeamMember> teamMembers, this.currentPage, this.limit, this.hasMore): _teamMembers = teamMembers;
+  const LoadedTeamMembers(final  List<TeamMember> teamMembers, this.currentPage, this.limit, this.hasMore, {final  Map<String, Team>? teams, final  Map<String, Sport>? sports}): _teamMembers = teamMembers,_teams = teams,_sports = sports;
   
 
  final  List<TeamMember> _teamMembers;
@@ -712,6 +712,24 @@ class LoadedTeamMembers implements TeamMemberState {
  final  int currentPage;
  final  int limit;
  final  bool hasMore;
+ final  Map<String, Team>? _teams;
+ Map<String, Team>? get teams {
+  final value = _teams;
+  if (value == null) return null;
+  if (_teams is EqualUnmodifiableMapView) return _teams;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(value);
+}
+
+ final  Map<String, Sport>? _sports;
+ Map<String, Sport>? get sports {
+  final value = _sports;
+  if (value == null) return null;
+  if (_sports is EqualUnmodifiableMapView) return _sports;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(value);
+}
+
 
 /// Create a copy of TeamMemberState
 /// with the given fields replaced by the non-null parameter values.
@@ -723,16 +741,16 @@ $LoadedTeamMembersCopyWith<LoadedTeamMembers> get copyWith => _$LoadedTeamMember
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedTeamMembers&&const DeepCollectionEquality().equals(other._teamMembers, _teamMembers)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedTeamMembers&&const DeepCollectionEquality().equals(other._teamMembers, _teamMembers)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore)&&const DeepCollectionEquality().equals(other._teams, _teams)&&const DeepCollectionEquality().equals(other._sports, _sports));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_teamMembers),currentPage,limit,hasMore);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_teamMembers),currentPage,limit,hasMore,const DeepCollectionEquality().hash(_teams),const DeepCollectionEquality().hash(_sports));
 
 @override
 String toString() {
-  return 'TeamMemberState.loadedTeamMembers(teamMembers: $teamMembers, currentPage: $currentPage, limit: $limit, hasMore: $hasMore)';
+  return 'TeamMemberState.loadedTeamMembers(teamMembers: $teamMembers, currentPage: $currentPage, limit: $limit, hasMore: $hasMore, teams: $teams, sports: $sports)';
 }
 
 
@@ -743,7 +761,7 @@ abstract mixin class $LoadedTeamMembersCopyWith<$Res> implements $TeamMemberStat
   factory $LoadedTeamMembersCopyWith(LoadedTeamMembers value, $Res Function(LoadedTeamMembers) _then) = _$LoadedTeamMembersCopyWithImpl;
 @useResult
 $Res call({
- List<TeamMember> teamMembers, int currentPage, int limit, bool hasMore
+ List<TeamMember> teamMembers, int currentPage, int limit, bool hasMore, Map<String, Team>? teams, Map<String, Sport>? sports
 });
 
 
@@ -760,13 +778,15 @@ class _$LoadedTeamMembersCopyWithImpl<$Res>
 
 /// Create a copy of TeamMemberState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? teamMembers = null,Object? currentPage = null,Object? limit = null,Object? hasMore = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? teamMembers = null,Object? currentPage = null,Object? limit = null,Object? hasMore = null,Object? teams = freezed,Object? sports = freezed,}) {
   return _then(LoadedTeamMembers(
 null == teamMembers ? _self._teamMembers : teamMembers // ignore: cast_nullable_to_non_nullable
 as List<TeamMember>,null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
 as int,null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
 as int,null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,teams: freezed == teams ? _self._teams : teams // ignore: cast_nullable_to_non_nullable
+as Map<String, Team>?,sports: freezed == sports ? _self._sports : sports // ignore: cast_nullable_to_non_nullable
+as Map<String, Sport>?,
   ));
 }
 

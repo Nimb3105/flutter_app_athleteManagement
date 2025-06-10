@@ -13,6 +13,7 @@ abstract class Health with _$Health {
     required double weight,
     required double bmi,
     required String bloodType,
+    @UtcDateTimeConverter() required DateTime date,
     @UtcDateTimeConverter() required DateTime createdAt,
     @UtcDateTimeConverter() required DateTime updatedAt,
   }) = _Health;

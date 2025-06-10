@@ -937,4 +937,92 @@ as String,
 
 }
 
+/// @nodoc
+
+
+class LoadedMultipleSportUsers implements SportUserState {
+  const LoadedMultipleSportUsers(final  Map<String, List<SportUser>> sportUsers, final  Map<String, Sport> sports, final  Map<String, String> errors): _sportUsers = sportUsers,_sports = sports,_errors = errors;
+  
+
+ final  Map<String, List<SportUser>> _sportUsers;
+ Map<String, List<SportUser>> get sportUsers {
+  if (_sportUsers is EqualUnmodifiableMapView) return _sportUsers;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_sportUsers);
+}
+
+ final  Map<String, Sport> _sports;
+ Map<String, Sport> get sports {
+  if (_sports is EqualUnmodifiableMapView) return _sports;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_sports);
+}
+
+ final  Map<String, String> _errors;
+ Map<String, String> get errors {
+  if (_errors is EqualUnmodifiableMapView) return _errors;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_errors);
+}
+
+
+/// Create a copy of SportUserState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$LoadedMultipleSportUsersCopyWith<LoadedMultipleSportUsers> get copyWith => _$LoadedMultipleSportUsersCopyWithImpl<LoadedMultipleSportUsers>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedMultipleSportUsers&&const DeepCollectionEquality().equals(other._sportUsers, _sportUsers)&&const DeepCollectionEquality().equals(other._sports, _sports)&&const DeepCollectionEquality().equals(other._errors, _errors));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_sportUsers),const DeepCollectionEquality().hash(_sports),const DeepCollectionEquality().hash(_errors));
+
+@override
+String toString() {
+  return 'SportUserState.loadedMultipleSportUsers(sportUsers: $sportUsers, sports: $sports, errors: $errors)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $LoadedMultipleSportUsersCopyWith<$Res> implements $SportUserStateCopyWith<$Res> {
+  factory $LoadedMultipleSportUsersCopyWith(LoadedMultipleSportUsers value, $Res Function(LoadedMultipleSportUsers) _then) = _$LoadedMultipleSportUsersCopyWithImpl;
+@useResult
+$Res call({
+ Map<String, List<SportUser>> sportUsers, Map<String, Sport> sports, Map<String, String> errors
+});
+
+
+
+
+}
+/// @nodoc
+class _$LoadedMultipleSportUsersCopyWithImpl<$Res>
+    implements $LoadedMultipleSportUsersCopyWith<$Res> {
+  _$LoadedMultipleSportUsersCopyWithImpl(this._self, this._then);
+
+  final LoadedMultipleSportUsers _self;
+  final $Res Function(LoadedMultipleSportUsers) _then;
+
+/// Create a copy of SportUserState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? sportUsers = null,Object? sports = null,Object? errors = null,}) {
+  return _then(LoadedMultipleSportUsers(
+null == sportUsers ? _self._sportUsers : sportUsers // ignore: cast_nullable_to_non_nullable
+as Map<String, List<SportUser>>,null == sports ? _self._sports : sports // ignore: cast_nullable_to_non_nullable
+as Map<String, Sport>,null == errors ? _self._errors : errors // ignore: cast_nullable_to_non_nullable
+as Map<String, String>,
+  ));
+}
+
+
+}
+
 // dart format on
