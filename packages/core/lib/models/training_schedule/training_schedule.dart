@@ -1,4 +1,5 @@
 import 'package:core/models/converters/converters.dart';
+import 'package:core/models/training_schedule/training_exercise.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'training_schedule.freezed.dart';
@@ -16,6 +17,9 @@ abstract class TrainingSchedule with _$TrainingSchedule {
     required String type,
     required String notes,
     required String createdBy,
+    required double? progress,
+    String? athleteId,
+    @Default([]) List<TrainingExercise> trainingExercises,
     @UtcDateTimeConverter() required DateTime? createdAt,
     @UtcDateTimeConverter() required DateTime? updatedAt,
   }) = _TrainingSchedule;

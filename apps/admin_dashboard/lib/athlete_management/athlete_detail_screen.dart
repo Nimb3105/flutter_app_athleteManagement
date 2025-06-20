@@ -4,8 +4,13 @@ import 'package:intl/intl.dart';
 
 class AthleteDetailScreen extends StatelessWidget {
   final String userId;
+  final String sportId;
 
-  const AthleteDetailScreen({super.key, required this.userId});
+  const AthleteDetailScreen({
+    super.key,
+    required this.userId,
+    required this.sportId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +22,6 @@ class AthleteDetailScreen extends StatelessWidget {
     );
     final healthBloc = HealthBloc(
       healthRepository: RepositoryProvider.of(context),
-    );
-    final progressBloc = ProgressBloc(
-      progressRepository: RepositoryProvider.of(context),
     );
     final userMatchBloc = UserMatchBloc(
       userMatchRepository: RepositoryProvider.of(context),
@@ -34,14 +36,10 @@ class AthleteDetailScreen extends StatelessWidget {
     final nutritionPlanBloc = NutritionPlanBloc(
       nutritionPlanRepository: RepositoryProvider.of(context),
     );
-    final performanceBloc = PerformanceBloc(
-      performanceRepository: RepositoryProvider.of(context),
-    );
     final coachAthleteBloc = CoachAthleteBloc(
       coachAthleteRepository: RepositoryProvider.of(context),
-    );
-    final sportUserBloc = SportUserBloc(
-      sportUserRepository: RepositoryProvider.of(context),
+      athleteRepository: RepositoryProvider.of(context),
+      userRepository: RepositoryProvider.of(context),
       sportRepository: RepositoryProvider.of(context),
     );
     final sportBloc = SportBloc(
@@ -91,13 +89,10 @@ class AthleteDetailScreen extends StatelessWidget {
         BlocProvider(create: (context) => achievementBloc),
         BlocProvider(create: (context) => injuryBloc),
         BlocProvider(create: (context) => healthBloc),
-        BlocProvider(create: (context) => progressBloc),
         BlocProvider(create: (context) => userMatchBloc),
         BlocProvider(create: (context) => teamMemberBloc),
         BlocProvider(create: (context) => nutritionPlanBloc),
-        BlocProvider(create: (context) => performanceBloc),
         BlocProvider(create: (context) => coachAthleteBloc),
-        BlocProvider(create: (context) => sportUserBloc),
         BlocProvider(create: (context) => sportBloc),
         BlocProvider(create: (context) => userBloc),
         BlocProvider(create: (context) => athleteBloc),
@@ -121,18 +116,16 @@ class AthleteDetailScreen extends StatelessWidget {
           achievementBloc.add(AchievementEvent.getAchievementByUserId(userId));
           injuryBloc.add(InjuryEvent.getInjuryByUserId(userId));
           healthBloc.add(HealthEvent.getHealthByUserId(userId));
-          progressBloc.add(ProgressEvent.getProgressesByUserId(userId));
+          //progressBloc.add(ProgressEvent.getProgressesByUserId(userId));
           userMatchBloc.add(UserMatchEvent.getUserMatchByUserId(userId));
           teamMemberBloc.add(TeamMemberEvent.getTeamMembersByUserId(userId));
           nutritionPlanBloc.add(
             NutritionPlanEvent.getNutritionPlansByUserId(userId),
           );
-          performanceBloc.add(PerformanceEvent.getPerformancesByUserId(userId));
-          coachAthleteBloc.add(CoachAthleteEvent.getAllByAthleteId(userId));
-          sportBloc.add(SportEvent.getAllSports());
+          coachAthleteBloc.add(CoachAthleteEvent.getByAthleteId(userId));
+          sportBloc.add(SportEvent.getSportById(sportId));
           athleteBloc.add(AthleteEvent.getAthleteByUserId(userId));
           userBloc.add(UserEvent.getUserById(userId));
-          sportUserBloc.add(SportUserEvent.getAllSportUserByUserId(userId));
           groupMemberBloc.add(GroupMemberEvent.getGroupMembersByUserId(userId));
           trainingScheduleUserBloc.add(
             TrainingScheduleUserEvent.getAllTrainingScheduleUserByUserId(
@@ -153,16 +146,8 @@ class AthleteDetailScreen extends StatelessWidget {
               ),
               BlocListener<UserBloc, UserState>(
                 listener: (context, state) {
+                  //print(state);
                   if (state is User_Error) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text(state.message)));
-                  }
-                },
-              ),
-              BlocListener<SportUserBloc, SportUserState>(
-                listener: (context, state) {
-                  if (state is Sport_User_Error) {
                     ScaffoldMessenger.of(
                       context,
                     ).showSnackBar(SnackBar(content: Text(state.message)));
@@ -205,15 +190,6 @@ class AthleteDetailScreen extends StatelessWidget {
                   }
                 },
               ),
-              BlocListener<ProgressBloc, ProgressState>(
-                listener: (context, state) {
-                  if (state is Progress_Error) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text(state.message)));
-                  }
-                },
-              ),
               BlocListener<UserMatchBloc, UserMatchState>(
                 listener: (context, state) {
                   if (state is UserMatch_Error) {
@@ -235,15 +211,6 @@ class AthleteDetailScreen extends StatelessWidget {
               BlocListener<NutritionPlanBloc, NutritionPlanState>(
                 listener: (context, state) {
                   if (state is NutritionPlan_Error) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text(state.message)));
-                  }
-                },
-              ),
-              BlocListener<PerformanceBloc, PerformanceState>(
-                listener: (context, state) {
-                  if (state is Performance_Error) {
                     ScaffoldMessenger.of(
                       context,
                     ).showSnackBar(SnackBar(content: Text(state.message)));
@@ -285,7 +252,6 @@ class AthleteDetailScreen extends StatelessWidget {
               ),
               BlocListener<TrainingExerciseBloc, TrainingExerciseState>(
                 listener: (context, state) {
-                  print(state);
                   if (state is TrainingExercise_Error) {
                     ScaffoldMessenger.of(
                       context,
@@ -294,14 +260,10 @@ class AthleteDetailScreen extends StatelessWidget {
                 },
               ),
               BlocListener<TrainingScheduleUserBloc, TrainingScheduleUserState>(
-                listener: (context, state) {
-                  print(state);
-                },
+                listener: (context, state) {},
               ),
               BlocListener<TrainingScheduleBloc, TrainingScheduleState>(
-                listener: (context, state) {
-                  print(state);
-                },
+                listener: (context, state) {},
               ),
             ],
             child: Scaffold(
@@ -321,7 +283,7 @@ class AthleteDetailScreen extends StatelessWidget {
                   children: [
                     _buildAthleteInfo(),
                     const SizedBox(height: 16),
-                    _buildSportsInfo(userId),
+                    _buildSportsInfo(),
                     const SizedBox(height: 16),
                     _buildAchievements(),
                     const SizedBox(height: 16),
@@ -335,15 +297,12 @@ class AthleteDetailScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     _buildNutritionPlans(),
                     const SizedBox(height: 16),
-                    //_buildCoachAthletes(),
+                    _buildCoachAthletes(),
                     const SizedBox(height: 16),
                     _buildGroupMembers(),
                     const SizedBox(height: 16),
-                    _buildProgress(),
-                    const SizedBox(height: 16),
                     _buildTraining(),
                     const SizedBox(height: 16),
-                    _buildPerformance(),
                   ],
                 ),
               ),
@@ -430,20 +389,19 @@ class AthleteDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSportsInfo(String userId) {
-    return BlocBuilder<SportUserBloc, SportUserState>(
-      builder: (context, sportUserState) {
-        if (sportUserState is Sport_User_Loading) {
+  Widget _buildSportsInfo() {
+    return BlocBuilder<SportBloc, SportState>(
+      builder: (context, sportState) {
+        if (sportState is Sport_Loading) {
           return const Center(child: CircularProgressIndicator());
         }
-        if (sportUserState is Sport_User_Error) {
-          return Center(child: Text('Lỗi: ${sportUserState.message}'));
+        if (sportState is Sport_Error) {
+          return Center(child: Text('Lỗi: ${sportState.message}'));
         }
-        if (sportUserState is LoadedMultipleSportUsers) {
-          final sportUsers = sportUserState.sportUsers[userId] ?? [];
-          final sportsMap = sportUserState.sports;
-
+        if (sportState is LoadedSport) {
+          final sport = sportState.sport;
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const ListTile(
                 title: Text(
@@ -452,23 +410,14 @@ class AthleteDetailScreen extends StatelessWidget {
                 ),
               ),
               const Divider(),
-              sportUsers.isEmpty
-                  ? const ListTile(
-                    title: Text('Chưa có môn thể thao nào được gán.'),
-                  )
-                  : Column(
-                    children:
-                        sportUsers.map((sportUser) {
-                          final sport = sportsMap[sportUser.sportId];
-                          return ListTile(
-                            title: Text(
-                              sport?.name ?? "Môn thể thao không xác định",
-                            ),
-                            subtitle: Text('Vị trí: ${sportUser.position}'),
-                            leading: const Icon(Icons.sports),
-                          );
-                        }).toList(),
-                  ),
+              ListTile(
+                title: const Text('Tên môn thể thao'),
+                subtitle: Text(sport?.name ?? 'N/A'),
+              ),
+              ListTile(
+                title: const Text('Vị trí'),
+                subtitle: Text(sport?.position ?? 'N/A'),
+              ),
             ],
           );
         }
@@ -1006,40 +955,201 @@ class AthleteDetailScreen extends StatelessWidget {
 
   Widget _buildCoachAthletes() {
     return BlocBuilder<CoachAthleteBloc, CoachAthleteState>(
-      builder: (context, state) {
-        if (state is CoachAthlete_Loading) {
-          return const Center(child: CircularProgressIndicator());
+      builder: (context, coachState) {
+        // Gửi event userBloc theo coachId một lần duy nhất sau khi build
+        if (coachState is LoadedCoachAthlete) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            context.read<UserBloc>().add(
+              UserEvent.getUserById(coachState.coachAthlete!.coachId),
+            );
+          });
         }
-        if (state is CoachAthlete_Error) {
-          return Center(child: Text('Lỗi: ${state.message}'));
-        }
-        if (state is LoadedCoachAthletes) {
-          final coachAthletes = state.coachAthletes;
-          return Column(
-            children: [
-              const ListTile(
-                title: Text(
+        final userState = context.select((UserBloc bloc) => bloc.state);
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
                   'Huấn luyện viên',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-              ),
-              const Divider(),
-              coachAthletes.isEmpty
-                  ? const ListTile(title: Text('Không có huấn luyện viên'))
-                  : Column(
-                    children:
-                        coachAthletes.map((ca) {
-                          return ListTile(
-                            title: Text('Huấn luyện viên'),
-                            subtitle: Text('ID: ${ca.coachId}'),
-                            leading: const Icon(Icons.person_outline),
-                          );
-                        }).toList(),
-                  ),
-            ],
-          );
-        }
-        return const SizedBox.shrink();
+                IconButton(
+                  icon: const Icon(Icons.add),
+                  tooltip: 'Thêm huấn luyện viên-vận động viên',
+                  onPressed:
+                      () => _showCreateCoachAthleteDialog(context, sportId),
+                ),
+              ],
+            ),
+            const Divider(),
+
+            if (coachState is CoachAthlete_Loading)
+              const Center(child: CircularProgressIndicator()),
+            if (coachState is CoachAthlete_Error)
+              Center(child: Text('Lỗi: ${coachState.message}')),
+            if (coachState is LoadedCoachAthlete)
+              if (coachState.coachAthlete == null)
+                const Center(child: Text('Không có dữ liệu huấn luyện viên'))
+              else
+                ListTile(
+                  title:
+                      userState is LoadedMultipleUsers
+                          ? Text(
+                            'Huấn luyện viên: ${userState.users[coachState.coachAthlete!.coachId]?.fullName}',
+                          )
+                          : const Text('Huấn luyện viên'),
+                  subtitle: Text('ID: ${coachState.coachAthlete!.coachId}'),
+                  leading: const Icon(Icons.person_outline),
+                ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showCreateCoachAthleteDialog(BuildContext context, String? sportId) {
+    final formKey = GlobalKey<FormState>();
+    String? selectedCoachId;
+
+    // Gửi sự kiện lấy danh sách huấn luyện viên nếu sportId không null
+    if (sportId != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        context.read<UserBloc>().add(
+          UserEvent.getAllUserCoachBySportId(sportId),
+        );
+      });
+    }
+
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: const Text('Thêm mối quan hệ huấn luyện viên-vận động viên'),
+          content: BlocBuilder<UserBloc, UserState>(
+            bloc:
+                context.read<UserBloc>(), // Sử dụng UserBloc từ context parent
+            builder: (context, userState) {
+              // Debug trạng thái
+              return Form(
+                key: formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (userState is User_Loading)
+                      const CircularProgressIndicator(),
+                    if (userState is User_Error)
+                      Text('Lỗi: ${userState.message}'),
+                    if (userState is LoadedUsers && sportId != null)
+                      // ignore: unnecessary_null_comparison
+                      if (userState.users == null || userState.users.isEmpty)
+                        const Text('Không có huấn luyện viên nào (LoadedUsers)')
+                      else
+                        DropdownButtonFormField<String>(
+                          decoration: const InputDecoration(
+                            labelText: 'Chọn huấn luyện viên',
+                          ),
+                          value: selectedCoachId,
+                          items:
+                              userState.users
+                                  .where(
+                                    (user) => user.role == 'Huấn luyện viên',
+                                  )
+                                  .map((user) {
+                                    return DropdownMenuItem<String>(
+                                      value: user.id,
+                                      child: Text(
+                                        user.fullName,
+                                      ),
+                                    );
+                                  })
+                                  .toList(),
+                          onChanged: (value) {
+                            selectedCoachId = value;
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Vui lòng chọn huấn luyện viên';
+                            }
+                            return null;
+                          },
+                        ),
+                    if (userState is LoadedMultipleUsers && sportId != null)
+                      if (userState.users.isEmpty)
+                        const Text(
+                          'Không có huấn luyện viên nào (LoadedMultipleUsers)',
+                        )
+                      else
+                        DropdownButtonFormField<String>(
+                          decoration: const InputDecoration(
+                            labelText: 'Chọn huấn luyện viên',
+                          ),
+                          value: selectedCoachId,
+                          items:
+                              userState.users.values
+                                  .where(
+                                    (user) => user.role == 'Huấn luyện viên',
+                                  )
+                                  .map((user) {
+                                    return DropdownMenuItem<String>(
+                                      value: user.id,
+                                      child: Text(
+                                        user.fullName,
+                                      ),
+                                    );
+                                  })
+                                  .toList(),
+                          onChanged: (value) {
+                            selectedCoachId = value;
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Vui lòng chọn huấn luyện viên';
+                            }
+                            return null;
+                          },
+                        ),
+                    if (sportId == null)
+                      const Text(
+                        'Vui lòng cung cấp sportId để chọn huấn luyện viên',
+                      ),
+                    if (userState is! User_Loading &&
+                        userState is! User_Error &&
+                        userState is! LoadedUsers &&
+                        userState is! LoadedMultipleUsers)
+                      const Text('Đang chờ dữ liệu huấn luyện viên...'),
+                  ],
+                ),
+              );
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: const Text('Hủy'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (formKey.currentState!.validate() &&
+                    selectedCoachId != null) {
+                  final coachAthlete = CoachAthlete(
+                    id: null, // Backend sẽ tạo ID
+                    coachId: selectedCoachId!,
+                    athleteId: userId,
+                    createdAt: DateTime.now().toUtc(),
+                    updatedAt: DateTime.now().toUtc(),
+                  );
+                  context.read<CoachAthleteBloc>().add(
+                    CreateCoachAthlete(coachAthlete),
+                  );
+                  Navigator.of(dialogContext).pop();
+                }
+              },
+              child: const Text('Thêm'),
+            ),
+          ],
+        );
       },
     );
   }
@@ -1137,78 +1247,6 @@ class AthleteDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProgress() {
-    final dateFormat = DateFormat('dd/MM/yyyy');
-    return BlocBuilder<ProgressBloc, ProgressState>(
-      builder: (context, progressState) {
-        if (progressState is Progress_Loading) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (progressState is Progress_Error) {
-          return Center(
-            child: Column(
-              children: [
-                Text('Lỗi: ${progressState.message}'),
-                ElevatedButton(
-                  onPressed: () {
-                    context.read<ProgressBloc>().add(
-                      ProgressEvent.getProgressesByUserId(userId),
-                    );
-                  },
-                  child: const Text('Thử lại'),
-                ),
-              ],
-            ),
-          );
-        }
-        if (progressState is LoadedProgresses) {
-          final progresses = progressState.progresses;
-
-          if (progresses.isEmpty) {
-            return Column(
-              children: [
-                const ListTile(
-                  title: Text(
-                    'Tiến trình',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const Divider(),
-                const ListTile(title: Text('Không có tiến trình')),
-              ],
-            );
-          }
-
-          return Column(
-            children: [
-              const ListTile(
-                title: Text(
-                  'Tiến trình',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              const Divider(),
-              ...progresses.map((progress) {
-                return ListTile(
-                  title: Text('Chỉ số: ${progress.metricType}'),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Giá trị: ${progress.value}'),
-                      Text('Ngày: ${dateFormat.format(progress.date)}'),
-                    ],
-                  ),
-                  leading: const Icon(Icons.trending_up),
-                );
-              }),
-            ],
-          );
-        }
-        return const SizedBox.shrink();
-      },
-    );
-  }
-
   Widget _buildTraining() {
     final dateFormat = DateFormat('dd/MM/yyyy');
     final timeFormat = DateFormat('HH:mm');
@@ -1268,7 +1306,7 @@ class AthleteDetailScreen extends StatelessWidget {
                               margin: const EdgeInsets.symmetric(vertical: 8.0),
                               child: ExpansionTile(
                                 title: Text(
-                                  '${schedule.type ?? 'Không xác định'} - ${dateFormat.format(schedule.date)}',
+                                  '${schedule.type} - ${dateFormat.format(schedule.date)}',
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -1284,15 +1322,11 @@ class AthleteDetailScreen extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          'Địa điểm: ${schedule.location ?? 'Không xác định'}',
-                                        ),
+                                        Text('Địa điểm: ${schedule.location}'),
                                         Text(
                                           'Ghi chú: ${schedule.notes.isEmpty ? 'Không có' : schedule.notes}',
                                         ),
-                                        Text(
-                                          'Trạng thái: ${schedule.status ?? 'Không xác định'}',
-                                        ),
+                                        Text('Trạng thái: ${schedule.status}'),
                                         const SizedBox(height: 8),
                                         const Text(
                                           'Danh sách bài tập:',
@@ -1419,9 +1453,5 @@ class AthleteDetailScreen extends StatelessWidget {
         return const SizedBox.shrink();
       },
     );
-  }
-
-  Widget _buildPerformance() {
-    return Text('');
   }
 }

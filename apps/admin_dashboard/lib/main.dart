@@ -25,9 +25,6 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(
           create: (_) => SportRepository(baseUrl: ApiConstants.baseUrl),
         ),
-        RepositoryProvider(
-          create: (_) => SportUserRepository(baseUrl: ApiConstants.baseUrl),
-        ),
         RepositoryProvider(create: (_) => ImageRepository()),
         RepositoryProvider(
           create:
@@ -83,16 +80,10 @@ class MyApp extends StatelessWidget {
           create: (_) => HealthRepository(baseUrl: ApiConstants.baseUrl),
         ),
         RepositoryProvider(
-          create: (_) => ProgressRepository(baseUrl: ApiConstants.baseUrl),
-        ),
-        RepositoryProvider(
           create: (_) => UserMatchRepository(baseUrl: ApiConstants.baseUrl),
         ),
         RepositoryProvider(
           create: (_) => TeamMemberRepository(baseUrl: ApiConstants.baseUrl),
-        ),
-        RepositoryProvider(
-          create: (_) => PerformanceRepository(baseUrl: ApiConstants.baseUrl),
         ),
         RepositoryProvider(
           create: (_) => CoachAthleteRepository(baseUrl: ApiConstants.baseUrl),

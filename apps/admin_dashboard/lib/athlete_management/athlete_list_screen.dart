@@ -1,3 +1,4 @@
+
 import 'package:admin_dashboard/athlete_management/athlete_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
@@ -26,13 +27,6 @@ class AthleteListScreen extends StatelessWidget {
         ),
         BlocProvider(
           create:
-              (context) => SportUserBloc(
-                sportUserRepository: RepositoryProvider.of(context),
-                sportRepository: RepositoryProvider.of(context),
-              ),
-        ),
-        BlocProvider(
-          create:
               (context) =>
                   SportBloc(sportRepository: RepositoryProvider.of(context)),
         ),
@@ -46,9 +40,6 @@ class AthleteListScreen extends StatelessWidget {
                   context.read<UserBloc>().add(
                     UserEvent.getUserById(athlete.userId),
                   );
-                  context.read<SportUserBloc>().add(
-                    SportUserEvent.getAllSportUserByUserId(athlete.userId),
-                  );
                 }
               }
               if (athleteState is Athlete_Error) {
@@ -60,36 +51,20 @@ class AthleteListScreen extends StatelessWidget {
           ),
           BlocListener<UserBloc, UserState>(
             listener: (context, userState) {
+              //print(userState);
               if (userState is User_Error) {
                 ScaffoldMessenger.of(
                   context,
                 ).showSnackBar(SnackBar(content: Text(userState.message)));
               }
-            },
-          ),
-          BlocListener<SportUserBloc, SportUserState>(
-            listener: (context, sportUserState) {
-              if (sportUserState is LoadedSportUsers ||
-                  sportUserState is LoadedMultipleSportUsers) {
-                Map<String, Sport> sports =
-                    sportUserState is LoadedSportUsers
-                        ? sportUserState.sports
-                        : (sportUserState as LoadedMultipleSportUsers).sports;
-                for (var sportId in sports.keys) {
-                  context.read<SportBloc>().add(
-                    SportEvent.getSportById(sportId),
-                  );
-                }
-              }
-              if (sportUserState is Sport_User_Error) {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text(sportUserState.message)));
+              if (userState is LoadedMultipleUsers) {
+                context.read<SportBloc>().add(SportEvent.getAllSports());
               }
             },
           ),
           BlocListener<SportBloc, SportState>(
             listener: (context, sportState) {
+              //print(sportState);
               if (sportState is Sport_Error) {
                 ScaffoldMessenger.of(
                   context,
@@ -102,134 +77,56 @@ class AthleteListScreen extends StatelessWidget {
           builder: (context, athleteState) {
             return BlocBuilder<UserBloc, UserState>(
               builder: (context, userState) {
-                return BlocBuilder<SportUserBloc, SportUserState>(
-                  builder: (context, sportUserState) {
-                    return BlocBuilder<SportBloc, SportState>(
-                      builder: (context, sportState) {
-                        // Map to store user data and errors by userId
-                        Map<String, User?> userMap = {};
-                        Map<String, String?> userErrorMap = {};
+                return BlocBuilder<SportBloc, SportState>(
+                  builder: (context, sportState) {
+                    // Map to store user data and errors by userId
+                    Map<String, User?> userMap = {};
+                    Map<String, String?> userErrorMap = {};
 
-                        // Map to store sport user data by userId
-                        Map<String, List<SportUser>> sportUserMap = {};
+                    // Map to store sport data and errors by sportId
+                    Map<String, Sport?> sportMap = {};
+                    Map<String, String?> sportErrorMap = {};
 
-                        // Map to store sport data and errors by sportId
-                        Map<String, Sport?> sportMap = {};
-                        Map<String, String?> sportErrorMap = {};
+                    // Handle UserState
+                    if (userState is LoadedMultipleUsers) {
+                      userMap = userState.users;
+                      userErrorMap = userState.errors;
+                    } else if (userState is User_Error) {
+                      userErrorMap[userState.message] = userState.message;
+                    } else if (userState is User_Success) {
+                      // No action needed
+                    } else if (userState is LoggedIn) {
+                      // No action needed
+                    }
+                    if (sportState is LoadedSport) {
+                      sportMap[sportState.sport?.id ?? ''] = sportState.sport;
+                    } else if (sportState is LoadedSports) {
+                      for (var sport in sportState.sports) {
+                        sportMap[sport.id ?? ''] = sport;
+                      }
+                    } else if (sportState is Sport_Error) {
+                      sportErrorMap[sportState.message] = sportState.message;
+                    }
 
-                        // Handle UserState
-                        if (userState is User_Initial) {
-                          // No user data yet
-                        } else if (userState is User_Loading) {
-                          // Users are being loaded
-                        } else if (userState is LoadedUser) {
-                          userMap[userState.user.id ?? ''] = userState.user;
-                        } else if (userState is LoadedUsers) {
-                          for (var user in userState.users) {
-                            userMap[user.id ?? ''] = user;
-                          }
-                        } else if (userState is LoadedMultipleUsers) {
-                          userMap = userState.users;
-                          userErrorMap = userState.errors;
-                        } else if (userState is User_Error) {
-                          userErrorMap[userState.message] = userState.message;
-                        } else if (userState is User_Success) {
-                          // No action needed
-                        } else if (userState is LoggedIn) {
-                          // No action needed
-                        }
-
-                        // Handle SportUserState
-                        if (sportUserState is Sport_User_Initial) {
-                          // No sport user data yet
-                        } else if (sportUserState is Sport_User_Loading) {
-                          // Sport users are being loaded
-                        } else if (sportUserState is LoadedSportUser) {
-                          if (!sportUserMap.containsKey(
-                            sportUserState.sportUser.userId,
-                          )) {
-                            sportUserMap[sportUserState.sportUser.userId] = [];
-                          }
-                          sportUserMap[sportUserState.sportUser.userId]!.add(
-                            sportUserState.sportUser,
-                          );
-                        } else if (sportUserState is LoadedSportUsers) {
-                          for (var sportUser in sportUserState.sportUsers) {
-                            if (!sportUserMap.containsKey(sportUser.userId)) {
-                              sportUserMap[sportUser.userId] = [];
-                            }
-                            sportUserMap[sportUser.userId]!.add(sportUser);
-                          }
-                          sportMap.addAll(sportUserState.sports);
-                        } else if (sportUserState is LoadedMultipleSportUsers) {
-                          sportUserMap = sportUserState.sportUsers;
-                          sportMap.addAll(sportUserState.sports);
-                        } else if (sportUserState is Sport_User_Error) {
-                          // Handle errors if needed
-                        } else if (sportUserState is Sport_User_Success) {
-                          // No action needed
-                        }
-
-                        // Handle SportState
-                        if (sportState is Sport_Initial) {
-                          // No sport data yet
-                        } else if (sportState is Sport_Loading) {
-                          // Sports are being loaded
-                        } else if (sportState is LoadedSport) {
-                          sportMap[sportState.sport.id ?? ''] =
-                              sportState.sport;
-                        } else if (sportState is LoadedSports) {
-                          for (var sport in sportState.sports) {
-                            sportMap[sport.id ?? ''] = sport;
-                          }
-                        } else if (sportState is Sport_Error) {
-                          sportErrorMap[sportState.message] =
-                              sportState.message;
-                        } else if (sportState is Sport_Success) {
-                          // No action needed
-                        }
-
-                        // Handle AthleteState
-                        if (athleteState is Athlete_Initial) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        if (athleteState is Athlete_Loading) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        if (athleteState is LoadedAthlete) {
-                          return const Center(child: Text('Unexpected state'));
-                        }
-                        if (athleteState is LoadedAthletes) {
-                          return _buildDataTable(
-                            context,
-                            athleteState.athletes,
-                            athleteState.currentPage,
-                            athleteState.limit,
-                            athleteState.hasMore,
-                            userMap,
-                            userErrorMap,
-                            sportUserMap,
-                            sportMap,
-                            sportErrorMap,
-                          );
-                        }
-                        if (athleteState is Athlete_Error) {
-                          return Center(
-                            child: Text(
-                              'Athlete Error: ${athleteState.message}',
-                            ),
-                          );
-                        }
-                        if (athleteState is Athlete_Success) {
-                          return const Center(child: Text('Unexpected state'));
-                        }
-                        return const Center(child: Text('Unknown state'));
-                      },
-                    );
+                    if (athleteState is LoadedAthletes) {
+                      return _buildDataTable(
+                        context,
+                        athleteState.athletes,
+                        athleteState.currentPage,
+                        athleteState.limit,
+                        athleteState.hasMore,
+                        userMap,
+                        userErrorMap,
+                        sportMap,
+                        sportErrorMap,
+                      );
+                    }
+                    if (athleteState is Athlete_Error) {
+                      return Center(
+                        child: Text('Athlete Error: ${athleteState.message}'),
+                      );
+                    }
+                    return const Center(child: Text('Unknown state'));
                   },
                 );
               },
@@ -248,7 +145,6 @@ class AthleteListScreen extends StatelessWidget {
     bool hasMore,
     Map<String, User?> userMap,
     Map<String, String?> userErrorMap,
-    Map<String, List<SportUser>> sportUserMap,
     Map<String, Sport?> sportMap,
     Map<String, String?> sportErrorMap,
   ) {
@@ -280,6 +176,7 @@ class AthleteListScreen extends StatelessWidget {
                             MaterialPageRoute(
                               builder:
                                   (_) => AthleteDetailScreen(
+                                    sportId:userMap[athlete.userId]!.sportId,
                                     userId: athlete.userId,
                                   ),
                             ),
@@ -305,25 +202,15 @@ class AthleteListScreen extends StatelessWidget {
                             ),
                           ),
                           DataCell(
-                            sportUserMap[athlete.userId]?.isNotEmpty == true
-                                ? Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children:
-                                      sportUserMap[athlete.userId]!
-                                          .map(
-                                            (sportUser) => Text(
-                                              sportMap[sportUser.sportId]
-                                                      ?.name ??
-                                                  (sportErrorMap[sportUser
-                                                              .sportId] !=
-                                                          null
-                                                      ? 'Error: ${sportErrorMap[sportUser.sportId]}'
-                                                      : 'Loading...'),
-                                            ),
-                                          )
-                                          .toList(),
-                                )
-                                : const Text('N/A'),
+                            Text(
+                              sportMap[userMap[athlete.userId]?.sportId]
+                                      ?.name ??
+                                  (sportErrorMap[userMap[athlete.userId]
+                                              ?.sportId] !=
+                                          null
+                                      ? 'Error: ${sportErrorMap[userMap[athlete.userId]?.sportId]}'
+                                      : 'Loading...'),
+                            ),
                           ),
                           DataCell(Text(athlete.athleteType)),
                           DataCell(Text(dateFormat.format(athlete.createdAt))),

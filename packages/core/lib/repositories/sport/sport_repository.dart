@@ -29,7 +29,7 @@ class SportRepository {
   }
 
   // Get sport by ID
-  Future<Sport> getSportById(String id) async {
+  Future<Sport?> getSportById(String id) async {
     final response = await http.get(
       Uri.parse('$baseUrl/sports/$id'),
       headers: {'Content-Type': 'application/json'},
@@ -39,9 +39,8 @@ class SportRepository {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       if (data['data'] != null && data['data'] is Map<String, dynamic>) {
         return Sport.fromJson(data['data'] as Map<String, dynamic>);
-      } else {
-        throw Exception('No valid "data" object found in response: $data');
       }
+      return null;
     } else {
       throw Exception('Failed to get sport: ${response.statusCode}');
     }

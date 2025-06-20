@@ -7,22 +7,33 @@ part 'match_schedule_bloc.freezed.dart';
 
 @freezed
 sealed class MatchScheduleEvent with _$MatchScheduleEvent {
-  const factory MatchScheduleEvent.createMatchSchedule(MatchSchedule matchSchedule) = _CreateMatchSchedule;
-  const factory MatchScheduleEvent.getMatchScheduleById(String id) = _GetMatchScheduleById;
-  const factory MatchScheduleEvent.getMatchScheduleByTournamentId(String tournamentId) = _GetMatchScheduleByTournamentId;
+  const factory MatchScheduleEvent.createMatchSchedule(
+    MatchSchedule matchSchedule,
+  ) = _CreateMatchSchedule;
+  const factory MatchScheduleEvent.getMatchScheduleById(String id) =
+      _GetMatchScheduleById;
+  const factory MatchScheduleEvent.getMatchScheduleByTournamentId(
+    String tournamentId,
+  ) = _GetMatchScheduleByTournamentId;
   const factory MatchScheduleEvent.getAllMatchSchedules({
     @Default(1) int page,
     @Default(10) int limit,
   }) = _GetAllMatchSchedules;
-  const factory MatchScheduleEvent.updateMatchSchedule(String id, MatchSchedule matchSchedule) = _UpdateMatchSchedule;
-  const factory MatchScheduleEvent.deleteMatchSchedule(String id) = _DeleteMatchSchedule;
+  const factory MatchScheduleEvent.updateMatchSchedule(
+    String id,
+    MatchSchedule matchSchedule,
+  ) = _UpdateMatchSchedule;
+  const factory MatchScheduleEvent.deleteMatchSchedule(String id) =
+      _DeleteMatchSchedule;
 }
 
 @freezed
 sealed class MatchScheduleState with _$MatchScheduleState {
   const factory MatchScheduleState.initial() = MatchSchedule_Initial;
   const factory MatchScheduleState.loading() = MatchSchedule_Loading;
-  const factory MatchScheduleState.loadedMatchSchedule(MatchSchedule matchSchedule) = LoadedMatchSchedule;
+  const factory MatchScheduleState.loadedMatchSchedule(
+    MatchSchedule matchSchedule,
+  ) = LoadedMatchSchedule;
   const factory MatchScheduleState.loadedMatchSchedules(
     List<MatchSchedule> matchSchedules,
     int currentPage,
@@ -30,14 +41,15 @@ sealed class MatchScheduleState with _$MatchScheduleState {
     bool hasMore,
   ) = LoadedMatchSchedules;
   const factory MatchScheduleState.error(String message) = MatchSchedule_Error;
-  const factory MatchScheduleState.success(String message) = MatchSchedule_Success;
+  const factory MatchScheduleState.success(String message) =
+      MatchSchedule_Success;
 }
 
 class MatchScheduleBloc extends Bloc<MatchScheduleEvent, MatchScheduleState> {
   final MatchScheduleRepository matchScheduleRepository;
 
   MatchScheduleBloc({required this.matchScheduleRepository})
-      : super(const MatchScheduleState.initial()) {
+    : super(const MatchScheduleState.initial()) {
     on<_CreateMatchSchedule>(_onCreateMatchSchedule);
     on<_GetMatchScheduleById>(_onGetMatchScheduleById);
     on<_GetMatchScheduleByTournamentId>(_onGetMatchScheduleByTournamentId);
@@ -52,7 +64,9 @@ class MatchScheduleBloc extends Bloc<MatchScheduleEvent, MatchScheduleState> {
   ) async {
     emit(const MatchScheduleState.loading());
     try {
-      final createdMatchSchedule = await matchScheduleRepository.createMatchSchedule(event.matchSchedule);
+      final createdMatchSchedule = await matchScheduleRepository
+          .createMatchSchedule(event.matchSchedule);
+      emit(const MatchScheduleState.success('Tạo lịch thi đấu thành công'));
       emit(MatchScheduleState.loadedMatchSchedule(createdMatchSchedule));
     } catch (e) {
       emit(MatchScheduleState.error(e.toString()));
@@ -65,7 +79,9 @@ class MatchScheduleBloc extends Bloc<MatchScheduleEvent, MatchScheduleState> {
   ) async {
     emit(const MatchScheduleState.loading());
     try {
-      final matchSchedule = await matchScheduleRepository.getMatchScheduleById(event.id);
+      final matchSchedule = await matchScheduleRepository.getMatchScheduleById(
+        event.id,
+      );
       emit(MatchScheduleState.loadedMatchSchedule(matchSchedule));
     } catch (e) {
       emit(MatchScheduleState.error(e.toString()));
@@ -78,7 +94,8 @@ class MatchScheduleBloc extends Bloc<MatchScheduleEvent, MatchScheduleState> {
   ) async {
     emit(const MatchScheduleState.loading());
     try {
-      final matchSchedule = await matchScheduleRepository.getMatchScheduleByTournamentId(event.tournamentId);
+      final matchSchedule = await matchScheduleRepository
+          .getMatchScheduleByTournamentId(event.tournamentId);
       emit(MatchScheduleState.loadedMatchSchedule(matchSchedule));
     } catch (e) {
       emit(MatchScheduleState.error(e.toString()));
@@ -114,10 +131,8 @@ class MatchScheduleBloc extends Bloc<MatchScheduleEvent, MatchScheduleState> {
   ) async {
     emit(const MatchScheduleState.loading());
     try {
-      final updatedMatchSchedule = await matchScheduleRepository.updateMatchSchedule(
-        event.id,
-        event.matchSchedule,
-      );
+      final updatedMatchSchedule = await matchScheduleRepository
+          .updateMatchSchedule(event.id, event.matchSchedule);
       emit(MatchScheduleState.loadedMatchSchedule(updatedMatchSchedule));
     } catch (e) {
       emit(MatchScheduleState.error(e.toString()));
@@ -131,7 +146,9 @@ class MatchScheduleBloc extends Bloc<MatchScheduleEvent, MatchScheduleState> {
     emit(const MatchScheduleState.loading());
     try {
       await matchScheduleRepository.deleteMatchSchedule(event.id);
-      emit(const MatchScheduleState.success('Match schedule deleted successfully'));
+      emit(
+        const MatchScheduleState.success('Match schedule deleted successfully'),
+      );
     } catch (e) {
       emit(MatchScheduleState.error(e.toString()));
     }

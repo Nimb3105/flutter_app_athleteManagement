@@ -9,8 +9,15 @@ part 'food_bloc.freezed.dart';
 sealed class FoodEvent with _$FoodEvent {
   const factory FoodEvent.createFood(Food food) = CreateFood;
   const factory FoodEvent.getFoodById(String id) = GetFoodById;
-  const factory FoodEvent.getAllFoods({@Default(1) int page ,@Default(10) int limit }) =
-      GetAllFoods;
+  const factory FoodEvent.getAllFoods({
+    @Default(1) int page,
+    @Default(10) int limit,
+  }) = GetAllFoods;
+  const factory FoodEvent.getAllFoodsByFoodType(
+    String foodType, {
+    @Default(1) int page,
+    @Default(10) int limit,
+  }) = GetAllFoodsByFoodType;
   const factory FoodEvent.updateFood(String id, Food food) = UpdateFood;
   const factory FoodEvent.deleteFood(String id) = DeleteFood;
 }
@@ -20,6 +27,7 @@ sealed class FoodState with _$FoodState {
   const factory FoodState.initial() = Food_Initial;
   const factory FoodState.loading() = Food_Loading;
   const factory FoodState.loadedFood(Food food) = LoadedFood;
+  const factory FoodState.loadingMore() = Food_LoadingMore;
   const factory FoodState.loadedFoods(
     List<Food> foods,
     int currentPage,
@@ -32,6 +40,10 @@ sealed class FoodState with _$FoodState {
 
 class FoodBloc extends Bloc<FoodEvent, FoodState> {
   final FoodRepository foodRepository;
+  // ignore: unused_field
+  int _currentPage = 1;
+  final List<Food> _foods = [];
+  String? _currentFoodType;
 
   FoodBloc({required this.foodRepository}) : super(const FoodState.initial()) {
     on<CreateFood>(_onCreateFood);
@@ -39,6 +51,7 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
     on<GetAllFoods>(_onGetAllFoods);
     on<UpdateFood>(_onUpdateFood);
     on<DeleteFood>(_onDeleteFood);
+    on<GetAllFoodsByFoodType>(_onGetAllFoodsByFoodType);
   }
 
   Future<void> _onCreateFood(CreateFood event, Emitter<FoodState> emit) async {
@@ -47,6 +60,45 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
       final createdFood = await foodRepository.createFood(event.food);
       emit(const Food_Success('Tạo món ăn thành công'));
       emit(FoodState.loadedFood(createdFood));
+    } catch (e) {
+      emit(FoodState.error(e.toString()));
+    }
+  }
+
+  Future<void> _onGetAllFoodsByFoodType(
+    GetAllFoodsByFoodType event,
+    Emitter<FoodState> emit,
+  ) async {
+    try {
+      // Nếu target thay đổi hoặc page = 1, xóa danh sách cũ
+      if (event.page == 1 || _currentFoodType != event.foodType) {
+        _foods.clear();
+        _currentPage = 1;
+        _currentFoodType = event.foodType;
+        emit(const Food_Loading());
+      } else {
+        emit(const Food_LoadingMore());
+      }
+
+      final response = await foodRepository.getAllFoodByFoodType(
+        event.foodType,
+        page: event.page,
+        limit: event.limit,
+      );
+
+      _foods.addAll(response.items);
+      final hasMore = _foods.length < response.totalCount;
+
+      emit(
+        LoadedFoods(
+          List.from(_foods),
+          event.page,
+          event.limit,
+          hasMore,
+        ),
+      );
+
+      if (hasMore) _currentPage = event.page + 1;
     } catch (e) {
       emit(FoodState.error(e.toString()));
     }
@@ -78,14 +130,7 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
       // Giả sử API trả về thông tin tổng số món ăn hoặc tổng số trang
       // Ở đây giả định `hasMore` dựa trên số lượng món ăn trả về
       final hasMore = foods.length == event.limit;
-      emit(
-        FoodState.loadedFoods(
-          foods,
-           event.page,
-           event.limit,
-           hasMore,
-        ),
-      );
+      emit(FoodState.loadedFoods(foods, event.page, event.limit, hasMore));
     } catch (e) {
       emit(FoodState.error(e.toString()));
     }

@@ -64,7 +64,8 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           overflow: TextOverflow.ellipsis,
         ),
-        backgroundColor: Colors.blue.shade700,
+        backgroundColor: Theme.of(context).primaryColor,
+        centerTitle: true,
         foregroundColor: Colors.white,
         elevation: 2,
       ),
@@ -234,17 +235,18 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildDetailRow('BodyPart', widget.exercise.bodyPart),
+                          _buildDetailRow('Nhóm cơ', widget.exercise.bodyPart),
                           _buildDetailRow(
-                            'Equipment',
+                            'Thiết bị',
                             widget.exercise.equipment,
                           ),
-                          _buildDetailRow('Target', widget.exercise.target),
+                          _buildDetailRow('Tác động', widget.exercise.target),
+                          _buildDetailRow('Môn thể thao',widget.exercise.sportName),
 
                           if (widget.exercise.secondaryMuscles.isNotEmpty) ...[
                             const SizedBox(height: 8),
                             Text(
-                              'Secondary Muscles',
+                              'Cơ phụ',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -267,7 +269,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                           if (widget.exercise.instructions.isNotEmpty) ...[
                             const SizedBox(height: 8),
                             Text(
-                              'Instructions',
+                              'Hướng dẫn',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,

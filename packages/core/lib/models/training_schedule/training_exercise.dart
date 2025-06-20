@@ -1,3 +1,4 @@
+
 import 'package:core/models/converters/converters.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -8,9 +9,19 @@ part 'training_exercise.g.dart';
 abstract class TrainingExercise with _$TrainingExercise {
   const factory TrainingExercise({
     required String? id,
-    required String scheduleId,
+    required String? scheduleId,
     required String exerciseId,
     required int order,
+    required int reps,
+    required int sets,
+    required double weight,
+    required int duration,
+    required double distance,
+    required int actualReps,
+    required int actualSets,
+    required double actualWeight,
+    required int actualDuration,
+    required double actualDistance,
     @UtcDateTimeConverter() required DateTime? createdAt,
     @UtcDateTimeConverter() required DateTime? updatedAt,
   }) = _TrainingExercise;

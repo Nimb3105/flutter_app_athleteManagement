@@ -21,7 +21,7 @@ sealed class SportEvent with _$SportEvent {
 sealed class SportState with _$SportState {
   const factory SportState.initial() = Sport_Initial;
   const factory SportState.loading() = Sport_Loading;
-  const factory SportState.loadedSport(Sport sport) = LoadedSport;
+  const factory SportState.loadedSport(Sport? sport) = LoadedSport;
   const factory SportState.loadedSports(
     List<Sport> sports,
     int currentPage,

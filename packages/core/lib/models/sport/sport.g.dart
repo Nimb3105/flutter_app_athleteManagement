@@ -9,6 +9,7 @@ part of 'sport.dart';
 _Sport _$SportFromJson(Map<String, dynamic> json) => _Sport(
   id: json['id'] as String?,
   name: json['name'] as String,
+  position: json['position'] as String,
   createdAt: _$JsonConverterFromJson<String, DateTime>(
     json['createdAt'],
     const UtcDateTimeConverter().fromJson,
@@ -22,6 +23,7 @@ _Sport _$SportFromJson(Map<String, dynamic> json) => _Sport(
 Map<String, dynamic> _$SportToJson(_Sport instance) => <String, dynamic>{
   'id': instance.id,
   'name': instance.name,
+  'position': instance.position,
   'createdAt': _$JsonConverterToJson<String, DateTime>(
     instance.createdAt,
     const UtcDateTimeConverter().toJson,

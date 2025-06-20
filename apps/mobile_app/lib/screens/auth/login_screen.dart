@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:mobile_app/screens/app/coach/coach_home.dart';
+import 'package:mobile_app/screens/navigationbutton/navigation_menu.dart';
 
 class LoginScreen extends StatefulWidget {
-
   const LoginScreen({super.key});
 
   @override
@@ -36,7 +35,10 @@ class _LoginScreenState extends State<LoginScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return BlocProvider(
-      create: (context) => UserBloc( userRepository: RepositoryProvider.of<UserRepository>(context),),
+      create:
+          (context) => UserBloc(
+            userRepository: RepositoryProvider.of<UserRepository>(context),
+          ),
       child: Scaffold(
         body: Container(
           decoration: BoxDecoration(
@@ -173,6 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 24),
 
                       // Login Button
+                      // Login Button
                       BlocConsumer<UserBloc, UserState>(
                         listener: (context, state) async {
                           if (state is LoggedIn) {
@@ -182,21 +185,33 @@ class _LoginScreenState extends State<LoginScreen> {
                               value: state.token,
                             );
 
-                            // Show success message
+                            // Trigger fetching user by email
                             // ignore: use_build_context_synchronously
+                            context.read<UserBloc>().add(
+                              UserEvent.getUserByEmail(
+                                emailController.text.trim(),
+                              ),
+                            );
+                          } else if (state is LoadedUser) {
+                            // Navigate to NavigationMenu with userId
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => NavigationMenu(
+                                      coachId:
+                                          state
+                                              .user
+                                              .id!, // Pass userId from User object
+                                    ),
+                              ),
+                            );
+
+                            // Show success message
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Login successful!'),
                                 backgroundColor: Colors.green,
-                              ),
-                            );
-
-                            // Navigate to CoachHomeApp, replacing the login screen
-                            Navigator.pushReplacement(
-                              // ignore: use_build_context_synchronously
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CoachHomeApp(),
                               ),
                             );
                           } else if (state is User_Error) {
@@ -230,6 +245,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         return;
                                       }
 
+                                      // Trigger login event
                                       context.read<UserBloc>().add(
                                         UserEvent.login(
                                           emailController.text.trim(),
@@ -271,7 +287,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           );
                         },
                       ),
-
                       const SizedBox(height: 24),
 
                       // Register Option

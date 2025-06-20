@@ -3,6 +3,13 @@ import 'dart:convert';
 import 'package:core/models/exercise/exercise.dart';
 import 'package:http/http.dart' as http;
 
+class GetAllExerciseResponse {
+  final List<Exercise> items;
+  final int totalCount;
+
+  GetAllExerciseResponse({required this.items, required this.totalCount});
+}
+
 class ExerciseRepository {
   final String baseUrl;
 
@@ -47,8 +54,72 @@ class ExerciseRepository {
     }
   }
 
+  Future<GetAllExerciseResponse> getAllExercisesByBodyPart(
+    String bodyPart, {
+    int page = 1,
+    int limit = 10,
+  }) async {
+    final response = await http.get(
+      Uri.parse(
+        '$baseUrl/exercises/bodyPart/$bodyPart?page=$page&limit=$limit',
+      ),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+
+      if (data['data'] != null && data['data'] is List<dynamic>) {
+        final List<dynamic> jsonList = data['data'];
+        final exercises =
+            jsonList
+                .map((json) => Exercise.fromJson(json as Map<String, dynamic>))
+                .toList();
+
+        final totalCount = data['totalCount'] ?? 0;
+
+        return GetAllExerciseResponse(items: exercises, totalCount: totalCount);
+      } else {
+        throw Exception('No valid "data" list found in response: $data');
+      }
+    } else {
+      throw Exception('Failed to get exercises: ${response.statusCode}');
+    }
+  }
+
+  Future<GetAllExerciseResponse> getAllExercisesBySportName(
+    String sportName, {
+    int page = 1,
+    int limit = 10,
+  }) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/exercises/sport/$sportName?page=$page&limit=$limit'),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+
+      if (data['data'] != null && data['data'] is List<dynamic>) {
+        final List<dynamic> jsonList = data['data'];
+        final exercises =
+            jsonList
+                .map((json) => Exercise.fromJson(json as Map<String, dynamic>))
+                .toList();
+
+        final totalCount = data['totalCount'] ?? 0;
+
+        return GetAllExerciseResponse(items: exercises, totalCount: totalCount);
+      } else {
+        throw Exception('No valid "data" list found in response: $data');
+      }
+    } else {
+      throw Exception('Failed to get exercises: ${response.statusCode}');
+    }
+  }
+
   // Get all exercises
-  Future<Map<String, dynamic>> getAllExercises({
+  Future<GetAllExerciseResponse> getAllExercises({
     int page = 1,
     int limit = 10,
   }) async {
@@ -59,15 +130,17 @@ class ExerciseRepository {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
+
       if (data['data'] != null && data['data'] is List<dynamic>) {
         final List<dynamic> jsonList = data['data'];
-        final totalCount = data['totalCount'] as int? ?? 0;
         final exercises =
             jsonList
                 .map((json) => Exercise.fromJson(json as Map<String, dynamic>))
                 .toList();
-        final hasMore = (page * limit) < totalCount;
-        return {'exercises': exercises, 'hasMore': hasMore};
+
+        final totalCount = data['totalCount'] ?? 0;
+
+        return GetAllExerciseResponse(items: exercises, totalCount: totalCount);
       } else {
         throw Exception('No valid "data" list found in response: $data');
       }

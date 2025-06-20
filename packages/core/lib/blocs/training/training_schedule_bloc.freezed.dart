@@ -219,10 +219,9 @@ String toString() {
 
 
 class UpdateTrainingSchedule implements TrainingScheduleEvent {
-  const UpdateTrainingSchedule(this.id, this.schedule);
+  const UpdateTrainingSchedule(this.schedule);
   
 
- final  String id;
  final  TrainingSchedule schedule;
 
 /// Create a copy of TrainingScheduleEvent
@@ -235,16 +234,16 @@ $UpdateTrainingScheduleCopyWith<UpdateTrainingSchedule> get copyWith => _$Update
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateTrainingSchedule&&(identical(other.id, id) || other.id == id)&&(identical(other.schedule, schedule) || other.schedule == schedule));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateTrainingSchedule&&(identical(other.schedule, schedule) || other.schedule == schedule));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,schedule);
+int get hashCode => Object.hash(runtimeType,schedule);
 
 @override
 String toString() {
-  return 'TrainingScheduleEvent.updateTrainingSchedule(id: $id, schedule: $schedule)';
+  return 'TrainingScheduleEvent.updateTrainingSchedule(schedule: $schedule)';
 }
 
 
@@ -255,7 +254,7 @@ abstract mixin class $UpdateTrainingScheduleCopyWith<$Res> implements $TrainingS
   factory $UpdateTrainingScheduleCopyWith(UpdateTrainingSchedule value, $Res Function(UpdateTrainingSchedule) _then) = _$UpdateTrainingScheduleCopyWithImpl;
 @useResult
 $Res call({
- String id, TrainingSchedule schedule
+ TrainingSchedule schedule
 });
 
 
@@ -272,10 +271,9 @@ class _$UpdateTrainingScheduleCopyWithImpl<$Res>
 
 /// Create a copy of TrainingScheduleEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? id = null,Object? schedule = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? schedule = null,}) {
   return _then(UpdateTrainingSchedule(
-null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,null == schedule ? _self.schedule : schedule // ignore: cast_nullable_to_non_nullable
+null == schedule ? _self.schedule : schedule // ignore: cast_nullable_to_non_nullable
 as TrainingSchedule,
   ));
 }

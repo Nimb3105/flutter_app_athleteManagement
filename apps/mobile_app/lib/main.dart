@@ -34,8 +34,14 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<SportRepository>(
           create: (_) => SportRepository(baseUrl: ApiConstants.baseUrl),
         ),
-        RepositoryProvider<SportUserRepository>(
-          create: (_) => SportUserRepository(baseUrl: ApiConstants.baseUrl),
+        // RepositoryProvider<SportUserRepository>(
+        //   create: (_) => SportUserRepository(baseUrl: ApiConstants.baseUrl),
+        // ),
+        RepositoryProvider<AthleteRepository>(
+          create: (_) => AthleteRepository(baseUrl: ApiConstants.baseUrl),
+        ),
+        RepositoryProvider<TrainingScheduleRepository>(
+          create: (_) => TrainingScheduleRepository(baseUrl: ApiConstants.baseUrl),
         ),
 
         // Thêm các repository khác nếu cần
@@ -43,6 +49,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.blue, // đổi sang xanh
+          ),
           primarySwatch: Colors.blue,
           useMaterial3: true,
           inputDecorationTheme: InputDecorationTheme(

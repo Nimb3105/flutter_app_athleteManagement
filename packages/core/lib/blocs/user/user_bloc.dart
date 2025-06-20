@@ -1,5 +1,6 @@
 import 'package:core/models/user/user.dart';
 import 'package:core/repositories/user/user_repository.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -10,10 +11,18 @@ sealed class UserEvent with _$UserEvent {
   const factory UserEvent.createUser(User user) = CreateUser;
   const factory UserEvent.getUserById(String id) = GetUserById;
   const factory UserEvent.getUserByEmail(String email) = GetUserByEmail;
-  const factory UserEvent.getAllUsers() = GetAllUsers;
+  const factory UserEvent.getAllUsers({
+    @Default(1) int page,
+    @Default(10) int limit,
+  }) = GetAllUsers;
   const factory UserEvent.updateUser(String id, User user) = UpdateUser;
   const factory UserEvent.deleteUser(String id) = DeleteUser;
   const factory UserEvent.login(String email, String password) = Login;
+  const factory UserEvent.getAllUserCoachBySportId(
+    String sportId, {
+    @Default(1) int page,
+    @Default(10) int limit,
+  }) = GetAllUserCoachBySportId;
 }
 
 @freezed
@@ -21,7 +30,12 @@ sealed class UserState with _$UserState {
   const factory UserState.initial() = User_Initial;
   const factory UserState.loading() = User_Loading;
   const factory UserState.loadedUser(User user) = LoadedUser;
-  const factory UserState.loadedUsers(List<User> users) = LoadedUsers;
+  const factory UserState.loadedUsers(
+    List<User> users,
+    int currentPage,
+    int limit,
+    bool hasMore,
+  ) = LoadedUsers;
   const factory UserState.error(String message) = User_Error;
   const factory UserState.success(String message) = User_Success;
   const factory UserState.loggedIn(String token) = LoggedIn;
@@ -44,6 +58,31 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<UpdateUser>(_onUpdateUser);
     on<DeleteUser>(_onDeleteUser);
     on<Login>(_onLogin);
+    on<GetAllUserCoachBySportId>(_onGetAllUserCoachBySportId);
+  }
+
+  Future<void> _onGetAllUserCoachBySportId(
+    GetAllUserCoachBySportId event,
+    Emitter<UserState> emit,
+  ) async {
+    emit(const UserState.loading());
+    try {
+      final result = await userRepository.getAllUserCoachBySportId(
+        event.sportId,
+        page: event.page,
+        limit: event.limit,
+      );
+      emit(
+        UserState.loadedUsers(
+          result['users'] as List<User>,
+          event.page,
+          event.limit,
+          result['hasMore'] as bool,
+        ),
+      );
+    } catch (e) {
+      emit(UserState.error(e.toString()));
+    }
   }
 
   Future<void> _onCreateUser(CreateUser event, Emitter<UserState> emit) async {
@@ -91,7 +130,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(const UserState.loading());
     try {
       final users = await userRepository.getAllUsers();
-      emit(UserState.loadedUsers(users));
+      emit(
+        UserState.loadedUsers(
+          users as List<User>,
+          event.page,
+          event.limit,
+          users['hasMore'] as bool,
+        ),
+      );
     } catch (e) {
       emit(UserState.error(e.toString()));
     }

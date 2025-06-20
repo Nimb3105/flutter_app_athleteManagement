@@ -3,6 +3,13 @@ import 'dart:convert';
 import 'package:core/models/food/food.dart';
 import 'package:http/http.dart' as http;
 
+class GetAllFoodRespone {
+  final List<Food> items;
+  final int totalCount;
+
+  GetAllFoodRespone({required this.items, required this.totalCount});
+}
+
 class FoodRepository {
   final String baseUrl;
 
@@ -47,28 +54,60 @@ class FoodRepository {
     }
   }
 
+  Future<GetAllFoodRespone> getAllFoodByFoodType(
+    String foodType, {
+    int page = 1,
+    int limit = 10,
+  }) async {
+    final response = await http.get(
+      Uri.parse(
+        '$baseUrl/foods/foodType/$foodType?page=$page&limit=$limit',
+      ),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+
+      if (data['data'] != null && data['data'] is List<dynamic>) {
+        final List<dynamic> jsonList = data['data'];
+        final foods =
+            jsonList
+                .map((json) => Food.fromJson(json as Map<String, dynamic>))
+                .toList();
+
+        final totalCount = data['totalCount'] ?? 0;
+
+        return GetAllFoodRespone(items: foods, totalCount: totalCount);
+      } else {
+        throw Exception('No valid "data" list found in response: $data');
+      }
+    } else {
+      throw Exception('Failed to get foods: ${response.statusCode}');
+    }
+  }
+
   // Get all foods
   Future<List<Food>> getAllFoods({int page = 1, int limit = 10}) async {
-  final response = await http.get(
-    Uri.parse('$baseUrl/foods?page=$page&limit=$limit'),
-    headers: {'Content-Type': 'application/json'},
-  );
+    final response = await http.get(
+      Uri.parse('$baseUrl/foods?page=$page&limit=$limit'),
+      headers: {'Content-Type': 'application/json'},
+    );
 
-  if (response.statusCode == 200) {
-    final data = jsonDecode(response.body) as Map<String, dynamic>;
-    if (data['data'] != null && data['data'] is List<dynamic>) {
-      final List<dynamic> jsonList = data['data'];
-      return jsonList
-          .map((json) => Food.fromJson(json as Map<String, dynamic>))
-          .toList();
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      if (data['data'] != null && data['data'] is List<dynamic>) {
+        final List<dynamic> jsonList = data['data'];
+        return jsonList
+            .map((json) => Food.fromJson(json as Map<String, dynamic>))
+            .toList();
+      } else {
+        throw Exception('No valid "data" list found in response: $data');
+      }
     } else {
-      throw Exception('No valid "data" list found in response: $data');
+      throw Exception('Failed to get foods: ${response.statusCode}');
     }
-  } else {
-    throw Exception('Failed to get foods: ${response.statusCode}');
   }
-}
-
 
   // Update food
   Future<Food> updateFood(String id, Food food) async {

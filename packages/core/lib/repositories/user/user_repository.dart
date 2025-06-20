@@ -67,7 +67,10 @@ class UserRepository {
   }
 
   // Get all users
-  Future<List<User>> getAllUsers() async {
+  Future<Map<String, dynamic>> getAllUsers({
+    int page = 1,
+    int limit = 10,
+  }) async {
     final response = await http.get(
       Uri.parse('$baseUrl/users'),
       headers: {'Content-Type': 'application/json'},
@@ -77,9 +80,13 @@ class UserRepository {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       if (data['data'] != null && data['data'] is List<dynamic>) {
         final List<dynamic> jsonList = data['data'];
-        return jsonList
-            .map((json) => User.fromJson(json as Map<String, dynamic>))
-            .toList();
+        final totalCount = data['totalCount'] as int? ?? 0;
+        final users =
+            jsonList
+                .map((json) => User.fromJson(json as Map<String, dynamic>))
+                .toList();
+        final hasMore = (page * limit) < totalCount;
+        return {'users':users,'hasMore':hasMore};
       } else {
         throw Exception('No valid "data" list found in response: $data');
       }
@@ -138,6 +145,34 @@ class UserRepository {
       throw Exception(
         'Failed to login: ${response.statusCode} - ${response.body}',
       );
+    }
+  }
+
+  Future<Map<String, dynamic>> getAllUserCoachBySportId(
+    String sportId, {
+    int page = 1,
+    int limit = 10,
+  }) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/users/coach/sport/$sportId?page=$page&limit=$limit'),
+      headers: {'Content-Type': 'application/json'},
+    );
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      if (data['data'] != null && data['data'] is List<dynamic>) {
+        final List<dynamic> jsonList = data['data'];
+        final totalCount = data['totalCount'] as int? ?? 0;
+        final users =
+            jsonList
+                .map((json) => User.fromJson(json as Map<String, dynamic>))
+                .toList();
+        final hasMore = (page * limit) < totalCount;
+        return {'users': users, 'hasMore': hasMore};
+      } else {
+        throw Exception('No valid "data" list found in response: $data');
+      }
+    } else {
+      throw Exception('Failed to get users: ${response.statusCode}');
     }
   }
 }

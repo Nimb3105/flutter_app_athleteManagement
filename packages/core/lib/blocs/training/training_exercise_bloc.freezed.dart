@@ -219,10 +219,9 @@ String toString() {
 
 
 class UpdateTrainingExercise implements TrainingExerciseEvent {
-  const UpdateTrainingExercise(this.id, this.trainingExercise);
+  const UpdateTrainingExercise(this.trainingExercise);
   
 
- final  String id;
  final  TrainingExercise trainingExercise;
 
 /// Create a copy of TrainingExerciseEvent
@@ -235,16 +234,16 @@ $UpdateTrainingExerciseCopyWith<UpdateTrainingExercise> get copyWith => _$Update
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateTrainingExercise&&(identical(other.id, id) || other.id == id)&&(identical(other.trainingExercise, trainingExercise) || other.trainingExercise == trainingExercise));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateTrainingExercise&&(identical(other.trainingExercise, trainingExercise) || other.trainingExercise == trainingExercise));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,trainingExercise);
+int get hashCode => Object.hash(runtimeType,trainingExercise);
 
 @override
 String toString() {
-  return 'TrainingExerciseEvent.updateTrainingExercise(id: $id, trainingExercise: $trainingExercise)';
+  return 'TrainingExerciseEvent.updateTrainingExercise(trainingExercise: $trainingExercise)';
 }
 
 
@@ -255,7 +254,7 @@ abstract mixin class $UpdateTrainingExerciseCopyWith<$Res> implements $TrainingE
   factory $UpdateTrainingExerciseCopyWith(UpdateTrainingExercise value, $Res Function(UpdateTrainingExercise) _then) = _$UpdateTrainingExerciseCopyWithImpl;
 @useResult
 $Res call({
- String id, TrainingExercise trainingExercise
+ TrainingExercise trainingExercise
 });
 
 
@@ -272,10 +271,9 @@ class _$UpdateTrainingExerciseCopyWithImpl<$Res>
 
 /// Create a copy of TrainingExerciseEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? id = null,Object? trainingExercise = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? trainingExercise = null,}) {
   return _then(UpdateTrainingExercise(
-null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,null == trainingExercise ? _self.trainingExercise : trainingExercise // ignore: cast_nullable_to_non_nullable
+null == trainingExercise ? _self.trainingExercise : trainingExercise // ignore: cast_nullable_to_non_nullable
 as TrainingExercise,
   ));
 }

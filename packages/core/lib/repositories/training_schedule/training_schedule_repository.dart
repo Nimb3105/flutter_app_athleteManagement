@@ -12,23 +12,34 @@ class TrainingScheduleRepository {
   Future<TrainingSchedule> createTrainingSchedule(
     TrainingSchedule schedule,
   ) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/training-schedules'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(schedule.toJson()),
-    );
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      final data = jsonDecode(response.body) as Map<String, dynamic>;
-      if (data['data'] != null && data['data'] is Map<String, dynamic>) {
-        return TrainingSchedule.fromJson(data['data'] as Map<String, dynamic>);
-      } else {
-        throw Exception('No valid "data" object found in response: $data');
-      }
-    } else {
-      throw Exception(
-        'Failed to create training schedule: ${response.statusCode}',
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/training-schedules'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(schedule.toJson()),
       );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
+        if (data['data'] != null && data['data'] is Map<String, dynamic>) {
+          return TrainingSchedule.fromJson(
+            data['data'] as Map<String, dynamic>,
+          );
+        } else {
+          throw Exception(
+            'Không tìm thấy đối tượng "data" hợp lệ trong phản hồi: $data',
+          );
+        }
+      } else {
+        // Xử lý lỗi từ server
+        final errorData = jsonDecode(response.body) as Map<String, dynamic>;
+        final errorMessage =
+            errorData['error'] as String? ??
+            'Lỗi không xác định từ server: ${response.statusCode}';
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      rethrow; // Ném lại lỗi để BLoC xử lý
     }
   }
 
@@ -81,11 +92,10 @@ class TrainingScheduleRepository {
 
   // Update training schedule
   Future<TrainingSchedule> updateTrainingSchedule(
-    String id,
     TrainingSchedule schedule,
   ) async {
     final response = await http.put(
-      Uri.parse('$baseUrl/training-schedules/$id'),
+      Uri.parse('$baseUrl/training-schedules'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(schedule.toJson()),
     );

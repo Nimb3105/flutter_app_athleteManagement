@@ -1,6 +1,5 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_app/screens/app/coach/sports/sport_create.dart';
 
 class SportScreen extends StatelessWidget {
   const SportScreen({super.key});
@@ -63,25 +62,6 @@ class SportScaffold extends StatelessWidget {
             }
           },
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder:
-                  (_) => RepositoryProvider.value(
-                    value: context.read<SportRepository>(),
-                    child: BlocProvider.value(
-                      value: context.read<SportBloc>(),
-                      child: const SportCreateForm(),
-                    ),
-                  ),
-            ),
-          );
-        },
-        icon: const Icon(Icons.add),
-        label: const Text('Thêm bộ môn'),
       ),
     );
   }

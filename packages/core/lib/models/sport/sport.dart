@@ -9,6 +9,7 @@ abstract class Sport with _$Sport {
   const factory Sport({
     required String? id,
     required String name,
+    required String position,
     @UtcDateTimeConverter() required DateTime? createdAt,
     @UtcDateTimeConverter() required DateTime? updatedAt,
   }) = _Sport;

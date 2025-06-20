@@ -495,7 +495,7 @@ class LoadedSport implements SportState {
   const LoadedSport(this.sport);
   
 
- final  Sport sport;
+ final  Sport? sport;
 
 /// Create a copy of SportState
 /// with the given fields replaced by the non-null parameter values.
@@ -527,11 +527,11 @@ abstract mixin class $LoadedSportCopyWith<$Res> implements $SportStateCopyWith<$
   factory $LoadedSportCopyWith(LoadedSport value, $Res Function(LoadedSport) _then) = _$LoadedSportCopyWithImpl;
 @useResult
 $Res call({
- Sport sport
+ Sport? sport
 });
 
 
-$SportCopyWith<$Res> get sport;
+$SportCopyWith<$Res>? get sport;
 
 }
 /// @nodoc
@@ -544,10 +544,10 @@ class _$LoadedSportCopyWithImpl<$Res>
 
 /// Create a copy of SportState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? sport = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? sport = freezed,}) {
   return _then(LoadedSport(
-null == sport ? _self.sport : sport // ignore: cast_nullable_to_non_nullable
-as Sport,
+freezed == sport ? _self.sport : sport // ignore: cast_nullable_to_non_nullable
+as Sport?,
   ));
 }
 
@@ -555,9 +555,12 @@ as Sport,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SportCopyWith<$Res> get sport {
-  
-  return $SportCopyWith<$Res>(_self.sport, (value) {
+$SportCopyWith<$Res>? get sport {
+    if (_self.sport == null) {
+    return null;
+  }
+
+  return $SportCopyWith<$Res>(_self.sport!, (value) {
     return _then(_self.copyWith(sport: value));
   });
 }

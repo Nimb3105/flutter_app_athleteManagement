@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Food {
 
- String? get id; String get name; String get foodType; String get foodImage; String get description; int get calories;@UtcDateTimeConverter() DateTime? get createdAt;@UtcDateTimeConverter() DateTime? get updatedAt;
+ String? get id; String get name; String get foodType; String get foodImage; String get description; int get calories; int get protein; int get carbs; int get fat;@UtcDateTimeConverter() DateTime? get createdAt;@UtcDateTimeConverter() DateTime? get updatedAt;
 /// Create a copy of Food
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $FoodCopyWith<Food> get copyWith => _$FoodCopyWithImpl<Food>(this as Food, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Food&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.foodType, foodType) || other.foodType == foodType)&&(identical(other.foodImage, foodImage) || other.foodImage == foodImage)&&(identical(other.description, description) || other.description == description)&&(identical(other.calories, calories) || other.calories == calories)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Food&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.foodType, foodType) || other.foodType == foodType)&&(identical(other.foodImage, foodImage) || other.foodImage == foodImage)&&(identical(other.description, description) || other.description == description)&&(identical(other.calories, calories) || other.calories == calories)&&(identical(other.protein, protein) || other.protein == protein)&&(identical(other.carbs, carbs) || other.carbs == carbs)&&(identical(other.fat, fat) || other.fat == fat)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,foodType,foodImage,description,calories,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,name,foodType,foodImage,description,calories,protein,carbs,fat,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Food(id: $id, name: $name, foodType: $foodType, foodImage: $foodImage, description: $description, calories: $calories, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Food(id: $id, name: $name, foodType: $foodType, foodImage: $foodImage, description: $description, calories: $calories, protein: $protein, carbs: $carbs, fat: $fat, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $FoodCopyWith<$Res>  {
   factory $FoodCopyWith(Food value, $Res Function(Food) _then) = _$FoodCopyWithImpl;
 @useResult
 $Res call({
- String? id, String name, String foodType, String foodImage, String description, int calories,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
+ String? id, String name, String foodType, String foodImage, String description, int calories, int protein, int carbs, int fat,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
 });
 
 
@@ -66,7 +66,7 @@ class _$FoodCopyWithImpl<$Res>
 
 /// Create a copy of Food
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = null,Object? foodType = null,Object? foodImage = null,Object? description = null,Object? calories = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = null,Object? foodType = null,Object? foodImage = null,Object? description = null,Object? calories = null,Object? protein = null,Object? carbs = null,Object? fat = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -74,6 +74,9 @@ as String,foodType: null == foodType ? _self.foodType : foodType // ignore: cast
 as String,foodImage: null == foodImage ? _self.foodImage : foodImage // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,calories: null == calories ? _self.calories : calories // ignore: cast_nullable_to_non_nullable
+as int,protein: null == protein ? _self.protein : protein // ignore: cast_nullable_to_non_nullable
+as int,carbs: null == carbs ? _self.carbs : carbs // ignore: cast_nullable_to_non_nullable
+as int,fat: null == fat ? _self.fat : fat // ignore: cast_nullable_to_non_nullable
 as int,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
@@ -87,7 +90,7 @@ as DateTime?,
 @JsonSerializable()
 
 class _Food implements Food {
-  const _Food({required this.id, required this.name, required this.foodType, required this.foodImage, required this.description, required this.calories, @UtcDateTimeConverter() required this.createdAt, @UtcDateTimeConverter() required this.updatedAt});
+  const _Food({required this.id, required this.name, required this.foodType, required this.foodImage, required this.description, required this.calories, required this.protein, required this.carbs, required this.fat, @UtcDateTimeConverter() required this.createdAt, @UtcDateTimeConverter() required this.updatedAt});
   factory _Food.fromJson(Map<String, dynamic> json) => _$FoodFromJson(json);
 
 @override final  String? id;
@@ -96,6 +99,9 @@ class _Food implements Food {
 @override final  String foodImage;
 @override final  String description;
 @override final  int calories;
+@override final  int protein;
+@override final  int carbs;
+@override final  int fat;
 @override@UtcDateTimeConverter() final  DateTime? createdAt;
 @override@UtcDateTimeConverter() final  DateTime? updatedAt;
 
@@ -112,16 +118,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Food&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.foodType, foodType) || other.foodType == foodType)&&(identical(other.foodImage, foodImage) || other.foodImage == foodImage)&&(identical(other.description, description) || other.description == description)&&(identical(other.calories, calories) || other.calories == calories)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Food&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.foodType, foodType) || other.foodType == foodType)&&(identical(other.foodImage, foodImage) || other.foodImage == foodImage)&&(identical(other.description, description) || other.description == description)&&(identical(other.calories, calories) || other.calories == calories)&&(identical(other.protein, protein) || other.protein == protein)&&(identical(other.carbs, carbs) || other.carbs == carbs)&&(identical(other.fat, fat) || other.fat == fat)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,foodType,foodImage,description,calories,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,name,foodType,foodImage,description,calories,protein,carbs,fat,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Food(id: $id, name: $name, foodType: $foodType, foodImage: $foodImage, description: $description, calories: $calories, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Food(id: $id, name: $name, foodType: $foodType, foodImage: $foodImage, description: $description, calories: $calories, protein: $protein, carbs: $carbs, fat: $fat, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -132,7 +138,7 @@ abstract mixin class _$FoodCopyWith<$Res> implements $FoodCopyWith<$Res> {
   factory _$FoodCopyWith(_Food value, $Res Function(_Food) _then) = __$FoodCopyWithImpl;
 @override @useResult
 $Res call({
- String? id, String name, String foodType, String foodImage, String description, int calories,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
+ String? id, String name, String foodType, String foodImage, String description, int calories, int protein, int carbs, int fat,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
 });
 
 
@@ -149,7 +155,7 @@ class __$FoodCopyWithImpl<$Res>
 
 /// Create a copy of Food
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? name = null,Object? foodType = null,Object? foodImage = null,Object? description = null,Object? calories = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? name = null,Object? foodType = null,Object? foodImage = null,Object? description = null,Object? calories = null,Object? protein = null,Object? carbs = null,Object? fat = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_Food(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -157,6 +163,9 @@ as String,foodType: null == foodType ? _self.foodType : foodType // ignore: cast
 as String,foodImage: null == foodImage ? _self.foodImage : foodImage // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,calories: null == calories ? _self.calories : calories // ignore: cast_nullable_to_non_nullable
+as int,protein: null == protein ? _self.protein : protein // ignore: cast_nullable_to_non_nullable
+as int,carbs: null == carbs ? _self.carbs : carbs // ignore: cast_nullable_to_non_nullable
+as int,fat: null == fat ? _self.fat : fat // ignore: cast_nullable_to_non_nullable
 as int,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,

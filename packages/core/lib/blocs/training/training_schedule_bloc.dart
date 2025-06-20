@@ -15,7 +15,6 @@ sealed class TrainingScheduleEvent with _$TrainingScheduleEvent {
   const factory TrainingScheduleEvent.getAllTrainingSchedules() =
       GetAllTrainingSchedules;
   const factory TrainingScheduleEvent.updateTrainingSchedule(
-    String id,
     TrainingSchedule schedule,
   ) = UpdateTrainingSchedule;
   const factory TrainingScheduleEvent.deleteTrainingSchedule(String id) =
@@ -101,8 +100,13 @@ class TrainingScheduleBloc
     emit(const TrainingScheduleState.loading());
     try {
       final updatedSchedule = await trainingScheduleRepository
-          .updateTrainingSchedule(event.id, event.schedule);
+          .updateTrainingSchedule(event.schedule);
       emit(TrainingScheduleState.loadedTrainingSchedule(updatedSchedule));
+      emit(
+        const TrainingScheduleState.success(
+          'Training schedule updated successfully',
+        ),
+      );
     } catch (e) {
       emit(TrainingScheduleState.error(e.toString()));
     }

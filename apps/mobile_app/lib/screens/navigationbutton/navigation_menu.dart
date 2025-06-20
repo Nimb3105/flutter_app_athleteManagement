@@ -1,129 +1,10 @@
-
-// import 'package:flutter/material.dart';
-// import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-// import 'package:mobile_app/screens/app/coach/athleteFromCoach/athlete_list_screen.dart';
-// import 'package:mobile_app/screens/app/coach/exercises/exercise_screen.dart';
-// import 'package:mobile_app/screens/app/coach/food/food_list_screen.dart';
-// import 'package:mobile_app/screens/app/coach/sports/sport_screen.dart';
-// import 'package:mobile_app/screens/app/coach/training/training_schedule_screen.dart';
-
-// class NavigationMenu extends StatefulWidget {
-//   const NavigationMenu({super.key});
-
-//   @override
-//   State<NavigationMenu> createState() => _NavigationMenuState();
-// }
-
-// class _NavigationMenuState extends State<NavigationMenu> {
-//   int _selectedIndex = 0;
-
-//   // Danh sách các màn hình tương ứng với từng tab
-//   final List<Widget> _widgetOptions = [
-//     const AthleteListView(athletes: [],), // Trang chủ: Danh sách vận động viên
-//     const SportScreen(), // Môn thể thao
-//     const TrainingScheduleScreen(), // Lịch tập
-//     const ExerciseScreen(), // Bài tập
-//     const FoodListScreen(), // Danh sách thực phẩm
-//   ];
-
-//   void _onItemTapped(int index) {
-//     setState(() {
-//       _selectedIndex = index;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: _widgetOptions.elementAt(_selectedIndex),
-//       bottomNavigationBar: BottomNavigationBar(
-//         items: const <BottomNavigationBarItem>[
-//           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Trang chủ'),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.sports),
-//             label: 'Môn thể thao',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.calendar_today),
-//             label: 'Lịch tập',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.fitness_center),
-//             label: 'Bài tập',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.food_bank),
-//             label: 'Món ăn',
-//           ),
-//         ],
-//         currentIndex: _selectedIndex,
-//         selectedItemColor: Theme.of(context).primaryColor,
-//         unselectedItemColor: Colors.grey,
-//         onTap: _onItemTapped,
-//         type: BottomNavigationBarType.fixed,
-//       ),
-//       floatingActionButton:
-//           _selectedIndex == 0
-//               ? SpeedDial(
-//                 icon: Icons.add,
-//                 activeIcon: Icons.close,
-//                 backgroundColor: Theme.of(context).primaryColor,
-//                 children: [
-//                   SpeedDialChild(
-//                     child: const Icon(Icons.sports),
-//                     label: 'Xem danh sách môn thể thao',
-//                     backgroundColor: Colors.blue,
-//                     onTap: () {
-//                       Navigator.push(
-//                         context,
-//                         MaterialPageRoute(
-//                           builder: (context) => const SportScreen(),
-//                         ),
-//                       );
-//                     },
-//                   ),
-//                   SpeedDialChild(
-//                     child: const Icon(Icons.calendar_today),
-//                     label: 'Xem danh sách lịch tập',
-//                     backgroundColor: Colors.blue,
-//                     onTap: () {
-//                       Navigator.push(
-//                         context,
-//                         MaterialPageRoute(
-//                           builder: (context) => const TrainingScheduleScreen(),
-//                         ),
-//                       );
-//                     },
-//                   ),
-//                   SpeedDialChild(
-//                     child: const Icon(Icons.fitness_center),
-//                     label: 'Xem danh sách bài tập',
-//                     backgroundColor: Colors.blue,
-//                     onTap: () {
-//                       Navigator.push(
-//                         context,
-//                         MaterialPageRoute(
-//                           builder: (context) => const ExerciseScreen(),
-//                         ),
-//                       );
-//                     },
-//                   ),
-//                 ],
-//               )
-//               : null, // Chỉ hiển thị SpeedDial ở tab Trang chủ
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:mobile_app/screens/app/coach/athleteFromCoach/athlete_list_screen.dart';
-import 'package:mobile_app/screens/app/coach/exercises/exercise_screen.dart';
-import 'package:mobile_app/screens/app/coach/sports/sport_screen.dart';
-import 'package:mobile_app/screens/app/coach/training/training_schedule_screen.dart';
+import 'package:mobile_app/screens/app/coach/coach_home_screen.dart'; // Đảm bảo đã import
 
 class NavigationMenu extends StatefulWidget {
-  const NavigationMenu({super.key});
+  final String coachId;
+  const NavigationMenu({super.key, required this.coachId});
 
   @override
   State<NavigationMenu> createState() => _NavigationMenuState();
@@ -131,15 +12,43 @@ class NavigationMenu extends StatefulWidget {
 
 class _NavigationMenuState extends State<NavigationMenu> {
   int _selectedIndex = 0;
-
-  // Danh sách các màn hình tương ứng với từng tab
-  final List<Widget> _widgetOptions = [
-    const AthleteListView(), // Sử dụng AthleteListView với AthleteBloc
-    const SportScreen(),
-    const TrainingScheduleScreen(),
-    const ExerciseScreen(),
-    //const FoodListScreen(selectedFoodIds: [], onSelectionChanged: (List<String> ) {  },),
+  // Sử dụng GlobalKey cho Navigator của từng tab để có thể push/pop route
+  final List<GlobalKey<NavigatorState>> _navigatorKeys = [
+    GlobalKey<NavigatorState>(), // Cho tab Trang chủ
+    GlobalKey<NavigatorState>(), // Cho tab Danh sách VĐV
+    GlobalKey<NavigatorState>(), // Cho tab Tài khoản
   ];
+
+  // Danh sách các màn hình gốc cho từng tab
+  List<Widget> get _widgetOptions => [
+        // Tab 0: Trang chủ
+        Navigator(
+          key: _navigatorKeys[0],
+          onGenerateRoute: (settings) {
+            return MaterialPageRoute(
+              builder: (context) => CoachHomeScreen(),
+            );
+          },
+        ),
+        // Tab 1: Danh sách VĐV
+        Navigator(
+          key: _navigatorKeys[1],
+          onGenerateRoute: (settings) {
+            return MaterialPageRoute(
+              builder: (context) => AthleteListScreen(coachId: widget.coachId),
+            );
+          },
+        ),
+        // Tab 2: Tài khoản
+        Navigator(
+          key: _navigatorKeys[2],
+          onGenerateRoute: (settings) {
+            return MaterialPageRoute(
+              builder: (context) => const Center(child: Text('Thông tin huấn luyện viên', style: TextStyle(fontSize: 30))),
+            );
+          },
+        ),
+      ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -147,84 +56,64 @@ class _NavigationMenuState extends State<NavigationMenu> {
     });
   }
 
+  // Hàm để xử lý nút back của hệ thống
+  Future<bool> _onWillPop() async {
+    final bool? maybePop = await _navigatorKeys[_selectedIndex].currentState?.maybePop();
+    if (maybePop == false) {
+      // Nếu không thể pop từ Navigator hiện tại, cho phép Navigator ngoài cùng pop
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Trang chủ'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sports),
-            label: 'Môn thể thao',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: 'Lịch tập',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.fitness_center),
-            label: 'Bài tập',
-          ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.food_bank),
-          //   label: 'Món ăn',
-          // ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.grey,
-        onTap: _onItemTapped,
-        type: BottomNavigationBarType.fixed,
+    return PopScope( // Use PopScope for back button handling
+      canPop: false, // Prevent the main navigator from popping directly
+      // ignore: deprecated_member_use
+      onPopInvoked: (didPop) async {
+        if (didPop) {
+          return;
+        }
+        final NavigatorState? navigator = _navigatorKeys[_selectedIndex].currentState;
+        if (navigator != null && navigator.canPop()) {
+          navigator.pop();
+        } else {
+          // If at the root of the nested navigator, then allow the main app to pop
+          if (Navigator.of(context).canPop()) {
+            Navigator.of(context).pop();
+          }
+          // Or, if this is the root of the entire app, exit the app
+          // For Android: SystemNavigator.pop();
+        }
+      },
+      child: Scaffold(
+        body: IndexedStack( // Sử dụng IndexedStack để giữ trạng thái của các tab
+          index: _selectedIndex,
+          children: _widgetOptions,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Trang chủ',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list),
+              label: 'Danh sách VĐV',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Tài khoản',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Theme.of(context).primaryColor,
+          unselectedItemColor: Colors.grey,
+          onTap: _onItemTapped,
+          type: BottomNavigationBarType.fixed,
+        ),
       ),
-      floatingActionButton: _selectedIndex == 0
-          ? SpeedDial(
-              icon: Icons.add,
-              activeIcon: Icons.close,
-              backgroundColor: Theme.of(context).primaryColor,
-              children: [
-                SpeedDialChild(
-                  child: const Icon(Icons.sports),
-                  label: 'Xem danh sách môn thể thao',
-                  backgroundColor: Colors.blue,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SportScreen(),
-                      ),
-                    );
-                  },
-                ),
-                SpeedDialChild(
-                  child: const Icon(Icons.calendar_today),
-                  label: 'Xem danh sách lịch tập',
-                  backgroundColor: Colors.blue,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const TrainingScheduleScreen(),
-                      ),
-                    );
-                  },
-                ),
-                SpeedDialChild(
-                  child: const Icon(Icons.fitness_center),
-                  label: 'Xem danh sách bài tập',
-                  backgroundColor: Colors.blue,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ExerciseScreen(),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            )
-          : null, // Chỉ hiển thị SpeedDial ở tab Trang chủ
     );
   }
 }

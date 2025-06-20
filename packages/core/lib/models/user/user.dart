@@ -8,6 +8,7 @@ part 'user.g.dart';
 abstract class User with _$User {
   const factory User({
     required String? id,
+    required String sportId,
     required String gender,
     required String fullName,
     required String imageUrl,

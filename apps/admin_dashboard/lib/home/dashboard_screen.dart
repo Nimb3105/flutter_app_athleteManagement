@@ -67,8 +67,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               leading: Icon(Icons.supervisor_account),
               title: Text("Quản lý huấn luyện viên"),
               onTap: () {
-                Navigator.pop(context); // Close the drawer
-                _updateBody(const CoachListScreen(), "Quản lý huấn luyện viên");
+                // Navigator.pop(context); // Close the drawer
+                // _updateBody(const CoachListScreen(), "Quản lý huấn luyện viên");
               },
             ),
             ListTile(

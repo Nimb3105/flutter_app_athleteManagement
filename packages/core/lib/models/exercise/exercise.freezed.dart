@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Exercise {
 
- String? get id; String get name; String get bodyPart; String get target; List<String> get secondaryMuscles; List<String> get instructions; String get equipment; String get gifUrl;@UtcDateTimeConverter() DateTime? get createdAt;@UtcDateTimeConverter() DateTime? get updatedAt;
+ String? get id; String get name; String get bodyPart; String get target; List<String> get secondaryMuscles; List<String> get instructions; String get equipment; String get gifUrl; String get sportName;@UtcDateTimeConverter() DateTime? get createdAt;@UtcDateTimeConverter() DateTime? get updatedAt;
 /// Create a copy of Exercise
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $ExerciseCopyWith<Exercise> get copyWith => _$ExerciseCopyWithImpl<Exercise>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Exercise&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.bodyPart, bodyPart) || other.bodyPart == bodyPart)&&(identical(other.target, target) || other.target == target)&&const DeepCollectionEquality().equals(other.secondaryMuscles, secondaryMuscles)&&const DeepCollectionEquality().equals(other.instructions, instructions)&&(identical(other.equipment, equipment) || other.equipment == equipment)&&(identical(other.gifUrl, gifUrl) || other.gifUrl == gifUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Exercise&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.bodyPart, bodyPart) || other.bodyPart == bodyPart)&&(identical(other.target, target) || other.target == target)&&const DeepCollectionEquality().equals(other.secondaryMuscles, secondaryMuscles)&&const DeepCollectionEquality().equals(other.instructions, instructions)&&(identical(other.equipment, equipment) || other.equipment == equipment)&&(identical(other.gifUrl, gifUrl) || other.gifUrl == gifUrl)&&(identical(other.sportName, sportName) || other.sportName == sportName)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,bodyPart,target,const DeepCollectionEquality().hash(secondaryMuscles),const DeepCollectionEquality().hash(instructions),equipment,gifUrl,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,name,bodyPart,target,const DeepCollectionEquality().hash(secondaryMuscles),const DeepCollectionEquality().hash(instructions),equipment,gifUrl,sportName,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Exercise(id: $id, name: $name, bodyPart: $bodyPart, target: $target, secondaryMuscles: $secondaryMuscles, instructions: $instructions, equipment: $equipment, gifUrl: $gifUrl, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Exercise(id: $id, name: $name, bodyPart: $bodyPart, target: $target, secondaryMuscles: $secondaryMuscles, instructions: $instructions, equipment: $equipment, gifUrl: $gifUrl, sportName: $sportName, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $ExerciseCopyWith<$Res>  {
   factory $ExerciseCopyWith(Exercise value, $Res Function(Exercise) _then) = _$ExerciseCopyWithImpl;
 @useResult
 $Res call({
- String? id, String name, String bodyPart, String target, List<String> secondaryMuscles, List<String> instructions, String equipment, String gifUrl,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
+ String? id, String name, String bodyPart, String target, List<String> secondaryMuscles, List<String> instructions, String equipment, String gifUrl, String sportName,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
 });
 
 
@@ -66,7 +66,7 @@ class _$ExerciseCopyWithImpl<$Res>
 
 /// Create a copy of Exercise
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = null,Object? bodyPart = null,Object? target = null,Object? secondaryMuscles = null,Object? instructions = null,Object? equipment = null,Object? gifUrl = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = null,Object? bodyPart = null,Object? target = null,Object? secondaryMuscles = null,Object? instructions = null,Object? equipment = null,Object? gifUrl = null,Object? sportName = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -76,6 +76,7 @@ as String,secondaryMuscles: null == secondaryMuscles ? _self.secondaryMuscles : 
 as List<String>,instructions: null == instructions ? _self.instructions : instructions // ignore: cast_nullable_to_non_nullable
 as List<String>,equipment: null == equipment ? _self.equipment : equipment // ignore: cast_nullable_to_non_nullable
 as String,gifUrl: null == gifUrl ? _self.gifUrl : gifUrl // ignore: cast_nullable_to_non_nullable
+as String,sportName: null == sportName ? _self.sportName : sportName // ignore: cast_nullable_to_non_nullable
 as String,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
@@ -89,7 +90,7 @@ as DateTime?,
 @JsonSerializable()
 
 class _Exercise implements Exercise {
-  const _Exercise({required this.id, required this.name, required this.bodyPart, required this.target, required final  List<String> secondaryMuscles, required final  List<String> instructions, required this.equipment, required this.gifUrl, @UtcDateTimeConverter() required this.createdAt, @UtcDateTimeConverter() required this.updatedAt}): _secondaryMuscles = secondaryMuscles,_instructions = instructions;
+  const _Exercise({required this.id, required this.name, required this.bodyPart, required this.target, required final  List<String> secondaryMuscles, required final  List<String> instructions, required this.equipment, required this.gifUrl, required this.sportName, @UtcDateTimeConverter() required this.createdAt, @UtcDateTimeConverter() required this.updatedAt}): _secondaryMuscles = secondaryMuscles,_instructions = instructions;
   factory _Exercise.fromJson(Map<String, dynamic> json) => _$ExerciseFromJson(json);
 
 @override final  String? id;
@@ -112,6 +113,7 @@ class _Exercise implements Exercise {
 
 @override final  String equipment;
 @override final  String gifUrl;
+@override final  String sportName;
 @override@UtcDateTimeConverter() final  DateTime? createdAt;
 @override@UtcDateTimeConverter() final  DateTime? updatedAt;
 
@@ -128,16 +130,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Exercise&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.bodyPart, bodyPart) || other.bodyPart == bodyPart)&&(identical(other.target, target) || other.target == target)&&const DeepCollectionEquality().equals(other._secondaryMuscles, _secondaryMuscles)&&const DeepCollectionEquality().equals(other._instructions, _instructions)&&(identical(other.equipment, equipment) || other.equipment == equipment)&&(identical(other.gifUrl, gifUrl) || other.gifUrl == gifUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Exercise&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.bodyPart, bodyPart) || other.bodyPart == bodyPart)&&(identical(other.target, target) || other.target == target)&&const DeepCollectionEquality().equals(other._secondaryMuscles, _secondaryMuscles)&&const DeepCollectionEquality().equals(other._instructions, _instructions)&&(identical(other.equipment, equipment) || other.equipment == equipment)&&(identical(other.gifUrl, gifUrl) || other.gifUrl == gifUrl)&&(identical(other.sportName, sportName) || other.sportName == sportName)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,bodyPart,target,const DeepCollectionEquality().hash(_secondaryMuscles),const DeepCollectionEquality().hash(_instructions),equipment,gifUrl,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,name,bodyPart,target,const DeepCollectionEquality().hash(_secondaryMuscles),const DeepCollectionEquality().hash(_instructions),equipment,gifUrl,sportName,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Exercise(id: $id, name: $name, bodyPart: $bodyPart, target: $target, secondaryMuscles: $secondaryMuscles, instructions: $instructions, equipment: $equipment, gifUrl: $gifUrl, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Exercise(id: $id, name: $name, bodyPart: $bodyPart, target: $target, secondaryMuscles: $secondaryMuscles, instructions: $instructions, equipment: $equipment, gifUrl: $gifUrl, sportName: $sportName, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -148,7 +150,7 @@ abstract mixin class _$ExerciseCopyWith<$Res> implements $ExerciseCopyWith<$Res>
   factory _$ExerciseCopyWith(_Exercise value, $Res Function(_Exercise) _then) = __$ExerciseCopyWithImpl;
 @override @useResult
 $Res call({
- String? id, String name, String bodyPart, String target, List<String> secondaryMuscles, List<String> instructions, String equipment, String gifUrl,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
+ String? id, String name, String bodyPart, String target, List<String> secondaryMuscles, List<String> instructions, String equipment, String gifUrl, String sportName,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
 });
 
 
@@ -165,7 +167,7 @@ class __$ExerciseCopyWithImpl<$Res>
 
 /// Create a copy of Exercise
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? name = null,Object? bodyPart = null,Object? target = null,Object? secondaryMuscles = null,Object? instructions = null,Object? equipment = null,Object? gifUrl = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? name = null,Object? bodyPart = null,Object? target = null,Object? secondaryMuscles = null,Object? instructions = null,Object? equipment = null,Object? gifUrl = null,Object? sportName = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_Exercise(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -175,6 +177,7 @@ as String,secondaryMuscles: null == secondaryMuscles ? _self._secondaryMuscles :
 as List<String>,instructions: null == instructions ? _self._instructions : instructions // ignore: cast_nullable_to_non_nullable
 as List<String>,equipment: null == equipment ? _self.equipment : equipment // ignore: cast_nullable_to_non_nullable
 as String,gifUrl: null == gifUrl ? _self.gifUrl : gifUrl // ignore: cast_nullable_to_non_nullable
+as String,sportName: null == sportName ? _self.sportName : sportName // ignore: cast_nullable_to_non_nullable
 as String,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,

@@ -81,11 +81,10 @@ class TrainingExerciseRepository {
 
   // Update training exercise
   Future<TrainingExercise> updateTrainingExercise(
-    String id,
     TrainingExercise trainingExercise,
   ) async {
     final response = await http.put(
-      Uri.parse('$baseUrl/training-exercises/$id'),
+      Uri.parse('$baseUrl/training-exercises'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(trainingExercise.toJson()),
     );

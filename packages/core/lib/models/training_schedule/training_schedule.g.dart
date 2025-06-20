@@ -19,6 +19,13 @@ _TrainingSchedule _$TrainingScheduleFromJson(Map<String, dynamic> json) =>
       type: json['type'] as String,
       notes: json['notes'] as String,
       createdBy: json['createdBy'] as String,
+      progress: (json['progress'] as num?)?.toDouble(),
+      athleteId: json['athleteId'] as String?,
+      trainingExercises:
+          (json['trainingExercises'] as List<dynamic>?)
+              ?.map((e) => TrainingExercise.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       createdAt: _$JsonConverterFromJson<String, DateTime>(
         json['createdAt'],
         const UtcDateTimeConverter().fromJson,
@@ -40,6 +47,9 @@ Map<String, dynamic> _$TrainingScheduleToJson(_TrainingSchedule instance) =>
       'type': instance.type,
       'notes': instance.notes,
       'createdBy': instance.createdBy,
+      'progress': instance.progress,
+      'athleteId': instance.athleteId,
+      'trainingExercises': instance.trainingExercises,
       'createdAt': _$JsonConverterToJson<String, DateTime>(
         instance.createdAt,
         const UtcDateTimeConverter().toJson,

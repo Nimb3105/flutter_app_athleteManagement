@@ -13,6 +13,9 @@ abstract class Food with _$Food {
     required String foodImage,
     required String description,
     required int calories,
+    required int protein,
+    required int carbs,
+    required int fat,
     @UtcDateTimeConverter() required DateTime? createdAt,
     @UtcDateTimeConverter() required DateTime? updatedAt,
   }) = _Food;

@@ -133,7 +133,7 @@ class TeamMemberBloc extends Bloc<TeamMemberEvent, TeamMemberState> {
         final team = await teamRepository.getTeamById(teamMember.teamId);
         teams[teamMember.teamId] = team;
         final sport = await sportRepository.getSportById(team.sportId);
-        sports[team.sportId] = sport;
+        sports[team.sportId] = sport!;
       }
       emit(
         TeamMemberState.loadedTeamMembers(
@@ -167,7 +167,7 @@ class TeamMemberBloc extends Bloc<TeamMemberEvent, TeamMemberState> {
         final team = await teamRepository.getTeamById(teamMember.teamId);
         teams[teamMember.teamId] = team;
         final sport = await sportRepository.getSportById(team.sportId);
-        sports[team.sportId] = sport;
+        sports[team.sportId] = sport!;
       }
       emit(
         TeamMemberState.loadedTeamMembers(

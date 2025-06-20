@@ -186,6 +186,146 @@ as String,
 /// @nodoc
 
 
+class GetAllExercisesByBodyPart implements ExerciseEvent {
+  const GetAllExercisesByBodyPart(this.bodyPart, {this.page = 1, this.limit = 10});
+  
+
+ final  String bodyPart;
+@JsonKey() final  int page;
+@JsonKey() final  int limit;
+
+/// Create a copy of ExerciseEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetAllExercisesByBodyPartCopyWith<GetAllExercisesByBodyPart> get copyWith => _$GetAllExercisesByBodyPartCopyWithImpl<GetAllExercisesByBodyPart>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetAllExercisesByBodyPart&&(identical(other.bodyPart, bodyPart) || other.bodyPart == bodyPart)&&(identical(other.page, page) || other.page == page)&&(identical(other.limit, limit) || other.limit == limit));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,bodyPart,page,limit);
+
+@override
+String toString() {
+  return 'ExerciseEvent.getAllExercisesByBodyPart(bodyPart: $bodyPart, page: $page, limit: $limit)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GetAllExercisesByBodyPartCopyWith<$Res> implements $ExerciseEventCopyWith<$Res> {
+  factory $GetAllExercisesByBodyPartCopyWith(GetAllExercisesByBodyPart value, $Res Function(GetAllExercisesByBodyPart) _then) = _$GetAllExercisesByBodyPartCopyWithImpl;
+@useResult
+$Res call({
+ String bodyPart, int page, int limit
+});
+
+
+
+
+}
+/// @nodoc
+class _$GetAllExercisesByBodyPartCopyWithImpl<$Res>
+    implements $GetAllExercisesByBodyPartCopyWith<$Res> {
+  _$GetAllExercisesByBodyPartCopyWithImpl(this._self, this._then);
+
+  final GetAllExercisesByBodyPart _self;
+  final $Res Function(GetAllExercisesByBodyPart) _then;
+
+/// Create a copy of ExerciseEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? bodyPart = null,Object? page = null,Object? limit = null,}) {
+  return _then(GetAllExercisesByBodyPart(
+null == bodyPart ? _self.bodyPart : bodyPart // ignore: cast_nullable_to_non_nullable
+as String,page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
+as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class GetAllExercisesBySportName implements ExerciseEvent {
+  const GetAllExercisesBySportName(this.sportName, {this.page = 1, this.limit = 10});
+  
+
+ final  String sportName;
+@JsonKey() final  int page;
+@JsonKey() final  int limit;
+
+/// Create a copy of ExerciseEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetAllExercisesBySportNameCopyWith<GetAllExercisesBySportName> get copyWith => _$GetAllExercisesBySportNameCopyWithImpl<GetAllExercisesBySportName>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetAllExercisesBySportName&&(identical(other.sportName, sportName) || other.sportName == sportName)&&(identical(other.page, page) || other.page == page)&&(identical(other.limit, limit) || other.limit == limit));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,sportName,page,limit);
+
+@override
+String toString() {
+  return 'ExerciseEvent.getAllExercisesBySportName(sportName: $sportName, page: $page, limit: $limit)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GetAllExercisesBySportNameCopyWith<$Res> implements $ExerciseEventCopyWith<$Res> {
+  factory $GetAllExercisesBySportNameCopyWith(GetAllExercisesBySportName value, $Res Function(GetAllExercisesBySportName) _then) = _$GetAllExercisesBySportNameCopyWithImpl;
+@useResult
+$Res call({
+ String sportName, int page, int limit
+});
+
+
+
+
+}
+/// @nodoc
+class _$GetAllExercisesBySportNameCopyWithImpl<$Res>
+    implements $GetAllExercisesBySportNameCopyWith<$Res> {
+  _$GetAllExercisesBySportNameCopyWithImpl(this._self, this._then);
+
+  final GetAllExercisesBySportName _self;
+  final $Res Function(GetAllExercisesBySportName) _then;
+
+/// Create a copy of ExerciseEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? sportName = null,Object? page = null,Object? limit = null,}) {
+  return _then(GetAllExercisesBySportName(
+null == sportName ? _self.sportName : sportName // ignore: cast_nullable_to_non_nullable
+as String,page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
+as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
 class GetAllExercises implements ExerciseEvent {
   const GetAllExercises({this.page = 1, this.limit = 10});
   
@@ -480,6 +620,38 @@ int get hashCode => runtimeType.hashCode;
 @override
 String toString() {
   return 'ExerciseState.loading()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class Exercise_LoadingMore implements ExerciseState {
+  const Exercise_LoadingMore();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Exercise_LoadingMore);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'ExerciseState.loadingMore()';
 }
 
 

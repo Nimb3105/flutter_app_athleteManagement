@@ -1,9 +1,4 @@
 import 'package:core/core.dart';
-import 'package:core/models/exercise/exercise.dart';
-import 'package:core/models/training_schedule/training_exercise.dart';
-import 'package:core/repositories/exercise/exercise_repository.dart';
-import 'package:core/repositories/training_schedule/training_exercise_repository.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'training_exercise_bloc.freezed.dart';
@@ -18,7 +13,6 @@ sealed class TrainingExerciseEvent with _$TrainingExerciseEvent {
   const factory TrainingExerciseEvent.getAllTrainingExercises() =
       GetAllTrainingExercises;
   const factory TrainingExerciseEvent.updateTrainingExercise(
-    String id,
     TrainingExercise trainingExercise,
   ) = UpdateTrainingExercise;
   const factory TrainingExerciseEvent.deleteTrainingExercise(String id) =
@@ -121,9 +115,14 @@ class TrainingExerciseBloc
     emit(const TrainingExerciseState.loading());
     try {
       final updatedTrainingExercise = await trainingExerciseRepository
-          .updateTrainingExercise(event.id, event.trainingExercise);
+          .updateTrainingExercise(event.trainingExercise);
       emit(
         TrainingExerciseState.loadedTrainingExercise(updatedTrainingExercise),
+      );
+      emit(
+        const TrainingExerciseState.success(
+          'Training exercise updated successfully',
+        ),
       );
     } catch (e) {
       emit(TrainingExerciseState.error(e.toString()));
@@ -163,8 +162,8 @@ class TrainingExerciseBloc
         );
         exercises[trainingExercise.exerciseId] = exercise;
         final trainingSchedule = await trainingScheduleRepository
-            .getTrainingScheduleById(trainingExercise.scheduleId);
-        trainingSchedules[trainingExercise.scheduleId] = trainingSchedule;
+            .getTrainingScheduleById(trainingExercise.scheduleId!);
+        trainingSchedules[trainingExercise.scheduleId!] = trainingSchedule;
       }
       emit(
         TrainingExerciseState.loadedTrainingExercisesWithExercises(

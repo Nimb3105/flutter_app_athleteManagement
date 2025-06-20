@@ -24,7 +24,9 @@ class MatchScheduleRepository {
         throw Exception('No valid "data" object found in response: $data');
       }
     } else {
-      throw Exception('Failed to create match schedule: ${response.statusCode}');
+      throw Exception(
+        'Failed to create match schedule: ${response.statusCode}',
+      );
     }
   }
 
@@ -48,7 +50,9 @@ class MatchScheduleRepository {
   }
 
   // Get match schedule by tournament ID
-  Future<MatchSchedule> getMatchScheduleByTournamentId(String tournamentId) async {
+  Future<MatchSchedule> getMatchScheduleByTournamentId(
+    String tournamentId,
+  ) async {
     final response = await http.get(
       Uri.parse('$baseUrl/match-schedules/tournament/$tournamentId'),
       headers: {'Content-Type': 'application/json'},
@@ -62,12 +66,17 @@ class MatchScheduleRepository {
         throw Exception('No valid "data" object found in response: $data');
       }
     } else {
-      throw Exception('Failed to get match schedule by tournament ID: ${response.statusCode}');
+      throw Exception(
+        'Failed to get match schedule by tournament ID: ${response.statusCode}',
+      );
     }
   }
 
   // Get all match schedules
-  Future<Map<String, dynamic>> getAllMatchSchedules({int page = 1, int limit = 10}) async {
+  Future<Map<String, dynamic>> getAllMatchSchedules({
+    int page = 1,
+    int limit = 10,
+  }) async {
     final response = await http.get(
       Uri.parse('$baseUrl/match-schedules?page=$page&limit=$limit'),
       headers: {'Content-Type': 'application/json'},
@@ -78,9 +87,13 @@ class MatchScheduleRepository {
       if (data['data'] != null && data['data'] is List<dynamic>) {
         final List<dynamic> jsonList = data['data'];
         final totalCount = data['totalCount'] as int? ?? 0;
-        final matchSchedules = jsonList
-            .map((json) => MatchSchedule.fromJson(json as Map<String, dynamic>))
-            .toList();
+        final matchSchedules =
+            jsonList
+                .map(
+                  (json) =>
+                      MatchSchedule.fromJson(json as Map<String, dynamic>),
+                )
+                .toList();
         final hasMore = (page * limit) < totalCount;
         return {'matchSchedules': matchSchedules, 'hasMore': hasMore};
       } else {
@@ -92,7 +105,10 @@ class MatchScheduleRepository {
   }
 
   // Update match schedule
-  Future<MatchSchedule> updateMatchSchedule(String id, MatchSchedule matchSchedule) async {
+  Future<MatchSchedule> updateMatchSchedule(
+    String id,
+    MatchSchedule matchSchedule,
+  ) async {
     final response = await http.put(
       Uri.parse('$baseUrl/match-schedules/$id'),
       headers: {'Content-Type': 'application/json'},
@@ -107,7 +123,9 @@ class MatchScheduleRepository {
         throw Exception('No valid "data" object found in response: $data');
       }
     } else {
-      throw Exception('Failed to update match schedule: ${response.statusCode}');
+      throw Exception(
+        'Failed to update match schedule: ${response.statusCode}',
+      );
     }
   }
 
@@ -119,7 +137,9 @@ class MatchScheduleRepository {
     );
 
     if (response.statusCode != 200 && response.statusCode != 204) {
-      throw Exception('Failed to delete match schedule: ${response.statusCode}');
+      throw Exception(
+        'Failed to delete match schedule: ${response.statusCode}',
+      );
     }
   }
 }

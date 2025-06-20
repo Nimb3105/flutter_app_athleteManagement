@@ -1,4 +1,5 @@
 // import 'dart:io';
+// import 'dart:math';
 // import 'package:file_picker/file_picker.dart';
 // import 'package:flutter/material.dart';
 // import 'package:core/core.dart';
@@ -15,25 +16,20 @@
 
 // class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
 //   final TextEditingController nameController = TextEditingController();
-//   final TextEditingController durationController = TextEditingController();
+//   final TextEditingController targetController = TextEditingController();
 //   final TextEditingController descriptionController = TextEditingController();
 //   final TextEditingController equipmentController = TextEditingController();
 //   final TextEditingController muscleController = TextEditingController();
 
-//   String? selectedType;
-//   String? selectedIntensity;
+//   String? selectedBodyPart;
+//   String? selectedEquipment;
 //   File? selectedFile;
 //   String? uploadedFilePath;
 //   VideoPlayerController? _videoPlayerController;
 //   Future<void>? _initializeVideoPlayerFuture;
 
-//   final List<String> exerciseTypes = [
-//     'Strength',
-//     'Cardio',
-//     'Flexibility',
-//     'Balance',
-//   ];
-//   final List<String> intensities = ['Low', 'Medium', 'High'];
+//   final List<String> bodyParts = ['lưng', 'chân', 'vai', 'ngực', 'tay', 'bụng'];
+//   final List<String> equipments = ['trọng lượng cơ thể', 'dụng cụ'];
 
 //   final ImageRepository imageRepository = ImageRepository();
 
@@ -45,7 +41,7 @@
 //   @override
 //   void dispose() {
 //     nameController.dispose();
-//     durationController.dispose();
+//     targetController.dispose();
 //     descriptionController.dispose();
 //     equipmentController.dispose();
 //     muscleController.dispose();
@@ -372,14 +368,14 @@
 //                     ),
 //                     const SizedBox(height: 16),
 //                     DropdownButtonFormField<String>(
-//                       value: selectedType,
+//                       value: selectedBodyPart,
 //                       decoration: const InputDecoration(
-//                         labelText: 'Loại',
+//                         labelText: 'Nhóm cơ',
 //                         prefixIcon: Icon(Icons.category),
 //                       ),
-//                       hint: const Text('Chọn loại bài tập'),
+//                       hint: const Text('Chọn nhóm cơ'),
 //                       items:
-//                           exerciseTypes.map((type) {
+//                           bodyParts.map((type) {
 //                             return DropdownMenuItem(
 //                               value: type,
 //                               child: Text(type),
@@ -387,38 +383,38 @@
 //                           }).toList(),
 //                       onChanged: (value) {
 //                         setState(() {
-//                           selectedType = value;
+//                           selectedBodyPart = value;
 //                         });
 //                       },
 //                     ),
 //                     const SizedBox(height: 16),
 //                     DropdownButtonFormField<String>(
-//                       value: selectedIntensity,
+//                       value: selectedEquipment,
 //                       decoration: const InputDecoration(
-//                         labelText: 'Cường độ',
+//                         labelText: 'Thiết bị',
 //                         prefixIcon: Icon(Icons.whatshot),
 //                       ),
-//                       hint: const Text('Chọn cường độ'),
+//                       hint: const Text('Chọn thiết bị'),
 //                       items:
-//                           intensities.map((intensity) {
+//                           equipments.map((equipment) {
 //                             return DropdownMenuItem(
-//                               value: intensity,
-//                               child: Text(intensity),
+//                               value: equipment,
+//                               child: Text(equipment),
 //                             );
 //                           }).toList(),
 //                       onChanged: (value) {
 //                         setState(() {
-//                           selectedIntensity = value;
+//                           selectedEquipment = value;
 //                         });
 //                       },
 //                     ),
 //                     const SizedBox(height: 16),
 //                     TextField(
-//                       controller: durationController,
+//                       controller: targetController,
 //                       decoration: const InputDecoration(
-//                         labelText: 'Thời gian (phút)',
-//                         prefixIcon: Icon(Icons.timer),
-//                         hintText: 'Nhập thời gian',
+//                         labelText: 'Tác động',
+//                         prefixIcon: Icon(Icons.center_focus_strong),
+//                         hintText: 'Nhập tác động',
 //                       ),
 //                       keyboardType: TextInputType.number,
 //                     ),
@@ -540,9 +536,9 @@
 //                                             ? null
 //                                             : () {
 //                                               if (nameController.text.isEmpty ||
-//                                                   selectedType == null ||
-//                                                   selectedIntensity == null ||
-//                                                   durationController
+//                                                   selectedBodyPart == null ||
+//                                                   selectedEquipment == null ||
+//                                                   targetController
 //                                                       .text
 //                                                       .isEmpty ||
 //                                                   descriptionController
@@ -572,14 +568,9 @@
 //                                                 id: null,
 //                                                 name:
 //                                                     nameController.text.trim(),
-//                                                 type: selectedType!,
-//                                                 intensity: selectedIntensity!,
-//                                                 duration:
-//                                                     int.tryParse(
-//                                                       durationController.text
-//                                                           .trim(),
-//                                                     ) ??
-//                                                     0,
+//                                                 bodyPart: selectedBodyPart!,
+//                                                 equipment: selectedEquipment!,
+//                                                 target:targetController.text.trim(),
 //                                                 description:
 //                                                     descriptionController.text
 //                                                         .trim(),
@@ -589,12 +580,9 @@
 //                                                 muscle:
 //                                                     muscleController.text
 //                                                         .trim(),
-//                                                 gifUrl:
-//                                                     uploadedFilePath ?? '',
-//                                                 createdAt:
-//                                                     DateTime.now().toUtc(),
-//                                                 updatedAt:
-//                                                     DateTime.now().toUtc(),
+//                                                 gifUrl: uploadedFilePath ?? '',
+//                                                 createdAt: null,
+//                                                 updatedAt: null,
 //                                               );
 
 //                                               context.read<ExerciseBloc>().add(
@@ -685,3 +673,274 @@
 //     );
 //   }
 // }
+
+import 'package:flutter/material.dart';
+import 'package:core/core.dart';
+
+class ExerciseCreateScreen extends StatelessWidget {
+  const ExerciseCreateScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create:
+          (context) =>
+              SportBloc(sportRepository: context.read<SportRepository>())
+                ..add(const GetAllSports()), // Trigger GetAllSports immediately
+      child: const _ExerciseCreateScreenContent(),
+    );
+  }
+}
+
+class _ExerciseCreateScreenContent extends StatelessWidget {
+  const _ExerciseCreateScreenContent();
+
+  @override
+  Widget build(BuildContext context) {
+    // Initialize controllers
+    final formKey = GlobalKey<FormState>();
+    final nameController = TextEditingController();
+    final targetController = TextEditingController();
+    final secondaryMusclesController = TextEditingController();
+    final instructionsController = TextEditingController();
+    final gifUrlController = TextEditingController();
+
+    // Use ValueNotifier for dropdown selections
+    final selectedBodyPart = ValueNotifier<String?>(null);
+    final selectedEquipment = ValueNotifier<String?>(null);
+    final selectedSport = ValueNotifier<String?>(null);
+
+    // Define static lists
+    const List<String> bodyParts = [
+      'lưng',
+      'vai',
+      'tay',
+      'chân',
+      'ngực',
+      'bụng',
+    ];
+    const List<String> equipments = ['dụng cụ', 'trọng lượng cơ thể'];
+
+    void createExercise() {
+      if (formKey.currentState!.validate()) {
+        final exercise = Exercise(
+          id: null,
+          name: nameController.text,
+          bodyPart: selectedBodyPart.value!,
+          equipment: selectedEquipment.value!,
+          target: targetController.text,
+          secondaryMuscles:
+              secondaryMusclesController.text
+                  .split(',')
+                  .map((e) => e.trim())
+                  .toList(),
+          instructions:
+              instructionsController.text
+                  .split('\n')
+                  .map((e) => e.trim())
+                  .toList(),
+          gifUrl: gifUrlController.text,
+          sportName: selectedSport.value!,
+          createdAt: null,
+          updatedAt: null,
+        );
+
+        context.read<ExerciseBloc>().add(CreateExercise(exercise));
+      }
+    }
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('Tạo bài tập mới')),
+      body: BlocListener<ExerciseBloc, ExerciseState>(
+        listener: (context, state) {
+          //print(state);
+          if (state is Exercise_Loading) {
+          } else if (state is LoadedExercise) {
+            Navigator.pop(context);
+          } else if (state is Exercise_Error) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Lỗi: ${state.message}')));
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: nameController,
+                    decoration: const InputDecoration(labelText: 'Tên bài tập'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Vui lòng nhập tên bài tập';
+                      }
+                      return null;
+                    },
+                  ),
+
+                  SizedBox(height: 16),
+
+                  ValueListenableBuilder<String?>(
+                    valueListenable: selectedBodyPart,
+                    builder: (context, value, child) {
+                      return DropdownButtonFormField<String>(
+                        value: value,
+                        decoration: const InputDecoration(labelText: 'Nhóm cơ'),
+                        items:
+                            bodyParts
+                                .map(
+                                  (bodyPart) => DropdownMenuItem(
+                                    value: bodyPart,
+                                    child: Text(bodyPart),
+                                  ),
+                                )
+                                .toList(),
+                        onChanged: (newValue) {
+                          selectedBodyPart.value = newValue;
+                        },
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Vui lòng chọn nhóm cơ';
+                          }
+                          return null;
+                        },
+                      );
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  ValueListenableBuilder<String?>(
+                    valueListenable: selectedEquipment,
+                    builder: (context, value, child) {
+                      return DropdownButtonFormField<String>(
+                        value: value,
+                        decoration: const InputDecoration(
+                          labelText: 'Thiết bị',
+                        ),
+                        items:
+                            equipments
+                                .map(
+                                  (equipment) => DropdownMenuItem(
+                                    value: equipment,
+                                    child: Text(equipment),
+                                  ),
+                                )
+                                .toList(),
+                        onChanged: (newValue) {
+                          selectedEquipment.value = newValue;
+                        },
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Vui lòng chọn thiết bị';
+                          }
+                          return null;
+                        },
+                      );
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  TextFormField(
+                    controller: targetController,
+                    decoration: const InputDecoration(labelText: 'Cơ mục tiêu'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Vui lòng nhập cơ mục tiêu';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  TextFormField(
+                    controller: secondaryMusclesController,
+                    decoration: const InputDecoration(
+                      labelText: 'Cơ phụ (phân cách bởi dấu phẩy)',
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Vui lòng nhập ít nhất một cơ phụ';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  TextFormField(
+                    controller: instructionsController,
+                    decoration: const InputDecoration(
+                      labelText: 'Hướng dẫn (mỗi dòng một bước)',
+                    ),
+                    maxLines: 5,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Vui lòng nhập hướng dẫn';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  TextFormField(
+                    controller: gifUrlController,
+                    decoration: const InputDecoration(labelText: 'URL GIF'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Vui lòng nhập URL GIF';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  BlocBuilder<SportBloc, SportState>(
+                    builder: (context, state) {
+                      if (state is LoadedSports) {
+                        return ValueListenableBuilder<String?>(
+                          valueListenable: selectedSport,
+                          builder: (context, value, child) {
+                            return DropdownButtonFormField<String>(
+                              value: value,
+                              decoration: const InputDecoration(
+                                labelText: 'Bộ môn',
+                              ),
+                              items:
+                                  state.sports
+                                      .map(
+                                        (sport) => DropdownMenuItem(
+                                          value: sport.name,
+                                          child: Text(sport.name),
+                                        ),
+                                      )
+                                      .toList(),
+                              onChanged: (newValue) {
+                                selectedSport.value = newValue;
+                              },
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Vui lòng chọn bộ môn';
+                                }
+                                return null;
+                              },
+                            );
+                          },
+                        );
+                      } else if (state is Sport_Loading) {
+                        return const CircularProgressIndicator();
+                      } else if (state is Sport_Error) {
+                        return Text('Lỗi: ${state.message}');
+                      }
+                      return const Text('Không có bộ môn nào');
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: createExercise,
+                    child: const Text('Tạo bài tập'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

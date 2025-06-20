@@ -15,7 +15,7 @@ class ExerciseInTrainingScreen extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           overflow: TextOverflow.ellipsis,
         ),
-        backgroundColor: Colors.blue.shade700,
+        backgroundColor: Theme.of(context).primaryColor,
         foregroundColor: Colors.white,
         elevation: 2,
       ),
@@ -87,7 +87,7 @@ class ExerciseInTrainingScreen extends StatelessWidget {
 
                   // Exercise Details
                   Text(
-                    'Exercise Details',
+                    'Chi tiết bài tập',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -107,17 +107,17 @@ class ExerciseInTrainingScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildDetailRow('BodyPart', exercise.bodyPart),
+                          _buildDetailRow('Phần cơ thể', exercise.bodyPart),
                           _buildDetailRow(
-                            'Equipment',
+                            'Thiết bị hỗ trợ',
                             exercise.equipment,
                           ),
-                          _buildDetailRow('Target', exercise.target),
+                          _buildDetailRow('Cơ chính', exercise.target),
 
                           if (exercise.secondaryMuscles.isNotEmpty) ...[
                             const SizedBox(height: 8),
                             Text(
-                              'Secondary Muscles',
+                              'Cơ phụ',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -131,7 +131,16 @@ class ExerciseInTrainingScreen extends StatelessWidget {
                               children:
                                   exercise.secondaryMuscles
                                       .map(
-                                        (muscle) => Chip(label: Text(muscle)),
+                                        (muscle) => Tooltip(
+                                          message: '', // Vô hiệu hóa tooltip
+                                          child: Chip(
+                                            label: Text(
+                                              muscle.length > 20
+                                                  ? '${muscle.substring(0, 20)}...'
+                                                  : muscle,
+                                            ),
+                                          ),
+                                        ),
                                       )
                                       .toList(),
                             ),
@@ -140,7 +149,7 @@ class ExerciseInTrainingScreen extends StatelessWidget {
                           if (exercise.instructions.isNotEmpty) ...[
                             const SizedBox(height: 8),
                             Text(
-                              'Instructions',
+                              'Hướng dẫn',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -154,7 +163,16 @@ class ExerciseInTrainingScreen extends StatelessWidget {
                               children:
                                   exercise.instructions
                                       .map(
-                                        (instructions) => Chip(label: Text(instructions)),
+                                        (instruction) => Tooltip(
+                                          message: '', // Vô hiệu hóa tooltip
+                                          child: Chip(
+                                            label: Text(
+                                              instruction.length > 30
+                                                  ? '${instruction.substring(0, 30)}...'
+                                                  : instruction,
+                                            ),
+                                          ),
+                                        ),
                                       )
                                       .toList(),
                             ),

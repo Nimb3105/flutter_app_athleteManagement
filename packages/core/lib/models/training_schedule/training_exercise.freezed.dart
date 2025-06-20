@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TrainingExercise {
 
- String? get id; String get scheduleId; String get exerciseId; int get order;@UtcDateTimeConverter() DateTime? get createdAt;@UtcDateTimeConverter() DateTime? get updatedAt;
+ String? get id; String? get scheduleId; String get exerciseId; int get order; int get reps; int get sets; double get weight; int get duration; double get distance; int get actualReps; int get actualSets; double get actualWeight; int get actualDuration; double get actualDistance;@UtcDateTimeConverter() DateTime? get createdAt;@UtcDateTimeConverter() DateTime? get updatedAt;
 /// Create a copy of TrainingExercise
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $TrainingExerciseCopyWith<TrainingExercise> get copyWith => _$TrainingExerciseCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TrainingExercise&&(identical(other.id, id) || other.id == id)&&(identical(other.scheduleId, scheduleId) || other.scheduleId == scheduleId)&&(identical(other.exerciseId, exerciseId) || other.exerciseId == exerciseId)&&(identical(other.order, order) || other.order == order)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TrainingExercise&&(identical(other.id, id) || other.id == id)&&(identical(other.scheduleId, scheduleId) || other.scheduleId == scheduleId)&&(identical(other.exerciseId, exerciseId) || other.exerciseId == exerciseId)&&(identical(other.order, order) || other.order == order)&&(identical(other.reps, reps) || other.reps == reps)&&(identical(other.sets, sets) || other.sets == sets)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.distance, distance) || other.distance == distance)&&(identical(other.actualReps, actualReps) || other.actualReps == actualReps)&&(identical(other.actualSets, actualSets) || other.actualSets == actualSets)&&(identical(other.actualWeight, actualWeight) || other.actualWeight == actualWeight)&&(identical(other.actualDuration, actualDuration) || other.actualDuration == actualDuration)&&(identical(other.actualDistance, actualDistance) || other.actualDistance == actualDistance)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,scheduleId,exerciseId,order,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,scheduleId,exerciseId,order,reps,sets,weight,duration,distance,actualReps,actualSets,actualWeight,actualDuration,actualDistance,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'TrainingExercise(id: $id, scheduleId: $scheduleId, exerciseId: $exerciseId, order: $order, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'TrainingExercise(id: $id, scheduleId: $scheduleId, exerciseId: $exerciseId, order: $order, reps: $reps, sets: $sets, weight: $weight, duration: $duration, distance: $distance, actualReps: $actualReps, actualSets: $actualSets, actualWeight: $actualWeight, actualDuration: $actualDuration, actualDistance: $actualDistance, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $TrainingExerciseCopyWith<$Res>  {
   factory $TrainingExerciseCopyWith(TrainingExercise value, $Res Function(TrainingExercise) _then) = _$TrainingExerciseCopyWithImpl;
 @useResult
 $Res call({
- String? id, String scheduleId, String exerciseId, int order,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
+ String? id, String? scheduleId, String exerciseId, int order, int reps, int sets, double weight, int duration, double distance, int actualReps, int actualSets, double actualWeight, int actualDuration, double actualDistance,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
 });
 
 
@@ -66,13 +66,23 @@ class _$TrainingExerciseCopyWithImpl<$Res>
 
 /// Create a copy of TrainingExercise
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? scheduleId = null,Object? exerciseId = null,Object? order = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? scheduleId = freezed,Object? exerciseId = null,Object? order = null,Object? reps = null,Object? sets = null,Object? weight = null,Object? duration = null,Object? distance = null,Object? actualReps = null,Object? actualSets = null,Object? actualWeight = null,Object? actualDuration = null,Object? actualDistance = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String?,scheduleId: null == scheduleId ? _self.scheduleId : scheduleId // ignore: cast_nullable_to_non_nullable
-as String,exerciseId: null == exerciseId ? _self.exerciseId : exerciseId // ignore: cast_nullable_to_non_nullable
+as String?,scheduleId: freezed == scheduleId ? _self.scheduleId : scheduleId // ignore: cast_nullable_to_non_nullable
+as String?,exerciseId: null == exerciseId ? _self.exerciseId : exerciseId // ignore: cast_nullable_to_non_nullable
 as String,order: null == order ? _self.order : order // ignore: cast_nullable_to_non_nullable
-as int,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as int,reps: null == reps ? _self.reps : reps // ignore: cast_nullable_to_non_nullable
+as int,sets: null == sets ? _self.sets : sets // ignore: cast_nullable_to_non_nullable
+as int,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
+as double,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
+as int,distance: null == distance ? _self.distance : distance // ignore: cast_nullable_to_non_nullable
+as double,actualReps: null == actualReps ? _self.actualReps : actualReps // ignore: cast_nullable_to_non_nullable
+as int,actualSets: null == actualSets ? _self.actualSets : actualSets // ignore: cast_nullable_to_non_nullable
+as int,actualWeight: null == actualWeight ? _self.actualWeight : actualWeight // ignore: cast_nullable_to_non_nullable
+as double,actualDuration: null == actualDuration ? _self.actualDuration : actualDuration // ignore: cast_nullable_to_non_nullable
+as int,actualDistance: null == actualDistance ? _self.actualDistance : actualDistance // ignore: cast_nullable_to_non_nullable
+as double,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
@@ -85,13 +95,23 @@ as DateTime?,
 @JsonSerializable()
 
 class _TrainingExercise implements TrainingExercise {
-  const _TrainingExercise({required this.id, required this.scheduleId, required this.exerciseId, required this.order, @UtcDateTimeConverter() required this.createdAt, @UtcDateTimeConverter() required this.updatedAt});
+  const _TrainingExercise({required this.id, required this.scheduleId, required this.exerciseId, required this.order, required this.reps, required this.sets, required this.weight, required this.duration, required this.distance, required this.actualReps, required this.actualSets, required this.actualWeight, required this.actualDuration, required this.actualDistance, @UtcDateTimeConverter() required this.createdAt, @UtcDateTimeConverter() required this.updatedAt});
   factory _TrainingExercise.fromJson(Map<String, dynamic> json) => _$TrainingExerciseFromJson(json);
 
 @override final  String? id;
-@override final  String scheduleId;
+@override final  String? scheduleId;
 @override final  String exerciseId;
 @override final  int order;
+@override final  int reps;
+@override final  int sets;
+@override final  double weight;
+@override final  int duration;
+@override final  double distance;
+@override final  int actualReps;
+@override final  int actualSets;
+@override final  double actualWeight;
+@override final  int actualDuration;
+@override final  double actualDistance;
 @override@UtcDateTimeConverter() final  DateTime? createdAt;
 @override@UtcDateTimeConverter() final  DateTime? updatedAt;
 
@@ -108,16 +128,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TrainingExercise&&(identical(other.id, id) || other.id == id)&&(identical(other.scheduleId, scheduleId) || other.scheduleId == scheduleId)&&(identical(other.exerciseId, exerciseId) || other.exerciseId == exerciseId)&&(identical(other.order, order) || other.order == order)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TrainingExercise&&(identical(other.id, id) || other.id == id)&&(identical(other.scheduleId, scheduleId) || other.scheduleId == scheduleId)&&(identical(other.exerciseId, exerciseId) || other.exerciseId == exerciseId)&&(identical(other.order, order) || other.order == order)&&(identical(other.reps, reps) || other.reps == reps)&&(identical(other.sets, sets) || other.sets == sets)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.distance, distance) || other.distance == distance)&&(identical(other.actualReps, actualReps) || other.actualReps == actualReps)&&(identical(other.actualSets, actualSets) || other.actualSets == actualSets)&&(identical(other.actualWeight, actualWeight) || other.actualWeight == actualWeight)&&(identical(other.actualDuration, actualDuration) || other.actualDuration == actualDuration)&&(identical(other.actualDistance, actualDistance) || other.actualDistance == actualDistance)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,scheduleId,exerciseId,order,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,scheduleId,exerciseId,order,reps,sets,weight,duration,distance,actualReps,actualSets,actualWeight,actualDuration,actualDistance,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'TrainingExercise(id: $id, scheduleId: $scheduleId, exerciseId: $exerciseId, order: $order, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'TrainingExercise(id: $id, scheduleId: $scheduleId, exerciseId: $exerciseId, order: $order, reps: $reps, sets: $sets, weight: $weight, duration: $duration, distance: $distance, actualReps: $actualReps, actualSets: $actualSets, actualWeight: $actualWeight, actualDuration: $actualDuration, actualDistance: $actualDistance, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -128,7 +148,7 @@ abstract mixin class _$TrainingExerciseCopyWith<$Res> implements $TrainingExerci
   factory _$TrainingExerciseCopyWith(_TrainingExercise value, $Res Function(_TrainingExercise) _then) = __$TrainingExerciseCopyWithImpl;
 @override @useResult
 $Res call({
- String? id, String scheduleId, String exerciseId, int order,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
+ String? id, String? scheduleId, String exerciseId, int order, int reps, int sets, double weight, int duration, double distance, int actualReps, int actualSets, double actualWeight, int actualDuration, double actualDistance,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
 });
 
 
@@ -145,13 +165,23 @@ class __$TrainingExerciseCopyWithImpl<$Res>
 
 /// Create a copy of TrainingExercise
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? scheduleId = null,Object? exerciseId = null,Object? order = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? scheduleId = freezed,Object? exerciseId = null,Object? order = null,Object? reps = null,Object? sets = null,Object? weight = null,Object? duration = null,Object? distance = null,Object? actualReps = null,Object? actualSets = null,Object? actualWeight = null,Object? actualDuration = null,Object? actualDistance = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_TrainingExercise(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String?,scheduleId: null == scheduleId ? _self.scheduleId : scheduleId // ignore: cast_nullable_to_non_nullable
-as String,exerciseId: null == exerciseId ? _self.exerciseId : exerciseId // ignore: cast_nullable_to_non_nullable
+as String?,scheduleId: freezed == scheduleId ? _self.scheduleId : scheduleId // ignore: cast_nullable_to_non_nullable
+as String?,exerciseId: null == exerciseId ? _self.exerciseId : exerciseId // ignore: cast_nullable_to_non_nullable
 as String,order: null == order ? _self.order : order // ignore: cast_nullable_to_non_nullable
-as int,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as int,reps: null == reps ? _self.reps : reps // ignore: cast_nullable_to_non_nullable
+as int,sets: null == sets ? _self.sets : sets // ignore: cast_nullable_to_non_nullable
+as int,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
+as double,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
+as int,distance: null == distance ? _self.distance : distance // ignore: cast_nullable_to_non_nullable
+as double,actualReps: null == actualReps ? _self.actualReps : actualReps // ignore: cast_nullable_to_non_nullable
+as int,actualSets: null == actualSets ? _self.actualSets : actualSets // ignore: cast_nullable_to_non_nullable
+as int,actualWeight: null == actualWeight ? _self.actualWeight : actualWeight // ignore: cast_nullable_to_non_nullable
+as double,actualDuration: null == actualDuration ? _self.actualDuration : actualDuration // ignore: cast_nullable_to_non_nullable
+as int,actualDistance: null == actualDistance ? _self.actualDistance : actualDistance // ignore: cast_nullable_to_non_nullable
+as double,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));

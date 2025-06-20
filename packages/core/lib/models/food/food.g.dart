@@ -13,6 +13,9 @@ _Food _$FoodFromJson(Map<String, dynamic> json) => _Food(
   foodImage: json['foodImage'] as String,
   description: json['description'] as String,
   calories: (json['calories'] as num).toInt(),
+  protein: (json['protein'] as num).toInt(),
+  carbs: (json['carbs'] as num).toInt(),
+  fat: (json['fat'] as num).toInt(),
   createdAt: _$JsonConverterFromJson<String, DateTime>(
     json['createdAt'],
     const UtcDateTimeConverter().fromJson,
@@ -30,6 +33,9 @@ Map<String, dynamic> _$FoodToJson(_Food instance) => <String, dynamic>{
   'foodImage': instance.foodImage,
   'description': instance.description,
   'calories': instance.calories,
+  'protein': instance.protein,
+  'carbs': instance.carbs,
+  'fat': instance.fat,
   'createdAt': _$JsonConverterToJson<String, DateTime>(
     instance.createdAt,
     const UtcDateTimeConverter().toJson,

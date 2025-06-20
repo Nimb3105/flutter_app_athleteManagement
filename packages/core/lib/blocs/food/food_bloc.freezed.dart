@@ -254,6 +254,76 @@ as int,
 /// @nodoc
 
 
+class GetAllFoodsByFoodType implements FoodEvent {
+  const GetAllFoodsByFoodType(this.foodType, {this.page = 1, this.limit = 10});
+  
+
+ final  String foodType;
+@JsonKey() final  int page;
+@JsonKey() final  int limit;
+
+/// Create a copy of FoodEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetAllFoodsByFoodTypeCopyWith<GetAllFoodsByFoodType> get copyWith => _$GetAllFoodsByFoodTypeCopyWithImpl<GetAllFoodsByFoodType>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetAllFoodsByFoodType&&(identical(other.foodType, foodType) || other.foodType == foodType)&&(identical(other.page, page) || other.page == page)&&(identical(other.limit, limit) || other.limit == limit));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,foodType,page,limit);
+
+@override
+String toString() {
+  return 'FoodEvent.getAllFoodsByFoodType(foodType: $foodType, page: $page, limit: $limit)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GetAllFoodsByFoodTypeCopyWith<$Res> implements $FoodEventCopyWith<$Res> {
+  factory $GetAllFoodsByFoodTypeCopyWith(GetAllFoodsByFoodType value, $Res Function(GetAllFoodsByFoodType) _then) = _$GetAllFoodsByFoodTypeCopyWithImpl;
+@useResult
+$Res call({
+ String foodType, int page, int limit
+});
+
+
+
+
+}
+/// @nodoc
+class _$GetAllFoodsByFoodTypeCopyWithImpl<$Res>
+    implements $GetAllFoodsByFoodTypeCopyWith<$Res> {
+  _$GetAllFoodsByFoodTypeCopyWithImpl(this._self, this._then);
+
+  final GetAllFoodsByFoodType _self;
+  final $Res Function(GetAllFoodsByFoodType) _then;
+
+/// Create a copy of FoodEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? foodType = null,Object? page = null,Object? limit = null,}) {
+  return _then(GetAllFoodsByFoodType(
+null == foodType ? _self.foodType : foodType // ignore: cast_nullable_to_non_nullable
+as String,page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
+as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
 class UpdateFood implements FoodEvent {
   const UpdateFood(this.id, this.food);
   
@@ -562,6 +632,38 @@ $FoodCopyWith<$Res> get food {
   });
 }
 }
+
+/// @nodoc
+
+
+class Food_LoadingMore implements FoodState {
+  const Food_LoadingMore();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Food_LoadingMore);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'FoodState.loadingMore()';
+}
+
+
+}
+
+
+
 
 /// @nodoc
 

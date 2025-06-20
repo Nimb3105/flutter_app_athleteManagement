@@ -13,11 +13,17 @@ part of 'user_bloc.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$UserEvent {
+mixin _$UserEvent implements DiagnosticableTreeMixin {
 
 
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserEvent'))
+    ;
+}
 
 @override
 bool operator ==(Object other) {
@@ -29,7 +35,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserEvent()';
 }
 
@@ -45,7 +51,7 @@ $UserEventCopyWith(UserEvent _, $Res Function(UserEvent) __);
 /// @nodoc
 
 
-class CreateUser implements UserEvent {
+class CreateUser with DiagnosticableTreeMixin implements UserEvent {
   const CreateUser(this.user);
   
 
@@ -58,6 +64,12 @@ class CreateUser implements UserEvent {
 $CreateUserCopyWith<CreateUser> get copyWith => _$CreateUserCopyWithImpl<CreateUser>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserEvent.createUser'))
+    ..add(DiagnosticsProperty('user', user));
+}
 
 @override
 bool operator ==(Object other) {
@@ -69,7 +81,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,user);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserEvent.createUser(user: $user)';
 }
 
@@ -120,7 +132,7 @@ $UserCopyWith<$Res> get user {
 /// @nodoc
 
 
-class GetUserById implements UserEvent {
+class GetUserById with DiagnosticableTreeMixin implements UserEvent {
   const GetUserById(this.id);
   
 
@@ -133,6 +145,12 @@ class GetUserById implements UserEvent {
 $GetUserByIdCopyWith<GetUserById> get copyWith => _$GetUserByIdCopyWithImpl<GetUserById>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserEvent.getUserById'))
+    ..add(DiagnosticsProperty('id', id));
+}
 
 @override
 bool operator ==(Object other) {
@@ -144,7 +162,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,id);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserEvent.getUserById(id: $id)';
 }
 
@@ -186,7 +204,7 @@ as String,
 /// @nodoc
 
 
-class GetUserByEmail implements UserEvent {
+class GetUserByEmail with DiagnosticableTreeMixin implements UserEvent {
   const GetUserByEmail(this.email);
   
 
@@ -199,6 +217,12 @@ class GetUserByEmail implements UserEvent {
 $GetUserByEmailCopyWith<GetUserByEmail> get copyWith => _$GetUserByEmailCopyWithImpl<GetUserByEmail>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserEvent.getUserByEmail'))
+    ..add(DiagnosticsProperty('email', email));
+}
 
 @override
 bool operator ==(Object other) {
@@ -210,7 +234,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,email);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserEvent.getUserByEmail(email: $email)';
 }
 
@@ -252,39 +276,81 @@ as String,
 /// @nodoc
 
 
-class GetAllUsers implements UserEvent {
-  const GetAllUsers();
+class GetAllUsers with DiagnosticableTreeMixin implements UserEvent {
+  const GetAllUsers({this.page = 1, this.limit = 10});
   
 
+@JsonKey() final  int page;
+@JsonKey() final  int limit;
+
+/// Create a copy of UserEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetAllUsersCopyWith<GetAllUsers> get copyWith => _$GetAllUsersCopyWithImpl<GetAllUsers>(this, _$identity);
 
 
-
-
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserEvent.getAllUsers'))
+    ..add(DiagnosticsProperty('page', page))..add(DiagnosticsProperty('limit', limit));
+}
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetAllUsers);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetAllUsers&&(identical(other.page, page) || other.page == page)&&(identical(other.limit, limit) || other.limit == limit));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,page,limit);
 
 @override
-String toString() {
-  return 'UserEvent.getAllUsers()';
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'UserEvent.getAllUsers(page: $page, limit: $limit)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class $GetAllUsersCopyWith<$Res> implements $UserEventCopyWith<$Res> {
+  factory $GetAllUsersCopyWith(GetAllUsers value, $Res Function(GetAllUsers) _then) = _$GetAllUsersCopyWithImpl;
+@useResult
+$Res call({
+ int page, int limit
+});
 
 
+
+
+}
+/// @nodoc
+class _$GetAllUsersCopyWithImpl<$Res>
+    implements $GetAllUsersCopyWith<$Res> {
+  _$GetAllUsersCopyWithImpl(this._self, this._then);
+
+  final GetAllUsers _self;
+  final $Res Function(GetAllUsers) _then;
+
+/// Create a copy of UserEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? page = null,Object? limit = null,}) {
+  return _then(GetAllUsers(
+page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
+as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
 
 /// @nodoc
 
 
-class UpdateUser implements UserEvent {
+class UpdateUser with DiagnosticableTreeMixin implements UserEvent {
   const UpdateUser(this.id, this.user);
   
 
@@ -298,6 +364,12 @@ class UpdateUser implements UserEvent {
 $UpdateUserCopyWith<UpdateUser> get copyWith => _$UpdateUserCopyWithImpl<UpdateUser>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserEvent.updateUser'))
+    ..add(DiagnosticsProperty('id', id))..add(DiagnosticsProperty('user', user));
+}
 
 @override
 bool operator ==(Object other) {
@@ -309,7 +381,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,id,user);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserEvent.updateUser(id: $id, user: $user)';
 }
 
@@ -361,7 +433,7 @@ $UserCopyWith<$Res> get user {
 /// @nodoc
 
 
-class DeleteUser implements UserEvent {
+class DeleteUser with DiagnosticableTreeMixin implements UserEvent {
   const DeleteUser(this.id);
   
 
@@ -374,6 +446,12 @@ class DeleteUser implements UserEvent {
 $DeleteUserCopyWith<DeleteUser> get copyWith => _$DeleteUserCopyWithImpl<DeleteUser>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserEvent.deleteUser'))
+    ..add(DiagnosticsProperty('id', id));
+}
 
 @override
 bool operator ==(Object other) {
@@ -385,7 +463,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,id);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserEvent.deleteUser(id: $id)';
 }
 
@@ -427,7 +505,7 @@ as String,
 /// @nodoc
 
 
-class Login implements UserEvent {
+class Login with DiagnosticableTreeMixin implements UserEvent {
   const Login(this.email, this.password);
   
 
@@ -441,6 +519,12 @@ class Login implements UserEvent {
 $LoginCopyWith<Login> get copyWith => _$LoginCopyWithImpl<Login>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserEvent.login'))
+    ..add(DiagnosticsProperty('email', email))..add(DiagnosticsProperty('password', password));
+}
 
 @override
 bool operator ==(Object other) {
@@ -452,7 +536,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,email,password);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserEvent.login(email: $email, password: $password)';
 }
 
@@ -493,11 +577,93 @@ as String,
 }
 
 /// @nodoc
-mixin _$UserState {
+
+
+class GetAllUserCoachBySportId with DiagnosticableTreeMixin implements UserEvent {
+  const GetAllUserCoachBySportId(this.sportId, {this.page = 1, this.limit = 10});
+  
+
+ final  String sportId;
+@JsonKey() final  int page;
+@JsonKey() final  int limit;
+
+/// Create a copy of UserEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetAllUserCoachBySportIdCopyWith<GetAllUserCoachBySportId> get copyWith => _$GetAllUserCoachBySportIdCopyWithImpl<GetAllUserCoachBySportId>(this, _$identity);
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserEvent.getAllUserCoachBySportId'))
+    ..add(DiagnosticsProperty('sportId', sportId))..add(DiagnosticsProperty('page', page))..add(DiagnosticsProperty('limit', limit));
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetAllUserCoachBySportId&&(identical(other.sportId, sportId) || other.sportId == sportId)&&(identical(other.page, page) || other.page == page)&&(identical(other.limit, limit) || other.limit == limit));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,sportId,page,limit);
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'UserEvent.getAllUserCoachBySportId(sportId: $sportId, page: $page, limit: $limit)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GetAllUserCoachBySportIdCopyWith<$Res> implements $UserEventCopyWith<$Res> {
+  factory $GetAllUserCoachBySportIdCopyWith(GetAllUserCoachBySportId value, $Res Function(GetAllUserCoachBySportId) _then) = _$GetAllUserCoachBySportIdCopyWithImpl;
+@useResult
+$Res call({
+ String sportId, int page, int limit
+});
 
 
 
 
+}
+/// @nodoc
+class _$GetAllUserCoachBySportIdCopyWithImpl<$Res>
+    implements $GetAllUserCoachBySportIdCopyWith<$Res> {
+  _$GetAllUserCoachBySportIdCopyWithImpl(this._self, this._then);
+
+  final GetAllUserCoachBySportId _self;
+  final $Res Function(GetAllUserCoachBySportId) _then;
+
+/// Create a copy of UserEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? sportId = null,Object? page = null,Object? limit = null,}) {
+  return _then(GetAllUserCoachBySportId(
+null == sportId ? _self.sportId : sportId // ignore: cast_nullable_to_non_nullable
+as String,page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
+as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+/// @nodoc
+mixin _$UserState implements DiagnosticableTreeMixin {
+
+
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserState'))
+    ;
+}
 
 @override
 bool operator ==(Object other) {
@@ -509,7 +675,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserState()';
 }
 
@@ -525,7 +691,7 @@ $UserStateCopyWith(UserState _, $Res Function(UserState) __);
 /// @nodoc
 
 
-class User_Initial implements UserState {
+class User_Initial with DiagnosticableTreeMixin implements UserState {
   const User_Initial();
   
 
@@ -533,6 +699,12 @@ class User_Initial implements UserState {
 
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserState.initial'))
+    ;
+}
 
 @override
 bool operator ==(Object other) {
@@ -544,7 +716,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserState.initial()';
 }
 
@@ -557,7 +729,7 @@ String toString() {
 /// @nodoc
 
 
-class User_Loading implements UserState {
+class User_Loading with DiagnosticableTreeMixin implements UserState {
   const User_Loading();
   
 
@@ -565,6 +737,12 @@ class User_Loading implements UserState {
 
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserState.loading'))
+    ;
+}
 
 @override
 bool operator ==(Object other) {
@@ -576,7 +754,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserState.loading()';
 }
 
@@ -589,7 +767,7 @@ String toString() {
 /// @nodoc
 
 
-class LoadedUser implements UserState {
+class LoadedUser with DiagnosticableTreeMixin implements UserState {
   const LoadedUser(this.user);
   
 
@@ -602,6 +780,12 @@ class LoadedUser implements UserState {
 $LoadedUserCopyWith<LoadedUser> get copyWith => _$LoadedUserCopyWithImpl<LoadedUser>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserState.loadedUser'))
+    ..add(DiagnosticsProperty('user', user));
+}
 
 @override
 bool operator ==(Object other) {
@@ -613,7 +797,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,user);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserState.loadedUser(user: $user)';
 }
 
@@ -664,8 +848,8 @@ $UserCopyWith<$Res> get user {
 /// @nodoc
 
 
-class LoadedUsers implements UserState {
-  const LoadedUsers(final  List<User> users): _users = users;
+class LoadedUsers with DiagnosticableTreeMixin implements UserState {
+  const LoadedUsers(final  List<User> users, this.currentPage, this.limit, this.hasMore): _users = users;
   
 
  final  List<User> _users;
@@ -675,6 +859,9 @@ class LoadedUsers implements UserState {
   return EqualUnmodifiableListView(_users);
 }
 
+ final  int currentPage;
+ final  int limit;
+ final  bool hasMore;
 
 /// Create a copy of UserState
 /// with the given fields replaced by the non-null parameter values.
@@ -683,19 +870,25 @@ class LoadedUsers implements UserState {
 $LoadedUsersCopyWith<LoadedUsers> get copyWith => _$LoadedUsersCopyWithImpl<LoadedUsers>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserState.loadedUsers'))
+    ..add(DiagnosticsProperty('users', users))..add(DiagnosticsProperty('currentPage', currentPage))..add(DiagnosticsProperty('limit', limit))..add(DiagnosticsProperty('hasMore', hasMore));
+}
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedUsers&&const DeepCollectionEquality().equals(other._users, _users));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedUsers&&const DeepCollectionEquality().equals(other._users, _users)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_users));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_users),currentPage,limit,hasMore);
 
 @override
-String toString() {
-  return 'UserState.loadedUsers(users: $users)';
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'UserState.loadedUsers(users: $users, currentPage: $currentPage, limit: $limit, hasMore: $hasMore)';
 }
 
 
@@ -706,7 +899,7 @@ abstract mixin class $LoadedUsersCopyWith<$Res> implements $UserStateCopyWith<$R
   factory $LoadedUsersCopyWith(LoadedUsers value, $Res Function(LoadedUsers) _then) = _$LoadedUsersCopyWithImpl;
 @useResult
 $Res call({
- List<User> users
+ List<User> users, int currentPage, int limit, bool hasMore
 });
 
 
@@ -723,10 +916,13 @@ class _$LoadedUsersCopyWithImpl<$Res>
 
 /// Create a copy of UserState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? users = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? users = null,Object? currentPage = null,Object? limit = null,Object? hasMore = null,}) {
   return _then(LoadedUsers(
 null == users ? _self._users : users // ignore: cast_nullable_to_non_nullable
-as List<User>,
+as List<User>,null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
+as int,null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
+as int,null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -736,7 +932,7 @@ as List<User>,
 /// @nodoc
 
 
-class User_Error implements UserState {
+class User_Error with DiagnosticableTreeMixin implements UserState {
   const User_Error(this.message);
   
 
@@ -749,6 +945,12 @@ class User_Error implements UserState {
 $User_ErrorCopyWith<User_Error> get copyWith => _$User_ErrorCopyWithImpl<User_Error>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserState.error'))
+    ..add(DiagnosticsProperty('message', message));
+}
 
 @override
 bool operator ==(Object other) {
@@ -760,7 +962,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,message);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserState.error(message: $message)';
 }
 
@@ -802,7 +1004,7 @@ as String,
 /// @nodoc
 
 
-class User_Success implements UserState {
+class User_Success with DiagnosticableTreeMixin implements UserState {
   const User_Success(this.message);
   
 
@@ -815,6 +1017,12 @@ class User_Success implements UserState {
 $User_SuccessCopyWith<User_Success> get copyWith => _$User_SuccessCopyWithImpl<User_Success>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserState.success'))
+    ..add(DiagnosticsProperty('message', message));
+}
 
 @override
 bool operator ==(Object other) {
@@ -826,7 +1034,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,message);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserState.success(message: $message)';
 }
 
@@ -868,7 +1076,7 @@ as String,
 /// @nodoc
 
 
-class LoggedIn implements UserState {
+class LoggedIn with DiagnosticableTreeMixin implements UserState {
   const LoggedIn(this.token);
   
 
@@ -881,6 +1089,12 @@ class LoggedIn implements UserState {
 $LoggedInCopyWith<LoggedIn> get copyWith => _$LoggedInCopyWithImpl<LoggedIn>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserState.loggedIn'))
+    ..add(DiagnosticsProperty('token', token));
+}
 
 @override
 bool operator ==(Object other) {
@@ -892,7 +1106,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,token);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserState.loggedIn(token: $token)';
 }
 
@@ -934,7 +1148,7 @@ as String,
 /// @nodoc
 
 
-class LoadedMultipleUsers implements UserState {
+class LoadedMultipleUsers with DiagnosticableTreeMixin implements UserState {
   const LoadedMultipleUsers(final  Map<String, User> users, final  Map<String, String> errors): _users = users,_errors = errors;
   
 
@@ -960,6 +1174,12 @@ class LoadedMultipleUsers implements UserState {
 $LoadedMultipleUsersCopyWith<LoadedMultipleUsers> get copyWith => _$LoadedMultipleUsersCopyWithImpl<LoadedMultipleUsers>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserState.loadedMultipleUsers'))
+    ..add(DiagnosticsProperty('users', users))..add(DiagnosticsProperty('errors', errors));
+}
 
 @override
 bool operator ==(Object other) {
@@ -971,7 +1191,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_users),const DeepCollectionEquality().hash(_errors));
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserState.loadedMultipleUsers(users: $users, errors: $errors)';
 }
 
