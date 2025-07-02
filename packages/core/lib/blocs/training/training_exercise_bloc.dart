@@ -70,10 +70,13 @@ class TrainingExerciseBloc
   ) async {
     emit(const TrainingExerciseState.loading());
     try {
-      final createdTrainingExercise = await trainingExerciseRepository
-          .createTrainingExercise(event.trainingExercise);
+      await trainingExerciseRepository.createTrainingExercise(
+        event.trainingExercise,
+      );
       emit(
-        TrainingExerciseState.loadedTrainingExercise(createdTrainingExercise),
+        const TrainingExerciseState.success(
+          'Training exercise create successfully',
+        ),
       );
     } catch (e) {
       emit(TrainingExerciseState.error(e.toString()));

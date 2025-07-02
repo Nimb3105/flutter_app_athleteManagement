@@ -87,6 +87,31 @@ class ExerciseRepository {
     }
   }
 
+  Future<List<Exercise>> getAllExercisesBySportId(String sportId) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/exercises/sport/$sportId'),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+
+      if (data['data'] != null && data['data'] is List<dynamic>) {
+        final List<dynamic> jsonList = data['data'];
+        final exercises =
+            jsonList
+                .map((json) => Exercise.fromJson(json as Map<String, dynamic>))
+                .toList();
+
+        return exercises;
+      } else {
+        throw Exception('No valid "data" list found in response: $data');
+      }
+    } else {
+      throw Exception('Failed to get exercises: ${response.statusCode}');
+    }
+  }
+
   Future<GetAllExerciseResponse> getAllExercisesBySportName(
     String sportName, {
     int page = 1,

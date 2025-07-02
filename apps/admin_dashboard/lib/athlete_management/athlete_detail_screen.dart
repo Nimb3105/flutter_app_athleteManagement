@@ -79,6 +79,8 @@ class AthleteDetailScreen extends StatelessWidget {
     );
     final trainingScheduleBloc = TrainingScheduleBloc(
       trainingScheduleRepository: RepositoryProvider.of(context),
+      exerciseRepository: RepositoryProvider.of(context),
+      trainingExerciseRepository: RepositoryProvider.of(context),
     );
     final trainingScheduleUserBloc = TrainingScheduleUserBloc(
       trainingScheduleUserRepository: RepositoryProvider.of(context),
@@ -413,10 +415,6 @@ class AthleteDetailScreen extends StatelessWidget {
               ListTile(
                 title: const Text('Tên môn thể thao'),
                 subtitle: Text(sport?.name ?? 'N/A'),
-              ),
-              ListTile(
-                title: const Text('Vị trí'),
-                subtitle: Text(sport?.position ?? 'N/A'),
               ),
             ],
           );

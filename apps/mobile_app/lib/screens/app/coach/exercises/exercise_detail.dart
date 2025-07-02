@@ -1,10 +1,10 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:video_player/video_player.dart';
 
 class ExerciseDetailScreen extends StatefulWidget {
   final Exercise exercise;
-
   const ExerciseDetailScreen({super.key, required this.exercise});
 
   @override
@@ -12,47 +12,33 @@ class ExerciseDetailScreen extends StatefulWidget {
 }
 
 class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
-  VideoPlayerController? _videoPlayerController;
+  VideoPlayerController? _videoController;
   Future<void>? _initializeVideoPlayerFuture;
 
   @override
   void initState() {
     super.initState();
-    // Khởi tạo trình phát video nếu mediaUrl là video
-    if (widget.exercise.gifUrl.isNotEmpty && _isVideo(widget.exercise.gifUrl)) {
+    if (_isUrlVideo(widget.exercise.gifUrl)) {
       _initializeVideoPlayer(widget.exercise.gifUrl);
     }
   }
 
-  @override
-  void dispose() {
-    _videoPlayerController?.dispose();
-    super.dispose();
-  }
-
-  bool _isVideo(String url) {
-    // Kiểm tra phần mở rộng của URL để xác định là video
-    return url.endsWith('.mp4') || url.endsWith('.mov') || url.endsWith('.avi');
-  }
+  bool _isUrlVideo(String url) => url.endsWith('.mp4');
 
   void _initializeVideoPlayer(String videoUrl) {
     // ignore: deprecated_member_use
-    _videoPlayerController = VideoPlayerController.network(videoUrl);
-    _initializeVideoPlayerFuture = _videoPlayerController!
-        .initialize()
-        .then((_) {
-          setState(() {});
-          _videoPlayerController!.setLooping(true);
-        })
-        .catchError((error) {
-          // ignore: use_build_context_synchronously
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Lỗi tải video: $error'),
-              backgroundColor: Colors.red,
-            ),
-          );
-        });
+    _videoController = VideoPlayerController.network(videoUrl);
+    _initializeVideoPlayerFuture = _videoController?.initialize().then((_) {
+      _videoController?.setLooping(true);
+      _videoController?.play();
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _videoController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -61,315 +47,223 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
       appBar: AppBar(
         title: Text(
           widget.exercise.name,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-          overflow: TextOverflow.ellipsis,
+          style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
         ),
-        backgroundColor: Theme.of(context).primaryColor,
-        centerTitle: true,
-        foregroundColor: Colors.white,
-        elevation: 2,
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Colors.blue.shade100, Colors.white],
+      body: ListView(
+        padding: const EdgeInsets.all(24.0),
+        children: [
+          _buildMediaSection(),
+          const SizedBox(height: 32),
+          _buildInfoCard(
+            title: 'Thông tin cơ bản',
+            icon: Icons.info_outline,
+            children: [
+              _buildDetailRow('Nhóm cơ', widget.exercise.bodyPart),
+              _buildDetailRow('Cơ mục tiêu', widget.exercise.target),
+              _buildDetailRow('Dụng cụ', widget.exercise.equipment),
+              _buildDetailRow('Đơn vị', widget.exercise.unitType, isLast: true),
+            ],
           ),
-        ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Media Section
-                  if (widget.exercise.gifUrl.isNotEmpty)
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(12.0),
-                      child:
-                          _isVideo(widget.exercise.gifUrl)
-                              ? (_videoPlayerController != null &&
-                                      _initializeVideoPlayerFuture != null)
-                                  ? FutureBuilder(
-                                    future: _initializeVideoPlayerFuture,
-                                    builder: (context, snapshot) {
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.done) {
-                                        return Column(
-                                          children: [
-                                            AspectRatio(
-                                              aspectRatio:
-                                                  _videoPlayerController!
-                                                      .value
-                                                      .aspectRatio,
-                                              child: VideoPlayer(
-                                                _videoPlayerController!,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 8),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                IconButton(
-                                                  icon: Icon(
-                                                    _videoPlayerController!
-                                                            .value
-                                                            .isPlaying
-                                                        ? Icons.pause
-                                                        : Icons.play_arrow,
-                                                    color: Colors.blue,
-                                                  ),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      if (_videoPlayerController!
-                                                          .value
-                                                          .isPlaying) {
-                                                        _videoPlayerController!
-                                                            .pause();
-                                                      } else {
-                                                        _videoPlayerController!
-                                                            .play();
-                                                      }
-                                                    });
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        );
-                                      } else {
-                                        return Container(
-                                          height: 200,
-                                          color: Colors.grey.shade200,
-                                          child: const Center(
-                                            child: CircularProgressIndicator(),
-                                          ),
-                                        );
-                                      }
-                                    },
-                                  )
-                                  : Container(
-                                    height: 200,
-                                    color: Colors.grey.shade200,
-                                    child: const Center(
-                                      child: Icon(
-                                        Icons.error_outline,
-                                        color: Colors.red,
-                                        size: 40,
-                                      ),
-                                    ),
-                                  )
-                              : Image.network(
-                                ApiConstants.baseUrl + widget.exercise.gifUrl,
-                                height: 200,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                                loadingBuilder: (
-                                  context,
-                                  child,
-                                  loadingProgress,
-                                ) {
-                                  if (loadingProgress == null) return child;
-                                  return Container(
-                                    height: 200,
-                                    color: Colors.grey.shade200,
-                                    child: const Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  );
-                                },
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Container(
-                                    height: 200,
-                                    color: Colors.grey.shade200,
-                                    child: const Center(
-                                      child: Icon(
-                                        Icons.error_outline,
-                                        color: Colors.red,
-                                        size: 40,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                    )
-                  else
-                    Container(
-                      height: 200,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'No media available',
-                          style: TextStyle(color: Colors.grey, fontSize: 16),
-                        ),
-                      ),
-                    ),
-                  const SizedBox(height: 24),
-
-                  // Exercise Details
-                  Text(
-                    'Exercise Details',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue.shade900,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Detail Card
-                  Card(
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildDetailRow('Nhóm cơ', widget.exercise.bodyPart),
-                          _buildDetailRow(
-                            'Thiết bị',
-                            widget.exercise.equipment,
-                          ),
-                          _buildDetailRow('Tác động', widget.exercise.target),
-                          _buildDetailRow('Môn thể thao',widget.exercise.sportName),
-
-                          if (widget.exercise.secondaryMuscles.isNotEmpty) ...[
-                            const SizedBox(height: 8),
-                            Text(
-                              'Cơ phụ',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue.shade900,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Wrap(
-                              spacing: 8.0,
-                              runSpacing: 4.0,
-                              children:
-                                  widget.exercise.secondaryMuscles
-                                      .map(
-                                        (muscle) => Chip(label: Text(muscle)),
-                                      )
-                                      .toList(),
-                            ),
-                          ],
-
-                          if (widget.exercise.instructions.isNotEmpty) ...[
-                            const SizedBox(height: 8),
-                            Text(
-                              'Hướng dẫn',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue.shade900,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Wrap(
-                              spacing: 8.0,
-                              runSpacing: 4.0,
-                              children:
-                                  widget.exercise.instructions
-                                      .map(
-                                        (instructions) => Chip(label: Text(instructions)),
-                                      )
-                                      .toList(),
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Action Buttons
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          // Navigate to edit screen (to be implemented)
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Edit functionality coming soon!'),
-                            ),
-                          );
-                        },
-                        icon: const Icon(Icons.edit),
-                        label: const Text('Edit'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue.shade700,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                      ),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          context.read<ExerciseBloc>().add(
-                            DeleteExercise(widget.exercise.id!),
-                          );
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(Icons.delete),
-                        label: const Text('Delete'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red.shade700,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+          const SizedBox(height: 24),
+          _buildInfoCard(
+            title: 'Cơ bắp tác động',
+            icon: Icons.accessibility_new,
+            children: [
+              _buildChipList('Cơ phụ', widget.exercise.secondaryMuscles),
+            ],
           ),
-        ),
+          const SizedBox(height: 24),
+          _buildInfoCard(
+            title: 'Hướng dẫn thực hiện',
+            icon: Icons.integration_instructions_outlined,
+            children: [_buildInstructionList(widget.exercise.instructions)],
+          ),
+          const SizedBox(height: 32),
+          _buildActionButtons(),
+        ],
       ),
     );
   }
 
-  Widget _buildDetailRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 100,
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: 14,
+  Widget _buildMediaSection() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16.0),
+      child: Container(
+        height: 250,
+        color: Colors.grey[200],
+        child:
+            _isUrlVideo(widget.exercise.gifUrl)
+                ? FutureBuilder(
+                  future: _initializeVideoPlayerFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return AspectRatio(
+                        aspectRatio: _videoController!.value.aspectRatio,
+                        child: VideoPlayer(_videoController!),
+                      );
+                    }
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                )
+                : Image.network(
+                  widget
+                      .exercise
+                      .gifUrl, // Assuming this is a direct URL to an image/gif
+                  fit: BoxFit.cover,
+                  errorBuilder:
+                      (context, error, stackTrace) =>
+                          const Icon(Icons.error, color: Colors.red, size: 50),
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                ),
+      ),
+    );
+  }
+
+  Widget _buildInfoCard({
+    required String title,
+    required IconData icon,
+    required List<Widget> children,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(icon, color: Theme.of(context).colorScheme.primary),
+            const SizedBox(width: 12),
+            Text(
+              title,
+              style: GoogleFonts.poppins(
+                fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: Colors.blue.shade900,
               ),
             ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        Card(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: BorderSide(color: Colors.grey.shade200),
           ),
-          Expanded(
-            child: Text(
-              value,
-              style: const TextStyle(fontSize: 14, color: Colors.black87),
+          child: Column(children: children),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDetailRow(String label, String value, {bool isLast = false}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      decoration: BoxDecoration(
+        border:
+            isLast
+                ? null
+                : Border(bottom: BorderSide(color: Colors.grey.shade200)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: GoogleFonts.poppins(
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Text(
+            value,
+            style: GoogleFonts.poppins(
+              fontWeight: FontWeight.w600,
+              fontSize: 15,
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildChipList(String label, List<String> items) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: GoogleFonts.poppins(
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Wrap(
+            spacing: 8.0,
+            runSpacing: 8.0,
+            children: items.map((item) => Chip(label: Text(item))).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInstructionList(List<String> instructions) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+      child: Column(
+        children:
+            instructions.asMap().entries.map((entry) {
+              int idx = entry.key;
+              String text = entry.value;
+              return ListTile(
+                leading: CircleAvatar(radius: 15, child: Text('${idx + 1}')),
+                title: Text(text, style: GoogleFonts.poppins()),
+              );
+            }).toList(),
+      ),
+    );
+  }
+
+  Widget _buildActionButtons() {
+    return Row(
+      children: [
+        Expanded(
+          child: OutlinedButton.icon(
+            onPressed: () {},
+            icon: const Icon(Icons.edit_outlined),
+            label: const Text('Sửa'),
+            style: OutlinedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              textStyle: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: ElevatedButton.icon(
+            onPressed: () {
+              // Add delete confirmation dialog here
+              context.read<ExerciseBloc>().add(
+                DeleteExercise(widget.exercise.id!),
+              );
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.delete_outline),
+            label: const Text('Xóa'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red[400],
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              textStyle: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

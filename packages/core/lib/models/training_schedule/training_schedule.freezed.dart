@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TrainingSchedule {
 
- String? get id;@UtcDateTimeConverter() DateTime get date;@UtcDateTimeConverter() DateTime get startTime;@UtcDateTimeConverter() DateTime get endTime; String get status; String get location; String get type; String get notes; String get createdBy; double? get progress; String? get athleteId; List<TrainingExercise> get trainingExercises;@UtcDateTimeConverter() DateTime? get createdAt;@UtcDateTimeConverter() DateTime? get updatedAt;
+ String? get id;@UtcDateTimeConverter() DateTime get date;@UtcDateTimeConverter() DateTime get startTime;@UtcDateTimeConverter() DateTime get endTime; String get status; String get location; String get type; String get notes; String get createdBy; double? get progress; String? get dailyScheduleId; String get sportId; List<TrainingExercise> get trainingExercises;@UtcDateTimeConverter() DateTime? get createdAt;@UtcDateTimeConverter() DateTime? get updatedAt;
 /// Create a copy of TrainingSchedule
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $TrainingScheduleCopyWith<TrainingSchedule> get copyWith => _$TrainingScheduleCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TrainingSchedule&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.endTime, endTime) || other.endTime == endTime)&&(identical(other.status, status) || other.status == status)&&(identical(other.location, location) || other.location == location)&&(identical(other.type, type) || other.type == type)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.progress, progress) || other.progress == progress)&&(identical(other.athleteId, athleteId) || other.athleteId == athleteId)&&const DeepCollectionEquality().equals(other.trainingExercises, trainingExercises)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TrainingSchedule&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.endTime, endTime) || other.endTime == endTime)&&(identical(other.status, status) || other.status == status)&&(identical(other.location, location) || other.location == location)&&(identical(other.type, type) || other.type == type)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.progress, progress) || other.progress == progress)&&(identical(other.dailyScheduleId, dailyScheduleId) || other.dailyScheduleId == dailyScheduleId)&&(identical(other.sportId, sportId) || other.sportId == sportId)&&const DeepCollectionEquality().equals(other.trainingExercises, trainingExercises)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,date,startTime,endTime,status,location,type,notes,createdBy,progress,athleteId,const DeepCollectionEquality().hash(trainingExercises),createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,date,startTime,endTime,status,location,type,notes,createdBy,progress,dailyScheduleId,sportId,const DeepCollectionEquality().hash(trainingExercises),createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'TrainingSchedule(id: $id, date: $date, startTime: $startTime, endTime: $endTime, status: $status, location: $location, type: $type, notes: $notes, createdBy: $createdBy, progress: $progress, athleteId: $athleteId, trainingExercises: $trainingExercises, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'TrainingSchedule(id: $id, date: $date, startTime: $startTime, endTime: $endTime, status: $status, location: $location, type: $type, notes: $notes, createdBy: $createdBy, progress: $progress, dailyScheduleId: $dailyScheduleId, sportId: $sportId, trainingExercises: $trainingExercises, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $TrainingScheduleCopyWith<$Res>  {
   factory $TrainingScheduleCopyWith(TrainingSchedule value, $Res Function(TrainingSchedule) _then) = _$TrainingScheduleCopyWithImpl;
 @useResult
 $Res call({
- String? id,@UtcDateTimeConverter() DateTime date,@UtcDateTimeConverter() DateTime startTime,@UtcDateTimeConverter() DateTime endTime, String status, String location, String type, String notes, String createdBy, double? progress, String? athleteId, List<TrainingExercise> trainingExercises,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
+ String? id,@UtcDateTimeConverter() DateTime date,@UtcDateTimeConverter() DateTime startTime,@UtcDateTimeConverter() DateTime endTime, String status, String location, String type, String notes, String createdBy, double? progress, String? dailyScheduleId, String sportId, List<TrainingExercise> trainingExercises,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
 });
 
 
@@ -66,7 +66,7 @@ class _$TrainingScheduleCopyWithImpl<$Res>
 
 /// Create a copy of TrainingSchedule
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? date = null,Object? startTime = null,Object? endTime = null,Object? status = null,Object? location = null,Object? type = null,Object? notes = null,Object? createdBy = null,Object? progress = freezed,Object? athleteId = freezed,Object? trainingExercises = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? date = null,Object? startTime = null,Object? endTime = null,Object? status = null,Object? location = null,Object? type = null,Object? notes = null,Object? createdBy = null,Object? progress = freezed,Object? dailyScheduleId = freezed,Object? sportId = null,Object? trainingExercises = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
@@ -78,8 +78,9 @@ as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non
 as String,notes: null == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable
 as String,createdBy: null == createdBy ? _self.createdBy : createdBy // ignore: cast_nullable_to_non_nullable
 as String,progress: freezed == progress ? _self.progress : progress // ignore: cast_nullable_to_non_nullable
-as double?,athleteId: freezed == athleteId ? _self.athleteId : athleteId // ignore: cast_nullable_to_non_nullable
-as String?,trainingExercises: null == trainingExercises ? _self.trainingExercises : trainingExercises // ignore: cast_nullable_to_non_nullable
+as double?,dailyScheduleId: freezed == dailyScheduleId ? _self.dailyScheduleId : dailyScheduleId // ignore: cast_nullable_to_non_nullable
+as String?,sportId: null == sportId ? _self.sportId : sportId // ignore: cast_nullable_to_non_nullable
+as String,trainingExercises: null == trainingExercises ? _self.trainingExercises : trainingExercises // ignore: cast_nullable_to_non_nullable
 as List<TrainingExercise>,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
@@ -93,7 +94,7 @@ as DateTime?,
 @JsonSerializable()
 
 class _TrainingSchedule implements TrainingSchedule {
-  const _TrainingSchedule({required this.id, @UtcDateTimeConverter() required this.date, @UtcDateTimeConverter() required this.startTime, @UtcDateTimeConverter() required this.endTime, required this.status, required this.location, required this.type, required this.notes, required this.createdBy, required this.progress, this.athleteId, final  List<TrainingExercise> trainingExercises = const [], @UtcDateTimeConverter() required this.createdAt, @UtcDateTimeConverter() required this.updatedAt}): _trainingExercises = trainingExercises;
+  const _TrainingSchedule({required this.id, @UtcDateTimeConverter() required this.date, @UtcDateTimeConverter() required this.startTime, @UtcDateTimeConverter() required this.endTime, required this.status, required this.location, required this.type, required this.notes, required this.createdBy, required this.progress, required this.dailyScheduleId, required this.sportId, final  List<TrainingExercise> trainingExercises = const [], @UtcDateTimeConverter() required this.createdAt, @UtcDateTimeConverter() required this.updatedAt}): _trainingExercises = trainingExercises;
   factory _TrainingSchedule.fromJson(Map<String, dynamic> json) => _$TrainingScheduleFromJson(json);
 
 @override final  String? id;
@@ -106,7 +107,8 @@ class _TrainingSchedule implements TrainingSchedule {
 @override final  String notes;
 @override final  String createdBy;
 @override final  double? progress;
-@override final  String? athleteId;
+@override final  String? dailyScheduleId;
+@override final  String sportId;
  final  List<TrainingExercise> _trainingExercises;
 @override@JsonKey() List<TrainingExercise> get trainingExercises {
   if (_trainingExercises is EqualUnmodifiableListView) return _trainingExercises;
@@ -130,16 +132,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TrainingSchedule&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.endTime, endTime) || other.endTime == endTime)&&(identical(other.status, status) || other.status == status)&&(identical(other.location, location) || other.location == location)&&(identical(other.type, type) || other.type == type)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.progress, progress) || other.progress == progress)&&(identical(other.athleteId, athleteId) || other.athleteId == athleteId)&&const DeepCollectionEquality().equals(other._trainingExercises, _trainingExercises)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TrainingSchedule&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.endTime, endTime) || other.endTime == endTime)&&(identical(other.status, status) || other.status == status)&&(identical(other.location, location) || other.location == location)&&(identical(other.type, type) || other.type == type)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.progress, progress) || other.progress == progress)&&(identical(other.dailyScheduleId, dailyScheduleId) || other.dailyScheduleId == dailyScheduleId)&&(identical(other.sportId, sportId) || other.sportId == sportId)&&const DeepCollectionEquality().equals(other._trainingExercises, _trainingExercises)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,date,startTime,endTime,status,location,type,notes,createdBy,progress,athleteId,const DeepCollectionEquality().hash(_trainingExercises),createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,date,startTime,endTime,status,location,type,notes,createdBy,progress,dailyScheduleId,sportId,const DeepCollectionEquality().hash(_trainingExercises),createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'TrainingSchedule(id: $id, date: $date, startTime: $startTime, endTime: $endTime, status: $status, location: $location, type: $type, notes: $notes, createdBy: $createdBy, progress: $progress, athleteId: $athleteId, trainingExercises: $trainingExercises, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'TrainingSchedule(id: $id, date: $date, startTime: $startTime, endTime: $endTime, status: $status, location: $location, type: $type, notes: $notes, createdBy: $createdBy, progress: $progress, dailyScheduleId: $dailyScheduleId, sportId: $sportId, trainingExercises: $trainingExercises, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -150,7 +152,7 @@ abstract mixin class _$TrainingScheduleCopyWith<$Res> implements $TrainingSchedu
   factory _$TrainingScheduleCopyWith(_TrainingSchedule value, $Res Function(_TrainingSchedule) _then) = __$TrainingScheduleCopyWithImpl;
 @override @useResult
 $Res call({
- String? id,@UtcDateTimeConverter() DateTime date,@UtcDateTimeConverter() DateTime startTime,@UtcDateTimeConverter() DateTime endTime, String status, String location, String type, String notes, String createdBy, double? progress, String? athleteId, List<TrainingExercise> trainingExercises,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
+ String? id,@UtcDateTimeConverter() DateTime date,@UtcDateTimeConverter() DateTime startTime,@UtcDateTimeConverter() DateTime endTime, String status, String location, String type, String notes, String createdBy, double? progress, String? dailyScheduleId, String sportId, List<TrainingExercise> trainingExercises,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
 });
 
 
@@ -167,7 +169,7 @@ class __$TrainingScheduleCopyWithImpl<$Res>
 
 /// Create a copy of TrainingSchedule
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? date = null,Object? startTime = null,Object? endTime = null,Object? status = null,Object? location = null,Object? type = null,Object? notes = null,Object? createdBy = null,Object? progress = freezed,Object? athleteId = freezed,Object? trainingExercises = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? date = null,Object? startTime = null,Object? endTime = null,Object? status = null,Object? location = null,Object? type = null,Object? notes = null,Object? createdBy = null,Object? progress = freezed,Object? dailyScheduleId = freezed,Object? sportId = null,Object? trainingExercises = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_TrainingSchedule(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
@@ -179,8 +181,9 @@ as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non
 as String,notes: null == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable
 as String,createdBy: null == createdBy ? _self.createdBy : createdBy // ignore: cast_nullable_to_non_nullable
 as String,progress: freezed == progress ? _self.progress : progress // ignore: cast_nullable_to_non_nullable
-as double?,athleteId: freezed == athleteId ? _self.athleteId : athleteId // ignore: cast_nullable_to_non_nullable
-as String?,trainingExercises: null == trainingExercises ? _self._trainingExercises : trainingExercises // ignore: cast_nullable_to_non_nullable
+as double?,dailyScheduleId: freezed == dailyScheduleId ? _self.dailyScheduleId : dailyScheduleId // ignore: cast_nullable_to_non_nullable
+as String?,sportId: null == sportId ? _self.sportId : sportId // ignore: cast_nullable_to_non_nullable
+as String,trainingExercises: null == trainingExercises ? _self._trainingExercises : trainingExercises // ignore: cast_nullable_to_non_nullable
 as List<TrainingExercise>,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,

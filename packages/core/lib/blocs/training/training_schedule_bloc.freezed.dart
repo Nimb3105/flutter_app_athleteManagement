@@ -357,6 +357,74 @@ as String,
 }
 
 /// @nodoc
+
+
+class GetAllTrainingSchedulesByDailyScheduleId implements TrainingScheduleEvent {
+  const GetAllTrainingSchedulesByDailyScheduleId(this.dailyScheduleId, this.date);
+  
+
+ final  String dailyScheduleId;
+ final  String date;
+
+/// Create a copy of TrainingScheduleEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetAllTrainingSchedulesByDailyScheduleIdCopyWith<GetAllTrainingSchedulesByDailyScheduleId> get copyWith => _$GetAllTrainingSchedulesByDailyScheduleIdCopyWithImpl<GetAllTrainingSchedulesByDailyScheduleId>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetAllTrainingSchedulesByDailyScheduleId&&(identical(other.dailyScheduleId, dailyScheduleId) || other.dailyScheduleId == dailyScheduleId)&&(identical(other.date, date) || other.date == date));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,dailyScheduleId,date);
+
+@override
+String toString() {
+  return 'TrainingScheduleEvent.getAllTrainingSchedulesByDailyScheduleId(dailyScheduleId: $dailyScheduleId, date: $date)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GetAllTrainingSchedulesByDailyScheduleIdCopyWith<$Res> implements $TrainingScheduleEventCopyWith<$Res> {
+  factory $GetAllTrainingSchedulesByDailyScheduleIdCopyWith(GetAllTrainingSchedulesByDailyScheduleId value, $Res Function(GetAllTrainingSchedulesByDailyScheduleId) _then) = _$GetAllTrainingSchedulesByDailyScheduleIdCopyWithImpl;
+@useResult
+$Res call({
+ String dailyScheduleId, String date
+});
+
+
+
+
+}
+/// @nodoc
+class _$GetAllTrainingSchedulesByDailyScheduleIdCopyWithImpl<$Res>
+    implements $GetAllTrainingSchedulesByDailyScheduleIdCopyWith<$Res> {
+  _$GetAllTrainingSchedulesByDailyScheduleIdCopyWithImpl(this._self, this._then);
+
+  final GetAllTrainingSchedulesByDailyScheduleId _self;
+  final $Res Function(GetAllTrainingSchedulesByDailyScheduleId) _then;
+
+/// Create a copy of TrainingScheduleEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? dailyScheduleId = null,Object? date = null,}) {
+  return _then(GetAllTrainingSchedulesByDailyScheduleId(
+null == dailyScheduleId ? _self.dailyScheduleId : dailyScheduleId // ignore: cast_nullable_to_non_nullable
+as String,null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$TrainingScheduleState {
 
 
@@ -723,6 +791,96 @@ class _$TrainingSchedule_SuccessCopyWithImpl<$Res>
   return _then(TrainingSchedule_Success(
 null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class LoadedTrainingSchedulesByDailyScheduleId implements TrainingScheduleState {
+  const LoadedTrainingSchedulesByDailyScheduleId(final  List<TrainingSchedule> trainingSchedules, final  Map<String, List<TrainingExercise>> exercisesBySchedule, final  Map<String, Exercise> exerciseDetails): _trainingSchedules = trainingSchedules,_exercisesBySchedule = exercisesBySchedule,_exerciseDetails = exerciseDetails;
+  
+
+ final  List<TrainingSchedule> _trainingSchedules;
+ List<TrainingSchedule> get trainingSchedules {
+  if (_trainingSchedules is EqualUnmodifiableListView) return _trainingSchedules;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_trainingSchedules);
+}
+
+ final  Map<String, List<TrainingExercise>> _exercisesBySchedule;
+ Map<String, List<TrainingExercise>> get exercisesBySchedule {
+  if (_exercisesBySchedule is EqualUnmodifiableMapView) return _exercisesBySchedule;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_exercisesBySchedule);
+}
+
+// Map scheduleId -> List<TrainingExercise>
+ final  Map<String, Exercise> _exerciseDetails;
+// Map scheduleId -> List<TrainingExercise>
+ Map<String, Exercise> get exerciseDetails {
+  if (_exerciseDetails is EqualUnmodifiableMapView) return _exerciseDetails;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_exerciseDetails);
+}
+
+
+/// Create a copy of TrainingScheduleState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$LoadedTrainingSchedulesByDailyScheduleIdCopyWith<LoadedTrainingSchedulesByDailyScheduleId> get copyWith => _$LoadedTrainingSchedulesByDailyScheduleIdCopyWithImpl<LoadedTrainingSchedulesByDailyScheduleId>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedTrainingSchedulesByDailyScheduleId&&const DeepCollectionEquality().equals(other._trainingSchedules, _trainingSchedules)&&const DeepCollectionEquality().equals(other._exercisesBySchedule, _exercisesBySchedule)&&const DeepCollectionEquality().equals(other._exerciseDetails, _exerciseDetails));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_trainingSchedules),const DeepCollectionEquality().hash(_exercisesBySchedule),const DeepCollectionEquality().hash(_exerciseDetails));
+
+@override
+String toString() {
+  return 'TrainingScheduleState.loadedTrainingSchedulesByDailyScheduleId(trainingSchedules: $trainingSchedules, exercisesBySchedule: $exercisesBySchedule, exerciseDetails: $exerciseDetails)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $LoadedTrainingSchedulesByDailyScheduleIdCopyWith<$Res> implements $TrainingScheduleStateCopyWith<$Res> {
+  factory $LoadedTrainingSchedulesByDailyScheduleIdCopyWith(LoadedTrainingSchedulesByDailyScheduleId value, $Res Function(LoadedTrainingSchedulesByDailyScheduleId) _then) = _$LoadedTrainingSchedulesByDailyScheduleIdCopyWithImpl;
+@useResult
+$Res call({
+ List<TrainingSchedule> trainingSchedules, Map<String, List<TrainingExercise>> exercisesBySchedule, Map<String, Exercise> exerciseDetails
+});
+
+
+
+
+}
+/// @nodoc
+class _$LoadedTrainingSchedulesByDailyScheduleIdCopyWithImpl<$Res>
+    implements $LoadedTrainingSchedulesByDailyScheduleIdCopyWith<$Res> {
+  _$LoadedTrainingSchedulesByDailyScheduleIdCopyWithImpl(this._self, this._then);
+
+  final LoadedTrainingSchedulesByDailyScheduleId _self;
+  final $Res Function(LoadedTrainingSchedulesByDailyScheduleId) _then;
+
+/// Create a copy of TrainingScheduleState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? trainingSchedules = null,Object? exercisesBySchedule = null,Object? exerciseDetails = null,}) {
+  return _then(LoadedTrainingSchedulesByDailyScheduleId(
+null == trainingSchedules ? _self._trainingSchedules : trainingSchedules // ignore: cast_nullable_to_non_nullable
+as List<TrainingSchedule>,null == exercisesBySchedule ? _self._exercisesBySchedule : exercisesBySchedule // ignore: cast_nullable_to_non_nullable
+as Map<String, List<TrainingExercise>>,null == exerciseDetails ? _self._exerciseDetails : exerciseDetails // ignore: cast_nullable_to_non_nullable
+as Map<String, Exercise>,
   ));
 }
 

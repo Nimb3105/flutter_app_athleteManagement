@@ -43,6 +43,31 @@ class TrainingScheduleRepository {
     }
   }
 
+  Future<List<TrainingSchedule>> getAllTrainingScheduleByDailyScheduleId(String dailyScheduleId, String date) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/training-schedules/daily/$dailyScheduleId/$date'),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+
+      if (data['data'] != null && data['data'] is List<dynamic>) {
+        final List<dynamic> jsonList = data['data'];
+        final trainingSchedules =
+            jsonList
+                .map((json) => TrainingSchedule.fromJson(json as Map<String, dynamic>))
+                .toList();
+
+        return trainingSchedules;
+      } else {
+        throw Exception('No valid "data" list found in response: $data');
+      }
+    } else {
+      throw Exception('Failed to get exercises: ${response.statusCode}');
+    }
+  }
+
   // Get training schedule by ID
   Future<TrainingSchedule> getTrainingScheduleById(String id) async {
     final response = await http.get(

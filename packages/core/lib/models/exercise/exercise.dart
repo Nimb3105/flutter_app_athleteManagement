@@ -15,7 +15,8 @@ abstract class Exercise with _$Exercise {
     required List<String> instructions,
     required String equipment,
     required String gifUrl,
-    required String sportName,
+    required String sportId,
+    required String unitType,
     @UtcDateTimeConverter() required DateTime? createdAt,
     @UtcDateTimeConverter() required DateTime? updatedAt,
   }) = _Exercise;

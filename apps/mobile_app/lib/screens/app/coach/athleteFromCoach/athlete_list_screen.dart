@@ -1,7 +1,11 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
-import 'package:intl/intl.dart';
 import 'package:mobile_app/screens/app/coach/athleteFromCoach/athlete_detail.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class AthleteListScreen extends StatefulWidget {
   final String coachId;
@@ -33,13 +37,16 @@ class _AthleteListScreenState extends State<AthleteListScreen> {
     if (_scrollController.position.pixels >=
             _scrollController.position.maxScrollExtent * 0.9 &&
         !_isLoadingMore) {
-      context.read<CoachAthleteBloc>().add(
-        CoachAthleteEvent.getAllByCoachId(
-          widget.coachId,
-          page: _currentPage + 1,
-          limit: _limit,
-        ),
-      );
+      final state = context.read<CoachAthleteBloc>().state;
+      if (state is LoadedCoachAthletes && state.hasMore) {
+        context.read<CoachAthleteBloc>().add(
+          CoachAthleteEvent.getAllByCoachId(
+            widget.coachId,
+            page: _currentPage + 1,
+            limit: _limit,
+          ),
+        );
+      }
     }
   }
 
@@ -47,10 +54,15 @@ class _AthleteListScreenState extends State<AthleteListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Danh sách vận động viên'),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Colors.white,
-        elevation: 2,
+        title: Text(
+          'Vận Động Viên',
+          style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+        ),
+        centerTitle: false,
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.filter_list)),
+        ],
       ),
       body: BlocProvider(
         create:
@@ -84,143 +96,146 @@ class _AthleteListScreenState extends State<AthleteListScreen> {
           },
           builder: (context, state) {
             if (state is CoachAthlete_Loading && _currentPage == 1) {
-              return const Center(child: CircularProgressIndicator());
+              return _buildLoadingShimmer();
             }
             if (state is LoadedCoachAthletes) {
-              return _buildMobileList(
+              if (state.coachAthletes.isEmpty) {
+                return _buildEmptyState();
+              }
+              return _buildAthleteList(
                 context,
                 state.coachAthletes,
                 state.athleteMap,
-                state.currentPage,
-                state.limit,
                 state.hasMore,
                 state.userMap,
                 state.sportMap,
               );
             }
             if (state is CoachAthlete_Error) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.error_outline, size: 64, color: Colors.red[300]),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Lỗi: ${state.message}',
-                      style: TextStyle(color: Colors.red[700], fontSize: 16),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              );
+              return Center(child: Text('Lỗi: ${state.message}'));
             }
-            return const Center(child: Text('Không có dữ liệu'));
+            return _buildEmptyState();
           },
         ),
       ),
     );
   }
 
-  Widget _buildMobileList(
+  Widget _buildLoadingShimmer() {
+    return ListView.builder(
+      itemCount: 5,
+      itemBuilder: (context, index) {
+        return Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Card(
+            margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  const CircleAvatar(radius: 28, backgroundColor: Colors.white),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          height: 20,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(height: 8),
+                        Container(width: 100, height: 16, color: Colors.white),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.people_outline, size: 100, color: Colors.grey[300]),
+          const SizedBox(height: 24),
+          Text(
+            'Chưa có vận động viên',
+            style: GoogleFonts.poppins(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey[600],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Hãy bắt đầu bằng cách thêm một VĐV mới.',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey[500]),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAthleteList(
     BuildContext context,
     List<CoachAthlete> coachAthletes,
     Map<String, Athlete> athleteMap,
-    int currentPage,
-    int limit,
     bool hasMore,
     Map<String, User?> userMap,
     Map<String, Sport> sportMap,
   ) {
-    final DateFormat dateFormat = DateFormat('dd/MM/yyyy HH:mm');
-
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.blue[50],
-            border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
+    return RefreshIndicator(
+      onRefresh: () async {
+        _currentPage = 1;
+        context.read<CoachAthleteBloc>().add(
+          CoachAthleteEvent.getAllByCoachId(
+            widget.coachId,
+            page: 1,
+            limit: _limit,
           ),
-          child: Row(
-            children: [
-              Icon(Icons.sports, color: Colors.blue[600]),
-              const SizedBox(width: 8),
-              Text(
-                'Tổng số: ${coachAthletes.length} vận động viên',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.blue[800],
+        );
+      },
+      child: AnimationLimiter(
+        child: ListView.builder(
+          controller: _scrollController,
+          padding: const EdgeInsets.all(8),
+          itemCount: coachAthletes.length + (hasMore ? 1 : 0),
+          itemBuilder: (context, index) {
+            if (index == coachAthletes.length && hasMore) {
+              return const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Center(child: CircularProgressIndicator()),
+              );
+            }
+            final coachAthlete = coachAthletes[index];
+            final athlete = athleteMap[coachAthlete.athleteId];
+            if (athlete == null) return const SizedBox.shrink();
+
+            return AnimationConfiguration.staggeredList(
+              position: index,
+              duration: const Duration(milliseconds: 375),
+              child: SlideAnimation(
+                verticalOffset: 50.0,
+                child: FadeInAnimation(
+                  child: _buildAthleteCard(context, athlete, userMap, sportMap),
                 ),
               ),
-            ],
-          ),
+            );
+          },
         ),
-        Expanded(
-          child:
-              coachAthletes.isEmpty
-                  ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.sports_outlined,
-                          size: 64,
-                          color: Colors.grey[400],
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          'Không có vận động viên nào',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                  : RefreshIndicator(
-                    onRefresh: () async {
-                      context.read<CoachAthleteBloc>().add(
-                        CoachAthleteEvent.getAllByCoachId(
-                          widget.coachId,
-                          page: 1,
-                          limit: _limit,
-                        ),
-                      );
-                    },
-                    child: ListView.separated(
-                      controller: _scrollController,
-                      padding: const EdgeInsets.all(16),
-                      itemCount: coachAthletes.length + (hasMore ? 1 : 0),
-                      separatorBuilder:
-                          (context, index) => const SizedBox(height: 12),
-                      itemBuilder: (context, index) {
-                        if (index == coachAthletes.length && hasMore) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        final coachAthlete = coachAthletes[index];
-                        final athlete = athleteMap[coachAthlete.athleteId];
-                        if (athlete == null) {
-                          return const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: Center(child: CircularProgressIndicator()),
-                          );
-                        }
-                        return _buildAthleteCard(
-                          context,
-                          athlete,
-                          userMap,
-                          sportMap,
-                          dateFormat,
-                        );
-                      },
-                    ),
-                  ),
-        ),
-      ],
+      ),
     );
   }
 
@@ -229,130 +244,86 @@ class _AthleteListScreenState extends State<AthleteListScreen> {
     Athlete athlete,
     Map<String, User?> userMap,
     Map<String, Sport> sportMap,
-    DateFormat dateFormat,
   ) {
     final user = userMap[athlete.userId];
-    // Assuming Athlete model has a sportId' field
     final sport = sportMap[user?.sportId];
+    final theme = Theme.of(context);
 
     return Card(
       elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shadowColor: Colors.black.withOpacity(0.05),
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
         onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
               builder:
-                  (_) =>
-                      AthleteDetail(athlete: athlete, userId: widget.coachId),
+                  (_) => AthleteDetail(
+                    athlete: athlete,
+                    userId: widget.coachId,
+                    sportId: sport?.id,
+                  ),
             ),
           );
         },
         child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
             children: [
-              Row(
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.blue[100],
-                    child: Icon(Icons.person, color: Colors.blue[600]),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          user?.fullName ?? 'Đang tải...',
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.blue[100],
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            athlete.athleteType,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.blue[800],
-                            ),
-                          ),
-                        ),
-                      ],
+              Hero(
+                tag: 'athlete_${athlete.userId}',
+                child: CircleAvatar(
+                  radius: 30,
+                  backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
+                  child: Text(
+                    user?.fullName.isNotEmpty == true
+                        ? user!.fullName[0].toUpperCase()
+                        : '?',
+                    style: GoogleFonts.poppins(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.primary,
                     ),
                   ),
-
-                  Icon(Icons.chevron_right, color: Colors.grey[400]),
-                ],
+                ),
               ),
-              const SizedBox(height: 16),
-              _buildInfoRow(
-                Icons.email_outlined,
-                'Email',
-                user?.email ?? 'Đang tải...',
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      user?.fullName ?? 'Đang tải...',
+                      style: GoogleFonts.poppins(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      sport?.name ?? 'Chưa có môn thể thao',
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        color: theme.textTheme.bodyMedium?.color?.withOpacity(
+                          0.7,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 12),
-              _buildInfoRow(
-                Icons.sports_outlined,
-                'Môn thể thao',
-                sport?.name ?? 'Chưa có môn thể thao',
+              Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.grey.withOpacity(0.7),
+                size: 18,
               ),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildInfoRow(
-    IconData icon,
-    String label,
-    String value, {
-    bool isSmall = false,
-  }) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Icon(icon, size: isSmall ? 16 : 20, color: Colors.grey[600]),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: isSmall ? 12 : 14,
-                  color: Colors.grey[600],
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                value,
-                style: TextStyle(
-                  fontSize: isSmall ? 12 : 14,
-                  fontWeight: isSmall ? FontWeight.normal : FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

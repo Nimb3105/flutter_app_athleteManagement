@@ -54,41 +54,60 @@ class FoodRepository {
     }
   }
 
-  Future<GetAllFoodRespone> getAllFoodByFoodType(
-    String foodType, {
+  Future<GetAllFoodRespone> getFoodsByFilter({
+    String? foodType,
+    int? caloriesMin,
+    int? caloriesMax,
+    int? proteinMin,
+    int? proteinMax,
+    int? carbsMin,
+    int? carbsMax,
+    int? fatMin,
+    int? fatMax,
     int page = 1,
     int limit = 10,
   }) async {
+    // 1️⃣ Xây map query – chỉ thêm field khi cần
+    final params = <String, String>{
+      if (foodType != null && foodType.isNotEmpty) 'foodType': foodType,
+      'caloriesMin': (caloriesMin ?? -1).toString(),
+      'caloriesMax': (caloriesMax ?? -1).toString(),
+      'proteinMin': (proteinMin ?? -1).toString(),
+      'proteinMax': (proteinMax ?? -1).toString(),
+      'carbsMin': (carbsMin ?? -1).toString(),
+      'carbsMax': (carbsMax ?? -1).toString(),
+      'fatMin': (fatMin ?? -1).toString(),
+      'fatMax': (fatMax ?? -1).toString(),
+      'page': page.toString(),
+      'limit': limit.toString(),
+    };
+
+    // 2️⃣ Gọi API
+    final uri = Uri.parse(
+      '$baseUrl/foods/filter',
+    ).replace(queryParameters: params);
     final response = await http.get(
-      Uri.parse(
-        '$baseUrl/foods/foodType/$foodType?page=$page&limit=$limit',
-      ),
+      uri,
       headers: {'Content-Type': 'application/json'},
     );
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body) as Map<String, dynamic>;
-
-      if (data['data'] != null && data['data'] is List<dynamic>) {
-        final List<dynamic> jsonList = data['data'];
-        final foods =
-            jsonList
-                .map((json) => Food.fromJson(json as Map<String, dynamic>))
-                .toList();
-
-        final totalCount = data['totalCount'] ?? 0;
-
-        return GetAllFoodRespone(items: foods, totalCount: totalCount);
-      } else {
-        throw Exception('No valid "data" list found in response: $data');
-      }
-    } else {
+    // 3️⃣ Xử lý kết quả
+    if (response.statusCode != 200) {
       throw Exception('Failed to get foods: ${response.statusCode}');
     }
+
+    final data = jsonDecode(response.body) as Map<String, dynamic>;
+    final list =
+        (data['data'] as List<dynamic>? ?? [])
+            .map((json) => Food.fromJson(json as Map<String, dynamic>))
+            .toList();
+    final totalCount = data['totalCount'] ?? 0;
+
+    return GetAllFoodRespone(items: list, totalCount: totalCount);
   }
 
   // Get all foods
-  Future<List<Food>> getAllFoods({int page = 1, int limit = 10}) async {
+  Future<GetAllFoodRespone> getAllFoods({int page = 1, int limit = 10}) async {
     final response = await http.get(
       Uri.parse('$baseUrl/foods?page=$page&limit=$limit'),
       headers: {'Content-Type': 'application/json'},
@@ -98,9 +117,13 @@ class FoodRepository {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       if (data['data'] != null && data['data'] is List<dynamic>) {
         final List<dynamic> jsonList = data['data'];
-        return jsonList
-            .map((json) => Food.fromJson(json as Map<String, dynamic>))
-            .toList();
+        final foods =
+            jsonList
+                .map((json) => Food.fromJson(json as Map<String, dynamic>))
+                .toList();
+
+        final totalCount = data['totalCount'] ?? 0;
+        return GetAllFoodRespone(items: foods, totalCount: totalCount);
       } else {
         throw Exception('No valid "data" list found in response: $data');
       }

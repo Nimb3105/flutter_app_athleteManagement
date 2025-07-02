@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Sport {
 
- String? get id; String get name; String get position;@UtcDateTimeConverter() DateTime? get createdAt;@UtcDateTimeConverter() DateTime? get updatedAt;
+ String? get id; String get name;@UtcDateTimeConverter() DateTime? get createdAt;@UtcDateTimeConverter() DateTime? get updatedAt;
 /// Create a copy of Sport
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $SportCopyWith<Sport> get copyWith => _$SportCopyWithImpl<Sport>(this as Sport, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Sport&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.position, position) || other.position == position)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Sport&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,position,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,name,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Sport(id: $id, name: $name, position: $position, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Sport(id: $id, name: $name, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $SportCopyWith<$Res>  {
   factory $SportCopyWith(Sport value, $Res Function(Sport) _then) = _$SportCopyWithImpl;
 @useResult
 $Res call({
- String? id, String name, String position,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
+ String? id, String name,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
 });
 
 
@@ -66,11 +66,10 @@ class _$SportCopyWithImpl<$Res>
 
 /// Create a copy of Sport
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = null,Object? position = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,position: null == position ? _self.position : position // ignore: cast_nullable_to_non_nullable
 as String,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
@@ -84,12 +83,11 @@ as DateTime?,
 @JsonSerializable()
 
 class _Sport implements Sport {
-  const _Sport({required this.id, required this.name, required this.position, @UtcDateTimeConverter() required this.createdAt, @UtcDateTimeConverter() required this.updatedAt});
+  const _Sport({required this.id, required this.name, @UtcDateTimeConverter() required this.createdAt, @UtcDateTimeConverter() required this.updatedAt});
   factory _Sport.fromJson(Map<String, dynamic> json) => _$SportFromJson(json);
 
 @override final  String? id;
 @override final  String name;
-@override final  String position;
 @override@UtcDateTimeConverter() final  DateTime? createdAt;
 @override@UtcDateTimeConverter() final  DateTime? updatedAt;
 
@@ -106,16 +104,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Sport&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.position, position) || other.position == position)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Sport&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,position,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,name,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Sport(id: $id, name: $name, position: $position, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Sport(id: $id, name: $name, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -126,7 +124,7 @@ abstract mixin class _$SportCopyWith<$Res> implements $SportCopyWith<$Res> {
   factory _$SportCopyWith(_Sport value, $Res Function(_Sport) _then) = __$SportCopyWithImpl;
 @override @useResult
 $Res call({
- String? id, String name, String position,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
+ String? id, String name,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
 });
 
 
@@ -143,11 +141,10 @@ class __$SportCopyWithImpl<$Res>
 
 /// Create a copy of Sport
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? name = null,Object? position = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? name = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_Sport(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,position: null == position ? _self.position : position // ignore: cast_nullable_to_non_nullable
 as String,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,

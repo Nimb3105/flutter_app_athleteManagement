@@ -38,6 +38,7 @@ export 'models/training_schedule/training_schedule.dart';
 export 'models/training_schedule/training_schedule_user.dart';
 export 'models/training_schedule/training_exercise.dart';
 export 'models/converters/converters.dart';
+export 'models/training_schedule/daily_schedule.dart';
 
 //Repositories
 export 'repositories/user/user_repository.dart';
@@ -72,6 +73,7 @@ export 'repositories/training_schedule/training_schedule_repository.dart';
 export 'repositories/training_schedule/training_schedule_user_repository.dart';
 export 'repositories/training_schedule/training_exercise_repository.dart';
 export 'repositories/images/images_repository.dart';
+export 'repositories/training_schedule/daily_schedule_repository.dart';
 
 //Blocs
 export 'blocs/user/user_bloc.dart';
@@ -106,6 +108,7 @@ export 'blocs/training/training_schedule_bloc.dart';
 export 'blocs/training/training_schedule_user_bloc.dart';
 export 'blocs/training/training_exercise_bloc.dart';
 export 'blocs/images/image_bloc.dart';
+export 'blocs/training/daily_schedule_bloc.dart';
 
 //utils
 export 'utils/format_utc_to_local.dart';

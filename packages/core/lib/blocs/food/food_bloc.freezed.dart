@@ -254,76 +254,6 @@ as int,
 /// @nodoc
 
 
-class GetAllFoodsByFoodType implements FoodEvent {
-  const GetAllFoodsByFoodType(this.foodType, {this.page = 1, this.limit = 10});
-  
-
- final  String foodType;
-@JsonKey() final  int page;
-@JsonKey() final  int limit;
-
-/// Create a copy of FoodEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$GetAllFoodsByFoodTypeCopyWith<GetAllFoodsByFoodType> get copyWith => _$GetAllFoodsByFoodTypeCopyWithImpl<GetAllFoodsByFoodType>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetAllFoodsByFoodType&&(identical(other.foodType, foodType) || other.foodType == foodType)&&(identical(other.page, page) || other.page == page)&&(identical(other.limit, limit) || other.limit == limit));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,foodType,page,limit);
-
-@override
-String toString() {
-  return 'FoodEvent.getAllFoodsByFoodType(foodType: $foodType, page: $page, limit: $limit)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $GetAllFoodsByFoodTypeCopyWith<$Res> implements $FoodEventCopyWith<$Res> {
-  factory $GetAllFoodsByFoodTypeCopyWith(GetAllFoodsByFoodType value, $Res Function(GetAllFoodsByFoodType) _then) = _$GetAllFoodsByFoodTypeCopyWithImpl;
-@useResult
-$Res call({
- String foodType, int page, int limit
-});
-
-
-
-
-}
-/// @nodoc
-class _$GetAllFoodsByFoodTypeCopyWithImpl<$Res>
-    implements $GetAllFoodsByFoodTypeCopyWith<$Res> {
-  _$GetAllFoodsByFoodTypeCopyWithImpl(this._self, this._then);
-
-  final GetAllFoodsByFoodType _self;
-  final $Res Function(GetAllFoodsByFoodType) _then;
-
-/// Create a copy of FoodEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? foodType = null,Object? page = null,Object? limit = null,}) {
-  return _then(GetAllFoodsByFoodType(
-null == foodType ? _self.foodType : foodType // ignore: cast_nullable_to_non_nullable
-as String,page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
-as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
-as int,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
 class UpdateFood implements FoodEvent {
   const UpdateFood(this.id, this.food);
   
@@ -458,6 +388,92 @@ class _$DeleteFoodCopyWithImpl<$Res>
   return _then(DeleteFood(
 null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class GetFoodsByFilter implements FoodEvent {
+  const GetFoodsByFilter({this.foodType, this.caloriesMin, this.caloriesMax, this.proteinMin, this.proteinMax, this.carbsMin, this.carbsMax, this.fatMin, this.fatMax, this.page = 1, this.limit = 10});
+  
+
+ final  String? foodType;
+ final  int? caloriesMin;
+ final  int? caloriesMax;
+ final  int? proteinMin;
+ final  int? proteinMax;
+ final  int? carbsMin;
+ final  int? carbsMax;
+ final  int? fatMin;
+ final  int? fatMax;
+@JsonKey() final  int page;
+@JsonKey() final  int limit;
+
+/// Create a copy of FoodEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetFoodsByFilterCopyWith<GetFoodsByFilter> get copyWith => _$GetFoodsByFilterCopyWithImpl<GetFoodsByFilter>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetFoodsByFilter&&(identical(other.foodType, foodType) || other.foodType == foodType)&&(identical(other.caloriesMin, caloriesMin) || other.caloriesMin == caloriesMin)&&(identical(other.caloriesMax, caloriesMax) || other.caloriesMax == caloriesMax)&&(identical(other.proteinMin, proteinMin) || other.proteinMin == proteinMin)&&(identical(other.proteinMax, proteinMax) || other.proteinMax == proteinMax)&&(identical(other.carbsMin, carbsMin) || other.carbsMin == carbsMin)&&(identical(other.carbsMax, carbsMax) || other.carbsMax == carbsMax)&&(identical(other.fatMin, fatMin) || other.fatMin == fatMin)&&(identical(other.fatMax, fatMax) || other.fatMax == fatMax)&&(identical(other.page, page) || other.page == page)&&(identical(other.limit, limit) || other.limit == limit));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,foodType,caloriesMin,caloriesMax,proteinMin,proteinMax,carbsMin,carbsMax,fatMin,fatMax,page,limit);
+
+@override
+String toString() {
+  return 'FoodEvent.getFoodsByFilter(foodType: $foodType, caloriesMin: $caloriesMin, caloriesMax: $caloriesMax, proteinMin: $proteinMin, proteinMax: $proteinMax, carbsMin: $carbsMin, carbsMax: $carbsMax, fatMin: $fatMin, fatMax: $fatMax, page: $page, limit: $limit)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GetFoodsByFilterCopyWith<$Res> implements $FoodEventCopyWith<$Res> {
+  factory $GetFoodsByFilterCopyWith(GetFoodsByFilter value, $Res Function(GetFoodsByFilter) _then) = _$GetFoodsByFilterCopyWithImpl;
+@useResult
+$Res call({
+ String? foodType, int? caloriesMin, int? caloriesMax, int? proteinMin, int? proteinMax, int? carbsMin, int? carbsMax, int? fatMin, int? fatMax, int page, int limit
+});
+
+
+
+
+}
+/// @nodoc
+class _$GetFoodsByFilterCopyWithImpl<$Res>
+    implements $GetFoodsByFilterCopyWith<$Res> {
+  _$GetFoodsByFilterCopyWithImpl(this._self, this._then);
+
+  final GetFoodsByFilter _self;
+  final $Res Function(GetFoodsByFilter) _then;
+
+/// Create a copy of FoodEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? foodType = freezed,Object? caloriesMin = freezed,Object? caloriesMax = freezed,Object? proteinMin = freezed,Object? proteinMax = freezed,Object? carbsMin = freezed,Object? carbsMax = freezed,Object? fatMin = freezed,Object? fatMax = freezed,Object? page = null,Object? limit = null,}) {
+  return _then(GetFoodsByFilter(
+foodType: freezed == foodType ? _self.foodType : foodType // ignore: cast_nullable_to_non_nullable
+as String?,caloriesMin: freezed == caloriesMin ? _self.caloriesMin : caloriesMin // ignore: cast_nullable_to_non_nullable
+as int?,caloriesMax: freezed == caloriesMax ? _self.caloriesMax : caloriesMax // ignore: cast_nullable_to_non_nullable
+as int?,proteinMin: freezed == proteinMin ? _self.proteinMin : proteinMin // ignore: cast_nullable_to_non_nullable
+as int?,proteinMax: freezed == proteinMax ? _self.proteinMax : proteinMax // ignore: cast_nullable_to_non_nullable
+as int?,carbsMin: freezed == carbsMin ? _self.carbsMin : carbsMin // ignore: cast_nullable_to_non_nullable
+as int?,carbsMax: freezed == carbsMax ? _self.carbsMax : carbsMax // ignore: cast_nullable_to_non_nullable
+as int?,fatMin: freezed == fatMin ? _self.fatMin : fatMin // ignore: cast_nullable_to_non_nullable
+as int?,fatMax: freezed == fatMax ? _self.fatMax : fatMax // ignore: cast_nullable_to_non_nullable
+as int?,page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
+as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

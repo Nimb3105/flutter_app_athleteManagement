@@ -1,4 +1,3 @@
-
 import 'package:core/models/converters/converters.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -22,6 +21,8 @@ abstract class TrainingExercise with _$TrainingExercise {
     required double actualWeight,
     required int actualDuration,
     required double actualDistance,
+    required String status,
+    required String sportId,
     @UtcDateTimeConverter() required DateTime? createdAt,
     @UtcDateTimeConverter() required DateTime? updatedAt,
   }) = _TrainingExercise;

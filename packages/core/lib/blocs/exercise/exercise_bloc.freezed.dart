@@ -535,6 +535,72 @@ as String,
 }
 
 /// @nodoc
+
+
+class GetAllExercisesBySportId implements ExerciseEvent {
+  const GetAllExercisesBySportId(this.sportId);
+  
+
+ final  String sportId;
+
+/// Create a copy of ExerciseEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetAllExercisesBySportIdCopyWith<GetAllExercisesBySportId> get copyWith => _$GetAllExercisesBySportIdCopyWithImpl<GetAllExercisesBySportId>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetAllExercisesBySportId&&(identical(other.sportId, sportId) || other.sportId == sportId));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,sportId);
+
+@override
+String toString() {
+  return 'ExerciseEvent.getAllExxerciseBySportId(sportId: $sportId)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GetAllExercisesBySportIdCopyWith<$Res> implements $ExerciseEventCopyWith<$Res> {
+  factory $GetAllExercisesBySportIdCopyWith(GetAllExercisesBySportId value, $Res Function(GetAllExercisesBySportId) _then) = _$GetAllExercisesBySportIdCopyWithImpl;
+@useResult
+$Res call({
+ String sportId
+});
+
+
+
+
+}
+/// @nodoc
+class _$GetAllExercisesBySportIdCopyWithImpl<$Res>
+    implements $GetAllExercisesBySportIdCopyWith<$Res> {
+  _$GetAllExercisesBySportIdCopyWithImpl(this._self, this._then);
+
+  final GetAllExercisesBySportId _self;
+  final $Res Function(GetAllExercisesBySportId) _then;
+
+/// Create a copy of ExerciseEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? sportId = null,}) {
+  return _then(GetAllExercisesBySportId(
+null == sportId ? _self.sportId : sportId // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$ExerciseState {
 
 
@@ -939,6 +1005,78 @@ class _$Exercise_SuccessCopyWithImpl<$Res>
   return _then(Exercise_Success(
 null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class LoadedExercisesBySportId implements ExerciseState {
+  const LoadedExercisesBySportId(final  List<Exercise> exercises): _exercises = exercises;
+  
+
+ final  List<Exercise> _exercises;
+ List<Exercise> get exercises {
+  if (_exercises is EqualUnmodifiableListView) return _exercises;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_exercises);
+}
+
+
+/// Create a copy of ExerciseState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$LoadedExercisesBySportIdCopyWith<LoadedExercisesBySportId> get copyWith => _$LoadedExercisesBySportIdCopyWithImpl<LoadedExercisesBySportId>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedExercisesBySportId&&const DeepCollectionEquality().equals(other._exercises, _exercises));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_exercises));
+
+@override
+String toString() {
+  return 'ExerciseState.loadedExercisesBySportId(exercises: $exercises)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $LoadedExercisesBySportIdCopyWith<$Res> implements $ExerciseStateCopyWith<$Res> {
+  factory $LoadedExercisesBySportIdCopyWith(LoadedExercisesBySportId value, $Res Function(LoadedExercisesBySportId) _then) = _$LoadedExercisesBySportIdCopyWithImpl;
+@useResult
+$Res call({
+ List<Exercise> exercises
+});
+
+
+
+
+}
+/// @nodoc
+class _$LoadedExercisesBySportIdCopyWithImpl<$Res>
+    implements $LoadedExercisesBySportIdCopyWith<$Res> {
+  _$LoadedExercisesBySportIdCopyWithImpl(this._self, this._then);
+
+  final LoadedExercisesBySportId _self;
+  final $Res Function(LoadedExercisesBySportId) _then;
+
+/// Create a copy of ExerciseState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? exercises = null,}) {
+  return _then(LoadedExercisesBySportId(
+null == exercises ? _self._exercises : exercises // ignore: cast_nullable_to_non_nullable
+as List<Exercise>,
   ));
 }
 

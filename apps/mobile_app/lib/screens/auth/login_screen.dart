@@ -1,7 +1,10 @@
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mobile_app/screens/navigationbutton/navigation_menu.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,29 +13,55 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen>
+    with SingleTickerProviderStateMixin {
   final TextEditingController emailController = TextEditingController(
     text: "tai1@gmail.com",
   );
-
   final TextEditingController passwordController = TextEditingController(
     text: "123",
   );
-
   final storage = const FlutterSecureStorage();
   bool isPasswordVisible = false;
   bool rememberMe = false;
+
+  late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
+  late Animation<Offset> _slideAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
+    );
+
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.5),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
+    );
+
+    _animationController.forward();
+  }
 
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    final theme = Theme.of(context);
 
     return BlocProvider(
       create:
@@ -41,274 +70,238 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
       child: Scaffold(
         body: Container(
+          // Nền gradient hiện đại
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [Colors.blue.shade100, Colors.white],
+              colors: [
+                theme.colorScheme.primary.withOpacity(0.1),
+                theme.colorScheme.background,
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
           ),
           child: SafeArea(
             child: Center(
               child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // Logo or App Icon
-                      Container(
-                        height: screenHeight * 0.15,
-                        width: screenHeight * 0.15,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 10,
-                              offset: Offset(0, 5),
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: SlideTransition(
+                    position: _slideAnimation,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Logo
+                        Icon(
+                          Icons.motion_photos_on_rounded,
+                          size: 80,
+                          color: theme.colorScheme.primary,
+                        ),
+                        const SizedBox(height: 24),
+
+                        // Welcome Text
+                        Text(
+                          'Chào mừng trở lại!',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.onBackground,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Đăng nhập để tiếp tục',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            color: theme.colorScheme.onSurface.withOpacity(0.7),
+                          ),
+                        ),
+                        const SizedBox(height: 48),
+
+                        // Email Input
+                        TextFormField(
+                          controller: emailController,
+                          decoration: const InputDecoration(
+                            hintText: 'Nhập email của bạn',
+                            prefixIcon: Icon(Icons.alternate_email_rounded),
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        const SizedBox(height: 20),
+
+                        // Password Input
+                        TextFormField(
+                          controller: passwordController,
+                          decoration: InputDecoration(
+                            hintText: 'Nhập mật khẩu',
+                            prefixIcon: const Icon(Icons.lock_outline_rounded),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                isPasswordVisible
+                                    ? Icons.visibility_rounded
+                                    : Icons.visibility_off_rounded,
+                                color: theme.colorScheme.onSurface.withOpacity(
+                                  0.5,
+                                ),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  isPasswordVisible = !isPasswordVisible;
+                                });
+                              },
+                            ),
+                          ),
+                          obscureText: !isPasswordVisible,
+                        ),
+                        const SizedBox(height: 20),
+
+                        // Remember Me & Forgot Password
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Checkbox(
+                                  value: rememberMe,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      rememberMe = value ?? false;
+                                    });
+                                  },
+                                  activeColor: theme.colorScheme.primary,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                ),
+                                const Text('Ghi nhớ tôi'),
+                              ],
+                            ),
+                            TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                'Quên mật khẩu?',
+                                style: TextStyle(
+                                  color: theme.colorScheme.primary,
+                                ),
+                              ),
                             ),
                           ],
                         ),
-                        child: Center(
-                          child: Icon(
-                            Icons.person,
-                            size: screenHeight * 0.08,
-                            color: Colors.blue,
-                          ),
-                        ),
-                      ),
+                        const SizedBox(height: 24),
 
-                      const SizedBox(height: 24),
-
-                      // Welcome Text
-                      Text(
-                        'Welcome Back',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue.shade800,
-                        ),
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      Text(
-                        'Sign in to continue',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-
-                      const SizedBox(height: 32),
-
-                      // Email Input
-                      TextField(
-                        controller: emailController,
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          prefixIcon: const Icon(Icons.email_outlined),
-                          hintText: 'Enter your email',
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      // Password Input
-                      TextField(
-                        controller: passwordController,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          prefixIcon: const Icon(Icons.lock_outline),
-                          hintText: 'Enter your password',
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              isPasswordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: Colors.grey,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                isPasswordVisible = !isPasswordVisible;
-                              });
-                            },
-                          ),
-                        ),
-                        obscureText: !isPasswordVisible,
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      // Remember Me & Forgot Password
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Checkbox(
-                                value: rememberMe,
-                                onChanged: (value) {
-                                  setState(() {
-                                    rememberMe = value ?? false;
-                                  });
-                                },
-                              ),
-                              const Text('Remember me'),
-                            ],
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              // Forgot password logic
-                            },
-                            child: const Text('Forgot Password?'),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 24),
-
-                      // Login Button
-                      // Login Button
-                      BlocConsumer<UserBloc, UserState>(
-                        listener: (context, state) async {
-                          if (state is LoggedIn) {
-                            // Store the JWT token securely
-                            await storage.write(
-                              key: 'jwt_token',
-                              value: state.token,
-                            );
-
-                            // Trigger fetching user by email
-                            // ignore: use_build_context_synchronously
-                            context.read<UserBloc>().add(
-                              UserEvent.getUserByEmail(
-                                emailController.text.trim(),
-                              ),
-                            );
-                          } else if (state is LoadedUser) {
-                            // Navigate to NavigationMenu with userId
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (context) => NavigationMenu(
-                                      coachId:
-                                          state
-                                              .user
-                                              .id!, // Pass userId from User object
-                                    ),
-                              ),
-                            );
-
-                            // Show success message
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Login successful!'),
-                                backgroundColor: Colors.green,
-                              ),
-                            );
-                          } else if (state is User_Error) {
-                            // Show error message
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(state.message),
-                                backgroundColor: Colors.red,
-                              ),
-                            );
-                          }
-                        },
-                        builder: (context, state) {
-                          return ElevatedButton(
-                            onPressed:
-                                state is User_Loading
-                                    ? null
-                                    : () {
-                                      if (emailController.text.isEmpty ||
-                                          passwordController.text.isEmpty) {
-                                        ScaffoldMessenger.of(
-                                          context,
-                                        ).showSnackBar(
-                                          const SnackBar(
-                                            content: Text(
-                                              'Please fill all fields',
+                        // Login Button
+                        BlocConsumer<UserBloc, UserState>(
+                          listener: (context, state) async {
+                            if (state is LoggedIn) {
+                              await storage.write(
+                                key: 'jwt_token',
+                                value: state.token,
+                              );
+                              context.read<UserBloc>().add(
+                                UserEvent.getUserByEmail(
+                                  emailController.text.trim(),
+                                ),
+                              );
+                            } else if (state is LoadedUser) {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => NavigationMenu(
+                                        coachId: state.user.id!,
+                                        sportId: state.user.sportId,
+                                      ),
+                                ),
+                              );
+                              ScaffoldMessenger.of(context)
+                                ..hideCurrentSnackBar()
+                                ..showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Đăng nhập thành công!'),
+                                    backgroundColor: Colors.green,
+                                    behavior: SnackBarBehavior.floating,
+                                  ),
+                                );
+                            } else if (state is User_Error) {
+                              ScaffoldMessenger.of(context)
+                                ..hideCurrentSnackBar()
+                                ..showSnackBar(
+                                  SnackBar(
+                                    content: Text(state.message),
+                                    backgroundColor: theme.colorScheme.error,
+                                    behavior: SnackBarBehavior.floating,
+                                  ),
+                                );
+                            }
+                          },
+                          builder: (context, state) {
+                            return ElevatedButton(
+                              onPressed:
+                                  state is User_Loading
+                                      ? null
+                                      : () {
+                                        if (emailController.text.isEmpty ||
+                                            passwordController.text.isEmpty) {
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                'Vui lòng điền đầy đủ thông tin',
+                                              ),
+                                              backgroundColor: Colors.orange,
+                                              behavior:
+                                                  SnackBarBehavior.floating,
                                             ),
-                                            backgroundColor: Colors.orange,
+                                          );
+                                          return;
+                                        }
+                                        context.read<UserBloc>().add(
+                                          UserEvent.login(
+                                            emailController.text.trim(),
+                                            passwordController.text.trim(),
                                           ),
                                         );
-                                        return;
-                                      }
-
-                                      // Trigger login event
-                                      context.read<UserBloc>().add(
-                                        UserEvent.login(
-                                          emailController.text.trim(),
-                                          passwordController.text.trim(),
+                                      },
+                              child:
+                                  state is User_Loading
+                                      ? const SizedBox(
+                                        height: 24,
+                                        width: 24,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                          strokeWidth: 3,
                                         ),
-                                      );
-                                    },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                              foregroundColor: Colors.white,
-                              elevation: 3,
-                              minimumSize: const Size(double.infinity, 50),
-                            ),
-                            child:
-                                state is User_Loading
-                                    ? const Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          height: 20,
-                                          width: 20,
-                                          child: CircularProgressIndicator(
-                                            color: Colors.white,
-                                            strokeWidth: 2,
-                                          ),
-                                        ),
-                                        SizedBox(width: 16),
-                                        Text('Logging in...'),
-                                      ],
-                                    )
-                                    : const Text(
-                                      'SIGN IN',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 24),
+                                      )
+                                      : const Text('ĐĂNG NHẬP'),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 32),
 
-                      // Register Option
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Don't have an account? ",
-                            style: TextStyle(color: Colors.grey.shade700),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              // Navigate to registration page
-                            },
-                            child: const Text(
-                              'Register',
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                        // Register Option
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Chưa có tài khoản?"),
+                            TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                'Đăng ký ngay',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: theme.colorScheme.primary,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -7,7 +7,8 @@ part 'exercise_bloc.freezed.dart';
 
 @freezed
 sealed class ExerciseEvent with _$ExerciseEvent {
-  const factory ExerciseEvent.createExercise(Exercise exercise) = CreateExercise;
+  const factory ExerciseEvent.createExercise(Exercise exercise) =
+      CreateExercise;
   const factory ExerciseEvent.getExerciseById(String id) = GetExerciseById;
   const factory ExerciseEvent.getAllExercisesByBodyPart(
     String bodyPart, {
@@ -23,8 +24,11 @@ sealed class ExerciseEvent with _$ExerciseEvent {
     @Default(1) int page,
     @Default(10) int limit,
   }) = GetAllExercises;
-  const factory ExerciseEvent.updateExercise(String id, Exercise exercise) = UpdateExercise;
+  const factory ExerciseEvent.updateExercise(String id, Exercise exercise) =
+      UpdateExercise;
   const factory ExerciseEvent.deleteExercise(String id) = DeleteExercise;
+  const factory ExerciseEvent.getAllExxerciseBySportId(String sportId) =
+      GetAllExercisesBySportId;
 }
 
 @freezed
@@ -32,7 +36,8 @@ sealed class ExerciseState with _$ExerciseState {
   const factory ExerciseState.initial() = Exercise_Initial;
   const factory ExerciseState.loading() = Exercise_Loading;
   const factory ExerciseState.loadingMore() = Exercise_LoadingMore;
-  const factory ExerciseState.loadedExercise(Exercise exercise) = LoadedExercise;
+  const factory ExerciseState.loadedExercise(Exercise exercise) =
+      LoadedExercise;
   const factory ExerciseState.loadedExercises(
     List<Exercise> exercises,
     int currentPage,
@@ -41,6 +46,9 @@ sealed class ExerciseState with _$ExerciseState {
   ) = LoadedExercises;
   const factory ExerciseState.error(String message) = Exercise_Error;
   const factory ExerciseState.success(String message) = Exercise_Success;
+  const factory ExerciseState.loadedExercisesBySportId(
+    List<Exercise> exercises,
+  ) = LoadedExercisesBySportId; // Thêm state mới
 }
 
 class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
@@ -51,7 +59,8 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
   String? _currentSportName; // Lưu target hiện tại
   String? _currentBodyPart; // Lưu body part hiện tại
 
-  ExerciseBloc({required this.exerciseRepository}) : super(const ExerciseState.initial()) {
+  ExerciseBloc({required this.exerciseRepository})
+    : super(const ExerciseState.initial()) {
     on<CreateExercise>(_onCreateExercise);
     on<GetExerciseById>(_onGetExerciseById);
     on<GetAllExercises>(_onGetAllExercises);
@@ -59,12 +68,32 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
     on<DeleteExercise>(_onDeleteExercise);
     on<GetAllExercisesBySportName>(_onGetAllExercisesBySportName);
     on<GetAllExercisesByBodyPart>(_onGetAllExercisesByBodyPart);
+    on<GetAllExercisesBySportId>(_onGetAllExercisesBySportId);
   }
 
-  Future<void> _onCreateExercise(CreateExercise event, Emitter<ExerciseState> emit) async {
+  Future<void> _onGetAllExercisesBySportId(
+    GetAllExercisesBySportId event,
+    Emitter<ExerciseState> emit,
+  ) async {
+    try {
+      final exercises = await exerciseRepository.getAllExercisesBySportId(
+        event.sportId,
+      );
+      emit(ExerciseState.loadedExercisesBySportId(List.from(exercises)));
+    } catch (e) {
+      emit(ExerciseState.error(e.toString()));
+    }
+  }
+
+  Future<void> _onCreateExercise(
+    CreateExercise event,
+    Emitter<ExerciseState> emit,
+  ) async {
     emit(const ExerciseState.loading());
     try {
-      final createdExercise = await exerciseRepository.createExercise(event.exercise);
+      final createdExercise = await exerciseRepository.createExercise(
+        event.exercise,
+      );
       emit(ExerciseState.success('Thêm bài tập thành công'));
       emit(ExerciseState.loadedExercise(createdExercise));
     } catch (e) {
@@ -72,7 +101,10 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
     }
   }
 
-  Future<void> _onGetExerciseById(GetExerciseById event, Emitter<ExerciseState> emit) async {
+  Future<void> _onGetExerciseById(
+    GetExerciseById event,
+    Emitter<ExerciseState> emit,
+  ) async {
     emit(const ExerciseState.loading());
     try {
       final exercise = await exerciseRepository.getExerciseById(event.id);
@@ -127,11 +159,11 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
     Emitter<ExerciseState> emit,
   ) async {
     try {
-      // Nếu target thay đổi hoặc page = 1, xóa danh sách cũ
+      // Nếu sportName thay đổi hoặc page = 1, reset danh sách và trạng thái
       if (event.page == 1 || _currentSportName != event.sportName) {
         _exercises.clear();
         _currentPage = 1;
-        _currentBodyPart = null; // Reset body part
+        _currentBodyPart = null;
         _currentSportName = event.sportName;
         emit(const Exercise_Loading());
       } else {
@@ -144,8 +176,16 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
         limit: event.limit,
       );
 
-      _exercises.addAll(response.items);
-      final hasMore = _exercises.length < response.totalCount;
+      // Lọc bài tập trùng lặp
+      final newExercises =
+          response.items
+              .where((newEx) => !_exercises.any((ex) => ex.id == newEx.id))
+              .toList();
+      _exercises.addAll(newExercises);
+
+      // Kiểm tra hasMore dựa trên dữ liệu trả về
+      final hasMore =
+          response.items.isNotEmpty && _exercises.length < response.totalCount;
 
       emit(
         LoadedExercises(
@@ -156,20 +196,23 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
         ),
       );
 
-      if (hasMore) _currentPage = event.page + 1;
+      // Cập nhật _currentPage bất kể hasMore
+      _currentPage = event.page;
     } catch (e) {
       emit(ExerciseState.error(e.toString()));
     }
   }
 
-  Future<void> _onGetAllExercises(GetAllExercises event, Emitter<ExerciseState> emit) async {
+  Future<void> _onGetAllExercises(
+    GetAllExercises event,
+    Emitter<ExerciseState> emit,
+  ) async {
     try {
-      // Nếu không lọc theo target hoặc page = 1, xóa danh sách cũ
-      if (event.page == 1 || _currentBodyPart != null || _currentSportName != null) {
+      if (event.page == 1) {
         _exercises.clear();
         _currentPage = 1;
-        _currentSportName = null; // Reset sport name
-        _currentBodyPart = null; // Reset body part
+        _currentSportName = null;
+        _currentBodyPart = null;
         emit(const Exercise_Loading());
       } else {
         emit(const Exercise_LoadingMore());
@@ -180,7 +223,8 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
         limit: event.limit,
       );
 
-      _exercises.addAll(response.items);
+      _exercises.addAll(response.items); // Remove duplicate filtering
+
       final hasMore = _exercises.length < response.totalCount;
 
       emit(
@@ -191,24 +235,32 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
           hasMore,
         ),
       );
-
       if (hasMore) _currentPage = event.page + 1;
     } catch (e) {
       emit(ExerciseState.error(e.toString()));
     }
   }
 
-  Future<void> _onUpdateExercise(UpdateExercise event, Emitter<ExerciseState> emit) async {
+  Future<void> _onUpdateExercise(
+    UpdateExercise event,
+    Emitter<ExerciseState> emit,
+  ) async {
     emit(const ExerciseState.loading());
     try {
-      final updatedExercise = await exerciseRepository.updateExercise(event.id, event.exercise);
+      final updatedExercise = await exerciseRepository.updateExercise(
+        event.id,
+        event.exercise,
+      );
       emit(ExerciseState.loadedExercise(updatedExercise));
     } catch (e) {
       emit(ExerciseState.error(e.toString()));
     }
   }
 
-  Future<void> _onDeleteExercise(DeleteExercise event, Emitter<ExerciseState> emit) async {
+  Future<void> _onDeleteExercise(
+    DeleteExercise event,
+    Emitter<ExerciseState> emit,
+  ) async {
     emit(const ExerciseState.loading());
     try {
       await exerciseRepository.deleteExercise(event.id);

@@ -89,9 +89,6 @@
 //                         Map<String, User?> userMap = {};
 //                         Map<String, String?> userErrorMap = {};
 
-//                         // Map to store sport user data by userId
-//                         Map<String, List<SportUser>> sportUserMap = {};
-
 //                         // Map to store sport data and errors by sportId
 //                         Map<String, Sport?> sportMap = {};
 //                         Map<String, String?> sportErrorMap = {};
@@ -111,27 +108,7 @@
 //                         }
 
 //                         // Handle SportUserState
-//                         if (sportUserState is LoadedSportUser) {
-//                           if (!sportUserMap.containsKey(
-//                             sportUserState.sportUser.userId,
-//                           )) {
-//                             sportUserMap[sportUserState.sportUser.userId] = [];
-//                           }
-//                           sportUserMap[sportUserState.sportUser.userId]!.add(
-//                             sportUserState.sportUser,
-//                           );
-//                         } else if (sportUserState is LoadedSportUsers) {
-//                           for (var sportUser in sportUserState.sportUsers) {
-//                             if (!sportUserMap.containsKey(sportUser.userId)) {
-//                               sportUserMap[sportUser.userId] = [];
-//                             }
-//                             sportUserMap[sportUser.userId]!.add(sportUser);
-//                           }
-//                           sportMap.addAll(sportUserState.sports);
-//                         } else if (sportUserState is LoadedMultipleSportUsers) {
-//                           sportUserMap = sportUserState.sportUsers;
-//                           sportMap.addAll(sportUserState.sports);
-//                         }
+                        
 
 //                         // Handle SportState
 //                         if (sportState is LoadedSport) {
@@ -165,7 +142,6 @@
 //                             coachState.hasMore,
 //                             userMap,
 //                             userErrorMap,
-//                             sportUserMap,
 //                             sportMap,
 //                             sportErrorMap,
 //                           );
@@ -199,7 +175,6 @@
 //     bool hasMore,
 //     Map<String, User?> userMap,
 //     Map<String, String?> userErrorMap,
-//     Map<String, List<SportUser>> sportUserMap,
 //     Map<String, Sport?> sportMap,
 //     Map<String, String?> sportErrorMap,
 //   ) {

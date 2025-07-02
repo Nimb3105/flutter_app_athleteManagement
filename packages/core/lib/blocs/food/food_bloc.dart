@@ -1,5 +1,6 @@
 import 'package:core/models/food/food.dart';
 import 'package:core/repositories/food/food_repository.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -13,13 +14,21 @@ sealed class FoodEvent with _$FoodEvent {
     @Default(1) int page,
     @Default(10) int limit,
   }) = GetAllFoods;
-  const factory FoodEvent.getAllFoodsByFoodType(
-    String foodType, {
-    @Default(1) int page,
-    @Default(10) int limit,
-  }) = GetAllFoodsByFoodType;
   const factory FoodEvent.updateFood(String id, Food food) = UpdateFood;
   const factory FoodEvent.deleteFood(String id) = DeleteFood;
+  const factory FoodEvent.getFoodsByFilter({
+    String? foodType,
+    int? caloriesMin,
+    int? caloriesMax,
+    int? proteinMin,
+    int? proteinMax,
+    int? carbsMin,
+    int? carbsMax,
+    int? fatMin,
+    int? fatMax,
+    @Default(1) int page,
+    @Default(10) int limit,
+  }) = GetFoodsByFilter;
 }
 
 @freezed
@@ -43,7 +52,7 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
   // ignore: unused_field
   int _currentPage = 1;
   final List<Food> _foods = [];
-  String? _currentFoodType;
+  String? _currentFilterKey;
 
   FoodBloc({required this.foodRepository}) : super(const FoodState.initial()) {
     on<CreateFood>(_onCreateFood);
@@ -51,7 +60,61 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
     on<GetAllFoods>(_onGetAllFoods);
     on<UpdateFood>(_onUpdateFood);
     on<DeleteFood>(_onDeleteFood);
-    on<GetAllFoodsByFoodType>(_onGetAllFoodsByFoodType);
+    on<GetFoodsByFilter>(_onGetFoodsByFilter);
+  }
+
+  Future<void> _onGetFoodsByFilter(
+    GetFoodsByFilter event,
+    Emitter<FoodState> emit,
+  ) async {
+    try {
+      // Tạo key duy nhất đại diện cho toàn bộ bộ lọc (để reset khi thay đổi)
+      final filterKey = [
+        event.foodType ?? '',
+        event.caloriesMin,
+        event.caloriesMax,
+        event.proteinMin,
+        event.proteinMax,
+        event.carbsMin,
+        event.carbsMax,
+        event.fatMin,
+        event.fatMax,
+      ].join('-');
+
+      // Nếu lọc mới hoặc page đầu tiên → clear
+      if (event.page == 1 || _currentFilterKey != filterKey) {
+        _foods.clear();
+        _currentPage = 1;
+        _currentFilterKey = filterKey;
+        emit(const Food_Loading());
+      } else {
+        emit(const Food_LoadingMore());
+      }
+
+      // Gọi API gộp
+      final response = await foodRepository.getFoodsByFilter(
+        foodType: event.foodType,
+        caloriesMin: event.caloriesMin,
+        caloriesMax: event.caloriesMax,
+        proteinMin: event.proteinMin,
+        proteinMax: event.proteinMax,
+        carbsMin: event.carbsMin,
+        carbsMax: event.carbsMax,
+        fatMin: event.fatMin,
+        fatMax: event.fatMax,
+        page: event.page,
+        limit: event.limit,
+      );
+
+      _foods.addAll(response.items);
+      final hasMore = _foods.length < response.totalCount;
+
+      emit(LoadedFoods(List.from(_foods), event.page, event.limit, hasMore));
+
+      if (hasMore) _currentPage = event.page + 1;
+    } catch (e) {
+      emit(FoodState.error(e.toString()));
+    }
   }
 
   Future<void> _onCreateFood(CreateFood event, Emitter<FoodState> emit) async {
@@ -60,45 +123,6 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
       final createdFood = await foodRepository.createFood(event.food);
       emit(const Food_Success('Tạo món ăn thành công'));
       emit(FoodState.loadedFood(createdFood));
-    } catch (e) {
-      emit(FoodState.error(e.toString()));
-    }
-  }
-
-  Future<void> _onGetAllFoodsByFoodType(
-    GetAllFoodsByFoodType event,
-    Emitter<FoodState> emit,
-  ) async {
-    try {
-      // Nếu target thay đổi hoặc page = 1, xóa danh sách cũ
-      if (event.page == 1 || _currentFoodType != event.foodType) {
-        _foods.clear();
-        _currentPage = 1;
-        _currentFoodType = event.foodType;
-        emit(const Food_Loading());
-      } else {
-        emit(const Food_LoadingMore());
-      }
-
-      final response = await foodRepository.getAllFoodByFoodType(
-        event.foodType,
-        page: event.page,
-        limit: event.limit,
-      );
-
-      _foods.addAll(response.items);
-      final hasMore = _foods.length < response.totalCount;
-
-      emit(
-        LoadedFoods(
-          List.from(_foods),
-          event.page,
-          event.limit,
-          hasMore,
-        ),
-      );
-
-      if (hasMore) _currentPage = event.page + 1;
     } catch (e) {
       emit(FoodState.error(e.toString()));
     }
@@ -121,17 +145,35 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
     GetAllFoods event,
     Emitter<FoodState> emit,
   ) async {
-    emit(const FoodState.loading());
     try {
-      final foods = await foodRepository.getAllFoods(
+      if (event.page == 1 || _currentFilterKey != null) {
+        _foods.clear();
+        _currentPage = 1;
+        _currentFilterKey = null;
+        emit(const Food_Loading());
+      } else {
+        emit(const Food_LoadingMore());
+      }
+      final response = await foodRepository.getAllFoods(
         page: event.page,
         limit: event.limit,
       );
-      // Giả sử API trả về thông tin tổng số món ăn hoặc tổng số trang
-      // Ở đây giả định `hasMore` dựa trên số lượng món ăn trả về
-      final hasMore = foods.length == event.limit;
-      emit(FoodState.loadedFoods(foods, event.page, event.limit, hasMore));
+      _foods.addAll(response.items);
+      final hasMore = _foods.length < response.totalCount;
+      emit(
+        FoodState.loadedFoods(
+          List.from(_foods),
+          event.page,
+          event.limit,
+          hasMore,
+        ),
+      );
+
+      if (hasMore) {
+        _currentPage = event.page + 1;
+      }
     } catch (e) {
+      debugPrint('Error in GetAllFoods: $e');
       emit(FoodState.error(e.toString()));
     }
   }

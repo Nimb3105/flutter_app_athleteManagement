@@ -1,4 +1,8 @@
+import 'package:core/models/exercise/exercise.dart';
+import 'package:core/models/training_schedule/training_exercise.dart';
 import 'package:core/models/training_schedule/training_schedule.dart';
+import 'package:core/repositories/exercise/exercise_repository.dart';
+import 'package:core/repositories/training_schedule/training_exercise_repository.dart';
 import 'package:core/repositories/training_schedule/training_schedule_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -19,6 +23,10 @@ sealed class TrainingScheduleEvent with _$TrainingScheduleEvent {
   ) = UpdateTrainingSchedule;
   const factory TrainingScheduleEvent.deleteTrainingSchedule(String id) =
       DeleteTrainingSchedule;
+  const factory TrainingScheduleEvent.getAllTrainingSchedulesByDailyScheduleId(
+    String dailyScheduleId,
+    String date,
+  ) = GetAllTrainingSchedulesByDailyScheduleId;
 }
 
 @freezed
@@ -35,19 +43,91 @@ sealed class TrainingScheduleState with _$TrainingScheduleState {
       TrainingSchedule_Error;
   const factory TrainingScheduleState.success(String message) =
       TrainingSchedule_Success;
+  const factory TrainingScheduleState.loadedTrainingSchedulesByDailyScheduleId(
+    List<TrainingSchedule> trainingSchedules,
+    Map<String, List<TrainingExercise>>
+    exercisesBySchedule, // Map scheduleId -> List<TrainingExercise>
+    Map<String, Exercise> exerciseDetails, // Map exerciseId -> Exercise
+  ) = LoadedTrainingSchedulesByDailyScheduleId;
 }
 
 class TrainingScheduleBloc
     extends Bloc<TrainingScheduleEvent, TrainingScheduleState> {
   final TrainingScheduleRepository trainingScheduleRepository;
+  final TrainingExerciseRepository trainingExerciseRepository;
+  final ExerciseRepository exerciseRepository;
 
-  TrainingScheduleBloc({required this.trainingScheduleRepository})
-    : super(const TrainingScheduleState.initial()) {
+  TrainingScheduleBloc({
+    required this.trainingScheduleRepository,
+    required this.exerciseRepository,
+    required this.trainingExerciseRepository,
+  }) : super(const TrainingScheduleState.initial()) {
     on<CreateTrainingSchedule>(_onCreateTrainingSchedule);
     on<GetTrainingScheduleById>(_onGetTrainingScheduleById);
     on<GetAllTrainingSchedules>(_onGetAllTrainingSchedules);
     on<UpdateTrainingSchedule>(_onUpdateTrainingSchedule);
     on<DeleteTrainingSchedule>(_onDeleteTrainingSchedule);
+    on<GetAllTrainingSchedulesByDailyScheduleId>(
+      _onGetAllTrainingSchedulesByDailyScheduleId,
+    );
+  }
+
+  Future<void> _onGetAllTrainingSchedulesByDailyScheduleId(
+    GetAllTrainingSchedulesByDailyScheduleId event,
+    Emitter<TrainingScheduleState> emit,
+  ) async {
+    emit(const TrainingScheduleState.loading());
+    try {
+      // 1. Lấy tất cả lịch tập trong ngày
+      final trainingSchedules = await trainingScheduleRepository
+          .getAllTrainingScheduleByDailyScheduleId(
+            event.dailyScheduleId,
+            event.date,
+          );
+
+      if (trainingSchedules.isEmpty) {
+        emit(const LoadedTrainingSchedulesByDailyScheduleId([], {}, {}));
+        return;
+      }
+
+      // 2. Lấy tất cả các bài tập cho các lịch tập một cách song song
+      final exercisesBySchedule = <String, List<TrainingExercise>>{};
+      final exerciseFutures = trainingSchedules.map((schedule) async {
+        if (schedule.id != null) {
+          final exercises = await trainingExerciseRepository
+              .getAllTrainingExerciseByScheduleId(schedule.id!);
+          exercisesBySchedule[schedule.id!] = exercises;
+        }
+      });
+      await Future.wait(exerciseFutures);
+
+      // 3. Thu thập tất cả các ID bài tập duy nhất
+      final allExerciseIds =
+          exercisesBySchedule.values
+              .expand((exerciseList) => exerciseList)
+              .map((trainingExercise) => trainingExercise.exerciseId)
+              .toSet();
+
+      // 4. Lấy chi tiết tất cả bài tập trong một lần
+      final exerciseDetails = <String, Exercise>{};
+      final detailFutures = allExerciseIds.map((id) async {
+        if (!exerciseDetails.containsKey(id)) {
+          final detail = await exerciseRepository.getExerciseById(id);
+          exerciseDetails[id] = detail;
+        }
+      });
+      await Future.wait(detailFutures);
+
+      emit(
+        LoadedTrainingSchedulesByDailyScheduleId(
+          trainingSchedules,
+          exercisesBySchedule,
+          exerciseDetails,
+        ),
+      );
+    } catch (e) {
+      emit(TrainingScheduleState.error(e.toString()));
+    }
   }
 
   Future<void> _onCreateTrainingSchedule(
@@ -56,9 +136,9 @@ class TrainingScheduleBloc
   ) async {
     emit(const TrainingScheduleState.loading());
     try {
-      final createdSchedule = await trainingScheduleRepository
-          .createTrainingSchedule(event.schedule);
-      emit(TrainingScheduleState.loadedTrainingSchedule(createdSchedule));
+      await trainingScheduleRepository.createTrainingSchedule(event.schedule);
+      // emit(TrainingScheduleState.loadedTrainingSchedule(createdSchedule));
+      emit(TrainingScheduleState.success('tạo lịch tập thành công'));
     } catch (e) {
       emit(TrainingScheduleState.error(e.toString()));
     }
@@ -99,9 +179,8 @@ class TrainingScheduleBloc
   ) async {
     emit(const TrainingScheduleState.loading());
     try {
-      final updatedSchedule = await trainingScheduleRepository
-          .updateTrainingSchedule(event.schedule);
-      emit(TrainingScheduleState.loadedTrainingSchedule(updatedSchedule));
+      await trainingScheduleRepository.updateTrainingSchedule(event.schedule);
+      //emit(TrainingScheduleState.loadedTrainingSchedule(updatedSchedule));
       emit(
         const TrainingScheduleState.success(
           'Training schedule updated successfully',

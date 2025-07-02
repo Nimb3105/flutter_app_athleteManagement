@@ -22,6 +22,8 @@ _TrainingExercise _$TrainingExerciseFromJson(Map<String, dynamic> json) =>
       actualWeight: (json['actualWeight'] as num).toDouble(),
       actualDuration: (json['actualDuration'] as num).toInt(),
       actualDistance: (json['actualDistance'] as num).toDouble(),
+      status: json['status'] as String,
+      sportId: json['sportId'] as String,
       createdAt: _$JsonConverterFromJson<String, DateTime>(
         json['createdAt'],
         const UtcDateTimeConverter().fromJson,
@@ -48,6 +50,8 @@ Map<String, dynamic> _$TrainingExerciseToJson(_TrainingExercise instance) =>
       'actualWeight': instance.actualWeight,
       'actualDuration': instance.actualDuration,
       'actualDistance': instance.actualDistance,
+      'status': instance.status,
+      'sportId': instance.sportId,
       'createdAt': _$JsonConverterToJson<String, DateTime>(
         instance.createdAt,
         const UtcDateTimeConverter().toJson,

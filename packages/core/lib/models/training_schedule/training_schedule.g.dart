@@ -20,7 +20,8 @@ _TrainingSchedule _$TrainingScheduleFromJson(Map<String, dynamic> json) =>
       notes: json['notes'] as String,
       createdBy: json['createdBy'] as String,
       progress: (json['progress'] as num?)?.toDouble(),
-      athleteId: json['athleteId'] as String?,
+      dailyScheduleId: json['dailyScheduleId'] as String?,
+      sportId: json['sportId'] as String,
       trainingExercises:
           (json['trainingExercises'] as List<dynamic>?)
               ?.map((e) => TrainingExercise.fromJson(e as Map<String, dynamic>))
@@ -48,7 +49,8 @@ Map<String, dynamic> _$TrainingScheduleToJson(_TrainingSchedule instance) =>
       'notes': instance.notes,
       'createdBy': instance.createdBy,
       'progress': instance.progress,
-      'athleteId': instance.athleteId,
+      'dailyScheduleId': instance.dailyScheduleId,
+      'sportId': instance.sportId,
       'trainingExercises': instance.trainingExercises,
       'createdAt': _$JsonConverterToJson<String, DateTime>(
         instance.createdAt,
