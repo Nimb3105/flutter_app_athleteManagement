@@ -1,18 +1,12 @@
-import 'package:core/models/athlete/athlete.dart';
-import 'package:core/models/coach/coach_athlete.dart';
-import 'package:core/models/sport/sport.dart';
-import 'package:core/models/user/user.dart';
-import 'package:core/repositories/athlete/athlete_repository.dart';
-import 'package:core/repositories/coach/coach_athlete_repository.dart';
-import 'package:core/repositories/sport/sport_repository.dart';
-import 'package:core/repositories/user/user_repository.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:core/core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'coach_athlete_bloc.freezed.dart';
 
 @freezed
 sealed class CoachAthleteEvent with _$CoachAthleteEvent {
+  const factory CoachAthleteEvent.getAllByCoachId(String coachId) =
+      GetAllByCoachId;
   const factory CoachAthleteEvent.createCoachAthlete(
     CoachAthlete coachAthlete,
   ) = CreateCoachAthlete;
@@ -20,36 +14,21 @@ sealed class CoachAthleteEvent with _$CoachAthleteEvent {
       GetCoachAthleteById;
   const factory CoachAthleteEvent.getByAthleteId(String athleteId) =
       GetByAthleteId;
-  const factory CoachAthleteEvent.getAllCoachAthletes({
-    @Default(1) int page,
-    @Default(10) int limit,
-  }) = GetAllCoachAthletes;
   const factory CoachAthleteEvent.updateCoachAthlete(
     String id,
     CoachAthlete coachAthlete,
   ) = UpdateCoachAthlete;
   const factory CoachAthleteEvent.deleteCoachAthlete(String id) =
       DeleteCoachAthlete;
-  const factory CoachAthleteEvent.getAllByCoachId(
-    String coachId, {
-    @Default(1) int page,
-    @Default(10) int limit,
-  }) = GetAllByCoachId;
 }
 
+// ✅ Tối ưu State: Loại bỏ các trường liên quan đến phân trang
 @freezed
 sealed class CoachAthleteState with _$CoachAthleteState {
   const factory CoachAthleteState.initial() = CoachAthlete_Initial;
   const factory CoachAthleteState.loading() = CoachAthlete_Loading;
-  const factory CoachAthleteState.loadingMore() = CoachAthlete_LoadingMore;
-  const factory CoachAthleteState.loadedCoachAthlete(
-    CoachAthlete? coachAthlete,
-  ) = LoadedCoachAthlete;
   const factory CoachAthleteState.loadedCoachAthletes({
     required List<CoachAthlete> coachAthletes,
-    required int currentPage,
-    required int limit,
-    required bool hasMore,
     required Map<String, Athlete> athleteMap,
     required Map<String, User?> userMap,
     required Map<String, Sport> sportMap,
@@ -57,6 +36,9 @@ sealed class CoachAthleteState with _$CoachAthleteState {
   const factory CoachAthleteState.error(String message) = CoachAthlete_Error;
   const factory CoachAthleteState.success(String message) =
       CoachAthlete_Success;
+  const factory CoachAthleteState.loadedCoachAthlete(
+    CoachAthlete? coachAthlete,
+  ) = LoadedCoachAthlete;
 }
 
 class CoachAthleteBloc extends Bloc<CoachAthleteEvent, CoachAthleteState> {
@@ -64,7 +46,6 @@ class CoachAthleteBloc extends Bloc<CoachAthleteEvent, CoachAthleteState> {
   final AthleteRepository athleteRepository;
   final UserRepository userRepository;
   final SportRepository sportRepository;
-  List<CoachAthlete> _allCoachAthletes = [];
 
   CoachAthleteBloc({
     required this.coachAthleteRepository,
@@ -72,15 +53,99 @@ class CoachAthleteBloc extends Bloc<CoachAthleteEvent, CoachAthleteState> {
     required this.userRepository,
     required this.sportRepository,
   }) : super(const CoachAthleteState.initial()) {
+    on<GetAllByCoachId>(_onGetAllByCoachId);
     on<CreateCoachAthlete>(_onCreateCoachAthlete);
     on<GetCoachAthleteById>(_onGetCoachAthleteById);
-    on<GetAllCoachAthletes>(_onGetAllCoachAthletes);
+    on<GetByAthleteId>(_onGetByAthleteId);
     on<UpdateCoachAthlete>(_onUpdateCoachAthlete);
     on<DeleteCoachAthlete>(_onDeleteCoachAthlete);
-    on<GetAllByCoachId>(_onGetAllByCoachId);
-    on<GetByAthleteId>(_onGetByAthleteId);
   }
 
+  // ✅ Tối ưu: Toàn bộ logic được viết lại để tải dữ liệu một lần, song song và hiệu quả
+  Future<void> _onGetAllByCoachId(
+    GetAllByCoachId event,
+    Emitter<CoachAthleteState> emit,
+  ) async {
+    emit(const CoachAthleteState.loading());
+    try {
+      // 1. Lấy toàn bộ danh sách quan hệ từ repository
+      final coachAthletes = await coachAthleteRepository.getAllByCoachId(
+        event.coachId,
+      );
+
+      if (coachAthletes.isEmpty) {
+        emit(
+          const LoadedCoachAthletes(
+            coachAthletes: [],
+            athleteMap: {},
+            userMap: {},
+            sportMap: {},
+          ),
+        );
+        return;
+      }
+
+      // 2. Chuẩn bị để lấy dữ liệu liên quan song song
+      final athleteMap = <String, Athlete>{};
+      final userMap = <String, User?>{};
+      final sportMap = <String, Sport>{};
+      final sportIdsToFetch = <String>{};
+
+      // Tạo một danh sách các Future để thực hiện đồng thời
+      final futures =
+          coachAthletes.map((ca) async {
+            try {
+              final athleteId = ca.athleteId;
+              // Gọi API lấy Athlete và User cùng lúc để tăng tốc độ
+              final results = await Future.wait([
+                athleteRepository.getAthleteByUserId(athleteId),
+                userRepository.getUserById(athleteId),
+              ]);
+
+              final athlete = results[0] as Athlete;
+              final user = results[1] as User?;
+
+              athleteMap[athleteId] = athlete;
+              userMap[athleteId] = user;
+
+              if (user != null) {
+                sportIdsToFetch.add(user.sportId);
+              }
+            } catch (e) {
+              // Ghi lại lỗi nếu cần, nhưng không làm dừng cả quá trình
+            }
+          }).toList();
+
+      // Chờ tất cả các Future lấy thông tin Athlete và User hoàn tất
+      await Future.wait(futures);
+
+      // Sau khi có thông tin User, lấy thông tin các môn thể thao cần thiết
+      final sportFutures = sportIdsToFetch.map((id) async {
+        if (!sportMap.containsKey(id)) {
+          // Chỉ fetch nếu chưa có
+          final sport = await sportRepository.getSportById(id);
+          if (sport != null) {
+            sportMap[id] = sport;
+          }
+        }
+      });
+      await Future.wait(sportFutures);
+
+      // 3. Phát ra trạng thái cuối cùng với toàn bộ dữ liệu
+      emit(
+        LoadedCoachAthletes(
+          coachAthletes: coachAthletes,
+          athleteMap: athleteMap,
+          userMap: userMap,
+          sportMap: sportMap,
+        ),
+      );
+    } catch (e) {
+      emit(CoachAthleteState.error(e.toString()));
+    }
+  }
+
+  // --- Các hàm xử lý Event khác giữ nguyên ---
   Future<void> _onCreateCoachAthlete(
     CreateCoachAthlete event,
     Emitter<CoachAthleteState> emit,
@@ -130,33 +195,6 @@ class CoachAthleteBloc extends Bloc<CoachAthleteEvent, CoachAthleteState> {
     }
   }
 
-  Future<void> _onGetAllCoachAthletes(
-    GetAllCoachAthletes event,
-    Emitter<CoachAthleteState> emit,
-  ) async {
-    emit(const CoachAthleteState.loading());
-    try {
-      final coachAthletes = await coachAthleteRepository.getAllCoachAthletes(
-        page: event.page,
-        limit: event.limit,
-      );
-      final hasMore = coachAthletes.length == event.limit;
-      emit(
-        CoachAthleteState.loadedCoachAthletes(
-          coachAthletes: coachAthletes,
-          currentPage: event.page,
-          limit: event.limit,
-          hasMore: hasMore,
-          athleteMap: const {},
-          userMap: const {},
-          sportMap: const {},
-        ),
-      );
-    } catch (e) {
-      emit(CoachAthleteState.error(e.toString()));
-    }
-  }
-
   Future<void> _onUpdateCoachAthlete(
     UpdateCoachAthlete event,
     Emitter<CoachAthleteState> emit,
@@ -181,94 +219,6 @@ class CoachAthleteBloc extends Bloc<CoachAthleteEvent, CoachAthleteState> {
       emit(
         const CoachAthleteState.success(
           'Xóa mối quan hệ huấn luyện viên-vận động viên thành công',
-        ),
-      );
-    } catch (e) {
-      emit(CoachAthleteState.error(e.toString()));
-    }
-  }
-
-  Future<void> _onGetAllByCoachId(
-    GetAllByCoachId event,
-    Emitter<CoachAthleteState> emit,
-  ) async {
-    if (event.page == 1) {
-      _allCoachAthletes = []; // Clear old list when loading first page
-      emit(const CoachAthleteState.loading());
-    } else {
-      emit(const CoachAthleteState.loadingMore()); // Loading more state
-    }
-    try {
-      // Fetch CoachAthlete list
-      final result = await coachAthleteRepository.getAllByCoachId(
-        event.coachId,
-        page: event.page,
-        limit: event.limit,
-      );
-      final coachAthletes =
-          result['coachAthletes'] as List<CoachAthlete>? ?? [];
-      _allCoachAthletes.addAll(coachAthletes); // Append new list
-      final hasMore = result['hasMore'] as bool? ?? false;
-
-      // Initialize maps for related data
-      final Map<String, Athlete> athleteMap = {};
-      final Map<String, User?> userMap = {};
-      final Map<String, Sport> sportMap = {};
-
-      // Fetch related data in parallel
-      final futures = <Future>[];
-      for (var coachAthlete in _allCoachAthletes) {
-        final athleteId = coachAthlete.athleteId;
-
-        // Fetch Athlete
-        futures.add(
-          athleteRepository
-              .getAthleteByUserId(athleteId)
-              .then(
-                (athlete) => athleteMap[athleteId] = athlete,
-                onError:
-                    // ignore: avoid_print
-                    (e) => print('Error loading Athlete for $athleteId: $e'),
-              ),
-        );
-
-        // Fetch User and Sport
-        futures.add(
-          userRepository
-              .getUserById(athleteId)
-              .then(
-                (user) async {
-                  userMap[athleteId] = user;
-                  if (!sportMap.containsKey(user.sportId)) {
-                    try {
-                      final sport = await sportRepository.getSportById(
-                        user.sportId,
-                      );
-                      sportMap[user.sportId] = sport!;
-                    } catch (e) {
-                      // Handle error silently
-                    }
-                  }
-                },
-                onError: (e) {
-                  userMap[athleteId] = null;
-                },
-              ),
-        );
-      }
-
-      // Wait for all requests to complete
-      await Future.wait(futures);
-
-      emit(
-        CoachAthleteState.loadedCoachAthletes(
-          coachAthletes: List.from(_allCoachAthletes), // Copy list
-          currentPage: event.page,
-          limit: event.limit,
-          hasMore: hasMore,
-          athleteMap: athleteMap,
-          userMap: userMap,
-          sportMap: sportMap,
         ),
       );
     } catch (e) {

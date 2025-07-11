@@ -1,3 +1,5 @@
+// lib/screens/app/coach/exercises/exercise_create_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -41,6 +43,16 @@ class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
   final List<String> unitTypeOptions = ['Thời gian', 'Hiệp'];
 
   @override
+  void dispose() {
+    nameController.dispose();
+    targetController.dispose();
+    secondaryMusclesController.dispose();
+    instructionsController.dispose();
+    gifUrlController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -49,23 +61,29 @@ class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
           style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
         ),
       ),
+      // BlocListener sẽ xử lý các tác vụ một lần như hiển thị SnackBar và điều hướng
       body: BlocListener<ExerciseBloc, ExerciseState>(
         listener: (context, state) {
           if (state is Exercise_Success) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: Colors.green,
-              ),
-            );
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                  backgroundColor: Colors.green,
+                ),
+              );
+            // Tự động quay lại màn hình trước đó khi thành công
             Navigator.pop(context);
           } else if (state is Exercise_Error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Lỗi: ${state.message}'),
-                backgroundColor: Colors.red,
-              ),
-            );
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Text('Lỗi: ${state.message}'),
+                  backgroundColor: Colors.red,
+                ),
+              );
           }
         },
         child: Form(
@@ -127,9 +145,25 @@ class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
                 validator: _validateNonEmpty,
               ),
               const SizedBox(height: 32),
-              ElevatedButton(
-                onPressed: _createExercise,
-                child: const Text('TẠO BÀI TẬP'),
+              // BlocBuilder sẽ xây dựng lại nút bấm dựa trên trạng thái
+              BlocBuilder<ExerciseBloc, ExerciseState>(
+                builder: (context, state) {
+                  final isLoading = state is Exercise_Loading;
+                  return ElevatedButton(
+                    onPressed: isLoading ? null : _createExercise,
+                    child:
+                        isLoading
+                            ? const SizedBox(
+                              height: 24,
+                              width: 24,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 3,
+                              ),
+                            )
+                            : const Text('TẠO BÀI TẬP'),
+                  );
+                },
               ),
             ],
           ),
@@ -139,7 +173,7 @@ class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
   }
 
   String? _validateNonEmpty(String? value) {
-    if (value == null || value.isEmpty) {
+    if (value == null || value.trim().isEmpty) {
       return 'Vui lòng không để trống trường này';
     }
     return null;
@@ -179,30 +213,38 @@ class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
   }
 
   void _createExercise() {
-    if (formKey.currentState?.validate() ?? false) {
-      final exercise = Exercise(
-        id: null,
-        name: nameController.text,
-        bodyPart: selectedBodyPart!,
-        target: targetController.text,
-        secondaryMuscles:
-            secondaryMusclesController.text
-                .split(',')
-                .map((e) => e.trim())
-                .toList(),
-        instructions:
-            instructionsController.text
-                .split(',')
-                .map((e) => e.trim())
-                .toList(),
-        equipment: selectedEquipment!,
-        gifUrl: gifUrlController.text,
-        sportId: widget.sportId,
-        unitType: selectedUnitType!,
-        createdAt: DateTime.now().toUtc(),
-        updatedAt: DateTime.now().toUtc(),
-      );
-      context.read<ExerciseBloc>().add(CreateExercise(exercise));
+    // Kiểm tra tính hợp lệ của form
+    if (!(formKey.currentState?.validate() ?? false)) {
+      return;
     }
+
+    // Tạo đối tượng Exercise từ dữ liệu người dùng
+    final exercise = Exercise(
+      id: null,
+      name: nameController.text.trim(),
+      bodyPart: selectedBodyPart!,
+      target: targetController.text.trim(),
+      secondaryMuscles:
+          secondaryMusclesController.text
+              .split(',')
+              .map((e) => e.trim())
+              .where((e) => e.isNotEmpty) // Loại bỏ các chuỗi rỗng
+              .toList(),
+      instructions:
+          instructionsController.text
+              .split(',')
+              .map((e) => e.trim())
+              .where((e) => e.isNotEmpty) // Loại bỏ các chuỗi rỗng
+              .toList(),
+      equipment: selectedEquipment!,
+      gifUrl: gifUrlController.text.trim(),
+      sportId: widget.sportId,
+      unitType: selectedUnitType!,
+      createdAt: DateTime.now(), // Không cần .toUtc() vì converter sẽ xử lý
+      updatedAt: DateTime.now(),
+    );
+
+    // Thêm sự kiện CreateExercise vào BLoC
+    context.read<ExerciseBloc>().add(CreateExercise(exercise));
   }
 }

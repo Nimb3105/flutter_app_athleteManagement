@@ -54,12 +54,7 @@ class CoachHomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        const CircleAvatar(
-          radius: 30,
-          // backgroundImage: NetworkImage(
-          //   'https://placehold.co/100x100/E2E8F0/475569?text=AV',
-          // ),
-        ),
+        const CircleAvatar(radius: 30),
       ],
     );
   }

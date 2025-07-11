@@ -1,3 +1,5 @@
+// lib/screens/app/coach/exercises/exercise_list_screen.dart
+
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
@@ -8,88 +10,102 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
-class ExerciseListScreen extends StatelessWidget {
+class ExerciseListScreen extends StatefulWidget {
   final String sportId;
 
   const ExerciseListScreen({required this.sportId, super.key});
 
   @override
+  State<ExerciseListScreen> createState() => _ExerciseListScreenState();
+}
+
+class _ExerciseListScreenState extends State<ExerciseListScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Khi màn hình được tạo, gọi sự kiện để tải danh sách bài tập.
+    // Bloc đã được cung cấp từ NavigationMenu.
+    context.read<ExerciseBloc>().add(GetAllExercisesBySportId(widget.sportId));
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create:
-          (context) =>
-              ExerciseBloc(exerciseRepository: RepositoryProvider.of(context))
-                ..add(GetAllExercisesBySportId(sportId)),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Bài Tập',
-            style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
-          ),
-          centerTitle: false,
-          actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.filter_list)),
-          ],
+    // Không cần BlocProvider ở đây nữa.
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Bài Tập',
+          style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
         ),
-        body: BlocConsumer<ExerciseBloc, ExerciseState>(
-          listener: (context, state) {
-            if (state is Exercise_Success) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: Colors.green,
-                ),
-              );
-              context.read<ExerciseBloc>().add(
-                GetAllExercisesBySportId(sportId),
-              );
-            } else if (state is Exercise_Error) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Lỗi: ${state.message}'),
-                  backgroundColor: Colors.red,
-                ),
-              );
-            }
-          },
-          builder: (context, state) {
-            if (state is Exercise_Loading) {
-              return _buildLoadingShimmer();
-            } else if (state is LoadedExercisesBySportId) {
-              if (state.exercises.isEmpty) {
-                return _buildEmptyState(context);
-              }
-              return _buildExerciseList(context, state.exercises);
-            } else if (state is Exercise_Error) {
-              return Center(child: Text('Lỗi: ${state.message}'));
-            }
-            return _buildEmptyState(context);
-          },
-        ),
-        floatingActionButton: Builder(
-          builder: (innerContext) {
-            return FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                  innerContext,
-                  MaterialPageRoute(
-                    builder:
-                        (context) => BlocProvider.value(
-                          value: BlocProvider.of<ExerciseBloc>(innerContext),
-                          child: ExerciseCreateScreen(sportId: sportId),
-                        ),
-                  ),
-                );
-              },
-              child: const Icon(Icons.add),
+        centerTitle: false,
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.filter_list)),
+        ],
+      ),
+      body: BlocConsumer<ExerciseBloc, ExerciseState>(
+        listener: (context, state) {
+          if (state is Exercise_Success) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.green,
+              ),
             );
-          },
-        ),
+            // Tải lại danh sách sau khi có hành động thành công
+            context.read<ExerciseBloc>().add(
+              GetAllExercisesBySportId(widget.sportId),
+            );
+          } else if (state is Exercise_Error) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Lỗi: ${state.message}'),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
+          if (state is Exercise_Loading) {
+            return _buildLoadingShimmer();
+          } else if (state is LoadedExercisesBySportId ||
+              (state is Exercise_Loading)) {
+            final exercises = (state as dynamic).exercises;
+            if (exercises.isEmpty) {
+              return _buildEmptyState(context);
+            }
+            return _buildExerciseList(context, exercises);
+          } else if (state is Exercise_Error) {
+            return Center(child: Text('Lỗi: ${state.message}'));
+          }
+          // Trạng thái mặc định hoặc không có bài tập
+          return _buildEmptyState(context);
+        },
+      ),
+      floatingActionButton: Builder(
+        builder: (innerContext) {
+          return FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                innerContext,
+                MaterialPageRoute(
+                  builder:
+                      (_) => BlocProvider.value(
+                        // Chia sẻ bloc hiện tại cho màn hình tạo mới
+                        value: BlocProvider.of<ExerciseBloc>(innerContext),
+                        child: ExerciseCreateScreen(sportId: widget.sportId),
+                      ),
+                ),
+              );
+            },
+            child: const Icon(Icons.add),
+          );
+        },
       ),
     );
   }
 
+  // ... các hàm _build còn lại không thay đổi ...
   Widget _buildLoadingShimmer() {
     return ListView.builder(
       padding: const EdgeInsets.all(8),

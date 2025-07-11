@@ -1,60 +1,27 @@
+// lib/screens/app/coach/athleteFromCoach/athlete_detail.dart
+
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
 import 'package:mobile_app/screens/app/coach/daily_schedule/daily_schedule_list_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer/shimmer.dart';
 
-class AthleteDetail extends StatelessWidget {
+class AthleteDetail extends StatefulWidget {
   final Athlete athlete;
-  final String userId;
+  final String userId; // Đây là coachId
   final String? sportId;
 
   const AthleteDetail({
     super.key,
     required this.athlete,
     required this.userId,
-    required this.sportId,
+    this.sportId,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create:
-              (context) =>
-                  UserBloc(userRepository: RepositoryProvider.of(context))
-                    ..add(GetUserById(athlete.userId)),
-        ),
-        BlocProvider(
-          create:
-              (context) =>
-                  SportBloc(sportRepository: RepositoryProvider.of(context))
-                    ..add(const GetAllSports()),
-        ),
-      ],
-      child: Scaffold(
-        body: BlocBuilder<UserBloc, UserState>(
-          builder: (context, userState) {
-            if (userState is User_Loading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (userState is LoadedMultipleUsers) {
-              return AthleteDetailView(
-                athlete: athlete,
-                user: userState.users[athlete.userId]!,
-                coachId: userId,
-                sportId: sportId,
-              );
-            } else if (userState is User_Error) {
-              return Center(child: Text('Lỗi: ${userState.message}'));
-            }
-            return const Center(child: Text('Đang khởi tạo...'));
-          },
-        ),
-      ),
-    );
-  }
+  State<AthleteDetail> createState() => _AthleteDetailState();
 }
 
 class AthleteDetailView extends StatelessWidget {
@@ -161,10 +128,7 @@ class AthleteDetailView extends StatelessWidget {
                     ),
                     _buildDetailItem(
                       'Tuổi',
-                      // ignore: unnecessary_null_comparison
-                      user.dateOfBirth != null
-                          ? '${DateTime.now().year - user.dateOfBirth.year} tuổi'
-                          : 'Chưa cập nhật',
+                      '${DateTime.now().year - user.dateOfBirth.year} tuổi',
                       Icons.cake_outlined,
                       isLast: true,
                     ),
@@ -284,22 +248,13 @@ class AthleteDetailView extends StatelessWidget {
       builder: (context, sportState) {
         if (sportState is Sport_Loading) {
           return const Center(child: CircularProgressIndicator());
-        } else if (sportState is LoadedSports) {
-          final sport = sportState.sports.firstWhere(
-            (s) => s.id == user.sportId,
-            orElse:
-                () => Sport(
-                  id: '',
-                  name: 'Chưa cập nhật',
-                  createdAt: null,
-                  updatedAt: null,
-                ),
-          );
+        } else if (sportState is LoadedSport) {
+          final sportName = sportState.sport?.name ?? 'Chưa cập nhật';
           return _buildInfoCard(
             children: [
               _buildDetailItem(
                 'Môn thi đấu',
-                sport.name,
+                sportName,
                 Icons.emoji_events_outlined,
                 isLast: true,
               ),
@@ -330,7 +285,7 @@ class AthleteDetailView extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder:
-                    (context) => DailyScheduleListScreen(
+                    (_) => DailyScheduleListScreen(
                       createdBy: coachId,
                       userId: athlete.userId,
                       sportId: sportId,
@@ -347,6 +302,120 @@ class AthleteDetailView extends StatelessWidget {
         ),
         const SizedBox(height: 12),
       ],
+    );
+  }
+}
+
+
+class _AthleteDetailState extends State<AthleteDetail> {
+  @override
+  void initState() {
+    super.initState();
+    // ✅ Gọi các sự kiện để tải dữ liệu cần thiết cho màn hình này
+    context.read<UserBloc>().add(GetUserById(widget.athlete.userId));
+    if (widget.sportId != null) {
+      context.read<SportBloc>().add(SportEvent.getSportById(widget.sportId!));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, userState) {
+        if (userState is User_Initial || userState is User_Loading) {
+            return const _AthleteDetailPlaceholder(); // ✅ Hiển thị placeholder khi đang tải
+        }
+        
+        if (userState is LoadedMultipleUsers) {
+          final user = userState.users[widget.athlete.userId];
+          if (user != null) {
+            return AthleteDetailView(
+              athlete: widget.athlete,
+              user: user,
+              coachId: widget.userId,
+              sportId: widget.sportId,
+            );
+          }
+        }
+        
+        if (userState is User_Error) {
+          return Scaffold(appBar: AppBar(), body: Center(child: Text('Lỗi: ${userState.message}')));
+        }
+        
+        // Trạng thái dự phòng
+        return const _AthleteDetailPlaceholder();
+      },
+    );
+  }
+}
+// ✅ TỐI ƯU HÓA: Widget placeholder cho toàn bộ màn hình chi tiết
+class _AthleteDetailPlaceholder extends StatelessWidget {
+  const _AthleteDetailPlaceholder();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Scaffold(
+      body: Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              expandedHeight: 250.0,
+              pinned: true,
+              backgroundColor: theme.colorScheme.primary,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Container(color: Colors.white),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildPlaceholderRow(width: 200),
+                    const SizedBox(height: 16),
+                    _buildPlaceholderCard(itemCount: 4),
+                    const SizedBox(height: 24),
+                    _buildPlaceholderRow(width: 220),
+                    const SizedBox(height: 16),
+                    _buildPlaceholderCard(itemCount: 2),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPlaceholderRow({double width = 100}) {
+    return Container(
+      width: width,
+      height: 20.0,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+      ),
+    );
+  }
+
+  Widget _buildPlaceholderCard({required int itemCount}) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        children: List.generate(itemCount, (index) => Padding(
+          padding: EdgeInsets.only(bottom: index == itemCount - 1 ? 0 : 16.0),
+          child: _buildPlaceholderRow(width: double.infinity),
+        )),
+      ),
     );
   }
 }

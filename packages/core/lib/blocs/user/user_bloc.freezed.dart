@@ -276,6 +276,44 @@ as String,
 /// @nodoc
 
 
+class Logout with DiagnosticableTreeMixin implements UserEvent {
+  const Logout();
+  
+
+
+
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserEvent.logout'))
+    ;
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Logout);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'UserEvent.logout()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
 class GetAllUsers with DiagnosticableTreeMixin implements UserEvent {
   const GetAllUsers({this.page = 1, this.limit = 10});
   
@@ -643,6 +681,82 @@ class _$GetAllUserCoachBySportIdCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? sportId = null,Object? page = null,Object? limit = null,}) {
   return _then(GetAllUserCoachBySportId(
 null == sportId ? _self.sportId : sportId // ignore: cast_nullable_to_non_nullable
+as String,page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
+as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class GetUsersByRoleWithPagination with DiagnosticableTreeMixin implements UserEvent {
+  const GetUsersByRoleWithPagination({required this.role, this.page = 1, this.limit = 10});
+  
+
+ final  String role;
+@JsonKey() final  int page;
+@JsonKey() final  int limit;
+
+/// Create a copy of UserEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetUsersByRoleWithPaginationCopyWith<GetUsersByRoleWithPagination> get copyWith => _$GetUsersByRoleWithPaginationCopyWithImpl<GetUsersByRoleWithPagination>(this, _$identity);
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserEvent.getUsersByRoleWithPagination'))
+    ..add(DiagnosticsProperty('role', role))..add(DiagnosticsProperty('page', page))..add(DiagnosticsProperty('limit', limit));
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetUsersByRoleWithPagination&&(identical(other.role, role) || other.role == role)&&(identical(other.page, page) || other.page == page)&&(identical(other.limit, limit) || other.limit == limit));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,role,page,limit);
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'UserEvent.getUsersByRoleWithPagination(role: $role, page: $page, limit: $limit)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GetUsersByRoleWithPaginationCopyWith<$Res> implements $UserEventCopyWith<$Res> {
+  factory $GetUsersByRoleWithPaginationCopyWith(GetUsersByRoleWithPagination value, $Res Function(GetUsersByRoleWithPagination) _then) = _$GetUsersByRoleWithPaginationCopyWithImpl;
+@useResult
+$Res call({
+ String role, int page, int limit
+});
+
+
+
+
+}
+/// @nodoc
+class _$GetUsersByRoleWithPaginationCopyWithImpl<$Res>
+    implements $GetUsersByRoleWithPaginationCopyWith<$Res> {
+  _$GetUsersByRoleWithPaginationCopyWithImpl(this._self, this._then);
+
+  final GetUsersByRoleWithPagination _self;
+  final $Res Function(GetUsersByRoleWithPagination) _then;
+
+/// Create a copy of UserEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? role = null,Object? page = null,Object? limit = null,}) {
+  return _then(GetUsersByRoleWithPagination(
+role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
 as String,page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
 as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
 as int,
@@ -1229,6 +1343,89 @@ as Map<String, String>,
 }
 
 
+}
+
+/// @nodoc
+
+
+class LoginSuccess with DiagnosticableTreeMixin implements UserState {
+  const LoginSuccess({required this.user, required this.token});
+  
+
+ final  User user;
+ final  String token;
+
+/// Create a copy of UserState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$LoginSuccessCopyWith<LoginSuccess> get copyWith => _$LoginSuccessCopyWithImpl<LoginSuccess>(this, _$identity);
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserState.loginSuccess'))
+    ..add(DiagnosticsProperty('user', user))..add(DiagnosticsProperty('token', token));
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginSuccess&&(identical(other.user, user) || other.user == user)&&(identical(other.token, token) || other.token == token));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,user,token);
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'UserState.loginSuccess(user: $user, token: $token)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $LoginSuccessCopyWith<$Res> implements $UserStateCopyWith<$Res> {
+  factory $LoginSuccessCopyWith(LoginSuccess value, $Res Function(LoginSuccess) _then) = _$LoginSuccessCopyWithImpl;
+@useResult
+$Res call({
+ User user, String token
+});
+
+
+$UserCopyWith<$Res> get user;
+
+}
+/// @nodoc
+class _$LoginSuccessCopyWithImpl<$Res>
+    implements $LoginSuccessCopyWith<$Res> {
+  _$LoginSuccessCopyWithImpl(this._self, this._then);
+
+  final LoginSuccess _self;
+  final $Res Function(LoginSuccess) _then;
+
+/// Create a copy of UserState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? user = null,Object? token = null,}) {
+  return _then(LoginSuccess(
+user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as User,token: null == token ? _self.token : token // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+/// Create a copy of UserState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$UserCopyWith<$Res> get user {
+  
+  return $UserCopyWith<$Res>(_self.user, (value) {
+    return _then(_self.copyWith(user: value));
+  });
+}
 }
 
 // dart format on

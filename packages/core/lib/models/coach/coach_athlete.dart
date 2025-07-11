@@ -10,8 +10,8 @@ abstract class CoachAthlete with _$CoachAthlete {
     required String? id,
     required String coachId,
     required String athleteId,
-    @UtcDateTimeConverter() required DateTime createdAt,
-    @UtcDateTimeConverter() required DateTime updatedAt,
+    @UtcDateTimeConverter() required DateTime? createdAt,
+    @UtcDateTimeConverter() required DateTime? updatedAt,
   }) = _CoachAthlete;
 
   factory CoachAthlete.fromJson(Map<String, dynamic> json) =>

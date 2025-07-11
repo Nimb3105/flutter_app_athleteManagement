@@ -29,6 +29,7 @@ class AddTrainingScheduleScreen extends StatefulWidget {
 
 class _AddTrainingScheduleScreenState extends State<AddTrainingScheduleScreen> {
   final _formKey = GlobalKey<FormState>();
+
   final _typeController = TextEditingController();
   final _locationController = TextEditingController();
   final _notesController = TextEditingController();
@@ -219,14 +220,13 @@ class _AddTrainingScheduleScreenState extends State<AddTrainingScheduleScreen> {
   void _submit() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-
       for (int i = 0; i < _trainingExercises.length; i++) {
         _trainingExercises[i] = _trainingExercises[i].copyWith(order: i + 1);
       }
 
-      final date = widget.latestEndTime;
-      final startDateTime = DateTime(
-        date!.year,
+      final date = widget.latestEndTime ?? widget.date.toLocal();
+    final startDateTime = DateTime(
+        date.year,
         date.month,
         date.day,
         _startTime.hour,
@@ -257,7 +257,6 @@ class _AddTrainingScheduleScreenState extends State<AddTrainingScheduleScreen> {
         createdAt: DateTime.now().toUtc(),
         updatedAt: DateTime.now().toUtc(),
       );
-
       context.read<TrainingScheduleBloc>().add(
         CreateTrainingSchedule(newSchedule),
       );
@@ -284,8 +283,10 @@ class _AddTrainingScheduleScreenState extends State<AddTrainingScheduleScreen> {
         },
         child: Padding(
           padding: const EdgeInsets.all(24.0),
+
           child: Form(
             key: _formKey,
+
             child: ListView(
               children: [
                 _buildSectionTitle('Thông tin buổi tập'),
@@ -330,6 +331,7 @@ class _AddTrainingScheduleScreenState extends State<AddTrainingScheduleScreen> {
                 const SizedBox(height: 24),
                 _buildExerciseListSection(),
                 const SizedBox(height: 32),
+
                 ElevatedButton(
                   onPressed: _submit,
                   child: const Text('TẠO BUỔI TẬP'),

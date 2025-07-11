@@ -18,8 +18,8 @@ abstract class User with _$User {
     @UtcDateTimeConverter() required DateTime dateOfBirth,
     required String role,
     required String status,
-    @UtcDateTimeConverter() required DateTime createdAt,
-    @UtcDateTimeConverter() required DateTime updatedAt,
+    @UtcDateTimeConverter() required DateTime? createdAt,
+    @UtcDateTimeConverter() required DateTime? updatedAt,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

@@ -122,7 +122,10 @@ class AthleteBloc extends Bloc<AthleteEvent, AthleteState> {
         event.id,
         event.athlete,
       );
+
+      // ✅ THAY ĐỔI: Phát ra trạng thái loadedAthlete với dữ liệu mới
       emit(AthleteState.loadedAthlete(updatedAthlete));
+      emit(const AthleteState.success('Athlete update successfully'));
     } catch (e) {
       emit(AthleteState.error(e.toString()));
     }

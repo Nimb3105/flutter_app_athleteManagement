@@ -7,65 +7,6 @@ class CoachAthleteRepository {
 
   CoachAthleteRepository({required this.baseUrl});
 
-  // Create a new coach-athlete relationship
-  Future<CoachAthlete> createCoachAthlete(CoachAthlete coachAthlete) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/coach-athletes'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(coachAthlete.toJson()),
-    );
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      final data = jsonDecode(response.body) as Map<String, dynamic>;
-      if (data['data'] != null && data['data'] is Map<String, dynamic>) {
-        return CoachAthlete.fromJson(data['data'] as Map<String, dynamic>);
-      } else {
-        throw Exception('No valid "data" object found in response: $data');
-      }
-    } else {
-      throw Exception('Failed to create coach-athlete: ${response.statusCode}');
-    }
-  }
-
-  // Get coach-athlete by ID
-  Future<CoachAthlete> getCoachAthleteById(String id) async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/coach-athletes/$id'),
-      headers: {'Content-Type': 'application/json'},
-    );
-
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body) as Map<String, dynamic>;
-      if (data['data'] != null && data['data'] is Map<String, dynamic>) {
-        return CoachAthlete.fromJson(data['data'] as Map<String, dynamic>);
-      } else {
-        throw Exception('No valid "data" object found in response: $data');
-      }
-    } else {
-      throw Exception('Failed to get coach-athlete: ${response.statusCode}');
-    }
-  }
-
-  Future<CoachAthlete?> getByAthleteId(String athleteId) async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/coach-athletes/athlete/$athleteId'),
-      headers: {'Content-Type': 'application/json'},
-    );
-
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body) as Map<String, dynamic>;
-      if (data['data'] != null && data['data'] is Map<String, dynamic>) {
-        return CoachAthlete.fromJson(data['data'] as Map<String, dynamic>);
-      }
-      return null;
-    } else {
-      throw Exception(
-        'Failed to get coach-athlete by user ID: ${response.statusCode}',
-      );
-    }
-  }
-
-  // Get all coach-athlete relationships
   Future<List<CoachAthlete>> getAllCoachAthletes({
     int page = 1,
     int limit = 10,
@@ -90,8 +31,102 @@ class CoachAthleteRepository {
     }
   }
 
-  // Update coach-athlete
-  Future<CoachAthlete> updateCoachAthlete(
+  /// ✅ Tối ưu: Phương thức này giờ sẽ tự động tải TẤT CẢ vận động viên.
+  /// Logic phân trang được xử lý nội bộ và ẩn đi khỏi BLoC.
+  Future<List<CoachAthlete>> getAllByCoachId(String coachId) async {
+    final List<CoachAthlete> allItems = [];
+    int currentPage = 1;
+    bool hasMorePages = true;
+
+    while (hasMorePages) {
+      // Tăng giới hạn (limit) để giảm số lần gọi API nếu có thể
+      final response = await http.get(
+        Uri.parse('$baseUrl/coach-athletes/user/$coachId?page=$currentPage&limit=50'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode != 200) {
+        throw Exception('Lỗi tải danh sách VĐV: ${response.statusCode}');
+      }
+
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      final List<dynamic> jsonList = data['data'] as List<dynamic>? ?? [];
+      
+      final pageItems = jsonList
+          .map((json) => CoachAthlete.fromJson(json as Map<String, dynamic>))
+          .toList();
+      
+      allItems.addAll(pageItems);
+
+      // Nếu API trả về ít item hơn limit, nghĩa là đã ở trang cuối
+      if (pageItems.length < 50) {
+        hasMorePages = false;
+      } else {
+        currentPage++; // Chuyển sang trang tiếp theo
+      }
+    }
+    return allItems;
+  }
+  
+  // --- Các phương thức khác giữ nguyên ---
+  
+   Future<CoachAthlete> createCoachAthlete(CoachAthlete coachAthlete) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/coach-athletes'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(coachAthlete.toJson()),
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      if (data['data'] != null && data['data'] is Map<String, dynamic>) {
+        return CoachAthlete.fromJson(data['data'] as Map<String, dynamic>);
+      } else {
+        throw Exception('No valid "data" object found in response: $data');
+      }
+    } else {
+      throw Exception('Failed to create coach-athlete: ${response.statusCode}');
+    }
+  }
+
+  Future<CoachAthlete> getCoachAthleteById(String id) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/coach-athletes/$id'),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      if (data['data'] != null && data['data'] is Map<String, dynamic>) {
+        return CoachAthlete.fromJson(data['data'] as Map<String, dynamic>);
+      } else {
+        throw Exception('No valid "data" object found in response: $data');
+      }
+    } else {
+      throw Exception('Failed to get coach-athlete: ${response.statusCode}');
+    }
+  }
+  
+  Future<CoachAthlete?> getByAthleteId(String athleteId) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/coach-athletes/athlete/$athleteId'),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      if (data['data'] != null && data['data'] is Map<String, dynamic>) {
+        return CoachAthlete.fromJson(data['data'] as Map<String, dynamic>);
+      }
+      return null;
+    } else {
+      throw Exception(
+        'Failed to get coach-athlete by user ID: ${response.statusCode}',
+      );
+    }
+  }
+  
+   Future<CoachAthlete> updateCoachAthlete(
     String id,
     CoachAthlete coachAthlete,
   ) async {
@@ -122,41 +157,6 @@ class CoachAthleteRepository {
 
     if (response.statusCode != 200 && response.statusCode != 204) {
       throw Exception('Failed to delete coach-athlete: ${response.statusCode}');
-    }
-  }
-
-  // Get coach-athlete relationships by coach ID with pagination
-  Future<Map<String, dynamic>> getAllByCoachId(
-    String coachId, {
-    int page = 1,
-    int limit = 10,
-  }) async {
-    final response = await http.get(
-      Uri.parse(
-        '$baseUrl/coach-athletes/user/$coachId?page=$page&limit=$limit',
-      ),
-      headers: {'Content-Type': 'application/json'},
-    );
-
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body) as Map<String, dynamic>;
-      if (data['data'] != null && data['data'] is List<dynamic>) {
-        final List<dynamic> jsonList = data['data'];
-        final coachAthletes =
-            jsonList
-                .map(
-                  (json) => CoachAthlete.fromJson(json as Map<String, dynamic>),
-                )
-                .toList();
-        final hasMore = coachAthletes.length == limit;
-        return {'coachAthletes': coachAthletes, 'hasMore': hasMore};
-      } else {
-        return {'coachAthletes': [], 'hasMore': false};
-      }
-    } else {
-      throw Exception(
-        'Failed to get coach-athletes by coach ID: ${response.statusCode}',
-      );
     }
   }
 }

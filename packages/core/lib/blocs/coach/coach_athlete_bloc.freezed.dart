@@ -45,6 +45,72 @@ $CoachAthleteEventCopyWith(CoachAthleteEvent _, $Res Function(CoachAthleteEvent)
 /// @nodoc
 
 
+class GetAllByCoachId implements CoachAthleteEvent {
+  const GetAllByCoachId(this.coachId);
+  
+
+ final  String coachId;
+
+/// Create a copy of CoachAthleteEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetAllByCoachIdCopyWith<GetAllByCoachId> get copyWith => _$GetAllByCoachIdCopyWithImpl<GetAllByCoachId>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetAllByCoachId&&(identical(other.coachId, coachId) || other.coachId == coachId));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,coachId);
+
+@override
+String toString() {
+  return 'CoachAthleteEvent.getAllByCoachId(coachId: $coachId)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GetAllByCoachIdCopyWith<$Res> implements $CoachAthleteEventCopyWith<$Res> {
+  factory $GetAllByCoachIdCopyWith(GetAllByCoachId value, $Res Function(GetAllByCoachId) _then) = _$GetAllByCoachIdCopyWithImpl;
+@useResult
+$Res call({
+ String coachId
+});
+
+
+
+
+}
+/// @nodoc
+class _$GetAllByCoachIdCopyWithImpl<$Res>
+    implements $GetAllByCoachIdCopyWith<$Res> {
+  _$GetAllByCoachIdCopyWithImpl(this._self, this._then);
+
+  final GetAllByCoachId _self;
+  final $Res Function(GetAllByCoachId) _then;
+
+/// Create a copy of CoachAthleteEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? coachId = null,}) {
+  return _then(GetAllByCoachId(
+null == coachId ? _self.coachId : coachId // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
 class CreateCoachAthlete implements CoachAthleteEvent {
   const CreateCoachAthlete(this.coachAthlete);
   
@@ -252,74 +318,6 @@ as String,
 /// @nodoc
 
 
-class GetAllCoachAthletes implements CoachAthleteEvent {
-  const GetAllCoachAthletes({this.page = 1, this.limit = 10});
-  
-
-@JsonKey() final  int page;
-@JsonKey() final  int limit;
-
-/// Create a copy of CoachAthleteEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$GetAllCoachAthletesCopyWith<GetAllCoachAthletes> get copyWith => _$GetAllCoachAthletesCopyWithImpl<GetAllCoachAthletes>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetAllCoachAthletes&&(identical(other.page, page) || other.page == page)&&(identical(other.limit, limit) || other.limit == limit));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,page,limit);
-
-@override
-String toString() {
-  return 'CoachAthleteEvent.getAllCoachAthletes(page: $page, limit: $limit)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $GetAllCoachAthletesCopyWith<$Res> implements $CoachAthleteEventCopyWith<$Res> {
-  factory $GetAllCoachAthletesCopyWith(GetAllCoachAthletes value, $Res Function(GetAllCoachAthletes) _then) = _$GetAllCoachAthletesCopyWithImpl;
-@useResult
-$Res call({
- int page, int limit
-});
-
-
-
-
-}
-/// @nodoc
-class _$GetAllCoachAthletesCopyWithImpl<$Res>
-    implements $GetAllCoachAthletesCopyWith<$Res> {
-  _$GetAllCoachAthletesCopyWithImpl(this._self, this._then);
-
-  final GetAllCoachAthletes _self;
-  final $Res Function(GetAllCoachAthletes) _then;
-
-/// Create a copy of CoachAthleteEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? page = null,Object? limit = null,}) {
-  return _then(GetAllCoachAthletes(
-page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
-as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
-as int,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
 class UpdateCoachAthlete implements CoachAthleteEvent {
   const UpdateCoachAthlete(this.id, this.coachAthlete);
   
@@ -461,76 +459,6 @@ as String,
 }
 
 /// @nodoc
-
-
-class GetAllByCoachId implements CoachAthleteEvent {
-  const GetAllByCoachId(this.coachId, {this.page = 1, this.limit = 10});
-  
-
- final  String coachId;
-@JsonKey() final  int page;
-@JsonKey() final  int limit;
-
-/// Create a copy of CoachAthleteEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$GetAllByCoachIdCopyWith<GetAllByCoachId> get copyWith => _$GetAllByCoachIdCopyWithImpl<GetAllByCoachId>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetAllByCoachId&&(identical(other.coachId, coachId) || other.coachId == coachId)&&(identical(other.page, page) || other.page == page)&&(identical(other.limit, limit) || other.limit == limit));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,coachId,page,limit);
-
-@override
-String toString() {
-  return 'CoachAthleteEvent.getAllByCoachId(coachId: $coachId, page: $page, limit: $limit)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $GetAllByCoachIdCopyWith<$Res> implements $CoachAthleteEventCopyWith<$Res> {
-  factory $GetAllByCoachIdCopyWith(GetAllByCoachId value, $Res Function(GetAllByCoachId) _then) = _$GetAllByCoachIdCopyWithImpl;
-@useResult
-$Res call({
- String coachId, int page, int limit
-});
-
-
-
-
-}
-/// @nodoc
-class _$GetAllByCoachIdCopyWithImpl<$Res>
-    implements $GetAllByCoachIdCopyWith<$Res> {
-  _$GetAllByCoachIdCopyWithImpl(this._self, this._then);
-
-  final GetAllByCoachId _self;
-  final $Res Function(GetAllByCoachId) _then;
-
-/// Create a copy of CoachAthleteEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? coachId = null,Object? page = null,Object? limit = null,}) {
-  return _then(GetAllByCoachId(
-null == coachId ? _self.coachId : coachId // ignore: cast_nullable_to_non_nullable
-as String,page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
-as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
-as int,
-  ));
-}
-
-
-}
-
-/// @nodoc
 mixin _$CoachAthleteState {
 
 
@@ -627,118 +555,8 @@ String toString() {
 /// @nodoc
 
 
-class CoachAthlete_LoadingMore implements CoachAthleteState {
-  const CoachAthlete_LoadingMore();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoachAthlete_LoadingMore);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'CoachAthleteState.loadingMore()';
-}
-
-
-}
-
-
-
-
-/// @nodoc
-
-
-class LoadedCoachAthlete implements CoachAthleteState {
-  const LoadedCoachAthlete(this.coachAthlete);
-  
-
- final  CoachAthlete? coachAthlete;
-
-/// Create a copy of CoachAthleteState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$LoadedCoachAthleteCopyWith<LoadedCoachAthlete> get copyWith => _$LoadedCoachAthleteCopyWithImpl<LoadedCoachAthlete>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedCoachAthlete&&(identical(other.coachAthlete, coachAthlete) || other.coachAthlete == coachAthlete));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,coachAthlete);
-
-@override
-String toString() {
-  return 'CoachAthleteState.loadedCoachAthlete(coachAthlete: $coachAthlete)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $LoadedCoachAthleteCopyWith<$Res> implements $CoachAthleteStateCopyWith<$Res> {
-  factory $LoadedCoachAthleteCopyWith(LoadedCoachAthlete value, $Res Function(LoadedCoachAthlete) _then) = _$LoadedCoachAthleteCopyWithImpl;
-@useResult
-$Res call({
- CoachAthlete? coachAthlete
-});
-
-
-$CoachAthleteCopyWith<$Res>? get coachAthlete;
-
-}
-/// @nodoc
-class _$LoadedCoachAthleteCopyWithImpl<$Res>
-    implements $LoadedCoachAthleteCopyWith<$Res> {
-  _$LoadedCoachAthleteCopyWithImpl(this._self, this._then);
-
-  final LoadedCoachAthlete _self;
-  final $Res Function(LoadedCoachAthlete) _then;
-
-/// Create a copy of CoachAthleteState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? coachAthlete = freezed,}) {
-  return _then(LoadedCoachAthlete(
-freezed == coachAthlete ? _self.coachAthlete : coachAthlete // ignore: cast_nullable_to_non_nullable
-as CoachAthlete?,
-  ));
-}
-
-/// Create a copy of CoachAthleteState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$CoachAthleteCopyWith<$Res>? get coachAthlete {
-    if (_self.coachAthlete == null) {
-    return null;
-  }
-
-  return $CoachAthleteCopyWith<$Res>(_self.coachAthlete!, (value) {
-    return _then(_self.copyWith(coachAthlete: value));
-  });
-}
-}
-
-/// @nodoc
-
-
 class LoadedCoachAthletes implements CoachAthleteState {
-  const LoadedCoachAthletes({required final  List<CoachAthlete> coachAthletes, required this.currentPage, required this.limit, required this.hasMore, required final  Map<String, Athlete> athleteMap, required final  Map<String, User?> userMap, required final  Map<String, Sport> sportMap}): _coachAthletes = coachAthletes,_athleteMap = athleteMap,_userMap = userMap,_sportMap = sportMap;
+  const LoadedCoachAthletes({required final  List<CoachAthlete> coachAthletes, required final  Map<String, Athlete> athleteMap, required final  Map<String, User?> userMap, required final  Map<String, Sport> sportMap}): _coachAthletes = coachAthletes,_athleteMap = athleteMap,_userMap = userMap,_sportMap = sportMap;
   
 
  final  List<CoachAthlete> _coachAthletes;
@@ -748,9 +566,6 @@ class LoadedCoachAthletes implements CoachAthleteState {
   return EqualUnmodifiableListView(_coachAthletes);
 }
 
- final  int currentPage;
- final  int limit;
- final  bool hasMore;
  final  Map<String, Athlete> _athleteMap;
  Map<String, Athlete> get athleteMap {
   if (_athleteMap is EqualUnmodifiableMapView) return _athleteMap;
@@ -783,16 +598,16 @@ $LoadedCoachAthletesCopyWith<LoadedCoachAthletes> get copyWith => _$LoadedCoachA
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedCoachAthletes&&const DeepCollectionEquality().equals(other._coachAthletes, _coachAthletes)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore)&&const DeepCollectionEquality().equals(other._athleteMap, _athleteMap)&&const DeepCollectionEquality().equals(other._userMap, _userMap)&&const DeepCollectionEquality().equals(other._sportMap, _sportMap));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedCoachAthletes&&const DeepCollectionEquality().equals(other._coachAthletes, _coachAthletes)&&const DeepCollectionEquality().equals(other._athleteMap, _athleteMap)&&const DeepCollectionEquality().equals(other._userMap, _userMap)&&const DeepCollectionEquality().equals(other._sportMap, _sportMap));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_coachAthletes),currentPage,limit,hasMore,const DeepCollectionEquality().hash(_athleteMap),const DeepCollectionEquality().hash(_userMap),const DeepCollectionEquality().hash(_sportMap));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_coachAthletes),const DeepCollectionEquality().hash(_athleteMap),const DeepCollectionEquality().hash(_userMap),const DeepCollectionEquality().hash(_sportMap));
 
 @override
 String toString() {
-  return 'CoachAthleteState.loadedCoachAthletes(coachAthletes: $coachAthletes, currentPage: $currentPage, limit: $limit, hasMore: $hasMore, athleteMap: $athleteMap, userMap: $userMap, sportMap: $sportMap)';
+  return 'CoachAthleteState.loadedCoachAthletes(coachAthletes: $coachAthletes, athleteMap: $athleteMap, userMap: $userMap, sportMap: $sportMap)';
 }
 
 
@@ -803,7 +618,7 @@ abstract mixin class $LoadedCoachAthletesCopyWith<$Res> implements $CoachAthlete
   factory $LoadedCoachAthletesCopyWith(LoadedCoachAthletes value, $Res Function(LoadedCoachAthletes) _then) = _$LoadedCoachAthletesCopyWithImpl;
 @useResult
 $Res call({
- List<CoachAthlete> coachAthletes, int currentPage, int limit, bool hasMore, Map<String, Athlete> athleteMap, Map<String, User?> userMap, Map<String, Sport> sportMap
+ List<CoachAthlete> coachAthletes, Map<String, Athlete> athleteMap, Map<String, User?> userMap, Map<String, Sport> sportMap
 });
 
 
@@ -820,13 +635,10 @@ class _$LoadedCoachAthletesCopyWithImpl<$Res>
 
 /// Create a copy of CoachAthleteState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? coachAthletes = null,Object? currentPage = null,Object? limit = null,Object? hasMore = null,Object? athleteMap = null,Object? userMap = null,Object? sportMap = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? coachAthletes = null,Object? athleteMap = null,Object? userMap = null,Object? sportMap = null,}) {
   return _then(LoadedCoachAthletes(
 coachAthletes: null == coachAthletes ? _self._coachAthletes : coachAthletes // ignore: cast_nullable_to_non_nullable
-as List<CoachAthlete>,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
-as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
-as int,hasMore: null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
-as bool,athleteMap: null == athleteMap ? _self._athleteMap : athleteMap // ignore: cast_nullable_to_non_nullable
+as List<CoachAthlete>,athleteMap: null == athleteMap ? _self._athleteMap : athleteMap // ignore: cast_nullable_to_non_nullable
 as Map<String, Athlete>,userMap: null == userMap ? _self._userMap : userMap // ignore: cast_nullable_to_non_nullable
 as Map<String, User?>,sportMap: null == sportMap ? _self._sportMap : sportMap // ignore: cast_nullable_to_non_nullable
 as Map<String, Sport>,
@@ -966,6 +778,84 @@ as String,
 }
 
 
+}
+
+/// @nodoc
+
+
+class LoadedCoachAthlete implements CoachAthleteState {
+  const LoadedCoachAthlete(this.coachAthlete);
+  
+
+ final  CoachAthlete? coachAthlete;
+
+/// Create a copy of CoachAthleteState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$LoadedCoachAthleteCopyWith<LoadedCoachAthlete> get copyWith => _$LoadedCoachAthleteCopyWithImpl<LoadedCoachAthlete>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedCoachAthlete&&(identical(other.coachAthlete, coachAthlete) || other.coachAthlete == coachAthlete));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,coachAthlete);
+
+@override
+String toString() {
+  return 'CoachAthleteState.loadedCoachAthlete(coachAthlete: $coachAthlete)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $LoadedCoachAthleteCopyWith<$Res> implements $CoachAthleteStateCopyWith<$Res> {
+  factory $LoadedCoachAthleteCopyWith(LoadedCoachAthlete value, $Res Function(LoadedCoachAthlete) _then) = _$LoadedCoachAthleteCopyWithImpl;
+@useResult
+$Res call({
+ CoachAthlete? coachAthlete
+});
+
+
+$CoachAthleteCopyWith<$Res>? get coachAthlete;
+
+}
+/// @nodoc
+class _$LoadedCoachAthleteCopyWithImpl<$Res>
+    implements $LoadedCoachAthleteCopyWith<$Res> {
+  _$LoadedCoachAthleteCopyWithImpl(this._self, this._then);
+
+  final LoadedCoachAthlete _self;
+  final $Res Function(LoadedCoachAthlete) _then;
+
+/// Create a copy of CoachAthleteState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? coachAthlete = freezed,}) {
+  return _then(LoadedCoachAthlete(
+freezed == coachAthlete ? _self.coachAthlete : coachAthlete // ignore: cast_nullable_to_non_nullable
+as CoachAthlete?,
+  ));
+}
+
+/// Create a copy of CoachAthleteState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CoachAthleteCopyWith<$Res>? get coachAthlete {
+    if (_self.coachAthlete == null) {
+    return null;
+  }
+
+  return $CoachAthleteCopyWith<$Res>(_self.coachAthlete!, (value) {
+    return _then(_self.copyWith(coachAthlete: value));
+  });
+}
 }
 
 // dart format on

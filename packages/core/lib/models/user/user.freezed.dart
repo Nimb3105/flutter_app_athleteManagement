@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$User {
 
- String? get id; String get sportId; String get gender; String get fullName; String get imageUrl; String get password; String get email; String get phoneNumber;@UtcDateTimeConverter() DateTime get dateOfBirth; String get role; String get status;@UtcDateTimeConverter() DateTime get createdAt;@UtcDateTimeConverter() DateTime get updatedAt;
+ String? get id; String get sportId; String get gender; String get fullName; String get imageUrl; String get password; String get email; String get phoneNumber;@UtcDateTimeConverter() DateTime get dateOfBirth; String get role; String get status;@UtcDateTimeConverter() DateTime? get createdAt;@UtcDateTimeConverter() DateTime? get updatedAt;
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -49,7 +49,7 @@ abstract mixin class $UserCopyWith<$Res>  {
   factory $UserCopyWith(User value, $Res Function(User) _then) = _$UserCopyWithImpl;
 @useResult
 $Res call({
- String? id, String sportId, String gender, String fullName, String imageUrl, String password, String email, String phoneNumber,@UtcDateTimeConverter() DateTime dateOfBirth, String role, String status,@UtcDateTimeConverter() DateTime createdAt,@UtcDateTimeConverter() DateTime updatedAt
+ String? id, String sportId, String gender, String fullName, String imageUrl, String password, String email, String phoneNumber,@UtcDateTimeConverter() DateTime dateOfBirth, String role, String status,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
 });
 
 
@@ -66,7 +66,7 @@ class _$UserCopyWithImpl<$Res>
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? sportId = null,Object? gender = null,Object? fullName = null,Object? imageUrl = null,Object? password = null,Object? email = null,Object? phoneNumber = null,Object? dateOfBirth = null,Object? role = null,Object? status = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? sportId = null,Object? gender = null,Object? fullName = null,Object? imageUrl = null,Object? password = null,Object? email = null,Object? phoneNumber = null,Object? dateOfBirth = null,Object? role = null,Object? status = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,sportId: null == sportId ? _self.sportId : sportId // ignore: cast_nullable_to_non_nullable
@@ -79,9 +79,9 @@ as String,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // 
 as String,dateOfBirth: null == dateOfBirth ? _self.dateOfBirth : dateOfBirth // ignore: cast_nullable_to_non_nullable
 as DateTime,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
 as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as String,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 
@@ -106,8 +106,8 @@ class _User implements User {
 @override@UtcDateTimeConverter() final  DateTime dateOfBirth;
 @override final  String role;
 @override final  String status;
-@override@UtcDateTimeConverter() final  DateTime createdAt;
-@override@UtcDateTimeConverter() final  DateTime updatedAt;
+@override@UtcDateTimeConverter() final  DateTime? createdAt;
+@override@UtcDateTimeConverter() final  DateTime? updatedAt;
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
@@ -142,7 +142,7 @@ abstract mixin class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) _then) = __$UserCopyWithImpl;
 @override @useResult
 $Res call({
- String? id, String sportId, String gender, String fullName, String imageUrl, String password, String email, String phoneNumber,@UtcDateTimeConverter() DateTime dateOfBirth, String role, String status,@UtcDateTimeConverter() DateTime createdAt,@UtcDateTimeConverter() DateTime updatedAt
+ String? id, String sportId, String gender, String fullName, String imageUrl, String password, String email, String phoneNumber,@UtcDateTimeConverter() DateTime dateOfBirth, String role, String status,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
 });
 
 
@@ -159,7 +159,7 @@ class __$UserCopyWithImpl<$Res>
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? sportId = null,Object? gender = null,Object? fullName = null,Object? imageUrl = null,Object? password = null,Object? email = null,Object? phoneNumber = null,Object? dateOfBirth = null,Object? role = null,Object? status = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? sportId = null,Object? gender = null,Object? fullName = null,Object? imageUrl = null,Object? password = null,Object? email = null,Object? phoneNumber = null,Object? dateOfBirth = null,Object? role = null,Object? status = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_User(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,sportId: null == sportId ? _self.sportId : sportId // ignore: cast_nullable_to_non_nullable
@@ -172,9 +172,9 @@ as String,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // 
 as String,dateOfBirth: null == dateOfBirth ? _self.dateOfBirth : dateOfBirth // ignore: cast_nullable_to_non_nullable
 as DateTime,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
 as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as String,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 

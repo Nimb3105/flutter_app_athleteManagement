@@ -1,3 +1,5 @@
+// lib/screens/app/coach/exercises/exercise_detail.dart
+
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,17 +20,23 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
   @override
   void initState() {
     super.initState();
+    // Chỉ khởi tạo video nếu URL hợp lệ và là video
     if (_isUrlVideo(widget.exercise.gifUrl)) {
       _initializeVideoPlayer(widget.exercise.gifUrl);
     }
   }
 
-  bool _isUrlVideo(String url) => url.endsWith('.mp4');
+  bool _isUrlVideo(String url) {
+    // Kiểm tra kỹ hơn để đảm bảo là URL hợp lệ
+    final uri = Uri.tryParse(url);
+    return uri != null && uri.isAbsolute && uri.path.endsWith('.mp4');
+  }
 
   void _initializeVideoPlayer(String videoUrl) {
     // ignore: deprecated_member_use
     _videoController = VideoPlayerController.network(videoUrl);
     _initializeVideoPlayerFuture = _videoController?.initialize().then((_) {
+      if (!mounted) return; // Kiểm tra widget còn tồn tại không
       _videoController?.setLooping(true);
       _videoController?.play();
       setState(() {});
@@ -41,47 +49,92 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
     super.dispose();
   }
 
+  void _showDeleteConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text('Xác nhận xóa'),
+          content: Text(
+            'Bạn có chắc chắn muốn xóa bài tập "${widget.exercise.name}" không?',
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Hủy'),
+              onPressed: () => Navigator.of(dialogContext).pop(),
+            ),
+            TextButton(
+              child: const Text('Xóa', style: TextStyle(color: Colors.red)),
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+                if (widget.exercise.id != null) {
+                  // Chỉ dispatch sự kiện khi có ID hợp lệ
+                  context.read<ExerciseBloc>().add(
+                    DeleteExercise(widget.exercise.id!),
+                  );
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.exercise.name,
-          style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+    // Lắng nghe trạng thái từ ExerciseBloc
+    return BlocListener<ExerciseBloc, ExerciseState>(
+      listener: (context, state) {
+        // Nếu xóa thành công, quay lại màn hình trước đó
+        if (state is Exercise_Success && state.message.contains('deleted')) {
+          Navigator.pop(context);
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            widget.exercise.name,
+            style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+          ),
         ),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(24.0),
-        children: [
-          _buildMediaSection(),
-          const SizedBox(height: 32),
-          _buildInfoCard(
-            title: 'Thông tin cơ bản',
-            icon: Icons.info_outline,
-            children: [
-              _buildDetailRow('Nhóm cơ', widget.exercise.bodyPart),
-              _buildDetailRow('Cơ mục tiêu', widget.exercise.target),
-              _buildDetailRow('Dụng cụ', widget.exercise.equipment),
-              _buildDetailRow('Đơn vị', widget.exercise.unitType, isLast: true),
-            ],
-          ),
-          const SizedBox(height: 24),
-          _buildInfoCard(
-            title: 'Cơ bắp tác động',
-            icon: Icons.accessibility_new,
-            children: [
-              _buildChipList('Cơ phụ', widget.exercise.secondaryMuscles),
-            ],
-          ),
-          const SizedBox(height: 24),
-          _buildInfoCard(
-            title: 'Hướng dẫn thực hiện',
-            icon: Icons.integration_instructions_outlined,
-            children: [_buildInstructionList(widget.exercise.instructions)],
-          ),
-          const SizedBox(height: 32),
-          _buildActionButtons(),
-        ],
+        body: ListView(
+          padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
+          children: [
+            _buildMediaSection(),
+            const SizedBox(height: 32),
+            _buildInfoCard(
+              title: 'Thông tin cơ bản',
+              icon: Icons.info_outline,
+              children: [
+                _buildDetailRow('Nhóm cơ', widget.exercise.bodyPart),
+                _buildDetailRow('Cơ mục tiêu', widget.exercise.target),
+                _buildDetailRow('Dụng cụ', widget.exercise.equipment),
+                _buildDetailRow(
+                  'Đơn vị',
+                  widget.exercise.unitType,
+                  isLast: true,
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            _buildInfoCard(
+              title: 'Cơ bắp tác động',
+              icon: Icons.accessibility_new,
+              children: [
+                _buildChipList('Cơ phụ', widget.exercise.secondaryMuscles),
+              ],
+            ),
+            const SizedBox(height: 24),
+            _buildInfoCard(
+              title: 'Hướng dẫn thực hiện',
+              icon: Icons.integration_instructions_outlined,
+              children: [_buildInstructionList(widget.exercise.instructions)],
+            ),
+            const SizedBox(height: 32),
+            _buildActionButtons(),
+          ],
+        ),
       ),
     );
   }
@@ -107,16 +160,22 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                   },
                 )
                 : Image.network(
-                  widget
-                      .exercise
-                      .gifUrl, // Assuming this is a direct URL to an image/gif
+                  widget.exercise.gifUrl,
                   fit: BoxFit.cover,
                   errorBuilder:
                       (context, error, stackTrace) =>
                           const Icon(Icons.error, color: Colors.red, size: 50),
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) return child;
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value:
+                            loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                      ),
+                    );
                   },
                 ),
       ),
@@ -176,11 +235,15 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
               fontWeight: FontWeight.w500,
             ),
           ),
-          Text(
-            value,
-            style: GoogleFonts.poppins(
-              fontWeight: FontWeight.w600,
-              fontSize: 15,
+          Expanded(
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w600,
+                fontSize: 15,
+              ),
             ),
           ),
         ],
@@ -189,6 +252,9 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
   }
 
   Widget _buildChipList(String label, List<String> items) {
+    if (items.isEmpty || (items.length == 1 && items[0].isEmpty)) {
+      return const SizedBox.shrink();
+    }
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -204,7 +270,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
           const SizedBox(height: 12),
           Wrap(
             spacing: 8.0,
-            runSpacing: 8.0,
+            runSpacing: 4.0,
             children: items.map((item) => Chip(label: Text(item))).toList(),
           ),
         ],
@@ -221,7 +287,13 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
               int idx = entry.key;
               String text = entry.value;
               return ListTile(
-                leading: CircleAvatar(radius: 15, child: Text('${idx + 1}')),
+                leading: CircleAvatar(
+                  radius: 16,
+                  child: Text(
+                    '${idx + 1}',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
                 title: Text(text, style: GoogleFonts.poppins()),
               );
             }).toList(),
@@ -234,7 +306,8 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
       children: [
         Expanded(
           child: OutlinedButton.icon(
-            onPressed: () {},
+            onPressed: () {
+            },
             icon: const Icon(Icons.edit_outlined),
             label: const Text('Sửa'),
             style: OutlinedButton.styleFrom(
@@ -246,13 +319,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
         const SizedBox(width: 16),
         Expanded(
           child: ElevatedButton.icon(
-            onPressed: () {
-              // Add delete confirmation dialog here
-              context.read<ExerciseBloc>().add(
-                DeleteExercise(widget.exercise.id!),
-              );
-              Navigator.pop(context);
-            },
+            onPressed: _showDeleteConfirmationDialog,
             icon: const Icon(Icons.delete_outline),
             label: const Text('Xóa'),
             style: ElevatedButton.styleFrom(

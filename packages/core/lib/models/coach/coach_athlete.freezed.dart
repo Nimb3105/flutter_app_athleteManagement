@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CoachAthlete {
 
- String? get id; String get coachId; String get athleteId;@UtcDateTimeConverter() DateTime get createdAt;@UtcDateTimeConverter() DateTime get updatedAt;
+ String? get id; String get coachId; String get athleteId;@UtcDateTimeConverter() DateTime? get createdAt;@UtcDateTimeConverter() DateTime? get updatedAt;
 /// Create a copy of CoachAthlete
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -49,7 +49,7 @@ abstract mixin class $CoachAthleteCopyWith<$Res>  {
   factory $CoachAthleteCopyWith(CoachAthlete value, $Res Function(CoachAthlete) _then) = _$CoachAthleteCopyWithImpl;
 @useResult
 $Res call({
- String? id, String coachId, String athleteId,@UtcDateTimeConverter() DateTime createdAt,@UtcDateTimeConverter() DateTime updatedAt
+ String? id, String coachId, String athleteId,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
 });
 
 
@@ -66,14 +66,14 @@ class _$CoachAthleteCopyWithImpl<$Res>
 
 /// Create a copy of CoachAthlete
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? coachId = null,Object? athleteId = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? coachId = null,Object? athleteId = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,coachId: null == coachId ? _self.coachId : coachId // ignore: cast_nullable_to_non_nullable
 as String,athleteId: null == athleteId ? _self.athleteId : athleteId // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as String,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 
@@ -90,8 +90,8 @@ class _CoachAthlete implements CoachAthlete {
 @override final  String? id;
 @override final  String coachId;
 @override final  String athleteId;
-@override@UtcDateTimeConverter() final  DateTime createdAt;
-@override@UtcDateTimeConverter() final  DateTime updatedAt;
+@override@UtcDateTimeConverter() final  DateTime? createdAt;
+@override@UtcDateTimeConverter() final  DateTime? updatedAt;
 
 /// Create a copy of CoachAthlete
 /// with the given fields replaced by the non-null parameter values.
@@ -126,7 +126,7 @@ abstract mixin class _$CoachAthleteCopyWith<$Res> implements $CoachAthleteCopyWi
   factory _$CoachAthleteCopyWith(_CoachAthlete value, $Res Function(_CoachAthlete) _then) = __$CoachAthleteCopyWithImpl;
 @override @useResult
 $Res call({
- String? id, String coachId, String athleteId,@UtcDateTimeConverter() DateTime createdAt,@UtcDateTimeConverter() DateTime updatedAt
+ String? id, String coachId, String athleteId,@UtcDateTimeConverter() DateTime? createdAt,@UtcDateTimeConverter() DateTime? updatedAt
 });
 
 
@@ -143,14 +143,14 @@ class __$CoachAthleteCopyWithImpl<$Res>
 
 /// Create a copy of CoachAthlete
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? coachId = null,Object? athleteId = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? coachId = null,Object? athleteId = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_CoachAthlete(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,coachId: null == coachId ? _self.coachId : coachId // ignore: cast_nullable_to_non_nullable
 as String,athleteId: null == athleteId ? _self.athleteId : athleteId // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as String,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 
