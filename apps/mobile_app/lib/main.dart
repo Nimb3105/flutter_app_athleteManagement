@@ -194,6 +194,7 @@ class MyApp extends StatelessWidget {
                 (context) => DailyScheduleBloc(
                   dailyScheduleRepository:
                       context.read<DailyScheduleRepository>(),
+                  userRepository: context.read<UserRepository>(),
                 ),
           ),
           BlocProvider(

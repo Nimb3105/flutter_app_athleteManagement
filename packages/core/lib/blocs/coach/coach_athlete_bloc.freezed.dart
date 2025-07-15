@@ -459,6 +459,72 @@ as String,
 }
 
 /// @nodoc
+
+
+class DeleteAllByCoachId implements CoachAthleteEvent {
+  const DeleteAllByCoachId(this.coachId);
+  
+
+ final  String coachId;
+
+/// Create a copy of CoachAthleteEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$DeleteAllByCoachIdCopyWith<DeleteAllByCoachId> get copyWith => _$DeleteAllByCoachIdCopyWithImpl<DeleteAllByCoachId>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeleteAllByCoachId&&(identical(other.coachId, coachId) || other.coachId == coachId));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,coachId);
+
+@override
+String toString() {
+  return 'CoachAthleteEvent.deleteAllByCoachId(coachId: $coachId)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $DeleteAllByCoachIdCopyWith<$Res> implements $CoachAthleteEventCopyWith<$Res> {
+  factory $DeleteAllByCoachIdCopyWith(DeleteAllByCoachId value, $Res Function(DeleteAllByCoachId) _then) = _$DeleteAllByCoachIdCopyWithImpl;
+@useResult
+$Res call({
+ String coachId
+});
+
+
+
+
+}
+/// @nodoc
+class _$DeleteAllByCoachIdCopyWithImpl<$Res>
+    implements $DeleteAllByCoachIdCopyWith<$Res> {
+  _$DeleteAllByCoachIdCopyWithImpl(this._self, this._then);
+
+  final DeleteAllByCoachId _self;
+  final $Res Function(DeleteAllByCoachId) _then;
+
+/// Create a copy of CoachAthleteEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? coachId = null,}) {
+  return _then(DeleteAllByCoachId(
+null == coachId ? _self.coachId : coachId // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$CoachAthleteState {
 
 

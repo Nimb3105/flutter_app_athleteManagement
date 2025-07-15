@@ -64,6 +64,7 @@ class _DailyScheduleCreateScreenState extends State<DailyScheduleCreateScreen> {
         widget.dailyScheduleBloc ??
         DailyScheduleBloc(
           dailyScheduleRepository: context.read<DailyScheduleRepository>(),
+          userRepository: context.read<UserRepository>(),
         );
 
     // Thêm listener để tự động tính endDate khi daysController thay đổi
@@ -154,6 +155,7 @@ class _DailyScheduleCreateScreenState extends State<DailyScheduleCreateScreen> {
       createdAt: null,
       updatedAt: null,
       trainingSchedules: trainingSchedulesNotifier.value,
+      createdBy: widget.createdBy,
     );
     bloc.add(CreateDailySchedule(dailySchedule));
   }
@@ -172,6 +174,7 @@ class _DailyScheduleCreateScreenState extends State<DailyScheduleCreateScreen> {
         ),
         body: BlocListener<DailyScheduleBloc, DailyScheduleState>(
           listener: (context, state) {
+            
             if (state is DailySchedule_Success) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(

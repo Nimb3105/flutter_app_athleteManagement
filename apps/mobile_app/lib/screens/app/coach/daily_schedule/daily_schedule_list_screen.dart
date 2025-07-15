@@ -25,6 +25,7 @@ class DailyScheduleListScreen extends StatelessWidget {
       create:
           (context) => DailyScheduleBloc(
             dailyScheduleRepository: context.read<DailyScheduleRepository>(),
+            userRepository: context.read<UserRepository>(), 
           )..add(
             GetDailyScheduleByUserId(
               userId,
@@ -175,6 +176,7 @@ class DailyScheduleListScreen extends StatelessWidget {
                         dailyScheduleId: schedule.id!,
                         date: formattedDate,
                         sportId: sportId!,
+                        createdBy: createdBy,
                       ),
                 ),
               );

@@ -20,6 +20,8 @@ sealed class CoachAthleteEvent with _$CoachAthleteEvent {
   ) = UpdateCoachAthlete;
   const factory CoachAthleteEvent.deleteCoachAthlete(String id) =
       DeleteCoachAthlete;
+  const factory CoachAthleteEvent.deleteAllByCoachId(String coachId) =
+      DeleteAllByCoachId;
 }
 
 // ✅ Tối ưu State: Loại bỏ các trường liên quan đến phân trang
@@ -59,6 +61,25 @@ class CoachAthleteBloc extends Bloc<CoachAthleteEvent, CoachAthleteState> {
     on<GetByAthleteId>(_onGetByAthleteId);
     on<UpdateCoachAthlete>(_onUpdateCoachAthlete);
     on<DeleteCoachAthlete>(_onDeleteCoachAthlete);
+    on<DeleteAllByCoachId>(_onDeleteAllByCoachId);
+  }
+
+  Future<void> _onDeleteAllByCoachId(
+    DeleteAllByCoachId event,
+    Emitter<CoachAthleteState> emit,
+  ) async {
+    // Không emit loading để tránh làm gián đoạn UI
+    try {
+      await coachAthleteRepository.deleteAllByCoachId(event.coachId);
+      // Có thể phát ra một trạng thái thành công nếu cần
+      emit(
+        const CoachAthleteState.success(
+          'Đã xóa tất cả các vận động viên do thay đổi môn thể thao.',
+        ),
+      );
+    } catch (e) {
+      emit(CoachAthleteState.error(e.toString()));
+    }
   }
 
   // ✅ Tối ưu: Toàn bộ logic được viết lại để tải dữ liệu một lần, song song và hiệu quả

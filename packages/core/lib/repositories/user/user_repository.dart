@@ -8,6 +8,23 @@ class UserRepository {
 
   UserRepository({required this.baseUrl});
 
+  Future<List<User>> getUnassignedAthletes(String sportId) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/users/unassigned-athletes/$sportId'),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      final List<dynamic> jsonList = data['data'] as List<dynamic>? ?? [];
+      return jsonList
+          .map((json) => User.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } else {
+      throw Exception('Failed to get unassigned athletes: ${response.body}');
+    }
+  }
+
   Future<Map<String, dynamic>> getUsersByRoleWithPagination({
     required String role,
     int page = 1,

@@ -767,6 +767,78 @@ as int,
 }
 
 /// @nodoc
+
+
+class GetUnassignedAthletes with DiagnosticableTreeMixin implements UserEvent {
+  const GetUnassignedAthletes(this.sportId);
+  
+
+ final  String sportId;
+
+/// Create a copy of UserEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetUnassignedAthletesCopyWith<GetUnassignedAthletes> get copyWith => _$GetUnassignedAthletesCopyWithImpl<GetUnassignedAthletes>(this, _$identity);
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserEvent.getUnassignedAthletes'))
+    ..add(DiagnosticsProperty('sportId', sportId));
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetUnassignedAthletes&&(identical(other.sportId, sportId) || other.sportId == sportId));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,sportId);
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'UserEvent.getUnassignedAthletes(sportId: $sportId)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GetUnassignedAthletesCopyWith<$Res> implements $UserEventCopyWith<$Res> {
+  factory $GetUnassignedAthletesCopyWith(GetUnassignedAthletes value, $Res Function(GetUnassignedAthletes) _then) = _$GetUnassignedAthletesCopyWithImpl;
+@useResult
+$Res call({
+ String sportId
+});
+
+
+
+
+}
+/// @nodoc
+class _$GetUnassignedAthletesCopyWithImpl<$Res>
+    implements $GetUnassignedAthletesCopyWith<$Res> {
+  _$GetUnassignedAthletesCopyWithImpl(this._self, this._then);
+
+  final GetUnassignedAthletes _self;
+  final $Res Function(GetUnassignedAthletes) _then;
+
+/// Create a copy of UserEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? sportId = null,}) {
+  return _then(GetUnassignedAthletes(
+null == sportId ? _self.sportId : sportId // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$UserState implements DiagnosticableTreeMixin {
 
 

@@ -1,5 +1,5 @@
-import 'package:admin_dashboard/athlete/add_athlete_page.dart';
-import 'package:admin_dashboard/athlete/athlete_detail_page.dart';
+import 'package:admin_dashboard/athlete/profile/add_athlete_page.dart';
+import 'package:admin_dashboard/athlete/profile/athlete_detail_page.dart';
 import 'package:core/core.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';

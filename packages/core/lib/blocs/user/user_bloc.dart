@@ -30,6 +30,9 @@ sealed class UserEvent with _$UserEvent {
     @Default(1) int page,
     @Default(10) int limit,
   }) = GetUsersByRoleWithPagination;
+
+  const factory UserEvent.getUnassignedAthletes(String sportId) =
+      GetUnassignedAthletes;
 }
 
 @freezed
@@ -73,6 +76,21 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<Logout>(_onLogout);
     on<GetAllUserCoachBySportId>(_onGetAllUserCoachBySportId);
     on<GetUsersByRoleWithPagination>(_onGetUsersByRoleWithPagination);
+    on<GetUnassignedAthletes>(_onGetUnassignedAthletes);
+  }
+
+   Future<void> _onGetUnassignedAthletes(
+    GetUnassignedAthletes event,
+    Emitter<UserState> emit,
+  ) async {
+    emit(const UserState.loading());
+    try {
+      final users = await userRepository.getUnassignedAthletes(event.sportId);
+      final userMap = {for (var user in users) user.id!: user};
+      emit(UserState.loadedMultipleUsers(userMap,{}));
+    } catch (e) {
+      emit(UserState.error(e.toString()));
+    }
   }
 
   Future<void> _onGetUsersByRoleWithPagination(

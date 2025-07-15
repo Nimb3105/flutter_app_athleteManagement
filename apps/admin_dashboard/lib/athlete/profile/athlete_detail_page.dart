@@ -1,6 +1,6 @@
 import 'package:admin_dashboard/athlete/profile/edit_athlete_page.dart';
 import 'package:admin_dashboard/athlete/profile/profile_tab.dart';
-import 'package:admin_dashboard/athlete/training_nutrition_tab.dart';
+import 'package:admin_dashboard/athlete/training/training_nutrition_tab.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 
@@ -21,15 +21,15 @@ class _AthleteDetailPageState extends State<AthleteDetailPage> {
   void initState() {
     super.initState();
     _currentAthlete = widget.athlete;
-    _loadAllDataForAthlete(_currentAthlete.id!);
+    _loadAllDataForAthlete(_currentAthlete);
   }
 
   // Gom tất cả lệnh gọi BLoC vào một hàm cho gọn
-  void _loadAllDataForAthlete(String userId) {
-    context.read<UserBloc>().add(
-      UserEvent.getUserById(userId),
-    ); // Thêm dòng này
+  void _loadAllDataForAthlete(User athlete) {
+    final userId = athlete.id!;
+    context.read<UserBloc>().add(UserEvent.getUserById(userId));
     context.read<AthleteBloc>().add(AthleteEvent.getAthleteByUserId(userId));
+    context.read<SportBloc>().add(SportEvent.getSportById(athlete.sportId));
     context.read<HealthBloc>().add(HealthEvent.getHealthByUserId(userId));
     context.read<InjuryBloc>().add(InjuryEvent.getInjuryByUserId(userId));
     context.read<AchievementBloc>().add(
@@ -39,7 +39,7 @@ class _AthleteDetailPageState extends State<AthleteDetailPage> {
       UserMatchEvent.getUserMatchByUserId(userId),
     );
     context.read<DailyScheduleBloc>().add(
-      DailyScheduleEvent.getDailyScheduleByUserId(userId, ''),
+      DailyScheduleEvent.getAllDailySchedulesByUserId(userId),
     );
     context.read<NutritionPlanBloc>().add(
       NutritionPlanEvent.getNutritionPlansByUserId(userId),
@@ -54,8 +54,8 @@ class _AthleteDetailPageState extends State<AthleteDetailPage> {
 
   // Hàm xử lý việc điều hướng đến trang sửa và làm mới dữ liệu
   void _navigateToEditPage() async {
-    // Thay đổi kiểu nhận kết quả thành bool
-    final result = await Navigator.push<bool>(
+    // Chờ trang sửa đóng lại
+    await Navigator.push<bool>(
       context,
       MaterialPageRoute(
         builder:
@@ -71,21 +71,29 @@ class _AthleteDetailPageState extends State<AthleteDetailPage> {
       ),
     );
 
-    // Chỉ cần tải lại dữ liệu nếu thành công, BlocListener sẽ xử lý phần còn lại
-    if (result == true && context.mounted) {
-      _loadAllDataForAthlete(_currentAthlete.id!);
+    // Tải lại toàn bộ dữ liệu khi quay lại, bất kể kết quả trả về là gì
+    if (context.mounted) {
+      _loadAllDataForAthlete(_currentAthlete);
     }
   }
 
+  @override
   Widget build(BuildContext context) {
-    // ✅ THAY ĐỔI: Sử dụng BlocListener để cập nhật state cục bộ
+    // Sử dụng BlocListener để cập nhật state cục bộ khi có dữ liệu mới
     return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
-        // Khi UserBloc phát ra trạng thái LoadedUser, cập nhật lại biến _currentAthlete
         if (state is LoadedUser && state.user.id == widget.athlete.id) {
           if (state.user != _currentAthlete) {
             setState(() {
               _currentAthlete = state.user;
+            });
+          }
+        } else if (state is LoadedMultipleUsers &&
+            state.users.containsKey(widget.athlete.id)) {
+          final updatedUser = state.users[widget.athlete.id]!;
+          if (updatedUser != _currentAthlete) {
+            setState(() {
+              _currentAthlete = updatedUser;
             });
           }
         }

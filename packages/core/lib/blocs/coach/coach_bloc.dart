@@ -53,6 +53,7 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
     emit(const CoachState.loading());
     try {
       final createdCoach = await coachRepository.createCoach(event.coach);
+      emit(const CoachState.success('Coach created successfully'));
       emit(CoachState.loadedCoach(createdCoach));
     } catch (e) {
       emit(CoachState.error(e.toString()));
@@ -119,6 +120,7 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
         event.coach,
       );
       emit(CoachState.loadedCoach(updatedCoach));
+      emit(const CoachState.success('Cập nhật thông tin thành công'));
     } catch (e) {
       emit(CoachState.error(e.toString()));
     }

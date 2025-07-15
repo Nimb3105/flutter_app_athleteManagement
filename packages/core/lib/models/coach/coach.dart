@@ -12,8 +12,8 @@ abstract class Coach with _$Coach {
     required String experience,
     //required String specialization,
     required String level,
-    @UtcDateTimeConverter() required DateTime createdAt,
-    @UtcDateTimeConverter() required DateTime updatedAt,
+    @UtcDateTimeConverter() required DateTime? createdAt,
+    @UtcDateTimeConverter() required DateTime? updatedAt,
   }) = _Coach;
 
   factory Coach.fromJson(Map<String, dynamic> json) => _$CoachFromJson(json);

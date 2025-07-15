@@ -13,11 +13,13 @@ class ListTrainingScheduleScreen extends StatelessWidget {
   final String dailyScheduleId;
   final String date;
   final String sportId;
+  final String createdBy;
 
   const ListTrainingScheduleScreen({
     required this.dailyScheduleId,
     required this.date,
     required this.sportId,
+    required this.createdBy,
     super.key,
   });
 
@@ -50,47 +52,6 @@ class ListTrainingScheduleScreen extends StatelessWidget {
         return Colors.white;
     }
   }
-
-  // double _calculateExerciseProgress(
-  //   TrainingExercise trainingExercise,
-  //   Exercise? exercise,
-  // ) {
-  //   if (exercise == null) return 0.0;
-  //   final List<double> progressValues = [];
-
-  //   if (trainingExercise.weight > 0) {
-  //     progressValues.add(
-  //       trainingExercise.actualWeight / trainingExercise.weight,
-  //     );
-  //   }
-  //   if (exercise.unitType == 'Hiệp') {
-  //     if (trainingExercise.sets > 0) {
-  //       progressValues.add(trainingExercise.actualSets / trainingExercise.sets);
-  //     }
-  //     if (trainingExercise.reps > 0) {
-  //       progressValues.add(trainingExercise.actualReps / trainingExercise.reps);
-  //     }
-  //   } else if (exercise.unitType == 'Thời gian') {
-  //     if (trainingExercise.duration > 0) {
-  //       progressValues.add(
-  //         trainingExercise.actualDuration / trainingExercise.duration,
-  //       );
-  //     }
-  //     if (trainingExercise.distance > 0) {
-  //       progressValues.add(
-  //         trainingExercise.actualDistance / trainingExercise.distance,
-  //       );
-  //     }
-  //   }
-
-  //   if (progressValues.isEmpty) {
-  //     return trainingExercise.status.toLowerCase() == 'hoàn thành' ? 1.0 : 0.0;
-  //   }
-
-  //   final averageProgress =
-  //       progressValues.reduce((a, b) => a + b) / progressValues.length;
-  //   return averageProgress;
-  // }
 
   void _deleteSchedule(BuildContext context, TrainingSchedule schedule) {
     showDialog(
@@ -152,10 +113,8 @@ class ListTrainingScheduleScreen extends StatelessWidget {
             BlocBuilder<TrainingScheduleBloc, TrainingScheduleState>(
               builder: (context, state) {
                 DateTime? latestEndTime;
-                String createBy = '';
                 if (state is LoadedTrainingSchedulesByDailyScheduleId &&
                     state.trainingSchedules.isNotEmpty) {
-                  createBy = state.trainingSchedules.first.createdBy;
                   latestEndTime = state.trainingSchedules
                       .map((s) => s.endTime)
                       .reduce((a, b) => a.isAfter(b) ? a : b);
@@ -183,7 +142,7 @@ class ListTrainingScheduleScreen extends StatelessWidget {
                               child: AddTrainingScheduleScreen(
                                 dailyScheduleId: dailyScheduleId,
                                 date: DateTime.parse(date),
-                                createBy: createBy,
+                                createBy: createdBy,
                                 sportId: sportId,
                                 latestEndTime: latestEndTime,
                               ),

@@ -11,6 +11,7 @@ abstract class DailySchedule with _$DailySchedule {
     required String userId,
     required String name,
     required String sportId,
+    required String createdBy,
     @Default([]) List<TrainingSchedule> trainingSchedules,
     @UtcDateTimeConverter() required DateTime? startDate,
     @UtcDateTimeConverter() required DateTime? endDate,
@@ -28,6 +29,7 @@ abstract class DailySchedule with _$DailySchedule {
         endDate: null,
         createdAt: null,
         updatedAt: null,
+        createdBy: '', // Thêm trường createdBy
       );
 
 

@@ -36,6 +36,10 @@ class _AddTrainingExerciseScreenState extends State<AddTrainingExerciseScreen> {
   String? _exerciseId;
   String _unitType = '';
 
+  // Biến mới để quản lý đơn vị
+  String _distanceUnit = 'm';
+  String _durationUnit = 'giây';
+
   @override
   void dispose() {
     _exerciseNameController.dispose();
@@ -51,6 +55,18 @@ class _AddTrainingExerciseScreenState extends State<AddTrainingExerciseScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
+      // Xử lý chuyển đổi đơn vị trước khi gửi đi
+      double distanceInMeters =
+          double.tryParse(_distanceController.text) ?? 0.0;
+      if (_distanceUnit == 'km') {
+        distanceInMeters *= 1000;
+      }
+
+      int durationInSeconds = int.tryParse(_durationController.text) ?? 0;
+      if (_durationUnit == 'phút') {
+        durationInSeconds *= 60;
+      }
+
       final newExercise = TrainingExercise(
         sportId: widget.sportId!,
         id: null,
@@ -60,8 +76,8 @@ class _AddTrainingExerciseScreenState extends State<AddTrainingExerciseScreen> {
         reps: int.tryParse(_repsController.text) ?? 0,
         sets: int.tryParse(_setsController.text) ?? 0,
         weight: double.tryParse(_weightController.text) ?? 0.0,
-        duration: int.tryParse(_durationController.text) ?? 0,
-        distance: double.tryParse(_distanceController.text) ?? 0.0,
+        duration: durationInSeconds,
+        distance: distanceInMeters,
         actualReps: 0,
         actualSets: 0,
         actualWeight: 0,
@@ -113,26 +129,84 @@ class _AddTrainingExerciseScreenState extends State<AddTrainingExerciseScreen> {
     } else if (_unitType == 'Thời gian') {
       return Column(
         children: [
-          TextFormField(
-            controller: _durationController,
-            decoration: const InputDecoration(labelText: 'Thời gian (giây)'),
-            keyboardType: TextInputType.number,
-            validator:
-                (value) =>
-                    (value == null || value.isEmpty)
-                        ? 'Không được để trống'
-                        : null,
+          // Trường nhập Thời gian với đơn vị
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                child: TextFormField(
+                  controller: _durationController,
+                  decoration: const InputDecoration(labelText: 'Thời gian'),
+                  keyboardType: TextInputType.number,
+                  validator:
+                      (value) =>
+                          (value == null || value.isEmpty)
+                              ? 'Không được để trống'
+                              : null,
+                ),
+              ),
+              const SizedBox(width: 8),
+              SizedBox(
+                width: 80,
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    value: _durationUnit,
+                    isExpanded: true,
+                    items:
+                        ['giây', 'phút']
+                            .map(
+                              (e) => DropdownMenuItem(value: e, child: Text(e)),
+                            )
+                            .toList(),
+                    onChanged: (value) {
+                      if (value != null) {
+                        setState(() => _durationUnit = value);
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 16),
-          TextFormField(
-            controller: _distanceController,
-            decoration: const InputDecoration(labelText: 'Khoảng cách (mét)'),
-            keyboardType: TextInputType.number,
-            validator:
-                (value) =>
-                    (value == null || value.isEmpty)
-                        ? 'Không được để trống'
-                        : null,
+          // Trường nhập Khoảng cách với đơn vị
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                child: TextFormField(
+                  controller: _distanceController,
+                  decoration: const InputDecoration(labelText: 'Khoảng cách'),
+                  keyboardType: TextInputType.number,
+                  validator:
+                      (value) =>
+                          (value == null || value.isEmpty)
+                              ? 'Không được để trống'
+                              : null,
+                ),
+              ),
+              const SizedBox(width: 8),
+              SizedBox(
+                width: 70,
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    value: _distanceUnit,
+                    isExpanded: true,
+                    items:
+                        ['m', 'km']
+                            .map(
+                              (e) => DropdownMenuItem(value: e, child: Text(e)),
+                            )
+                            .toList(),
+                    onChanged: (value) {
+                      if (value != null) {
+                        setState(() => _distanceUnit = value);
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       );

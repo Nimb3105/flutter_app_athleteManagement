@@ -1,4 +1,4 @@
-import 'package:admin_dashboard/athlete/profile/assign_coach_dialog.dart';
+import 'package:admin_dashboard/athlete/athleteCoach/assign_coach_dialog.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

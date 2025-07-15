@@ -463,6 +463,138 @@ as String,
 }
 
 /// @nodoc
+
+
+class GetAllDailySchedulesByCreatorId implements DailyScheduleEvent {
+  const GetAllDailySchedulesByCreatorId(this.creatorId);
+  
+
+ final  String creatorId;
+
+/// Create a copy of DailyScheduleEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetAllDailySchedulesByCreatorIdCopyWith<GetAllDailySchedulesByCreatorId> get copyWith => _$GetAllDailySchedulesByCreatorIdCopyWithImpl<GetAllDailySchedulesByCreatorId>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetAllDailySchedulesByCreatorId&&(identical(other.creatorId, creatorId) || other.creatorId == creatorId));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,creatorId);
+
+@override
+String toString() {
+  return 'DailyScheduleEvent.getAllDailySchedulesByCreatorId(creatorId: $creatorId)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GetAllDailySchedulesByCreatorIdCopyWith<$Res> implements $DailyScheduleEventCopyWith<$Res> {
+  factory $GetAllDailySchedulesByCreatorIdCopyWith(GetAllDailySchedulesByCreatorId value, $Res Function(GetAllDailySchedulesByCreatorId) _then) = _$GetAllDailySchedulesByCreatorIdCopyWithImpl;
+@useResult
+$Res call({
+ String creatorId
+});
+
+
+
+
+}
+/// @nodoc
+class _$GetAllDailySchedulesByCreatorIdCopyWithImpl<$Res>
+    implements $GetAllDailySchedulesByCreatorIdCopyWith<$Res> {
+  _$GetAllDailySchedulesByCreatorIdCopyWithImpl(this._self, this._then);
+
+  final GetAllDailySchedulesByCreatorId _self;
+  final $Res Function(GetAllDailySchedulesByCreatorId) _then;
+
+/// Create a copy of DailyScheduleEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? creatorId = null,}) {
+  return _then(GetAllDailySchedulesByCreatorId(
+null == creatorId ? _self.creatorId : creatorId // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class GetAllDailySchedulesByUserId implements DailyScheduleEvent {
+  const GetAllDailySchedulesByUserId(this.userId);
+  
+
+ final  String userId;
+
+/// Create a copy of DailyScheduleEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetAllDailySchedulesByUserIdCopyWith<GetAllDailySchedulesByUserId> get copyWith => _$GetAllDailySchedulesByUserIdCopyWithImpl<GetAllDailySchedulesByUserId>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetAllDailySchedulesByUserId&&(identical(other.userId, userId) || other.userId == userId));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,userId);
+
+@override
+String toString() {
+  return 'DailyScheduleEvent.getAllDailySchedulesByUserId(userId: $userId)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GetAllDailySchedulesByUserIdCopyWith<$Res> implements $DailyScheduleEventCopyWith<$Res> {
+  factory $GetAllDailySchedulesByUserIdCopyWith(GetAllDailySchedulesByUserId value, $Res Function(GetAllDailySchedulesByUserId) _then) = _$GetAllDailySchedulesByUserIdCopyWithImpl;
+@useResult
+$Res call({
+ String userId
+});
+
+
+
+
+}
+/// @nodoc
+class _$GetAllDailySchedulesByUserIdCopyWithImpl<$Res>
+    implements $GetAllDailySchedulesByUserIdCopyWith<$Res> {
+  _$GetAllDailySchedulesByUserIdCopyWithImpl(this._self, this._then);
+
+  final GetAllDailySchedulesByUserId _self;
+  final $Res Function(GetAllDailySchedulesByUserId) _then;
+
+/// Create a copy of DailyScheduleEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? userId = null,}) {
+  return _then(GetAllDailySchedulesByUserId(
+null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$DailyScheduleState {
 
 
@@ -744,6 +876,86 @@ as bool,
 /// @nodoc
 
 
+class LoadedAllDailySchedulesByCreatorId implements DailyScheduleState {
+  const LoadedAllDailySchedulesByCreatorId(final  List<DailySchedule> schedules, final  Map<String, User> userMap): _schedules = schedules,_userMap = userMap;
+  
+
+ final  List<DailySchedule> _schedules;
+ List<DailySchedule> get schedules {
+  if (_schedules is EqualUnmodifiableListView) return _schedules;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_schedules);
+}
+
+ final  Map<String, User> _userMap;
+ Map<String, User> get userMap {
+  if (_userMap is EqualUnmodifiableMapView) return _userMap;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_userMap);
+}
+
+
+/// Create a copy of DailyScheduleState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$LoadedAllDailySchedulesByCreatorIdCopyWith<LoadedAllDailySchedulesByCreatorId> get copyWith => _$LoadedAllDailySchedulesByCreatorIdCopyWithImpl<LoadedAllDailySchedulesByCreatorId>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedAllDailySchedulesByCreatorId&&const DeepCollectionEquality().equals(other._schedules, _schedules)&&const DeepCollectionEquality().equals(other._userMap, _userMap));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_schedules),const DeepCollectionEquality().hash(_userMap));
+
+@override
+String toString() {
+  return 'DailyScheduleState.loadedAllDailySchedulesByCreatorId(schedules: $schedules, userMap: $userMap)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $LoadedAllDailySchedulesByCreatorIdCopyWith<$Res> implements $DailyScheduleStateCopyWith<$Res> {
+  factory $LoadedAllDailySchedulesByCreatorIdCopyWith(LoadedAllDailySchedulesByCreatorId value, $Res Function(LoadedAllDailySchedulesByCreatorId) _then) = _$LoadedAllDailySchedulesByCreatorIdCopyWithImpl;
+@useResult
+$Res call({
+ List<DailySchedule> schedules, Map<String, User> userMap
+});
+
+
+
+
+}
+/// @nodoc
+class _$LoadedAllDailySchedulesByCreatorIdCopyWithImpl<$Res>
+    implements $LoadedAllDailySchedulesByCreatorIdCopyWith<$Res> {
+  _$LoadedAllDailySchedulesByCreatorIdCopyWithImpl(this._self, this._then);
+
+  final LoadedAllDailySchedulesByCreatorId _self;
+  final $Res Function(LoadedAllDailySchedulesByCreatorId) _then;
+
+/// Create a copy of DailyScheduleState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? schedules = null,Object? userMap = null,}) {
+  return _then(LoadedAllDailySchedulesByCreatorId(
+null == schedules ? _self._schedules : schedules // ignore: cast_nullable_to_non_nullable
+as List<DailySchedule>,null == userMap ? _self._userMap : userMap // ignore: cast_nullable_to_non_nullable
+as Map<String, User>,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
 class DailySchedule_Error implements DailyScheduleState {
   const DailySchedule_Error(this.message);
   
@@ -867,6 +1079,86 @@ class _$DailySchedule_SuccessCopyWithImpl<$Res>
   return _then(DailySchedule_Success(
 null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class LoadedAllDailySchedulesByUserId implements DailyScheduleState {
+  const LoadedAllDailySchedulesByUserId(final  List<DailySchedule> schedules, final  Map<String, User> userMap): _schedules = schedules,_userMap = userMap;
+  
+
+ final  List<DailySchedule> _schedules;
+ List<DailySchedule> get schedules {
+  if (_schedules is EqualUnmodifiableListView) return _schedules;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_schedules);
+}
+
+ final  Map<String, User> _userMap;
+ Map<String, User> get userMap {
+  if (_userMap is EqualUnmodifiableMapView) return _userMap;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_userMap);
+}
+
+
+/// Create a copy of DailyScheduleState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$LoadedAllDailySchedulesByUserIdCopyWith<LoadedAllDailySchedulesByUserId> get copyWith => _$LoadedAllDailySchedulesByUserIdCopyWithImpl<LoadedAllDailySchedulesByUserId>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadedAllDailySchedulesByUserId&&const DeepCollectionEquality().equals(other._schedules, _schedules)&&const DeepCollectionEquality().equals(other._userMap, _userMap));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_schedules),const DeepCollectionEquality().hash(_userMap));
+
+@override
+String toString() {
+  return 'DailyScheduleState.loadedAllDailySchedulesByUserId(schedules: $schedules, userMap: $userMap)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $LoadedAllDailySchedulesByUserIdCopyWith<$Res> implements $DailyScheduleStateCopyWith<$Res> {
+  factory $LoadedAllDailySchedulesByUserIdCopyWith(LoadedAllDailySchedulesByUserId value, $Res Function(LoadedAllDailySchedulesByUserId) _then) = _$LoadedAllDailySchedulesByUserIdCopyWithImpl;
+@useResult
+$Res call({
+ List<DailySchedule> schedules, Map<String, User> userMap
+});
+
+
+
+
+}
+/// @nodoc
+class _$LoadedAllDailySchedulesByUserIdCopyWithImpl<$Res>
+    implements $LoadedAllDailySchedulesByUserIdCopyWith<$Res> {
+  _$LoadedAllDailySchedulesByUserIdCopyWithImpl(this._self, this._then);
+
+  final LoadedAllDailySchedulesByUserId _self;
+  final $Res Function(LoadedAllDailySchedulesByUserId) _then;
+
+/// Create a copy of DailyScheduleState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? schedules = null,Object? userMap = null,}) {
+  return _then(LoadedAllDailySchedulesByUserId(
+null == schedules ? _self._schedules : schedules // ignore: cast_nullable_to_non_nullable
+as List<DailySchedule>,null == userMap ? _self._userMap : userMap // ignore: cast_nullable_to_non_nullable
+as Map<String, User>,
   ));
 }
 

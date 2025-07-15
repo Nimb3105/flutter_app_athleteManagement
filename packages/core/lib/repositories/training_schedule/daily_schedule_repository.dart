@@ -20,6 +20,58 @@ class DailyScheduleRepository {
 
   DailyScheduleRepository({required this.baseUrl});
 
+  Future<List<DailySchedule>> getAllDailySchedulesByUserId(
+    String userId,
+  ) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/dailySchedules/user/$userId/all'),
+      headers: {'Content-type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      if (data['data'] != null && data['data'] is List<dynamic>) {
+        final List<dynamic> jsonList = data['data'];
+        return jsonList
+            .map((json) => DailySchedule.fromJson(json as Map<String, dynamic>))
+            .toList();
+      } else {
+        return []; // Trả về danh sách rỗng nếu không có dữ liệu
+      }
+    } else {
+      throw Exception(
+        'Failed to get daily schedules by user: ${response.statusCode}',
+      );
+    }
+  }
+
+  // Lấy tất cả lịch tập được tạo bởi một người dùng (huấn luyện viên)
+  Future<List<DailySchedule>> getAllDailySchedulesByCreatorId(
+    String creatorId,
+  ) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/dailySchedules/creator/$creatorId'),
+      headers: {'Content-type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      if (data['data'] != null && data['data'] is List<dynamic>) {
+        final List<dynamic> jsonList = data['data'];
+        return jsonList
+            .map((json) => DailySchedule.fromJson(json as Map<String, dynamic>))
+            .toList();
+      } else {
+        // Trả về danh sách rỗng nếu không có dữ liệu
+        return [];
+      }
+    } else {
+      throw Exception(
+        'Failed to get daily schedules by creator: ${response.statusCode}',
+      );
+    }
+  }
+
   Future<DailySchedule> createDailySchedule(DailySchedule dailySchedule) async {
     final response = await http.post(
       Uri.parse('$baseUrl/dailySchedules'),
@@ -83,7 +135,7 @@ class DailyScheduleRepository {
       if (errorBody is Map<String, dynamic>) {
         errorMessage = (errorBody['error'] ?? '').toString().toLowerCase();
       }
-    // ignore: empty_catches
+      // ignore: empty_catches
     } catch (e) {}
 
     if (errorMessage != null &&

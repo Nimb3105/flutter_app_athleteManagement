@@ -12,6 +12,7 @@ _DailySchedule _$DailyScheduleFromJson(Map<String, dynamic> json) =>
       userId: json['userId'] as String,
       name: json['name'] as String,
       sportId: json['sportId'] as String,
+      createdBy: json['createdBy'] as String,
       trainingSchedules:
           (json['trainingSchedules'] as List<dynamic>?)
               ?.map((e) => TrainingSchedule.fromJson(e as Map<String, dynamic>))
@@ -41,6 +42,7 @@ Map<String, dynamic> _$DailyScheduleToJson(_DailySchedule instance) =>
       'userId': instance.userId,
       'name': instance.name,
       'sportId': instance.sportId,
+      'createdBy': instance.createdBy,
       'trainingSchedules': instance.trainingSchedules,
       'startDate': _$JsonConverterToJson<String, DateTime>(
         instance.startDate,

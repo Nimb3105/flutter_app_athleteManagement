@@ -41,7 +41,9 @@ class CoachAthleteRepository {
     while (hasMorePages) {
       // Tăng giới hạn (limit) để giảm số lần gọi API nếu có thể
       final response = await http.get(
-        Uri.parse('$baseUrl/coach-athletes/user/$coachId?page=$currentPage&limit=50'),
+        Uri.parse(
+          '$baseUrl/coach-athletes/user/$coachId?page=$currentPage&limit=50',
+        ),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -51,11 +53,14 @@ class CoachAthleteRepository {
 
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       final List<dynamic> jsonList = data['data'] as List<dynamic>? ?? [];
-      
-      final pageItems = jsonList
-          .map((json) => CoachAthlete.fromJson(json as Map<String, dynamic>))
-          .toList();
-      
+
+      final pageItems =
+          jsonList
+              .map(
+                (json) => CoachAthlete.fromJson(json as Map<String, dynamic>),
+              )
+              .toList();
+
       allItems.addAll(pageItems);
 
       // Nếu API trả về ít item hơn limit, nghĩa là đã ở trang cuối
@@ -67,10 +72,10 @@ class CoachAthleteRepository {
     }
     return allItems;
   }
-  
+
   // --- Các phương thức khác giữ nguyên ---
-  
-   Future<CoachAthlete> createCoachAthlete(CoachAthlete coachAthlete) async {
+
+  Future<CoachAthlete> createCoachAthlete(CoachAthlete coachAthlete) async {
     final response = await http.post(
       Uri.parse('$baseUrl/coach-athletes'),
       headers: {'Content-Type': 'application/json'},
@@ -106,7 +111,7 @@ class CoachAthleteRepository {
       throw Exception('Failed to get coach-athlete: ${response.statusCode}');
     }
   }
-  
+
   Future<CoachAthlete?> getByAthleteId(String athleteId) async {
     final response = await http.get(
       Uri.parse('$baseUrl/coach-athletes/athlete/$athleteId'),
@@ -125,8 +130,8 @@ class CoachAthleteRepository {
       );
     }
   }
-  
-   Future<CoachAthlete> updateCoachAthlete(
+
+  Future<CoachAthlete> updateCoachAthlete(
     String id,
     CoachAthlete coachAthlete,
   ) async {
@@ -157,6 +162,18 @@ class CoachAthleteRepository {
 
     if (response.statusCode != 200 && response.statusCode != 204) {
       throw Exception('Failed to delete coach-athlete: ${response.statusCode}');
+    }
+  }
+
+  Future<void> deleteAllByCoachId(String coachId) async {
+    final response = await http.delete(
+      Uri.parse('$baseUrl/coach-athletes/coach/$coachId'),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode != 200 && response.statusCode != 204) {
+      throw Exception(
+          'Failed to delete coach-athletes by coach ID: ${response.statusCode}');
     }
   }
 }

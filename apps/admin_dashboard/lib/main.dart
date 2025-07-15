@@ -1,8 +1,14 @@
 import 'package:admin_dashboard/login.dart';
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
+import 'package:intl/date_symbol_data_local.dart'; // Thêm import này
 
-void main() {
+void main() async {
+  // Đảm bảo các thành phần Flutter đã sẵn sàng
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Thêm dòng này để khởi tạo dữ liệu định dạng ngày tháng cho Tiếng Việt
+  await initializeDateFormatting('vi_VN', null);
   runApp(const MyApp());
 }
 
@@ -174,6 +180,7 @@ class MyApp extends StatelessWidget {
                 (context) => DailyScheduleBloc(
                   dailyScheduleRepository:
                       context.read<DailyScheduleRepository>(),
+                  userRepository: context.read<UserRepository>(),
                 ),
           ),
           BlocProvider(

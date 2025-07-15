@@ -1,5 +1,7 @@
 import 'package:core/models/training_schedule/daily_schedule.dart';
+import 'package:core/models/user/user.dart';
 import 'package:core/repositories/training_schedule/daily_schedule_repository.dart';
+import 'package:core/repositories/user/user_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -26,6 +28,11 @@ sealed class DailyScheduleEvent with _$DailyScheduleEvent {
   ) = UpdateDailySchedule;
   const factory DailyScheduleEvent.deleteDailySchedule(String id) =
       DeleteDailySchedule;
+  const factory DailyScheduleEvent.getAllDailySchedulesByCreatorId(
+    String creatorId,
+  ) = GetAllDailySchedulesByCreatorId;
+  const factory DailyScheduleEvent.getAllDailySchedulesByUserId(String userId) =
+      GetAllDailySchedulesByUserId; // Thêm event này
 }
 
 @freezed
@@ -42,25 +49,105 @@ sealed class DailyScheduleState with _$DailyScheduleState {
     int limit,
     bool hasMore,
   ) = LoadedDailySchedules;
+  const factory DailyScheduleState.loadedAllDailySchedulesByCreatorId(
+    List<DailySchedule> schedules,
+    Map<String, User> userMap,
+  ) = LoadedAllDailySchedulesByCreatorId;
   const factory DailyScheduleState.error(String message) = DailySchedule_Error;
   const factory DailyScheduleState.success(String message) =
       DailySchedule_Success;
+  const factory DailyScheduleState.loadedAllDailySchedulesByUserId(
+    List<DailySchedule> schedules,
+    Map<String, User> userMap, // Để lấy tên người tạo (HLV)
+  ) = LoadedAllDailySchedulesByUserId; // Thêm state này
 }
 
 class DailyScheduleBloc extends Bloc<DailyScheduleEvent, DailyScheduleState> {
   final DailyScheduleRepository dailyScheduleRepository;
+  final UserRepository userRepository;
   // ignore: unused_field
   int _currentPage = 1;
   final List<DailySchedule> _dailySchedules = [];
 
-  DailyScheduleBloc({required this.dailyScheduleRepository})
-    : super(const DailyScheduleState.initial()) {
+  DailyScheduleBloc({
+    required this.dailyScheduleRepository,
+    required this.userRepository,
+  }) : super(const DailyScheduleState.initial()) {
     on<CreateDailySchedule>(_onCreateDailySchedule);
     on<GetDailyScheduleById>(_onGetDailyScheduleById);
     on<GetDailyScheduleByUserId>(_onGetDailyScheduleByUserId);
     on<GetAllDailySchedule>(_onGetAllDailySchedule);
     on<UpdateDailySchedule>(_onUpdateDailySchedule);
     on<DeleteDailySchedule>(_onDeleteDailySchedule);
+    on<GetAllDailySchedulesByCreatorId>(_onGetAllDailySchedulesByCreatorId);
+    on<GetAllDailySchedulesByUserId>(_onGetAllDailySchedulesByUserId);
+  }
+
+  Future<void> _onGetAllDailySchedulesByUserId(
+    GetAllDailySchedulesByUserId event,
+    Emitter<DailyScheduleState> emit,
+  ) async {
+    emit(const DailyScheduleState.loading());
+    try {
+      final schedules = await dailyScheduleRepository
+          .getAllDailySchedulesByUserId(event.userId);
+      if (schedules.isEmpty) {
+        emit(const LoadedAllDailySchedulesByUserId([], {}));
+        return;
+      }
+      final userMap = <String, User>{};
+      for (final schedule in schedules) {
+        if (!userMap.containsKey(schedule.createdBy)) {
+          final user = await userRepository.getUserById(schedule.createdBy);
+          userMap[schedule.createdBy] = user;
+        }
+      }
+      emit(LoadedAllDailySchedulesByUserId(schedules, userMap));
+    } catch (e) {
+      emit(DailyScheduleState.error(e.toString()));
+    }
+  }
+
+  Future<void> _onGetAllDailySchedulesByCreatorId(
+    GetAllDailySchedulesByCreatorId event,
+    Emitter<DailyScheduleState> emit,
+  ) async {
+    emit(const DailyScheduleState.loading());
+    try {
+      final schedules = await dailyScheduleRepository
+          .getAllDailySchedulesByCreatorId(event.creatorId);
+
+      // Nếu không có lịch trình nào, trả về danh sách rỗng
+      if (schedules.isEmpty) {
+        emit(
+          const DailyScheduleState.loadedAllDailySchedulesByCreatorId([], {}),
+        );
+        return;
+      }
+
+      // Lấy thông tin người dùng (VĐV) cho mỗi lịch trình
+      final userMap = <String, User>{};
+      for (final schedule in schedules) {
+        // Chỉ gọi API nếu chưa có thông tin của VĐV này
+        if (!userMap.containsKey(schedule.userId)) {
+          try {
+            final user = await userRepository.getUserById(schedule.userId);
+            userMap[schedule.userId] = user;
+          } catch (e) {
+            // Bỏ qua lỗi nếu không tìm thấy VĐV để không làm hỏng toàn bộ quá trình
+          }
+        }
+      }
+
+      emit(
+        DailyScheduleState.loadedAllDailySchedulesByCreatorId(
+          schedules,
+          userMap,
+        ),
+      );
+    } catch (e) {
+      emit(DailyScheduleState.error(e.toString()));
+    }
   }
 
   Future<void> _onCreateDailySchedule(
