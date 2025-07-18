@@ -28,10 +28,12 @@ class MaxValueInputFormatter extends TextInputFormatter {
 class TrainingExerciseCreateScreen extends StatefulWidget {
   final DateTime trainingDate;
   final String? sportId;
+  final String coachId;
 
   const TrainingExerciseCreateScreen({
     required this.trainingDate,
     required this.sportId,
+    required this.coachId,
     super.key,
   });
 
@@ -74,7 +76,7 @@ class _TrainingExerciseCreateScreenState
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ExerciseSelectScreen(sportId: widget.sportId),
+        builder: (context) => ExerciseSelectScreen(sportId: widget.sportId,coachId:widget.coachId ,),
       ),
     );
     if (result != null && result is List && result.length == 3) {

@@ -243,6 +243,7 @@ class DailyScheduleBloc extends Bloc<DailyScheduleEvent, DailyScheduleState> {
     try {
       final updateDailySchedule = await dailyScheduleRepository
           .updateDailySchedule(event.id, event.dailySchedule);
+      emit(DailyScheduleState.success("DailyScheduel update successfully"));
       emit(DailyScheduleState.loadedDailySchedule(updateDailySchedule));
     } catch (e) {
       emit(DailyScheduleState.error(e.toString()));

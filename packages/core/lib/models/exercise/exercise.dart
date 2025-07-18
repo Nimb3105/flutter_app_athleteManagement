@@ -17,6 +17,7 @@ abstract class Exercise with _$Exercise {
     required String gifUrl,
     required String sportId,
     required String unitType,
+    required String createdBy,
     @UtcDateTimeConverter() required DateTime? createdAt,
     @UtcDateTimeConverter() required DateTime? updatedAt,
   }) = _Exercise;

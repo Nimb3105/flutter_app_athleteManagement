@@ -21,6 +21,7 @@ _Exercise _$ExerciseFromJson(Map<String, dynamic> json) => _Exercise(
   gifUrl: json['gifUrl'] as String,
   sportId: json['sportId'] as String,
   unitType: json['unitType'] as String,
+  createdBy: json['createdBy'] as String,
   createdAt: _$JsonConverterFromJson<String, DateTime>(
     json['createdAt'],
     const UtcDateTimeConverter().fromJson,
@@ -42,6 +43,7 @@ Map<String, dynamic> _$ExerciseToJson(_Exercise instance) => <String, dynamic>{
   'gifUrl': instance.gifUrl,
   'sportId': instance.sportId,
   'unitType': instance.unitType,
+  'createdBy': instance.createdBy,
   'createdAt': _$JsonConverterToJson<String, DateTime>(
     instance.createdAt,
     const UtcDateTimeConverter().toJson,

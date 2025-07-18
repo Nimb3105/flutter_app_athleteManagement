@@ -40,7 +40,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
     return [
       _buildNavigator(
         key: _navigatorKeys[0],
-        initialRoute: CoachHomeScreen(sportId: widget.sportId),
+        initialRoute: CoachHomeScreen(sportId: widget.sportId,coachId: widget.coachId,),
       ),
       // ✅ TỐI ƯU HÓA: Cung cấp BLoC ở cấp cao hơn cho các màn hình con sử dụng
       BlocProvider(

@@ -7,8 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ExerciseSelectScreen extends StatelessWidget {
   final String? sportId;
+  final String coachId;
 
-  const ExerciseSelectScreen({required this.sportId, super.key});
+  const ExerciseSelectScreen({required this.sportId, super.key,required this.coachId});
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +107,7 @@ class ExerciseSelectScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder:
-                        (context) => ExerciseDetailScreen(exercise: exercise),
+                        (context) => ExerciseDetailScreen(exercise: exercise,coachId:coachId,),
                   ),
                 );
               },

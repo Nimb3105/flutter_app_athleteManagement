@@ -1,22 +1,20 @@
-// lib/screens/app/coach/daily_schedule/daily_schedule_list_screen.dart
-// ignore_for_file: use_build_context_synchronously, deprecated_member_use
+// lib/screens/app/coach/daily_schedule/daily_schedule_detail_screen.dart
+// ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
 import 'package:intl/intl.dart';
-import 'package:mobile_app/screens/app/coach/daily_schedule/daily_schedule_create_screen.dart';
-import 'package:mobile_app/screens/app/coach/daily_schedule/daily_schedule_edit_screen.dart'; // Thêm import
-import 'package:mobile_app/screens/app/coach/daily_schedule/training_schedule/list_training_schedule_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile_app/screens/app/coach/daily_schedule/all_daily_schedules_screen.dart'; // Import màn hình mới
+import 'package:mobile_app/screens/app/coach/daily_schedule/daily_schedule_edit_screen.dart';
+import 'package:mobile_app/screens/app/coach/daily_schedule/training_schedule/list_training_schedule_screen.dart';
 
-class DailyScheduleListScreen extends StatelessWidget {
-  final String userId;
+class DailyScheduleDetailScreen extends StatelessWidget {
+  final DailySchedule dailySchedule;
   final String createdBy;
   final String? sportId;
 
-  const DailyScheduleListScreen({
-    required this.userId,
+  const DailyScheduleDetailScreen({
+    required this.dailySchedule,
     required this.createdBy,
     required this.sportId,
     super.key,
@@ -24,116 +22,19 @@ class DailyScheduleListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create:
-          (context) => DailyScheduleBloc(
-            dailyScheduleRepository: context.read<DailyScheduleRepository>(),
-            userRepository: context.read<UserRepository>(),
-          )..add(
-            GetDailyScheduleByUserId(
-              userId,
-              DateTime.now().toUtc().toIso8601String(),
-            ),
-          ),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Kế Hoạch Tập Luyện',
-            style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.history),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:
-                        (context) => AllDailySchedulesScreen(
-                          userId: userId,
-                          createdBy: createdBy,
-                          sportId: sportId,
-                        ),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-        body: BlocBuilder<DailyScheduleBloc, DailyScheduleState>(
-          builder: (context, dailyState) {
-            if (dailyState is DailySchedule_Loading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (dailyState is LoadedDailySchedule) {
-              if (dailyState.dailySchedule.id == null) {
-                return _buildEmptyState(context);
-              }
-              return _buildTrainingDaysList(context, dailyState.dailySchedule);
-            } else if (dailyState is DailySchedule_Error) {
-              return Center(child: Text('Lỗi: ${dailyState.message}'));
-            }
-            return _buildEmptyState(context);
-          },
-        ),
-        floatingActionButton: Builder(
-          builder:
-              (context) => FloatingActionButton.extended(
-                onPressed: () {
-                  final currentBloc = context.read<DailyScheduleBloc>();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) => DailyScheduleCreateScreen(
-                            sportId: sportId,
-                            createdBy: createdBy,
-                            userId: userId,
-                            dailyScheduleBloc: currentBloc,
-                          ),
-                    ),
-                  );
-                },
-                label: const Text('Thêm Kế Hoạch'),
-                icon: const Icon(Icons.add),
-              ),
+    // Không cần BlocProvider ở đây vì chúng ta đã có đủ dữ liệu
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Chi Tiết Kế Hoạch',
+          style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
         ),
       ),
-    );
-  }
-
-  Widget _buildEmptyState(BuildContext context) {
-    // ... (Giữ nguyên không đổi)
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.calendar_today_outlined,
-            size: 100,
-            color: Colors.grey[300],
-          ),
-          const SizedBox(height: 24),
-          Text(
-            'Chưa có kế hoạch tập luyện',
-            style: GoogleFonts.poppins(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey[600],
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Nhấn nút + để tạo một kế hoạch mới cho VĐV.',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey[500]),
-          ),
-        ],
-      ),
+      body: _buildTrainingDaysList(context, dailySchedule),
     );
   }
 
   Widget _buildTrainingDaysList(BuildContext context, DailySchedule schedule) {
-    // ... (Giữ nguyên không đổi)
     final List<DateTime> trainingDays = [];
     if (schedule.startDate != null && schedule.endDate != null) {
       DateTime currentDate = schedule.startDate!;
@@ -146,7 +47,7 @@ class DailyScheduleListScreen extends StatelessWidget {
 
     return ListView.builder(
       padding: const EdgeInsets.all(16.0),
-      itemCount: trainingDays.length + 1,
+      itemCount: trainingDays.length + 1, // +1 cho thẻ Header
       itemBuilder: (context, index) {
         if (index == 0) {
           return _buildHeaderCard(context, schedule);

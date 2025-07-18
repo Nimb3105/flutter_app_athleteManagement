@@ -1,12 +1,23 @@
 // lib/screens/app/coach/exercises/exercise_create_screen.dart
 
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:video_player/video_player.dart';
 
 class ExerciseCreateScreen extends StatefulWidget {
   final String sportId;
-  const ExerciseCreateScreen({required this.sportId, super.key});
+  final String createdBy;
+  const ExerciseCreateScreen({
+    required this.sportId,
+    super.key,
+    required this.createdBy,
+  });
 
   @override
   State<ExerciseCreateScreen> createState() => _ExerciseCreateScreenState();
@@ -18,7 +29,12 @@ class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
   final targetController = TextEditingController();
   final secondaryMusclesController = TextEditingController();
   final instructionsController = TextEditingController();
-  final gifUrlController = TextEditingController();
+
+  File? _selectedMediaFile;
+  String? _uploadedMediaUrl;
+  bool _isUploading = false;
+  bool _isVideoFile = false;
+  VideoPlayerController? _localVideoController;
 
   String? selectedBodyPart;
   String? selectedEquipment;
@@ -48,8 +64,43 @@ class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
     targetController.dispose();
     secondaryMusclesController.dispose();
     instructionsController.dispose();
-    gifUrlController.dispose();
+    _localVideoController?.dispose();
     super.dispose();
+  }
+
+  Future<void> _pickMedia() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? media = await picker.pickMedia();
+
+    if (media != null) {
+      // Dọn dẹp controller video cũ trước khi tạo cái mới
+      await _localVideoController?.dispose();
+      _localVideoController = null;
+
+      final isVideo =
+          media.path.toLowerCase().endsWith('.mp4') ||
+          media.path.toLowerCase().endsWith('.mov');
+
+      setState(() {
+        _selectedMediaFile = File(media.path);
+        _uploadedMediaUrl = null;
+        _isVideoFile = isVideo;
+      });
+
+      // Nếu là video, khởi tạo trình phát
+      if (isVideo) {
+        _localVideoController = VideoPlayerController.file(_selectedMediaFile!)
+          ..initialize().then((_) {
+            if (!mounted) return;
+            setState(() {}); // Cập nhật UI khi video đã sẵn sàng
+            _localVideoController?.play();
+            _localVideoController?.setLooping(true);
+          });
+      }
+
+      // Bắt đầu tải tệp lên server
+      context.read<ImageBloc>().add(UploadImage(_selectedMediaFile!));
+    }
   }
 
   @override
@@ -62,30 +113,63 @@ class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
         ),
       ),
       // BlocListener sẽ xử lý các tác vụ một lần như hiển thị SnackBar và điều hướng
-      body: BlocListener<ExerciseBloc, ExerciseState>(
-        listener: (context, state) {
-          if (state is Exercise_Success) {
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: Colors.green,
-                ),
-              );
-            // Tự động quay lại màn hình trước đó khi thành công
-            Navigator.pop(context);
-          } else if (state is Exercise_Error) {
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(
-                  content: Text('Lỗi: ${state.message}'),
-                  backgroundColor: Colors.red,
-                ),
-              );
-          }
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<ExerciseBloc, ExerciseState>(
+            listener: (context, state) {
+              if (state is Exercise_Success) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    SnackBar(
+                      content: Text(state.message),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                Navigator.pop(context);
+              } else if (state is Exercise_Error) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    SnackBar(
+                      content: Text('Lỗi tạo bài tập: ${state.message}'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+              }
+            },
+          ),
+          BlocListener<ImageBloc, ImageState>(
+            listener: (context, state) {
+              setState(() {
+                _isUploading = state is Image_Loading;
+              });
+
+              if (state is Image_Success) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    const SnackBar(
+                      content: Text("Tải tệp lên thành công!"),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                setState(() {
+                  _uploadedMediaUrl = state.fileUrl;
+                });
+              } else if (state is Image_Error) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    SnackBar(
+                      content: Text('Lỗi tải tệp lên: ${state.message}'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+              }
+            },
+          ),
+        ],
         child: Form(
           key: formKey,
           child: ListView(
@@ -139,20 +223,27 @@ class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
                 validator: _validateNonEmpty,
               ),
               const SizedBox(height: 20),
-              _buildTextFormField(
-                controller: gifUrlController,
-                labelText: 'URL Ảnh/Video minh họa',
-                validator: _validateNonEmpty,
+              Text(
+                "Ảnh/Video minh họa",
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey[600],
+                ),
               ),
+              const SizedBox(height: 8),
+              _buildMediaPicker(),
               const SizedBox(height: 32),
               // BlocBuilder sẽ xây dựng lại nút bấm dựa trên trạng thái
               BlocBuilder<ExerciseBloc, ExerciseState>(
                 builder: (context, state) {
-                  final isLoading = state is Exercise_Loading;
+                  final isCreatingExercise = state is Exercise_Loading;
                   return ElevatedButton(
-                    onPressed: isLoading ? null : _createExercise,
+                    onPressed:
+                        (isCreatingExercise || _isUploading)
+                            ? null
+                            : _createExercise,
                     child:
-                        isLoading
+                        (isCreatingExercise || _isUploading)
                             ? const SizedBox(
                               height: 24,
                               width: 24,
@@ -169,6 +260,73 @@ class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildMediaPicker() {
+    return GestureDetector(
+      onTap: _pickMedia,
+      child: Container(
+        height: 200,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: Colors.grey.shade300,
+            width: 2,
+            style: BorderStyle.solid,
+          ),
+        ),
+        child:
+            _isUploading
+                ? const Center(child: CircularProgressIndicator())
+                : _selectedMediaFile != null
+                ? _buildLocalMediaPreview() // Hiển thị preview từ file local
+                : _buildPlaceholder(), // Hiển thị placeholder mặc định
+      ),
+    );
+  }
+
+  // Widget để hiển thị preview cho file đã chọn
+  Widget _buildLocalMediaPreview() {
+    // Nếu là video và đã sẵn sàng
+    if (_isVideoFile &&
+        _localVideoController != null &&
+        _localVideoController!.value.isInitialized) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(14),
+        child: AspectRatio(
+          aspectRatio: _localVideoController!.value.aspectRatio,
+          child: VideoPlayer(_localVideoController!),
+        ),
+      );
+    }
+    // Nếu là video nhưng chưa sẵn sàng
+    else if (_isVideoFile) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    // Nếu là ảnh
+    else {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(14),
+        child: Image.file(_selectedMediaFile!, fit: BoxFit.cover),
+      );
+    }
+  }
+
+  // Widget cho placeholder
+  Widget _buildPlaceholder() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(Icons.cloud_upload_outlined, size: 50, color: Colors.grey[600]),
+        const SizedBox(height: 8),
+        Text(
+          'Nhấn để chọn ảnh/video',
+          style: GoogleFonts.poppins(color: Colors.grey[700]),
+        ),
+      ],
     );
   }
 
@@ -213,12 +371,19 @@ class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
   }
 
   void _createExercise() {
-    // Kiểm tra tính hợp lệ của form
-    if (!(formKey.currentState?.validate() ?? false)) {
+    if (!(formKey.currentState?.validate() ?? false)) return;
+
+    // Kiểm tra xem đã tải tệp lên chưa
+    if (_uploadedMediaUrl == null || _uploadedMediaUrl!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Vui lòng chọn và chờ tải lên tệp media.'),
+          backgroundColor: Colors.orange,
+        ),
+      );
       return;
     }
 
-    // Tạo đối tượng Exercise từ dữ liệu người dùng
     final exercise = Exercise(
       id: null,
       name: nameController.text.trim(),
@@ -228,23 +393,23 @@ class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
           secondaryMusclesController.text
               .split(',')
               .map((e) => e.trim())
-              .where((e) => e.isNotEmpty) // Loại bỏ các chuỗi rỗng
+              .where((e) => e.isNotEmpty)
               .toList(),
       instructions:
           instructionsController.text
               .split(',')
               .map((e) => e.trim())
-              .where((e) => e.isNotEmpty) // Loại bỏ các chuỗi rỗng
+              .where((e) => e.isNotEmpty)
               .toList(),
       equipment: selectedEquipment!,
-      gifUrl: gifUrlController.text.trim(),
+      gifUrl: _uploadedMediaUrl!, // Sử dụng URL đã tải lên
       sportId: widget.sportId,
       unitType: selectedUnitType!,
-      createdAt: DateTime.now(), // Không cần .toUtc() vì converter sẽ xử lý
-      updatedAt: DateTime.now(),
+      createdBy: widget.createdBy,
+      createdAt: null,
+      updatedAt: null,
     );
 
-    // Thêm sự kiện CreateExercise vào BLoC
     context.read<ExerciseBloc>().add(CreateExercise(exercise));
   }
 }

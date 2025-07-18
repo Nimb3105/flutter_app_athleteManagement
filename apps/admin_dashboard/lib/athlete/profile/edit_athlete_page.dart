@@ -24,7 +24,6 @@ class _EditAthletePageState extends State<EditAthletePage> {
   bool _isUserUpdateSuccess = false;
   bool _isAthleteUpdateSuccess = false;
 
-  // Vẫn giữ lại để biết HLV hiện tại là ai
   CoachAthlete? _currentCoachAthlete;
   String? _selectedAthleteType;
 
@@ -85,11 +84,28 @@ class _EditAthletePageState extends State<EditAthletePage> {
 
   void _onSave() {
     if (_formKey.currentState!.validate()) {
-      // Reset trạng thái thành công trước mỗi lần lưu
       setState(() {
         _isUserUpdateSuccess = false;
         _isAthleteUpdateSuccess = false;
       });
+
+      // Kiểm tra xem môn thể thao có thay đổi không
+      final bool sportHasChanged = _selectedSportId != widget.athlete.sportId;
+
+      // Nếu môn thể thao đã thay đổi và có HLV hiện tại, thực hiện xóa
+      if (sportHasChanged && _currentCoachAthlete != null) {
+        context.read<CoachAthleteBloc>().add(
+          CoachAthleteEvent.deleteCoachAthlete(_currentCoachAthlete!.id!),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              "Đã xóa HLV cũ do đổi môn thể thao. Vui lòng gán lại HLV mới.",
+            ),
+            backgroundColor: Colors.orange,
+          ),
+        );
+      }
 
       final updatedUser = widget.athlete.copyWith(
         fullName: _fullNameController.text,
@@ -107,7 +123,6 @@ class _EditAthletePageState extends State<EditAthletePage> {
           athleteType: _selectedAthleteType!,
           updatedAt: DateTime.now(),
         );
-        // Gửi sự kiện cập nhật User và Athlete
         context.read<UserBloc>().add(
           UserEvent.updateUser(widget.athlete.id!, updatedUser),
         );
@@ -126,7 +141,7 @@ class _EditAthletePageState extends State<EditAthletePage> {
           backgroundColor: Colors.green,
         ),
       );
-      Navigator.of(context).pop(true); // Trả về true
+      Navigator.of(context).pop(true);
     }
   }
 
@@ -166,7 +181,6 @@ class _EditAthletePageState extends State<EditAthletePage> {
               }
             },
           ),
-          // Lắng nghe để lấy HLV hiện tại
           BlocListener<CoachAthleteBloc, CoachAthleteState>(
             listenWhen: (previous, current) => current is LoadedCoachAthlete,
             listener: (context, state) {
@@ -243,7 +257,6 @@ class _EditAthletePageState extends State<EditAthletePage> {
                       onChanged: (v) => setState(() => _selectedGender = v),
                       validator: (v) => v == null ? 'Vui lòng chọn' : null,
                     ),
-
                     const SizedBox(height: 24),
                     const Text(
                       "Thông tin chuyên môn",
@@ -253,8 +266,6 @@ class _EditAthletePageState extends State<EditAthletePage> {
                       ),
                     ),
                     const SizedBox(height: 16),
-
-                    // Dropdown Môn thể thao
                     BlocBuilder<SportBloc, SportState>(
                       builder: (context, state) {
                         if (state is LoadedSports) {
@@ -273,32 +284,9 @@ class _EditAthletePageState extends State<EditAthletePage> {
                                     )
                                     .toList(),
                             onChanged: (newValue) {
-                              if (newValue != null &&
-                                  newValue != _selectedSportId) {
-                                setState(() {
-                                  _selectedSportId = newValue;
-                                });
-                                // LOGIC MỚI: Nếu có HLV đang được gán, hãy xóa mối quan hệ này
-                                if (_currentCoachAthlete != null) {
-                                  context.read<CoachAthleteBloc>().add(
-                                    CoachAthleteEvent.deleteCoachAthlete(
-                                      _currentCoachAthlete!.id!,
-                                    ),
-                                  );
-                                  // Reset state cục bộ
-                                  setState(() {
-                                    _currentCoachAthlete = null;
-                                  });
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text(
-                                        "Đã xóa HLV cũ do đổi môn thể thao. Vui lòng gán lại HLV mới ở trang chi tiết.",
-                                      ),
-                                      backgroundColor: Colors.orange,
-                                    ),
-                                  );
-                                }
-                              }
+                              setState(() {
+                                _selectedSportId = newValue;
+                              });
                             },
                             validator:
                                 (v) => v == null ? 'Vui lòng chọn' : null,
@@ -327,12 +315,8 @@ class _EditAthletePageState extends State<EditAthletePage> {
                         });
                       },
                       validator:
-                          (value) =>
-                              value == null
-                                  ? 'Vui lòng chọn loại vận động viên'
-                                  : null,
+                          (value) => value == null ? 'Vui lòng chọn' : null,
                     ),
-
                     const SizedBox(height: 32),
                     if (athleteState is LoadedAthlete)
                       SizedBox(

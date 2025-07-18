@@ -1,104 +1,85 @@
+// lib/repositories/images/images_repository.dart
+
+import 'dart:convert';
 import 'dart:io';
+import 'package:core/core.dart';
 import 'package:http/http.dart' as http;
 
 class ImageRepository {
-  /// Uploads any media file to Catbox.
-  /// Returns the URL of the uploaded file on success.
-  /// Throws an exception with the error message on failure.
+  /// Tải một tệp media lên backend của bạn.
+  /// Trả về URL của tệp đã tải lên nếu thành công.
+  /// Ném ra một Exception với thông báo lỗi nếu thất bại.
   Future<String> uploadImage(File file) async {
+    final uri = Uri.parse(
+      '${ApiConstants.baseUrl}/images/upload',
+    ); // Sửa lại endpoint cho đúng
+
     try {
-      final uri = Uri.parse('https://catbox.moe/user/api.php');
       final request = http.MultipartRequest('POST', uri);
 
-      // Add request type
-      request.fields['reqtype'] = 'fileupload';
+      // Sửa lại tên trường thành 'file' để khớp với backend
+      request.files.add(await http.MultipartFile.fromPath('file', file.path));
 
-      // Add file to the request
-      final fileStream = http.ByteStream(file.openRead());
-      final fileLength = await file.length();
-      final multipartFile = http.MultipartFile(
-        'fileToUpload',
-        fileStream,
-        fileLength,
-        filename: file.path.split('/').last,
-      );
-      request.files.add(multipartFile);
-
-      // Send request with timeout
-      // ignore: avoid_print
-      print('Uploading file: ${file.path}, size: $fileLength bytes');
-      final response = await request.send().timeout(
-        const Duration(seconds: 1000), // Timeout sau 30 giây
-        onTimeout: () {
-          throw Exception('Hết thời gian tải tệp lên, kiểm tra kết nối mạng.');
-        },
+      final streamedResponse = await request.send().timeout(
+        const Duration(minutes: 60),
+        onTimeout:
+            () =>
+                throw Exception('Hết thời gian tải tệp lên. Vui lòng thử lại.'),
       );
 
-      final responseBody = await http.Response.fromStream(response);
-      // ignore: avoid_print
-      print(
-        'Response status: ${response.statusCode}, body: ${responseBody.body}',
-      );
+      final response = await http.Response.fromStream(streamedResponse);
 
-      if (response.statusCode == 200) {
-        final imageUrl = responseBody.body.trim();
-        if (imageUrl.startsWith('https://files.catbox.moe/')) {
-          return imageUrl; // Return the Catbox URL
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
+
+        // --- THAY ĐỔI QUAN TRỌNG Ở ĐÂY ---
+        // Lấy URL từ key "url" mà backend đã trả về
+        final url = data['url'];
+
+        if (url != null && url is String) {
+          return url;
         } else {
-          throw Exception('Lỗi tải tệp lên Catbox: $imageUrl');
+          throw Exception('Phản hồi từ server không chứa URL hợp lệ.');
         }
       } else {
-        throw Exception('Lỗi tải tệp lên Catbox: ${responseBody.body}');
+        final errorData = jsonDecode(response.body);
+        final errorMessage =
+            errorData['error'] ?? 'Lỗi không xác định từ server.';
+        throw Exception(
+          'Tải tệp lên thất bại: $errorMessage (Mã lỗi: ${response.statusCode})',
+        );
       }
     } catch (e) {
-      // ignore: avoid_print
-      print('Upload error: $e');
       rethrow;
     }
   }
 
-  /// Deletes a media file from Catbox by its URL.
-  /// Returns a success message on successful deletion.
-  /// Throws an exception with the error message on failure.
+  /// Xóa một tệp media khỏi backend của bạn bằng URL của nó.
   Future<String> deleteImage(String fileUrl) async {
     try {
-      // Validate file URL
-      if (fileUrl.isEmpty || !fileUrl.startsWith('https://files.catbox.moe/')) {
-        throw Exception('URL tệp không hợp lệ');
-      }
+      final fileName = fileUrl.split('/').last;
 
-      final uri = Uri.parse('https://catbox.moe/user/api.php');
-      final request = http.MultipartRequest('POST', uri);
+      // Sửa lại endpoint để khớp với backend
+      final uri = Uri.parse('${ApiConstants.baseUrl}/images/$fileName');
 
-      // Add request type and file URL
-      request.fields['reqtype'] = 'deletefiles';
-      request.fields['files'] = fileUrl;
+      final response = await http
+          .delete(uri)
+          .timeout(
+            const Duration(seconds: 30),
+            onTimeout: () => throw Exception('Hết thời gian yêu cầu xóa tệp.'),
+          );
 
-      // Send request with timeout
-      // ignore: avoid_print
-      print('Deleting file: $fileUrl');
-      final response = await request.send().timeout(
-        const Duration(seconds: 100), // Timeout sau 15 giây
-        onTimeout: () {
-          throw Exception('Hết thời gian xóa tệp, kiểm tra kết nối mạng.');
-        },
-      );
-
-      final responseBody = await http.Response.fromStream(response);
-      // ignore: avoid_print
-      print(
-        'Delete response status: ${response.statusCode}, body: ${responseBody.body}',
-      );
-
-      if (response.statusCode == 200 &&
-          responseBody.body.contains('successfully')) {
+      if (response.statusCode >= 200 && response.statusCode < 300) {
         return 'Xóa tệp thành công';
       } else {
-        throw Exception('Lỗi xóa tệp trên Catbox: ${responseBody.body}');
+        final errorData = jsonDecode(response.body);
+        final errorMessage =
+            errorData['error'] ?? 'Lỗi không xác định từ server.';
+        throw Exception(
+          'Xóa tệp thất bại: $errorMessage (Mã lỗi: ${response.statusCode})',
+        );
       }
     } catch (e) {
-      // ignore: avoid_print
-      print('Delete error: $e');
       rethrow;
     }
   }

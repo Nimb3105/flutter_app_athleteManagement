@@ -75,6 +75,7 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
     GetAllExercisesBySportId event,
     Emitter<ExerciseState> emit,
   ) async {
+    emit(const ExerciseState.loading());
     try {
       final exercises = await exerciseRepository.getAllExercisesBySportId(
         event.sportId,
@@ -251,6 +252,7 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
         event.id,
         event.exercise,
       );
+      emit(const ExerciseState.success('Cập nhật bài tập thành công'));
       emit(ExerciseState.loadedExercise(updatedExercise));
     } catch (e) {
       emit(ExerciseState.error(e.toString()));

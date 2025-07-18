@@ -30,12 +30,14 @@ class TrainingExerciseEditScreen extends StatefulWidget {
   final String? sportId;
   final TrainingExercise exercise;
   final String exerciseName;
+  final String coachId;
 
   const TrainingExerciseEditScreen({
     required this.trainingDate,
     required this.sportId,
     required this.exercise,
     required this.exerciseName,
+    required this.coachId,
     super.key,
   });
 
@@ -122,7 +124,7 @@ class _TrainingExerciseEditScreenState
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ExerciseSelectScreen(sportId: widget.sportId),
+        builder: (context) => ExerciseSelectScreen(sportId: widget.sportId,coachId: widget.coachId,),
       ),
     );
     if (result != null && result is List && result.length == 3) {

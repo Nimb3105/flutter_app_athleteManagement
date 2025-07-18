@@ -186,7 +186,7 @@ class DailyScheduleRepository {
     DailySchedule dailySchedule,
   ) async {
     final response = await http.put(
-      Uri.parse('$baseUrl/dailySchedule/$id'),
+      Uri.parse('$baseUrl/dailySchedules/$id'),
       headers: {'Content-type': 'application/json'},
       body: jsonEncode(dailySchedule.toJson()),
     );

@@ -86,8 +86,53 @@ class _EditCoachPageState extends State<EditCoachPage> {
     }
   }
 
-  void _onSave() {
+  void _onSave() async {
     if (_formKey.currentState!.validate()) {
+      final bool sportHasChanged = _selectedSportId != widget.coach.sportId;
+
+      if (sportHasChanged && _coachAthletes.isNotEmpty) {
+        final bool? confirmed = await showDialog<bool>(
+          context: context,
+          builder:
+              (dialogContext) => AlertDialog(
+                title: const Text('Xác nhận thay đổi'),
+                content: const Text(
+                  'Thay đổi môn thể thao sẽ xóa tất cả các vận động viên hiện tại khỏi danh sách quản lý của huấn luyện viên này. Bạn có chắc chắn muốn tiếp tục?',
+                ),
+                actions: [
+                  TextButton(
+                    child: const Text('Hủy'),
+                    onPressed: () => Navigator.of(dialogContext).pop(false),
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(foregroundColor: Colors.red),
+                    child: const Text('Xác nhận'),
+                    onPressed: () {
+                      Navigator.of(dialogContext).pop(true);
+                    },
+                  ),
+                ],
+              ),
+        );
+
+        if (confirmed != true) {
+          return; // Hủy bỏ lưu nếu người dùng không xác nhận
+        }
+
+        // Nếu xác nhận, thực hiện xóa
+        context.read<CoachAthleteBloc>().add(
+          CoachAthleteEvent.deleteAllByCoachId(widget.coach.id!),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Đã xóa các VĐV cũ. Vui lòng gán lại VĐV cho môn thể thao mới.',
+            ),
+            backgroundColor: Colors.orange,
+          ),
+        );
+      }
+
       setState(() {
         _isUserUpdateSuccess = false;
         _isCoachUpdateSuccess = false;
@@ -132,58 +177,6 @@ class _EditCoachPageState extends State<EditCoachPage> {
     }
   }
 
-  void _handleSportChange(String? newSportId) {
-    if (newSportId != null && newSportId != _selectedSportId) {
-      // Chỉ hiển thị cảnh báo nếu HLV đang quản lý VĐV
-      if (_coachAthletes.isNotEmpty) {
-        showDialog(
-          context: context,
-          builder:
-              (dialogContext) => AlertDialog(
-                title: const Text('Xác nhận thay đổi'),
-                content: const Text(
-                  'Thay đổi môn thể thao sẽ xóa tất cả các vận động viên hiện tại khỏi danh sách quản lý của huấn luyện viên này. Bạn có chắc chắn muốn tiếp tục?',
-                ),
-                actions: [
-                  TextButton(
-                    child: const Text('Hủy'),
-                    onPressed: () => Navigator.of(dialogContext).pop(),
-                  ),
-                  TextButton(
-                    style: TextButton.styleFrom(foregroundColor: Colors.red),
-                    child: const Text('Xác nhận'),
-                    onPressed: () {
-                      // Gọi sự kiện xóa tất cả VĐV
-                      context.read<CoachAthleteBloc>().add(
-                        CoachAthleteEvent.deleteAllByCoachId(widget.coach.id!),
-                      );
-                      setState(() {
-                        _selectedSportId = newSportId;
-                        _coachAthletes = []; // Xóa danh sách VĐV ở state cục bộ
-                      });
-                      Navigator.of(dialogContext).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Đã xóa các VĐV cũ. Vui lòng gán lại VĐV cho môn thể thao mới ở trang chi tiết.',
-                          ),
-                          backgroundColor: Colors.orange,
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-        );
-      } else {
-        // Nếu không có VĐV nào, chỉ cần cập nhật state
-        setState(() {
-          _selectedSportId = newSportId;
-        });
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -220,7 +213,6 @@ class _EditCoachPageState extends State<EditCoachPage> {
               }
             },
           ),
-          // Lắng nghe để cập nhật danh sách VĐV của HLV
           BlocListener<CoachAthleteBloc, CoachAthleteState>(
             listener: (context, state) {
               if (state is LoadedCoachAthletes) {
@@ -325,7 +317,11 @@ class _EditCoachPageState extends State<EditCoachPage> {
                                       ),
                                     )
                                     .toList(),
-                            onChanged: _handleSportChange, // Gọi hàm xử lý
+                            onChanged: (newSportId) {
+                              setState(() {
+                                _selectedSportId = newSportId;
+                              });
+                            },
                             validator:
                                 (v) => v == null ? 'Vui lòng chọn' : null,
                           );

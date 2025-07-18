@@ -25,6 +25,9 @@ class _EditTrainingExerciseScreenState
   late TextEditingController _durationController;
   late TextEditingController _distanceController;
 
+  String _durationUnit = 'giây';
+  String _distanceUnit = 'm';
+
   @override
   void initState() {
     super.initState();
@@ -62,12 +65,24 @@ class _EditTrainingExerciseScreenState
   void _submit() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+
+      int durationInSeconds = int.tryParse(_durationController.text) ?? 0;
+      if (_durationUnit == 'phút') {
+        durationInSeconds *= 60;
+      }
+
+      double distanceInMeters =
+          double.tryParse(_distanceController.text) ?? 0.0;
+      if (_distanceUnit == 'km') {
+        distanceInMeters *= 1000;
+      }
+
       final updatedExercise = widget.trainingExercise.copyWith(
         reps: int.tryParse(_repsController.text) ?? 0,
         sets: int.tryParse(_setsController.text) ?? 0,
         weight: double.tryParse(_weightController.text) ?? 0.0,
-        duration: int.tryParse(_durationController.text) ?? 0,
-        distance: double.tryParse(_distanceController.text) ?? 0.0,
+        duration: durationInSeconds,
+        distance: distanceInMeters,
         updatedAt: DateTime.now().toUtc(),
       );
       context.read<TrainingExerciseBloc>().add(
@@ -106,18 +121,82 @@ class _EditTrainingExerciseScreenState
     } else if (_unitType == 'Thời gian') {
       return Column(
         children: [
-          TextFormField(
-            controller: _durationController,
-            decoration: const InputDecoration(labelText: 'Thời gian (giây)'),
-            keyboardType: TextInputType.number,
-            validator: (v) => (v == null || v.isEmpty) ? 'Bắt buộc' : null,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                flex: 2,
+                child: TextFormField(
+                  controller: _durationController,
+                  decoration: const InputDecoration(labelText: 'Thời gian'),
+                  keyboardType: TextInputType.number,
+                  validator:
+                      (v) => (v == null || v.isEmpty) ? 'Bắt buộc' : null,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                flex: 1,
+                child: DropdownButtonFormField<String>(
+                  value: _durationUnit,
+                  items:
+                      ['giây', 'phút']
+                          .map(
+                            (unit) => DropdownMenuItem(
+                              value: unit,
+                              child: Text(unit),
+                            ),
+                          )
+                          .toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      setState(() {
+                        _durationUnit = value;
+                      });
+                    }
+                  },
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 16),
-          TextFormField(
-            controller: _distanceController,
-            decoration: const InputDecoration(labelText: 'Khoảng cách (mét)'),
-            keyboardType: TextInputType.number,
-            validator: (v) => (v == null || v.isEmpty) ? 'Bắt buộc' : null,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                flex: 2,
+                child: TextFormField(
+                  controller: _distanceController,
+                  decoration: const InputDecoration(labelText: 'Khoảng cách'),
+                  keyboardType: TextInputType.number,
+                  validator:
+                      (v) => (v == null || v.isEmpty) ? 'Bắt buộc' : null,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                flex: 1,
+                child: DropdownButtonFormField<String>(
+                  value: _distanceUnit,
+                  items:
+                      ['m', 'km']
+                          .map(
+                            (unit) => DropdownMenuItem(
+                              value: unit,
+                              child: Text(unit),
+                            ),
+                          )
+                          .toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      setState(() {
+                        _distanceUnit = value;
+                      });
+                    }
+                  },
+                ),
+              ),
+            ],
           ),
         ],
       );

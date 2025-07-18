@@ -6,7 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CoachHomeScreen extends StatelessWidget {
   final String sportId;
-  const CoachHomeScreen({super.key, required this.sportId});
+  final String coachId;
+  const CoachHomeScreen({super.key, required this.sportId,required this.coachId});
 
   @override
   Widget build(BuildContext context) {
@@ -83,32 +84,11 @@ class CoachHomeScreen extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ExerciseListScreen(sportId: sportId),
+                builder: (context) => ExerciseListScreen(sportId: sportId,coachId: coachId,),
               ),
             );
           },
         ),
-        // _buildFeatureCard(
-        //   context,
-        //   icon: Icons.calendar_today,
-        //   label: 'Lịch Tập',
-        //   color: Colors.blue,
-        //   onTap: () {},
-        // ),
-        // _buildFeatureCard(
-        //   context,
-        //   icon: Icons.restaurant_menu,
-        //   label: 'Dinh Dưỡng',
-        //   color: Colors.green,
-        //   onTap: () {},
-        // ),
-        // _buildFeatureCard(
-        //   context,
-        //   icon: Icons.bar_chart,
-        //   label: 'Thống Kê',
-        //   color: Colors.purple,
-        //   onTap: () {},
-        // ),
       ],
     );
   }

@@ -302,6 +302,7 @@ class _TrainingScheduleCreateScreenState
                         (context) => TrainingExerciseCreateScreen(
                           trainingDate: widget.trainingDate,
                           sportId: widget.sportId,
+                          coachId: widget.createBy,
                         ),
                   ),
                 );
@@ -384,6 +385,7 @@ class _TrainingScheduleCreateScreenState
                                           sportId: widget.sportId,
                                           exercise: exercise,
                                           exerciseName: name,
+                                          coachId: widget.createBy  ,
                                         ),
                                   ),
                                 );

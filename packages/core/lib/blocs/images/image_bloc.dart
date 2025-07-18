@@ -37,6 +37,7 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
       final fileUrl = await imageRepository.uploadImage(event.file);
       emit(ImageState.success(fileUrl));
     } catch (e) {
+      // e.toString() giờ sẽ chứa thông báo lỗi rõ ràng hơn từ repository
       emit(ImageState.error(e.toString()));
     }
   }
@@ -48,7 +49,7 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
     emit(const ImageState.loading());
     try {
       final response = await imageRepository.deleteImage(event.fileUrl);
-      emit(ImageState.success(response)); // Empty URL after deletion
+      emit(ImageState.success(response));
     } catch (e) {
       emit(ImageState.error(e.toString()));
     }

@@ -1,5 +1,3 @@
-// lib/screens/app/coach/exercises/exercise_list_screen.dart
-
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
@@ -12,47 +10,191 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class ExerciseListScreen extends StatefulWidget {
   final String sportId;
-
-  const ExerciseListScreen({required this.sportId, super.key});
+  final String coachId;
+  const ExerciseListScreen({
+    required this.sportId,
+    super.key,
+    required this.coachId,
+  });
 
   @override
   State<ExerciseListScreen> createState() => _ExerciseListScreenState();
 }
 
 class _ExerciseListScreenState extends State<ExerciseListScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  List<Exercise> _allExercises = [];
+  List<Exercise> _filteredExercises = [];
+  String? _selectedBodyPart;
+
+  // Giả sử đây là các giá trị lọc bạn có
+  final List<String> _bodyParts = [
+    'Ngực',
+    'Lưng',
+    'Chân',
+    'Vai',
+    'Tay',
+    'Bụng',
+  ];
+
   @override
   void initState() {
     super.initState();
-    // Khi màn hình được tạo, gọi sự kiện để tải danh sách bài tập.
-    // Bloc đã được cung cấp từ NavigationMenu.
+
+    // Tải danh sách bài tập ban đầu
     context.read<ExerciseBloc>().add(GetAllExercisesBySportId(widget.sportId));
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _applyFilters() {
+    setState(() {
+      _filteredExercises =
+          _allExercises.where((exercise) {
+            final matchesSearch =
+                _searchController.text.isEmpty ||
+                exercise.name.toLowerCase().contains(
+                  _searchController.text.toLowerCase(),
+                );
+            final matchesFilter =
+                _selectedBodyPart == null ||
+                exercise.bodyPart == _selectedBodyPart;
+            return matchesSearch && matchesFilter;
+          }).toList();
+    });
+  }
+
+  void _onSearchChanged() {
+    _applyFilters();
+  }
+
+  void _showFilterDialog() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            return Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Lọc theo Nhóm Cơ',
+                    style: GoogleFonts.poppins(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  DropdownButtonFormField<String>(
+                    value: _selectedBodyPart,
+                    hint: const Text('Tất cả các nhóm cơ'),
+                    onChanged: (value) {
+                      setModalState(() {
+                        _selectedBodyPart = value;
+                      });
+                    },
+                    items: [
+                      const DropdownMenuItem<String>(
+                        value: null,
+                        child: Text('Tất cả'),
+                      ),
+                      ..._bodyParts.map(
+                        (part) =>
+                            DropdownMenuItem(value: part, child: Text(part)),
+                      ),
+                    ],
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Nhóm cơ',
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Hủy'),
+                      ),
+                      const SizedBox(width: 12),
+                      ElevatedButton(
+                        onPressed: () {
+                          _applyFilters(); // Áp dụng bộ lọc
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Áp dụng'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // Không cần BlocProvider ở đây nữa.
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Bài Tập',
-          style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+        title: SizedBox(
+          height: 40,
+          child: TextField(
+            controller: _searchController,
+            decoration: InputDecoration(
+              hintText: 'Tìm kiếm bài tập...',
+              prefixIcon: const Icon(Icons.search, size: 20),
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 0,
+                horizontal: 15,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              fillColor: Colors.grey[200],
+            ),
+          ),
         ),
         centerTitle: false,
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.filter_list)),
+          IconButton(
+            onPressed: _showFilterDialog,
+            icon: const Icon(Icons.filter_list),
+            tooltip: 'Lọc bài tập',
+          ),
         ],
       ),
       body: BlocConsumer<ExerciseBloc, ExerciseState>(
         listener: (context, state) {
-          if (state is Exercise_Success) {
+          // THÊM LOGIC XỬ LÝ KHI TẢI XONG
+          if (state is LoadedExercisesBySportId) {
+            setState(() {
+              _allExercises = state.exercises;
+              _applyFilters();
+            });
+          } else if (state is Exercise_Success) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
                 backgroundColor: Colors.green,
               ),
             );
-            // Tải lại danh sách sau khi có hành động thành công
             context.read<ExerciseBloc>().add(
               GetAllExercisesBySportId(widget.sportId),
             );
@@ -66,20 +208,17 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
           }
         },
         builder: (context, state) {
-          if (state is Exercise_Loading) {
-            return _buildLoadingShimmer();
-          } else if (state is LoadedExercisesBySportId ||
-              (state is Exercise_Loading)) {
-            final exercises = (state as dynamic).exercises;
-            if (exercises.isEmpty) {
-              return _buildEmptyState(context);
-            }
-            return _buildExerciseList(context, exercises);
-          } else if (state is Exercise_Error) {
+          if (state is Exercise_Error) {
             return Center(child: Text('Lỗi: ${state.message}'));
           }
-          // Trạng thái mặc định hoặc không có bài tập
-          return _buildEmptyState(context);
+          // Giờ đây điều kiện này sẽ hoạt động đúng
+          if (state is Exercise_Loading && _allExercises.isEmpty) {
+            return _buildLoadingShimmer();
+          }
+          if (_filteredExercises.isEmpty) {
+            return _buildEmptyState(context);
+          }
+          return _buildExerciseList(context, _filteredExercises);
         },
       ),
       floatingActionButton: Builder(
@@ -91,9 +230,8 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
                 MaterialPageRoute(
                   builder:
                       (_) => BlocProvider.value(
-                        // Chia sẻ bloc hiện tại cho màn hình tạo mới
                         value: BlocProvider.of<ExerciseBloc>(innerContext),
-                        child: ExerciseCreateScreen(sportId: widget.sportId),
+                        child: ExerciseCreateScreen(sportId: widget.sportId,createdBy: widget.coachId,),
                       ),
                 ),
               );
@@ -105,11 +243,10 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
     );
   }
 
-  // ... các hàm _build còn lại không thay đổi ...
   Widget _buildLoadingShimmer() {
     return ListView.builder(
       padding: const EdgeInsets.all(8),
-      itemCount: 6,
+      itemCount: 8,
       itemBuilder: (context, index) {
         return Shimmer.fromColors(
           baseColor: Colors.grey[300]!,
@@ -120,7 +257,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
               borderRadius: BorderRadius.circular(16),
             ),
             child: const ListTile(
-              leading: CircleAvatar(backgroundColor: Colors.white),
+              leading: CircleAvatar(radius: 28, backgroundColor: Colors.white),
               title: SizedBox(
                 height: 20,
                 child: ColoredBox(color: Colors.white),
@@ -141,10 +278,10 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.fitness_center, size: 100, color: Colors.grey[300]),
+          Icon(Icons.search_off, size: 100, color: Colors.grey[300]),
           const SizedBox(height: 24),
           Text(
-            'Chưa có bài tập nào',
+            'Không tìm thấy bài tập phù hợp',
             style: GoogleFonts.poppins(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -153,7 +290,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Nhấn nút + để thêm bài tập mới.',
+            'Hãy thử thay đổi từ khóa tìm kiếm hoặc bộ lọc.',
             textAlign: TextAlign.center,
             style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey[500]),
           ),
@@ -220,7 +357,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ExerciseDetailScreen(exercise: exercise),
+              builder: (context) => ExerciseDetailScreen(exercise: exercise,coachId: widget.coachId,),
             ),
           );
         },
