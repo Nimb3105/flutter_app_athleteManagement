@@ -201,8 +201,22 @@ class ExerciseRepository {
       headers: {'Content-Type': 'application/json'},
     );
 
+    // Nếu request không thành công (status code không phải 2xx)
     if (response.statusCode != 200 && response.statusCode != 204) {
-      throw Exception('Failed to delete exercise: ${response.statusCode}');
+      String errorMessage = 'Xóa bài tập thất bại.';
+      // Cố gắng đọc nội dung lỗi từ JSON response
+      try {
+        final errorData = jsonDecode(response.body) as Map<String, dynamic>;
+        // Lấy thông báo lỗi từ key "error"
+        if (errorData.containsKey('error')) {
+          errorMessage = errorData['error'] as String;
+        }
+      } catch (e) {
+        // Nếu không parse được JSON, sử dụng lỗi chung
+        errorMessage = 'Lỗi không xác định từ server: ${response.statusCode}';
+      }
+      // Ném ra Exception với thông báo lỗi đã được xử lý
+      throw Exception(errorMessage);
     }
   }
 }

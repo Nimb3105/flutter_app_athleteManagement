@@ -1,5 +1,4 @@
 // lib/screens/app/coach/exercises/exercise_detail.dart
-
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,7 +8,6 @@ import 'package:video_player/video_player.dart';
 class ExerciseDetailScreen extends StatefulWidget {
   final Exercise exercise;
   final String coachId;
-
   const ExerciseDetailScreen({
     super.key,
     required this.exercise,
@@ -20,119 +18,134 @@ class ExerciseDetailScreen extends StatefulWidget {
   State<ExerciseDetailScreen> createState() => _ExerciseDetailScreenState();
 }
 
-class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
+class _ExerciseDetailScreenState extends State<ExerciseDetailScreen>
+    with WidgetsBindingObserver {
   VideoPlayerController? _videoController;
   Future<void>? _initializeVideoPlayerFuture;
-  late Exercise _currentExercise;
+  late Exercise
+  _currentExercise; // Dùng state cục bộ để cập nhật UI ngay lập tức
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _currentExercise = widget.exercise;
-    _setupMedia(_currentExercise.gifUrl); // Gọi hàm setup media
+    _setupMedia(_currentExercise.gifUrl);
   }
 
-  String _getFullUrl(String relativePath) {
-    // Nếu đường dẫn đã là một URL đầy đủ, trả về luôn
-    if (relativePath.startsWith('http')) {
-      return relativePath;
-    }
-    // Ngược lại, ghép với baseUrl
-    return '${ApiConstants.baseUrl}$relativePath';
-  }
-
-  // Hàm helper để kiểm tra URL có phải là video không
-  bool _isUrlVideo(String url) {
-    // Không cần thay đổi hàm này
-    final uri = Uri.tryParse(url);
-    if (uri == null) return false;
-    final path = uri.path.toLowerCase();
-    return path.endsWith('.mp4') ||
-        path.endsWith('.mov') ||
-        path.endsWith('.avi');
-  }
-
-  void _setupMedia(String url) async {
-    final fullUrl = _getFullUrl(url);
-
-    // Nếu đang phát cùng video thì không cần khởi tạo lại
-    if (_videoController?.dataSource == fullUrl) return;
-
-    try {
-      await _videoController?.pause();
-      await _videoController?.dispose();
-    } catch (e) {
-      debugPrint("Error disposing video controller: $e");
-    }
-
-    _videoController = null;
-    _initializeVideoPlayerFuture = null;
-
-    if (_isUrlVideo(fullUrl)) {
-      final uri = Uri.parse(fullUrl);
-      _videoController = VideoPlayerController.networkUrl(uri);
-      _initializeVideoPlayerFuture = _videoController!
-          .initialize()
-          .then((_) {
-            if (!mounted) return;
-            _videoController!
-              ..setLooping(true)
-              ..play();
-            setState(() {});
-          })
-          .catchError((e) {
-            debugPrint("Error initializing video: $e");
-          });
-    }
-  }
-
-  @override
-  void didUpdateWidget(covariant ExerciseDetailScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // Nếu bài tập thực sự đổi và URL media khác thì mới khởi tạo lại
-    if (widget.exercise.id != oldWidget.exercise.id ||
-        widget.exercise.gifUrl != oldWidget.exercise.gifUrl) {
-      _setupMedia(widget.exercise.gifUrl);
-    }
-  }
-
+  // ... (dispose, didChangeAppLifecycleState, và các hàm helper _getFullUrl, _isUrlVideo không đổi)
   @override
   void dispose() {
-    _videoController?.pause();
+    WidgetsBinding.instance.removeObserver(this);
     _videoController?.dispose();
     super.dispose();
   }
 
-  // ... (Hàm _showDeleteConfirmationDialog không đổi)
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (_videoController == null || !_videoController!.value.isInitialized) {
+      return;
+    }
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused) {
+      _videoController!.pause();
+    } else if (state == AppLifecycleState.resumed) {
+      _videoController!.play();
+    }
+  }
+
+  String _getFullUrl(String path) {
+    if (path.startsWith('http')) return path;
+    return '${ApiConstants.baseUrl}$path';
+  }
+
+  bool _isUrlVideo(String url) {
+    final uri = Uri.tryParse(url);
+    if (uri == null) return false;
+    return [
+      '.mp4',
+      '.mov',
+      '.avi',
+    ].any((ext) => uri.path.toLowerCase().endsWith(ext));
+  }
+
+  void _setupMedia(String mediaUrl) {
+    final fullUrl = _getFullUrl(mediaUrl);
+    _videoController?.dispose(); // Dọn dẹp controller cũ
+
+    if (_isUrlVideo(fullUrl)) {
+      _videoController = VideoPlayerController.networkUrl(Uri.parse(fullUrl));
+      _initializeVideoPlayerFuture = _videoController!.initialize().then((_) {
+        if (mounted) {
+          _videoController!
+            ..setLooping(true)
+            ..play();
+          setState(() {});
+        }
+      });
+    } else {
+      _videoController = null;
+      _initializeVideoPlayerFuture = null;
+    }
+    setState(() {});
+  }
+
   void _showDeleteConfirmationDialog() {
     showDialog(
       context: context,
-      builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          title: const Text('Xác nhận xóa'),
-          content: Text(
-            'Bạn có chắc chắn muốn xóa bài tập "${widget.exercise.name}" không?',
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Hủy'),
-              onPressed: () => Navigator.of(dialogContext).pop(),
+      builder:
+          (dialogContext) => AlertDialog(
+            title: const Text('Xác nhận xóa'),
+            content: Text(
+              'Bạn có chắc chắn muốn xóa bài tập "${_currentExercise.name}" không?',
             ),
-            TextButton(
-              child: const Text('Xóa', style: TextStyle(color: Colors.red)),
-              onPressed: () {
-                Navigator.of(dialogContext).pop();
-                if (widget.exercise.id != null) {
-                  // Chỉ dispatch sự kiện khi có ID hợp lệ
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(),
+                child: const Text('Hủy'),
+              ),
+              TextButton(
+                child: const Text('Xóa', style: TextStyle(color: Colors.red)),
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
                   context.read<ExerciseBloc>().add(
-                    DeleteExercise(widget.exercise.id!),
+                    DeleteExercise(_currentExercise.id!),
                   );
-                }
-              },
+                },
+              ),
+            ],
+          ),
+    );
+  }
+
+  void _showForeignKeyErrorDialog(BuildContext context, String message) {
+    final displayMessage = message.replaceFirst('Exception: ', '');
+
+    showDialog(
+      context: context,
+      builder:
+          (dialogContext) => AlertDialog(
+            title: Row(
+              children: [
+                Icon(Icons.warning_amber_rounded, color: Colors.orange[700]),
+                const SizedBox(width: 10),
+                const Text('Không Thể Xóa'),
+              ],
             ),
-          ],
-        );
-      },
+            content: Text(displayMessage, style: GoogleFonts.poppins()),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+                  // SAU KHI ĐÓNG DIALOG, GỌI EVENT ĐỂ ĐẶT LẠI TRẠNG THÁI BLOC
+                  context.read<ExerciseBloc>().add(
+                    const ExerciseEvent.clearError(),
+                  );
+                },
+              ),
+            ],
+          ),
     );
   }
 
@@ -140,18 +153,37 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
   Widget build(BuildContext context) {
     return BlocListener<ExerciseBloc, ExerciseState>(
       listener: (context, state) {
-        if (state is LoadedExercise &&
-            state.exercise.id == _currentExercise.id) {
-          setState(() {
-            _currentExercise = state.exercise;
-            if (_currentExercise.gifUrl !=
-                (_videoController?.dataSource ?? '')) {
-              _setupMedia(_currentExercise.gifUrl);
+        // Xử lý khi xóa thành công
+        if (state is Exercise_Success && state.message.contains('Xóa bài tập thành công')) {
+          // Sử dụng addPostFrameCallback để đảm bảo navigation an toàn
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) {
+              // Hiển thị thông báo thành công
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Đã xóa bài tập thành công"),
+                  backgroundColor: Colors.green,
+                ),
+              );
+              // Quay về màn hình danh sách và trả về kết quả 'deleted'
+              Navigator.of(context).pop('deleted');
             }
           });
-        } else if (state is Exercise_Success &&
-            state.message.contains('deleted')) {
-          Navigator.pop(context);
+        }
+        // Xử lý lỗi (bao gồm cả lỗi khóa ngoại)
+        else if (state is Exercise_Error) {
+          if (state.message.contains('không thể xóa vì còn liên quan')) {
+            _showForeignKeyErrorDialog(context, state.message);
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Lỗi: ${state.message}"),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+          // Đặt lại trạng thái của BLoC để tránh lỗi lặp lại
+          context.read<ExerciseBloc>().add(const ExerciseEvent.clearError());
         }
       },
       child: Scaffold(
@@ -166,12 +198,12 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
     );
   }
 
-  // ... (_buildBody không đổi, nó sẽ gọi _buildMediaSection với exercise)
+  // ... (Các hàm _build... UI không thay đổi)
   Widget _buildBody(Exercise exercise) {
     return ListView(
       padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
       children: [
-        _buildMediaSection(exercise),
+        _buildMediaSection(),
         const SizedBox(height: 32),
         _buildInfoCard(
           title: 'Thông tin cơ bản',
@@ -201,17 +233,14 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
     );
   }
 
-  // --- THAY ĐỔI QUAN TRỌNG NHẤT LÀ Ở ĐÂY ---
-  Widget _buildMediaSection(Exercise exercise) {
-    final fullUrl = _getFullUrl(exercise.gifUrl); // <-- Luôn lấy URL đầy đủ
-    print("fullUrl : $fullUrl");
+  Widget _buildMediaSection() {
     return ClipRRect(
       borderRadius: BorderRadius.circular(16.0),
       child: Container(
         height: 250,
         color: Colors.grey[200],
         child:
-            _isUrlVideo(fullUrl) && _videoController != null
+            _isUrlVideo(_currentExercise.gifUrl) && _videoController != null
                 ? FutureBuilder(
                   future: _initializeVideoPlayerFuture,
                   builder: (context, snapshot) {
@@ -222,12 +251,20 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                         child: VideoPlayer(_videoController!),
                       );
                     }
+                    if (snapshot.hasError) {
+                      return const Center(
+                        child: Icon(
+                          Icons.error_outline,
+                          color: Colors.red,
+                          size: 50,
+                        ),
+                      );
+                    }
                     return const Center(child: CircularProgressIndicator());
                   },
                 )
                 : Image.network(
-                  // Image.network cũng sẽ nhận URL đầy đủ
-                  fullUrl,
+                  _getFullUrl(_currentExercise.gifUrl),
                   fit: BoxFit.cover,
                   errorBuilder:
                       (context, error, stackTrace) =>
@@ -249,7 +286,6 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
     );
   }
 
-  // ... (Các hàm build khác không đổi)
   Widget _buildInfoCard({
     required String title,
     required IconData icon,
@@ -370,51 +406,52 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
   }
 
   Widget _buildActionButtons(Exercise exercise) {
-    final bool canEditOrDelete =
-        exercise.createdBy ==
-        widget.coachId;
-    if (!canEditOrDelete) return const SizedBox.shrink();
-
+    if (exercise.createdBy != widget.coachId) return const SizedBox.shrink();
     return Row(
       children: [
         Expanded(
           child: OutlinedButton.icon(
-            onPressed: () {
-              Navigator.push<Exercise>(
+            onPressed: () async {
+              _videoController?.pause();
+              final updatedExercise = await Navigator.push<Exercise>(
                 context,
                 MaterialPageRoute(
                   builder:
                       (_) => MultiBlocProvider(
                         providers: [
                           BlocProvider.value(
-                            value: BlocProvider.of<ExerciseBloc>(context),
+                            value: context.read<ExerciseBloc>(),
+                          ),
+                          RepositoryProvider(
+                            create: (context) => ImageRepository(),
                           ),
                           BlocProvider(
                             create:
                                 (context) => ImageBloc(
-                                  imageRepository: ImageRepository(),
+                                  imageRepository:
+                                      context.read<ImageRepository>(),
                                 ),
                           ),
                         ],
-                        child: ExerciseEditScreen(exercise: exercise),
+                        child: ExerciseEditScreen(exercise: _currentExercise),
                       ),
                 ),
-              ).then((updatedExercise) {
-                if (updatedExercise != null) {
-                  setState(() {
-                    _currentExercise = updatedExercise;
-                    _setupMedia(_currentExercise.gifUrl);
-                  });
-                }
-              });
+              );
+              if (updatedExercise != null && mounted) {
+                setState(() {
+                  if (_currentExercise.gifUrl != updatedExercise.gifUrl) {
+                    _setupMedia(updatedExercise.gifUrl);
+                  }
+                  _currentExercise = updatedExercise;
+                });
+                // Pop with 'updated' to signal list screen to refresh
+                Navigator.pop(context, 'updated');
+              } else {
+                _videoController?.play();
+              }
             },
             icon: const Icon(Icons.edit_outlined),
             label: const Text('Sửa'),
-            style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              textStyle: GoogleFonts.poppins(fontWeight: FontWeight.bold),
-            ),
-            // ... (style)
           ),
         ),
         const SizedBox(width: 16),
@@ -426,12 +463,9 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red[400],
               foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              textStyle: GoogleFonts.poppins(fontWeight: FontWeight.bold),
             ),
           ),
         ),
-        // ... (nút Xóa)
       ],
     );
   }

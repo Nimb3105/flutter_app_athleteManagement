@@ -27,6 +27,9 @@ sealed class TrainingScheduleEvent with _$TrainingScheduleEvent {
     String dailyScheduleId,
     String date,
   ) = GetAllTrainingSchedulesByDailyScheduleId;
+  const factory TrainingScheduleEvent.createMultipleTrainingSchedules(
+    List<TrainingSchedule> schedules,
+  ) = CreateMultipleTrainingSchedules;
 }
 
 @freezed
@@ -70,6 +73,32 @@ class TrainingScheduleBloc
     on<GetAllTrainingSchedulesByDailyScheduleId>(
       _onGetAllTrainingSchedulesByDailyScheduleId,
     );
+    on<CreateMultipleTrainingSchedules>(_onCreateMultipleTrainingSchedules);
+  }
+
+  Future<void> _onCreateMultipleTrainingSchedules(
+    CreateMultipleTrainingSchedules event,
+    Emitter<TrainingScheduleState> emit,
+  ) async {
+    // Không cần emit loading để tránh làm gián đoạn UI
+    try {
+      // Dùng Future.wait để thực hiện các lệnh gọi API song song, tăng hiệu suất
+      await Future.wait(
+        event.schedules.map(
+          (schedule) =>
+              trainingScheduleRepository.createTrainingSchedule(schedule),
+        ),
+      );
+      // Có thể emit một trạng thái success chung nếu muốn
+      // emit(const TrainingScheduleState.success('Áp dụng lịch tập thành công'));
+    } catch (e) {
+      // Vẫn emit lỗi nếu có vấn đề
+      emit(
+        TrainingScheduleState.error(
+          "Lỗi khi áp dụng lịch tập: ${e.toString()}",
+        ),
+      );
+    }
   }
 
   Future<void> _onGetAllTrainingSchedulesByDailyScheduleId(

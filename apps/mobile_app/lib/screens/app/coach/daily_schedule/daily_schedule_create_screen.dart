@@ -160,6 +160,17 @@ class _DailyScheduleCreateScreenState extends State<DailyScheduleCreateScreen> {
     bloc.add(CreateDailySchedule(dailySchedule));
   }
 
+  List<DateTime> getAllDaysInPlan() {
+    final days = int.tryParse(daysController.text) ?? 0;
+    if (days <= 0 || startDateNotifier.value == null) return [];
+
+    return List.generate(days, (index) {
+      return DateUtils.dateOnly(
+        startDateNotifier.value!.add(Duration(days: index)),
+      );
+    });
+  }
+
   // --- PHẦN GIAO DIỆN BUILD ---
   @override
   Widget build(BuildContext context) {
@@ -174,7 +185,6 @@ class _DailyScheduleCreateScreenState extends State<DailyScheduleCreateScreen> {
         ),
         body: BlocListener<DailyScheduleBloc, DailyScheduleState>(
           listener: (context, state) {
-            
             if (state is DailySchedule_Success) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -445,6 +455,7 @@ class _DailyScheduleCreateScreenState extends State<DailyScheduleCreateScreen> {
                             trainingSchedulesNotifier:
                                 trainingSchedulesNotifier,
                             exerciseNamesNotifier: exerciseNamesNotifier,
+                            allDaysInPlan: getAllDaysInPlan(),
                           ),
                     ),
                   );

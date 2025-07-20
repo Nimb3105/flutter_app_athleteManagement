@@ -601,6 +601,38 @@ as String,
 }
 
 /// @nodoc
+
+
+class ClearExerciseError implements ExerciseEvent {
+  const ClearExerciseError();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ClearExerciseError);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'ExerciseEvent.clearError()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
 mixin _$ExerciseState {
 
 

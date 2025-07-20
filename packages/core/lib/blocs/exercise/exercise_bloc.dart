@@ -29,6 +29,8 @@ sealed class ExerciseEvent with _$ExerciseEvent {
   const factory ExerciseEvent.deleteExercise(String id) = DeleteExercise;
   const factory ExerciseEvent.getAllExxerciseBySportId(String sportId) =
       GetAllExercisesBySportId;
+
+  const factory ExerciseEvent.clearError() = ClearExerciseError;
 }
 
 @freezed
@@ -59,6 +61,8 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
   String? _currentSportName; // Lưu target hiện tại
   String? _currentBodyPart; // Lưu body part hiện tại
 
+  ExerciseState? _lastSuccessfulState;
+
   ExerciseBloc({required this.exerciseRepository})
     : super(const ExerciseState.initial()) {
     on<CreateExercise>(_onCreateExercise);
@@ -69,6 +73,17 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
     on<GetAllExercisesBySportName>(_onGetAllExercisesBySportName);
     on<GetAllExercisesByBodyPart>(_onGetAllExercisesByBodyPart);
     on<GetAllExercisesBySportId>(_onGetAllExercisesBySportId);
+    on<ClearExerciseError>(_onClearError);
+  }
+
+  void _onClearError(ClearExerciseError event, Emitter<ExerciseState> emit) {
+    // Nếu có trạng thái thành công đã lưu, phát lại nó
+    if (_lastSuccessfulState != null) {
+      emit(_lastSuccessfulState!);
+    } else {
+      // Nếu không, quay về trạng thái ban đầu
+      emit(const ExerciseState.initial());
+    }
   }
 
   Future<void> _onGetAllExercisesBySportId(
@@ -80,7 +95,15 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
       final exercises = await exerciseRepository.getAllExercisesBySportId(
         event.sportId,
       );
-      emit(ExerciseState.loadedExercisesBySportId(List.from(exercises)));
+      // Tạo state thành công
+      final successState = ExerciseState.loadedExercisesBySportId(
+        List.from(exercises),
+      );
+
+      // LƯU LẠI state thành công vào biến cache
+      _lastSuccessfulState = successState;
+
+      emit(successState);
     } catch (e) {
       emit(ExerciseState.error(e.toString()));
     }
@@ -95,6 +118,7 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
       final createdExercise = await exerciseRepository.createExercise(
         event.exercise,
       );
+      
       emit(ExerciseState.success('Thêm bài tập thành công'));
       emit(ExerciseState.loadedExercise(createdExercise));
     } catch (e) {
@@ -266,8 +290,10 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
     emit(const ExerciseState.loading());
     try {
       await exerciseRepository.deleteExercise(event.id);
-      emit(const ExerciseState.success('Exercise deleted successfully'));
+      emit(const ExerciseState.success('Xóa bài tập thành công'));
     } catch (e) {
+      // e.toString() bây giờ sẽ chứa thông báo lỗi cụ thể từ repository
+      // Ví dụ: "Exception: không thể xóa vì còn liên quan đến bài tập trong lịch tập luyện"
       emit(ExerciseState.error(e.toString()));
     }
   }

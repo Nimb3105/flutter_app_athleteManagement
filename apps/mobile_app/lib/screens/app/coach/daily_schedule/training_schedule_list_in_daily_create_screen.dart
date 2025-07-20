@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
+import 'package:mobile_app/screens/app/coach/daily_schedule/apply_schedule_dialog.dart';
+import 'package:mobile_app/screens/app/coach/daily_schedule/daily_schedule_create_screen.dart';
 import 'package:mobile_app/screens/app/coach/daily_schedule/training_schedule_create_screen.dart';
 import 'package:mobile_app/screens/app/coach/daily_schedule/training_schedule_edit_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,6 +18,7 @@ class TrainingScheduleListInDailyCreateScreen extends StatelessWidget {
   final String createBy;
   final String? sportId;
   final ValueNotifier<Map<String, List<String>>> exerciseNamesNotifier;
+  final List<DateTime> allDaysInPlan;
 
   const TrainingScheduleListInDailyCreateScreen({
     required this.trainingDate,
@@ -24,8 +27,17 @@ class TrainingScheduleListInDailyCreateScreen extends StatelessWidget {
     required this.createBy,
     required this.sportId,
     required this.exerciseNamesNotifier,
+    required this.allDaysInPlan,
     super.key,
   });
+
+  List<DateTime> _getAllDaysInPlan(BuildContext context) {
+    // Vì chúng ta đang ở màn hình tạo, không có DailySchedule object hoàn chỉnh.
+    // Chúng ta cần lấy thông tin từ các Notifier ở màn hình cha.
+    // Đây là một cách, nhưng tốt hơn là truyền trực tiếp vào.
+    // Tạm thời để trống, sẽ cập nhật ở bước sau.
+    return [];
+  }
 
   // Hàm kiểm tra xem hai DateTime có cùng ngày không
   bool _isSameDay(DateTime date1, DateTime date2) {
@@ -244,18 +256,24 @@ class TrainingScheduleListInDailyCreateScreen extends StatelessWidget {
 
   // --- LOGIC GỐC ĐƯỢC GIỮ NGUYÊN ---
 
+  // Mở tệp: lib/screens/app/coach/daily_schedule/training_schedule_list_in_daily_create_screen.dart
+  // Thay thế hàm _onAddSchedule hiện tại của bạn bằng hàm này.
+
   void _onAddSchedule(BuildContext context) async {
-    final schedules = trainingSchedulesNotifier.value;
-    final filtered =
-        schedules.where((ts) => _isSameDay(ts.date, trainingDate)).toList();
+    // 1. Lấy danh sách các buổi tập đã có trong ngày hiện tại để xác định giờ kết thúc muộn nhất
+    final schedulesForDate =
+        trainingSchedulesNotifier.value
+            .where((ts) => _isSameDay(ts.date, trainingDate))
+            .toList();
+
     final latestEndTime =
-        filtered.isNotEmpty
-            ? filtered
-                .where((ts) => ts.endTime != null)
+        schedulesForDate.isNotEmpty
+            ? schedulesForDate
                 .map((ts) => ts.endTime)
                 .reduce((a, b) => a.isAfter(b) ? a : b)
             : null;
 
+    // 2. Điều hướng đến màn hình tạo buổi tập và chờ kết quả trả về
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
@@ -269,18 +287,71 @@ class TrainingScheduleListInDailyCreateScreen extends StatelessWidget {
       ),
     );
 
+    // 3. Xử lý kết quả sau khi màn hình tạo đóng lại
     if (result != null && result is List && result.length == 2) {
       final newSchedule = result[0] as TrainingSchedule;
       final newExerciseNames = result[1] as List<String>;
+
+      // Cập nhật buổi tập vừa tạo vào danh sách tổng
       trainingSchedulesNotifier.value = [
         ...trainingSchedulesNotifier.value,
         newSchedule,
       ];
 
-      final updatedMap = Map<String, List<String>>.from(
-        exerciseNamesNotifier.value,
-      )..[newSchedule.id ?? schedules.length.toString()] = newExerciseNames;
-      exerciseNamesNotifier.value = updatedMap;
+      // Cập nhật tên bài tập tương ứng với buổi tập mới
+      // Sử dụng một khóa duy nhất, an toàn hơn là dùng id có thể là null
+      final scheduleKey = DateTime.now().toIso8601String();
+      exerciseNamesNotifier.value = {
+        ...exerciseNamesNotifier.value,
+        scheduleKey: newExerciseNames,
+      };
+
+      // 4. Hiển thị hộp thoại hỏi người dùng có muốn áp dụng cho ngày khác không
+      final applyToOthers = await showDialog<bool>(
+        context: context,
+        barrierDismissible: false, // Ngăn người dùng tắt dialog
+        builder:
+            (dialogContext) => AlertDialog(
+              title: const Text("Áp dụng cho ngày khác?"),
+              content: const Text(
+                "Bạn có muốn sao chép buổi tập này cho những ngày khác chưa có lịch không?",
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(dialogContext).pop(false),
+                  child: const Text("Không"),
+                ),
+                ElevatedButton(
+                  onPressed: () => Navigator.of(dialogContext).pop(true),
+                  child: const Text("Có, chọn ngày"),
+                ),
+              ],
+            ),
+      );
+
+      // 5. Nếu người dùng đồng ý, hiển thị hộp thoại chọn ngày
+      if (applyToOthers == true) {
+        // Giả sử `allDaysInPlan` đã được truyền vào widget này
+        // (như đã hướng dẫn trong câu trả lời trước)
+        final newSchedulesToCreate = await showDialog<List<TrainingSchedule>>(
+          context: context,
+          builder:
+              (dialogContext) => ApplyScheduleDialog(
+                allDaysInPlan: allDaysInPlan,
+                existingSchedules: trainingSchedulesNotifier.value,
+                sourceSchedule: newSchedule,
+              ),
+        );
+
+        // 6. Nếu người dùng đã chọn ngày, cập nhật danh sách tổng với các bản sao
+        if (newSchedulesToCreate != null && newSchedulesToCreate.isNotEmpty) {
+          trainingSchedulesNotifier.value = [
+            ...trainingSchedulesNotifier.value,
+            ...newSchedulesToCreate,
+          ];
+          // Lưu ý: Bạn có thể cần cập nhật cả `exerciseNamesNotifier` cho các bản sao nếu cần
+        }
+      }
     }
   }
 

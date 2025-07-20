@@ -1,3 +1,4 @@
+// lib/screens/app/coach/exercises/exercise_list_screen.dart
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
@@ -7,14 +8,27 @@ import 'package:mobile_app/screens/app/coach/exercises/exercise_detail.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'dart:async'; 
+
+class Debouncer {
+  final int milliseconds;
+  Timer? _timer;
+
+  Debouncer({required this.milliseconds});
+
+  void run(VoidCallback action) {
+    _timer?.cancel();
+    _timer = Timer(Duration(milliseconds: milliseconds), action);
+  }
+}
 
 class ExerciseListScreen extends StatefulWidget {
   final String sportId;
   final String coachId;
   const ExerciseListScreen({
     required this.sportId,
-    super.key,
     required this.coachId,
+    super.key,
   });
 
   @override
@@ -22,12 +36,10 @@ class ExerciseListScreen extends StatefulWidget {
 }
 
 class _ExerciseListScreenState extends State<ExerciseListScreen> {
-  final TextEditingController _searchController = TextEditingController();
-  List<Exercise> _allExercises = [];
-  List<Exercise> _filteredExercises = [];
+  final _searchController = TextEditingController();
+  final _debouncer = Debouncer(milliseconds: 500);
   String? _selectedBodyPart;
 
-  // Giả sử đây là các giá trị lọc bạn có
   final List<String> _bodyParts = [
     'Ngực',
     'Lưng',
@@ -40,38 +52,26 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
   @override
   void initState() {
     super.initState();
-
-    // Tải danh sách bài tập ban đầu
-    context.read<ExerciseBloc>().add(GetAllExercisesBySportId(widget.sportId));
-    _searchController.addListener(_onSearchChanged);
+    // Initial load
+    _fetchExercises();
+    _searchController.addListener(() {
+      _debouncer.run(() {
+        _fetchExercises();
+      });
+    });
   }
 
   @override
   void dispose() {
-    _searchController.removeListener(_onSearchChanged);
     _searchController.dispose();
+    _debouncer._timer?.cancel();
     super.dispose();
   }
 
-  void _applyFilters() {
-    setState(() {
-      _filteredExercises =
-          _allExercises.where((exercise) {
-            final matchesSearch =
-                _searchController.text.isEmpty ||
-                exercise.name.toLowerCase().contains(
-                  _searchController.text.toLowerCase(),
-                );
-            final matchesFilter =
-                _selectedBodyPart == null ||
-                exercise.bodyPart == _selectedBodyPart;
-            return matchesSearch && matchesFilter;
-          }).toList();
-    });
-  }
-
-  void _onSearchChanged() {
-    _applyFilters();
+  void _fetchExercises() {
+    context.read<ExerciseBloc>().add(
+      ExerciseEvent.getAllExxerciseBySportId(widget.sportId),
+    );
   }
 
   void _showFilterDialog() {
@@ -131,7 +131,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
                       const SizedBox(width: 12),
                       ElevatedButton(
                         onPressed: () {
-                          _applyFilters(); // Áp dụng bộ lọc
+                          _fetchExercises();
                           Navigator.pop(context);
                         },
                         child: const Text('Áp dụng'),
@@ -182,22 +182,14 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
       ),
       body: BlocConsumer<ExerciseBloc, ExerciseState>(
         listener: (context, state) {
-          // THÊM LOGIC XỬ LÝ KHI TẢI XONG
-          if (state is LoadedExercisesBySportId) {
-            setState(() {
-              _allExercises = state.exercises;
-              _applyFilters();
-            });
-          } else if (state is Exercise_Success) {
+          if (state is Exercise_Success) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
                 backgroundColor: Colors.green,
               ),
             );
-            context.read<ExerciseBloc>().add(
-              GetAllExercisesBySportId(widget.sportId),
-            );
+            _fetchExercises(); 
           } else if (state is Exercise_Error) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -208,37 +200,46 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
           }
         },
         builder: (context, state) {
-          if (state is Exercise_Error) {
+          if (state is Exercise_Initial || state is Exercise_Loading) {
+            return _buildLoadingShimmer();
+          } else if (state is Exercise_LoadingMore) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is LoadedExercise) {
+            return const SizedBox.shrink();
+          } else if (state is LoadedExercises) {
+            final exercises = state.exercises;
+            if (exercises.isEmpty) return _buildEmptyState(context);
+            return _buildExerciseList(context, exercises);
+          } else if (state is LoadedExercisesBySportId) {
+            final exercises = state.exercises;
+            if (exercises.isEmpty) return _buildEmptyState(context);
+            return _buildExerciseList(context, exercises);
+          } else if (state is Exercise_Error) {
             return Center(child: Text('Lỗi: ${state.message}'));
           }
-          // Giờ đây điều kiện này sẽ hoạt động đúng
-          if (state is Exercise_Loading && _allExercises.isEmpty) {
-            return _buildLoadingShimmer();
-          }
-          if (_filteredExercises.isEmpty) {
-            return _buildEmptyState(context);
-          }
-          return _buildExerciseList(context, _filteredExercises);
+          return const SizedBox.shrink();
         },
       ),
-      floatingActionButton: Builder(
-        builder: (innerContext) {
-          return FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                innerContext,
-                MaterialPageRoute(
-                  builder:
-                      (_) => BlocProvider.value(
-                        value: BlocProvider.of<ExerciseBloc>(innerContext),
-                        child: ExerciseCreateScreen(sportId: widget.sportId,createdBy: widget.coachId,),
-                      ),
-                ),
-              );
-            },
-            child: const Icon(Icons.add),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder:
+                  (_) => BlocProvider.value(
+                    value: context.read<ExerciseBloc>(),
+                    child: ExerciseCreateScreen(
+                      sportId: widget.sportId,
+                      createdBy: widget.coachId,
+                    ),
+                  ),
+            ),
           );
+          if (result == true) {
+            _fetchExercises(); 
+          }
         },
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -353,13 +354,20 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
           color: Colors.grey,
           size: 18,
         ),
-        onTap: () {
-          Navigator.push(
+        onTap: () async {
+          final result = await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ExerciseDetailScreen(exercise: exercise,coachId: widget.coachId,),
+              builder:
+                  (context) => ExerciseDetailScreen(
+                    exercise: exercise,
+                    coachId: widget.coachId,
+                  ),
             ),
           );
+          if (result == 'deleted' || result == 'updated') {
+            _fetchExercises();
+          }
         },
       ),
     );

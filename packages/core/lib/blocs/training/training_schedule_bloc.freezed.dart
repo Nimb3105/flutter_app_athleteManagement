@@ -425,6 +425,78 @@ as String,
 }
 
 /// @nodoc
+
+
+class CreateMultipleTrainingSchedules implements TrainingScheduleEvent {
+  const CreateMultipleTrainingSchedules(final  List<TrainingSchedule> schedules): _schedules = schedules;
+  
+
+ final  List<TrainingSchedule> _schedules;
+ List<TrainingSchedule> get schedules {
+  if (_schedules is EqualUnmodifiableListView) return _schedules;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_schedules);
+}
+
+
+/// Create a copy of TrainingScheduleEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$CreateMultipleTrainingSchedulesCopyWith<CreateMultipleTrainingSchedules> get copyWith => _$CreateMultipleTrainingSchedulesCopyWithImpl<CreateMultipleTrainingSchedules>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateMultipleTrainingSchedules&&const DeepCollectionEquality().equals(other._schedules, _schedules));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_schedules));
+
+@override
+String toString() {
+  return 'TrainingScheduleEvent.createMultipleTrainingSchedules(schedules: $schedules)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $CreateMultipleTrainingSchedulesCopyWith<$Res> implements $TrainingScheduleEventCopyWith<$Res> {
+  factory $CreateMultipleTrainingSchedulesCopyWith(CreateMultipleTrainingSchedules value, $Res Function(CreateMultipleTrainingSchedules) _then) = _$CreateMultipleTrainingSchedulesCopyWithImpl;
+@useResult
+$Res call({
+ List<TrainingSchedule> schedules
+});
+
+
+
+
+}
+/// @nodoc
+class _$CreateMultipleTrainingSchedulesCopyWithImpl<$Res>
+    implements $CreateMultipleTrainingSchedulesCopyWith<$Res> {
+  _$CreateMultipleTrainingSchedulesCopyWithImpl(this._self, this._then);
+
+  final CreateMultipleTrainingSchedules _self;
+  final $Res Function(CreateMultipleTrainingSchedules) _then;
+
+/// Create a copy of TrainingScheduleEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? schedules = null,}) {
+  return _then(CreateMultipleTrainingSchedules(
+null == schedules ? _self._schedules : schedules // ignore: cast_nullable_to_non_nullable
+as List<TrainingSchedule>,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$TrainingScheduleState {
 
 
