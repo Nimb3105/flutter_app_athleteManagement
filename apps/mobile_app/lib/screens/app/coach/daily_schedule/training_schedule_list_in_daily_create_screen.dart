@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
 import 'package:mobile_app/screens/app/coach/daily_schedule/apply_schedule_dialog.dart';
-import 'package:mobile_app/screens/app/coach/daily_schedule/daily_schedule_create_screen.dart';
 import 'package:mobile_app/screens/app/coach/daily_schedule/training_schedule_create_screen.dart';
 import 'package:mobile_app/screens/app/coach/daily_schedule/training_schedule_edit_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,14 +29,6 @@ class TrainingScheduleListInDailyCreateScreen extends StatelessWidget {
     required this.allDaysInPlan,
     super.key,
   });
-
-  List<DateTime> _getAllDaysInPlan(BuildContext context) {
-    // Vì chúng ta đang ở màn hình tạo, không có DailySchedule object hoàn chỉnh.
-    // Chúng ta cần lấy thông tin từ các Notifier ở màn hình cha.
-    // Đây là một cách, nhưng tốt hơn là truyền trực tiếp vào.
-    // Tạm thời để trống, sẽ cập nhật ở bước sau.
-    return [];
-  }
 
   // Hàm kiểm tra xem hai DateTime có cùng ngày không
   bool _isSameDay(DateTime date1, DateTime date2) {
