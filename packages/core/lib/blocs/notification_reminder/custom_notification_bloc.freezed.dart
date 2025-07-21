@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -47,6 +46,166 @@ class $CustomNotificationEventCopyWith<$Res>  {
 $CustomNotificationEventCopyWith(CustomNotificationEvent _, $Res Function(CustomNotificationEvent) __);
 }
 
+
+/// Adds pattern-matching-related methods to [CustomNotificationEvent].
+extension CustomNotificationEventPatterns on CustomNotificationEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( CreateNotification value)?  createNotification,TResult Function( GetNotificationById value)?  getNotificationById,TResult Function( GetNotificationsByUserId value)?  getNotificationsByUserId,TResult Function( UpdateNotification value)?  updateNotification,TResult Function( DeleteNotification value)?  deleteNotification,TResult Function( MarkNotificationsAsRead value)?  markNotificationsAsRead,TResult Function( GetAllCustomNotifications value)?  getAllCustomNotifications,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case CreateNotification() when createNotification != null:
+return createNotification(_that);case GetNotificationById() when getNotificationById != null:
+return getNotificationById(_that);case GetNotificationsByUserId() when getNotificationsByUserId != null:
+return getNotificationsByUserId(_that);case UpdateNotification() when updateNotification != null:
+return updateNotification(_that);case DeleteNotification() when deleteNotification != null:
+return deleteNotification(_that);case MarkNotificationsAsRead() when markNotificationsAsRead != null:
+return markNotificationsAsRead(_that);case GetAllCustomNotifications() when getAllCustomNotifications != null:
+return getAllCustomNotifications(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( CreateNotification value)  createNotification,required TResult Function( GetNotificationById value)  getNotificationById,required TResult Function( GetNotificationsByUserId value)  getNotificationsByUserId,required TResult Function( UpdateNotification value)  updateNotification,required TResult Function( DeleteNotification value)  deleteNotification,required TResult Function( MarkNotificationsAsRead value)  markNotificationsAsRead,required TResult Function( GetAllCustomNotifications value)  getAllCustomNotifications,}){
+final _that = this;
+switch (_that) {
+case CreateNotification():
+return createNotification(_that);case GetNotificationById():
+return getNotificationById(_that);case GetNotificationsByUserId():
+return getNotificationsByUserId(_that);case UpdateNotification():
+return updateNotification(_that);case DeleteNotification():
+return deleteNotification(_that);case MarkNotificationsAsRead():
+return markNotificationsAsRead(_that);case GetAllCustomNotifications():
+return getAllCustomNotifications(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( CreateNotification value)?  createNotification,TResult? Function( GetNotificationById value)?  getNotificationById,TResult? Function( GetNotificationsByUserId value)?  getNotificationsByUserId,TResult? Function( UpdateNotification value)?  updateNotification,TResult? Function( DeleteNotification value)?  deleteNotification,TResult? Function( MarkNotificationsAsRead value)?  markNotificationsAsRead,TResult? Function( GetAllCustomNotifications value)?  getAllCustomNotifications,}){
+final _that = this;
+switch (_that) {
+case CreateNotification() when createNotification != null:
+return createNotification(_that);case GetNotificationById() when getNotificationById != null:
+return getNotificationById(_that);case GetNotificationsByUserId() when getNotificationsByUserId != null:
+return getNotificationsByUserId(_that);case UpdateNotification() when updateNotification != null:
+return updateNotification(_that);case DeleteNotification() when deleteNotification != null:
+return deleteNotification(_that);case MarkNotificationsAsRead() when markNotificationsAsRead != null:
+return markNotificationsAsRead(_that);case GetAllCustomNotifications() when getAllCustomNotifications != null:
+return getAllCustomNotifications(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( CustomNotification notification)?  createNotification,TResult Function( String id)?  getNotificationById,TResult Function( String userId)?  getNotificationsByUserId,TResult Function( String id,  CustomNotification notification)?  updateNotification,TResult Function( String id)?  deleteNotification,TResult Function( String userId)?  markNotificationsAsRead,TResult Function( int page,  int limit)?  getAllCustomNotifications,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case CreateNotification() when createNotification != null:
+return createNotification(_that.notification);case GetNotificationById() when getNotificationById != null:
+return getNotificationById(_that.id);case GetNotificationsByUserId() when getNotificationsByUserId != null:
+return getNotificationsByUserId(_that.userId);case UpdateNotification() when updateNotification != null:
+return updateNotification(_that.id,_that.notification);case DeleteNotification() when deleteNotification != null:
+return deleteNotification(_that.id);case MarkNotificationsAsRead() when markNotificationsAsRead != null:
+return markNotificationsAsRead(_that.userId);case GetAllCustomNotifications() when getAllCustomNotifications != null:
+return getAllCustomNotifications(_that.page,_that.limit);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( CustomNotification notification)  createNotification,required TResult Function( String id)  getNotificationById,required TResult Function( String userId)  getNotificationsByUserId,required TResult Function( String id,  CustomNotification notification)  updateNotification,required TResult Function( String id)  deleteNotification,required TResult Function( String userId)  markNotificationsAsRead,required TResult Function( int page,  int limit)  getAllCustomNotifications,}) {final _that = this;
+switch (_that) {
+case CreateNotification():
+return createNotification(_that.notification);case GetNotificationById():
+return getNotificationById(_that.id);case GetNotificationsByUserId():
+return getNotificationsByUserId(_that.userId);case UpdateNotification():
+return updateNotification(_that.id,_that.notification);case DeleteNotification():
+return deleteNotification(_that.id);case MarkNotificationsAsRead():
+return markNotificationsAsRead(_that.userId);case GetAllCustomNotifications():
+return getAllCustomNotifications(_that.page,_that.limit);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( CustomNotification notification)?  createNotification,TResult? Function( String id)?  getNotificationById,TResult? Function( String userId)?  getNotificationsByUserId,TResult? Function( String id,  CustomNotification notification)?  updateNotification,TResult? Function( String id)?  deleteNotification,TResult? Function( String userId)?  markNotificationsAsRead,TResult? Function( int page,  int limit)?  getAllCustomNotifications,}) {final _that = this;
+switch (_that) {
+case CreateNotification() when createNotification != null:
+return createNotification(_that.notification);case GetNotificationById() when getNotificationById != null:
+return getNotificationById(_that.id);case GetNotificationsByUserId() when getNotificationsByUserId != null:
+return getNotificationsByUserId(_that.userId);case UpdateNotification() when updateNotification != null:
+return updateNotification(_that.id,_that.notification);case DeleteNotification() when deleteNotification != null:
+return deleteNotification(_that.id);case MarkNotificationsAsRead() when markNotificationsAsRead != null:
+return markNotificationsAsRead(_that.userId);case GetAllCustomNotifications() when getAllCustomNotifications != null:
+return getAllCustomNotifications(_that.page,_that.limit);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
@@ -609,6 +768,166 @@ class $CustomNotificationStateCopyWith<$Res>  {
 $CustomNotificationStateCopyWith(CustomNotificationState _, $Res Function(CustomNotificationState) __);
 }
 
+
+/// Adds pattern-matching-related methods to [CustomNotificationState].
+extension CustomNotificationStatePatterns on CustomNotificationState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( Notification_Initial value)?  initial,TResult Function( Notification_Loading value)?  loading,TResult Function( LoadedNotification value)?  loadedNotification,TResult Function( LoadedNotifications value)?  loadedNotifications,TResult Function( Notification_Success value)?  success,TResult Function( Notification_Error value)?  error,TResult Function( LoadedCustomNotification value)?  loadedCustomNotifications,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case Notification_Initial() when initial != null:
+return initial(_that);case Notification_Loading() when loading != null:
+return loading(_that);case LoadedNotification() when loadedNotification != null:
+return loadedNotification(_that);case LoadedNotifications() when loadedNotifications != null:
+return loadedNotifications(_that);case Notification_Success() when success != null:
+return success(_that);case Notification_Error() when error != null:
+return error(_that);case LoadedCustomNotification() when loadedCustomNotifications != null:
+return loadedCustomNotifications(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( Notification_Initial value)  initial,required TResult Function( Notification_Loading value)  loading,required TResult Function( LoadedNotification value)  loadedNotification,required TResult Function( LoadedNotifications value)  loadedNotifications,required TResult Function( Notification_Success value)  success,required TResult Function( Notification_Error value)  error,required TResult Function( LoadedCustomNotification value)  loadedCustomNotifications,}){
+final _that = this;
+switch (_that) {
+case Notification_Initial():
+return initial(_that);case Notification_Loading():
+return loading(_that);case LoadedNotification():
+return loadedNotification(_that);case LoadedNotifications():
+return loadedNotifications(_that);case Notification_Success():
+return success(_that);case Notification_Error():
+return error(_that);case LoadedCustomNotification():
+return loadedCustomNotifications(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( Notification_Initial value)?  initial,TResult? Function( Notification_Loading value)?  loading,TResult? Function( LoadedNotification value)?  loadedNotification,TResult? Function( LoadedNotifications value)?  loadedNotifications,TResult? Function( Notification_Success value)?  success,TResult? Function( Notification_Error value)?  error,TResult? Function( LoadedCustomNotification value)?  loadedCustomNotifications,}){
+final _that = this;
+switch (_that) {
+case Notification_Initial() when initial != null:
+return initial(_that);case Notification_Loading() when loading != null:
+return loading(_that);case LoadedNotification() when loadedNotification != null:
+return loadedNotification(_that);case LoadedNotifications() when loadedNotifications != null:
+return loadedNotifications(_that);case Notification_Success() when success != null:
+return success(_that);case Notification_Error() when error != null:
+return error(_that);case LoadedCustomNotification() when loadedCustomNotifications != null:
+return loadedCustomNotifications(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( CustomNotification notification)?  loadedNotification,TResult Function( List<CustomNotification> notifications)?  loadedNotifications,TResult Function( String message)?  success,TResult Function( String message)?  error,TResult Function( List<CustomNotification> customNotifications,  int curentPage,  int limit,  bool hasMore)?  loadedCustomNotifications,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case Notification_Initial() when initial != null:
+return initial();case Notification_Loading() when loading != null:
+return loading();case LoadedNotification() when loadedNotification != null:
+return loadedNotification(_that.notification);case LoadedNotifications() when loadedNotifications != null:
+return loadedNotifications(_that.notifications);case Notification_Success() when success != null:
+return success(_that.message);case Notification_Error() when error != null:
+return error(_that.message);case LoadedCustomNotification() when loadedCustomNotifications != null:
+return loadedCustomNotifications(_that.customNotifications,_that.curentPage,_that.limit,_that.hasMore);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( CustomNotification notification)  loadedNotification,required TResult Function( List<CustomNotification> notifications)  loadedNotifications,required TResult Function( String message)  success,required TResult Function( String message)  error,required TResult Function( List<CustomNotification> customNotifications,  int curentPage,  int limit,  bool hasMore)  loadedCustomNotifications,}) {final _that = this;
+switch (_that) {
+case Notification_Initial():
+return initial();case Notification_Loading():
+return loading();case LoadedNotification():
+return loadedNotification(_that.notification);case LoadedNotifications():
+return loadedNotifications(_that.notifications);case Notification_Success():
+return success(_that.message);case Notification_Error():
+return error(_that.message);case LoadedCustomNotification():
+return loadedCustomNotifications(_that.customNotifications,_that.curentPage,_that.limit,_that.hasMore);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( CustomNotification notification)?  loadedNotification,TResult? Function( List<CustomNotification> notifications)?  loadedNotifications,TResult? Function( String message)?  success,TResult? Function( String message)?  error,TResult? Function( List<CustomNotification> customNotifications,  int curentPage,  int limit,  bool hasMore)?  loadedCustomNotifications,}) {final _that = this;
+switch (_that) {
+case Notification_Initial() when initial != null:
+return initial();case Notification_Loading() when loading != null:
+return loading();case LoadedNotification() when loadedNotification != null:
+return loadedNotification(_that.notification);case LoadedNotifications() when loadedNotifications != null:
+return loadedNotifications(_that.notifications);case Notification_Success() when success != null:
+return success(_that.message);case Notification_Error() when error != null:
+return error(_that.message);case LoadedCustomNotification() when loadedCustomNotifications != null:
+return loadedCustomNotifications(_that.customNotifications,_that.curentPage,_that.limit,_that.hasMore);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 

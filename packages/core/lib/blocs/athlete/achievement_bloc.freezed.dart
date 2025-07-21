@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -41,6 +40,160 @@ class $AchievementEventCopyWith<$Res>  {
 $AchievementEventCopyWith(AchievementEvent _, $Res Function(AchievementEvent) __);
 }
 
+
+/// Adds pattern-matching-related methods to [AchievementEvent].
+extension AchievementEventPatterns on AchievementEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _CreateAchievement value)?  createAchievement,TResult Function( _GetAchievementById value)?  getAchievementById,TResult Function( _GetAchievementByUserId value)?  getAchievementByUserId,TResult Function( _GetAllAchievements value)?  getAllAchievements,TResult Function( _UpdateAchievement value)?  updateAchievement,TResult Function( _DeleteAchievement value)?  deleteAchievement,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _CreateAchievement() when createAchievement != null:
+return createAchievement(_that);case _GetAchievementById() when getAchievementById != null:
+return getAchievementById(_that);case _GetAchievementByUserId() when getAchievementByUserId != null:
+return getAchievementByUserId(_that);case _GetAllAchievements() when getAllAchievements != null:
+return getAllAchievements(_that);case _UpdateAchievement() when updateAchievement != null:
+return updateAchievement(_that);case _DeleteAchievement() when deleteAchievement != null:
+return deleteAchievement(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _CreateAchievement value)  createAchievement,required TResult Function( _GetAchievementById value)  getAchievementById,required TResult Function( _GetAchievementByUserId value)  getAchievementByUserId,required TResult Function( _GetAllAchievements value)  getAllAchievements,required TResult Function( _UpdateAchievement value)  updateAchievement,required TResult Function( _DeleteAchievement value)  deleteAchievement,}){
+final _that = this;
+switch (_that) {
+case _CreateAchievement():
+return createAchievement(_that);case _GetAchievementById():
+return getAchievementById(_that);case _GetAchievementByUserId():
+return getAchievementByUserId(_that);case _GetAllAchievements():
+return getAllAchievements(_that);case _UpdateAchievement():
+return updateAchievement(_that);case _DeleteAchievement():
+return deleteAchievement(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _CreateAchievement value)?  createAchievement,TResult? Function( _GetAchievementById value)?  getAchievementById,TResult? Function( _GetAchievementByUserId value)?  getAchievementByUserId,TResult? Function( _GetAllAchievements value)?  getAllAchievements,TResult? Function( _UpdateAchievement value)?  updateAchievement,TResult? Function( _DeleteAchievement value)?  deleteAchievement,}){
+final _that = this;
+switch (_that) {
+case _CreateAchievement() when createAchievement != null:
+return createAchievement(_that);case _GetAchievementById() when getAchievementById != null:
+return getAchievementById(_that);case _GetAchievementByUserId() when getAchievementByUserId != null:
+return getAchievementByUserId(_that);case _GetAllAchievements() when getAllAchievements != null:
+return getAllAchievements(_that);case _UpdateAchievement() when updateAchievement != null:
+return updateAchievement(_that);case _DeleteAchievement() when deleteAchievement != null:
+return deleteAchievement(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Achievement achievement)?  createAchievement,TResult Function( String id)?  getAchievementById,TResult Function( String userId)?  getAchievementByUserId,TResult Function( int page,  int limit)?  getAllAchievements,TResult Function( String id,  Achievement achievement)?  updateAchievement,TResult Function( String id)?  deleteAchievement,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _CreateAchievement() when createAchievement != null:
+return createAchievement(_that.achievement);case _GetAchievementById() when getAchievementById != null:
+return getAchievementById(_that.id);case _GetAchievementByUserId() when getAchievementByUserId != null:
+return getAchievementByUserId(_that.userId);case _GetAllAchievements() when getAllAchievements != null:
+return getAllAchievements(_that.page,_that.limit);case _UpdateAchievement() when updateAchievement != null:
+return updateAchievement(_that.id,_that.achievement);case _DeleteAchievement() when deleteAchievement != null:
+return deleteAchievement(_that.id);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Achievement achievement)  createAchievement,required TResult Function( String id)  getAchievementById,required TResult Function( String userId)  getAchievementByUserId,required TResult Function( int page,  int limit)  getAllAchievements,required TResult Function( String id,  Achievement achievement)  updateAchievement,required TResult Function( String id)  deleteAchievement,}) {final _that = this;
+switch (_that) {
+case _CreateAchievement():
+return createAchievement(_that.achievement);case _GetAchievementById():
+return getAchievementById(_that.id);case _GetAchievementByUserId():
+return getAchievementByUserId(_that.userId);case _GetAllAchievements():
+return getAllAchievements(_that.page,_that.limit);case _UpdateAchievement():
+return updateAchievement(_that.id,_that.achievement);case _DeleteAchievement():
+return deleteAchievement(_that.id);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Achievement achievement)?  createAchievement,TResult? Function( String id)?  getAchievementById,TResult? Function( String userId)?  getAchievementByUserId,TResult? Function( int page,  int limit)?  getAllAchievements,TResult? Function( String id,  Achievement achievement)?  updateAchievement,TResult? Function( String id)?  deleteAchievement,}) {final _that = this;
+switch (_that) {
+case _CreateAchievement() when createAchievement != null:
+return createAchievement(_that.achievement);case _GetAchievementById() when getAchievementById != null:
+return getAchievementById(_that.id);case _GetAchievementByUserId() when getAchievementByUserId != null:
+return getAchievementByUserId(_that.userId);case _GetAllAchievements() when getAllAchievements != null:
+return getAllAchievements(_that.page,_that.limit);case _UpdateAchievement() when updateAchievement != null:
+return updateAchievement(_that.id,_that.achievement);case _DeleteAchievement() when deleteAchievement != null:
+return deleteAchievement(_that.id);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
@@ -489,6 +642,160 @@ class $AchievementStateCopyWith<$Res>  {
 $AchievementStateCopyWith(AchievementState _, $Res Function(AchievementState) __);
 }
 
+
+/// Adds pattern-matching-related methods to [AchievementState].
+extension AchievementStatePatterns on AchievementState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( Achievement_Initial value)?  initial,TResult Function( Achievement_Loading value)?  loading,TResult Function( LoadedAchievement value)?  loadedAchievement,TResult Function( LoadedAchievements value)?  loadedAchievements,TResult Function( Achievement_Error value)?  error,TResult Function( Achievement_Success value)?  success,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case Achievement_Initial() when initial != null:
+return initial(_that);case Achievement_Loading() when loading != null:
+return loading(_that);case LoadedAchievement() when loadedAchievement != null:
+return loadedAchievement(_that);case LoadedAchievements() when loadedAchievements != null:
+return loadedAchievements(_that);case Achievement_Error() when error != null:
+return error(_that);case Achievement_Success() when success != null:
+return success(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( Achievement_Initial value)  initial,required TResult Function( Achievement_Loading value)  loading,required TResult Function( LoadedAchievement value)  loadedAchievement,required TResult Function( LoadedAchievements value)  loadedAchievements,required TResult Function( Achievement_Error value)  error,required TResult Function( Achievement_Success value)  success,}){
+final _that = this;
+switch (_that) {
+case Achievement_Initial():
+return initial(_that);case Achievement_Loading():
+return loading(_that);case LoadedAchievement():
+return loadedAchievement(_that);case LoadedAchievements():
+return loadedAchievements(_that);case Achievement_Error():
+return error(_that);case Achievement_Success():
+return success(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( Achievement_Initial value)?  initial,TResult? Function( Achievement_Loading value)?  loading,TResult? Function( LoadedAchievement value)?  loadedAchievement,TResult? Function( LoadedAchievements value)?  loadedAchievements,TResult? Function( Achievement_Error value)?  error,TResult? Function( Achievement_Success value)?  success,}){
+final _that = this;
+switch (_that) {
+case Achievement_Initial() when initial != null:
+return initial(_that);case Achievement_Loading() when loading != null:
+return loading(_that);case LoadedAchievement() when loadedAchievement != null:
+return loadedAchievement(_that);case LoadedAchievements() when loadedAchievements != null:
+return loadedAchievements(_that);case Achievement_Error() when error != null:
+return error(_that);case Achievement_Success() when success != null:
+return success(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( Achievement achievement)?  loadedAchievement,TResult Function( List<Achievement> achievements,  int currentPage,  int limit,  bool hasMore)?  loadedAchievements,TResult Function( String message)?  error,TResult Function( String message)?  success,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case Achievement_Initial() when initial != null:
+return initial();case Achievement_Loading() when loading != null:
+return loading();case LoadedAchievement() when loadedAchievement != null:
+return loadedAchievement(_that.achievement);case LoadedAchievements() when loadedAchievements != null:
+return loadedAchievements(_that.achievements,_that.currentPage,_that.limit,_that.hasMore);case Achievement_Error() when error != null:
+return error(_that.message);case Achievement_Success() when success != null:
+return success(_that.message);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( Achievement achievement)  loadedAchievement,required TResult Function( List<Achievement> achievements,  int currentPage,  int limit,  bool hasMore)  loadedAchievements,required TResult Function( String message)  error,required TResult Function( String message)  success,}) {final _that = this;
+switch (_that) {
+case Achievement_Initial():
+return initial();case Achievement_Loading():
+return loading();case LoadedAchievement():
+return loadedAchievement(_that.achievement);case LoadedAchievements():
+return loadedAchievements(_that.achievements,_that.currentPage,_that.limit,_that.hasMore);case Achievement_Error():
+return error(_that.message);case Achievement_Success():
+return success(_that.message);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( Achievement achievement)?  loadedAchievement,TResult? Function( List<Achievement> achievements,  int currentPage,  int limit,  bool hasMore)?  loadedAchievements,TResult? Function( String message)?  error,TResult? Function( String message)?  success,}) {final _that = this;
+switch (_that) {
+case Achievement_Initial() when initial != null:
+return initial();case Achievement_Loading() when loading != null:
+return loading();case LoadedAchievement() when loadedAchievement != null:
+return loadedAchievement(_that.achievement);case LoadedAchievements() when loadedAchievements != null:
+return loadedAchievements(_that.achievements,_that.currentPage,_that.limit,_that.hasMore);case Achievement_Error() when error != null:
+return error(_that.message);case Achievement_Success() when success != null:
+return success(_that.message);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 

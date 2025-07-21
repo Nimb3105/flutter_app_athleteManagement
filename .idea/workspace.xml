@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d1b55390-5b96-403f-9402-6a8f6c7c86f7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/melos_bootstrap.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/melos_bootstrap.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/melos_clean.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/melos_clean.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/melos_flutter_test_shared_ui.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/melos_flutter_test_shared_ui.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/admin_dashboard/analysis_options.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/apps/admin_dashboard/analysis_options.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/admin_dashboard/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/apps/admin_dashboard/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/admin_dashboard/pubspec_overrides.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/mobile_app/analysis_options.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/apps/mobile_app/analysis_options.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/mobile_app/lib/screens/app/coach/exercises/exercise_list_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/mobile_app/lib/screens/app/coach/exercises/exercise_list_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/mobile_app/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/apps/mobile_app/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/mobile_app/pubspec_overrides.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/melos.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/melos_flutter_modular.iml" beforeDir="false" afterPath="$PROJECT_DIR$/melos_flutter_modular.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/analysis_options.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/analysis_options.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/athlete/achievement_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/athlete/achievement_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/athlete/athlete_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/athlete/athlete_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/athlete/health_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/athlete/health_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/athlete/injury_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/athlete/injury_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/athlete/medical_history_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/athlete/medical_history_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/coach/coach_athlete_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/coach/coach_athlete_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/coach/coach_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/coach/coach_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/coach/coach_certification_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/coach/coach_certification_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/exercise/exercise_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/exercise/exercise_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/feedback/feedback_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/feedback/feedback_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/food/food_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/food/food_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/images/image_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/images/image_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/match_schedule/match_schedule_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/match_schedule/match_schedule_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/match_schedule/user_match_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/match_schedule/user_match_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/message_group/group_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/message_group/group_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/message_group/group_member_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/message_group/group_member_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/message_group/message_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/message_group/message_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/notification_reminder/custom_notification_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/notification_reminder/custom_notification_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/notification_reminder/reminder_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/notification_reminder/reminder_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/nutrition_plan/nutrition_plan_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/nutrition_plan/nutrition_plan_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/nutrition_plan/plan_food_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/nutrition_plan/plan_food_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/sport/sport_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/sport/sport_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/team/team_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/team/team_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/team/team_member_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/team/team_member_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/tournament/tournament_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/tournament/tournament_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/training/daily_schedule_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/training/daily_schedule_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/training/training_exercise_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/training/training_exercise_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/training/training_schedule_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/training/training_schedule_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/blocs/user/user_bloc.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/blocs/user/user_bloc.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/constant/api.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/constant/api.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/athlete/achievement/achievement.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/athlete/achievement/achievement.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/athlete/athlete.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/athlete/athlete.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/athlete/health/health.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/athlete/health/health.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/athlete/health/medical_history.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/athlete/health/medical_history.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/athlete/injury/injury.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/athlete/injury/injury.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/coach/coach.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/coach/coach.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/coach/coach_athlete.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/coach/coach_athlete.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/coach/coach_certification.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/coach/coach_certification.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/exercise/exercise.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/exercise/exercise.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/feedback/feedback.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/feedback/feedback.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/food/food.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/food/food.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/match_schedule/match_schedule.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/match_schedule/match_schedule.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/match_schedule/user_match.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/match_schedule/user_match.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/message_group/group.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/message_group/group.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/message_group/group_member.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/message_group/group_member.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/message_group/message.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/message_group/message.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/notification_reminder/custom_notification.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/notification_reminder/custom_notification.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/notification_reminder/reminder.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/notification_reminder/reminder.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/nutrition_plan/nutrition_plan.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/nutrition_plan/nutrition_plan.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/nutrition_plan/plan_food.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/nutrition_plan/plan_food.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/sport/sport.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/sport/sport.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/team/team.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/team/team.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/team/team_member.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/team/team_member.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/tournament/tournament.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/tournament/tournament.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/training_schedule/daily_schedule.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/training_schedule/daily_schedule.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/training_schedule/training_exercise.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/training_schedule/training_exercise.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/training_schedule/training_schedule.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/training_schedule/training_schedule.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/lib/models/user/user.freezed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/lib/models/user/user.freezed.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="307zeU587EaXdU4YfBUpcdTxo1f" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Flutter.Flutter Run -> 'admin_dashboard'.executor": "Run",
+    "Flutter.Flutter Run -> 'mobile_app'.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "Shell Script.Melos -> Bootstrap Workspace.executor": "Run",
+    "Shell Script.Melos Run -> 'metrics'.executor": "Run",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/software2/flutter/src/flutter/bin/cache/dart-sdk",
+    "settings.editor.selected.configurable": "dart.settings",
+    "show.migrate.to.gradle.popup": "false"
+  }
+}]]></component>
+  <component name="RunManager" selected="Flutter.Flutter Run -&gt; 'admin_dashboard'">
+    <list>
+      <item itemvalue="Flutter.Flutter Run -&gt; 'admin_dashboard'" />
+      <item itemvalue="Flutter.Flutter Run -&gt; 'mobile_app'" />
+      <item itemvalue="Flutter Test.Flutter Test -&gt; 'core'" />
+      <item itemvalue="Flutter Test.Flutter Test -&gt; 'shared_ui'" />
+      <item itemvalue="Flutter Test.Flutter Test -&gt; 'utils'" />
+      <item itemvalue="Shell Script.Melos -&gt; Bootstrap Workspace" />
+      <item itemvalue="Shell Script.Melos -&gt; Clean Workspace" />
+      <item itemvalue="Shell Script.Melos Run -&gt; 'analyze'" />
+      <item itemvalue="Shell Script.Melos Run -&gt; 'build'" />
+      <item itemvalue="Shell Script.Melos Run -&gt; 'clean'" />
+      <item itemvalue="Shell Script.Melos Run -&gt; 'get'" />
+      <item itemvalue="Shell Script.Melos Run -&gt; 'metrics'" />
+      <item itemvalue="Shell Script.Melos Run -&gt; 'mobile'" />
+      <item itemvalue="Shell Script.Melos Run -&gt; 'pub_get'" />
+      <item itemvalue="Shell Script.Melos Run -&gt; 'run_mobile'" />
+      <item itemvalue="Shell Script.Melos Run -&gt; 'test'" />
+      <item itemvalue="Shell Script.Melos Run -&gt; 'web'" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d1b55390-5b96-403f-9402-6a8f6c7c86f7" name="Changes" comment="" />
+      <created>1752993495611</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1752993495611</updated>
+    </task>
+    <servers />
+  </component>
+</project>

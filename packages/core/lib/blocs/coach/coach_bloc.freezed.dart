@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -41,6 +40,160 @@ class $CoachEventCopyWith<$Res>  {
 $CoachEventCopyWith(CoachEvent _, $Res Function(CoachEvent) __);
 }
 
+
+/// Adds pattern-matching-related methods to [CoachEvent].
+extension CoachEventPatterns on CoachEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _CreateCoach value)?  createCoach,TResult Function( _GetCoachById value)?  getCoachById,TResult Function( _GetCoachByUserId value)?  getCoachByUserId,TResult Function( GetAllCoaches value)?  getAllCoaches,TResult Function( _UpdateCoach value)?  updateCoach,TResult Function( _DeleteCoach value)?  deleteCoach,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _CreateCoach() when createCoach != null:
+return createCoach(_that);case _GetCoachById() when getCoachById != null:
+return getCoachById(_that);case _GetCoachByUserId() when getCoachByUserId != null:
+return getCoachByUserId(_that);case GetAllCoaches() when getAllCoaches != null:
+return getAllCoaches(_that);case _UpdateCoach() when updateCoach != null:
+return updateCoach(_that);case _DeleteCoach() when deleteCoach != null:
+return deleteCoach(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _CreateCoach value)  createCoach,required TResult Function( _GetCoachById value)  getCoachById,required TResult Function( _GetCoachByUserId value)  getCoachByUserId,required TResult Function( GetAllCoaches value)  getAllCoaches,required TResult Function( _UpdateCoach value)  updateCoach,required TResult Function( _DeleteCoach value)  deleteCoach,}){
+final _that = this;
+switch (_that) {
+case _CreateCoach():
+return createCoach(_that);case _GetCoachById():
+return getCoachById(_that);case _GetCoachByUserId():
+return getCoachByUserId(_that);case GetAllCoaches():
+return getAllCoaches(_that);case _UpdateCoach():
+return updateCoach(_that);case _DeleteCoach():
+return deleteCoach(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _CreateCoach value)?  createCoach,TResult? Function( _GetCoachById value)?  getCoachById,TResult? Function( _GetCoachByUserId value)?  getCoachByUserId,TResult? Function( GetAllCoaches value)?  getAllCoaches,TResult? Function( _UpdateCoach value)?  updateCoach,TResult? Function( _DeleteCoach value)?  deleteCoach,}){
+final _that = this;
+switch (_that) {
+case _CreateCoach() when createCoach != null:
+return createCoach(_that);case _GetCoachById() when getCoachById != null:
+return getCoachById(_that);case _GetCoachByUserId() when getCoachByUserId != null:
+return getCoachByUserId(_that);case GetAllCoaches() when getAllCoaches != null:
+return getAllCoaches(_that);case _UpdateCoach() when updateCoach != null:
+return updateCoach(_that);case _DeleteCoach() when deleteCoach != null:
+return deleteCoach(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Coach coach)?  createCoach,TResult Function( String id)?  getCoachById,TResult Function( String userId)?  getCoachByUserId,TResult Function( int page,  int limit)?  getAllCoaches,TResult Function( String id,  Coach coach)?  updateCoach,TResult Function( String id)?  deleteCoach,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _CreateCoach() when createCoach != null:
+return createCoach(_that.coach);case _GetCoachById() when getCoachById != null:
+return getCoachById(_that.id);case _GetCoachByUserId() when getCoachByUserId != null:
+return getCoachByUserId(_that.userId);case GetAllCoaches() when getAllCoaches != null:
+return getAllCoaches(_that.page,_that.limit);case _UpdateCoach() when updateCoach != null:
+return updateCoach(_that.id,_that.coach);case _DeleteCoach() when deleteCoach != null:
+return deleteCoach(_that.id);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Coach coach)  createCoach,required TResult Function( String id)  getCoachById,required TResult Function( String userId)  getCoachByUserId,required TResult Function( int page,  int limit)  getAllCoaches,required TResult Function( String id,  Coach coach)  updateCoach,required TResult Function( String id)  deleteCoach,}) {final _that = this;
+switch (_that) {
+case _CreateCoach():
+return createCoach(_that.coach);case _GetCoachById():
+return getCoachById(_that.id);case _GetCoachByUserId():
+return getCoachByUserId(_that.userId);case GetAllCoaches():
+return getAllCoaches(_that.page,_that.limit);case _UpdateCoach():
+return updateCoach(_that.id,_that.coach);case _DeleteCoach():
+return deleteCoach(_that.id);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Coach coach)?  createCoach,TResult? Function( String id)?  getCoachById,TResult? Function( String userId)?  getCoachByUserId,TResult? Function( int page,  int limit)?  getAllCoaches,TResult? Function( String id,  Coach coach)?  updateCoach,TResult? Function( String id)?  deleteCoach,}) {final _that = this;
+switch (_that) {
+case _CreateCoach() when createCoach != null:
+return createCoach(_that.coach);case _GetCoachById() when getCoachById != null:
+return getCoachById(_that.id);case _GetCoachByUserId() when getCoachByUserId != null:
+return getCoachByUserId(_that.userId);case GetAllCoaches() when getAllCoaches != null:
+return getAllCoaches(_that.page,_that.limit);case _UpdateCoach() when updateCoach != null:
+return updateCoach(_that.id,_that.coach);case _DeleteCoach() when deleteCoach != null:
+return deleteCoach(_that.id);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
@@ -489,6 +642,160 @@ class $CoachStateCopyWith<$Res>  {
 $CoachStateCopyWith(CoachState _, $Res Function(CoachState) __);
 }
 
+
+/// Adds pattern-matching-related methods to [CoachState].
+extension CoachStatePatterns on CoachState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( Coach_Initial value)?  initial,TResult Function( Coach_Loading value)?  loading,TResult Function( LoadedCoach value)?  loadedCoach,TResult Function( LoadedCoaches value)?  loadedCoaches,TResult Function( Coach_Error value)?  error,TResult Function( Coach_Success value)?  success,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case Coach_Initial() when initial != null:
+return initial(_that);case Coach_Loading() when loading != null:
+return loading(_that);case LoadedCoach() when loadedCoach != null:
+return loadedCoach(_that);case LoadedCoaches() when loadedCoaches != null:
+return loadedCoaches(_that);case Coach_Error() when error != null:
+return error(_that);case Coach_Success() when success != null:
+return success(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( Coach_Initial value)  initial,required TResult Function( Coach_Loading value)  loading,required TResult Function( LoadedCoach value)  loadedCoach,required TResult Function( LoadedCoaches value)  loadedCoaches,required TResult Function( Coach_Error value)  error,required TResult Function( Coach_Success value)  success,}){
+final _that = this;
+switch (_that) {
+case Coach_Initial():
+return initial(_that);case Coach_Loading():
+return loading(_that);case LoadedCoach():
+return loadedCoach(_that);case LoadedCoaches():
+return loadedCoaches(_that);case Coach_Error():
+return error(_that);case Coach_Success():
+return success(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( Coach_Initial value)?  initial,TResult? Function( Coach_Loading value)?  loading,TResult? Function( LoadedCoach value)?  loadedCoach,TResult? Function( LoadedCoaches value)?  loadedCoaches,TResult? Function( Coach_Error value)?  error,TResult? Function( Coach_Success value)?  success,}){
+final _that = this;
+switch (_that) {
+case Coach_Initial() when initial != null:
+return initial(_that);case Coach_Loading() when loading != null:
+return loading(_that);case LoadedCoach() when loadedCoach != null:
+return loadedCoach(_that);case LoadedCoaches() when loadedCoaches != null:
+return loadedCoaches(_that);case Coach_Error() when error != null:
+return error(_that);case Coach_Success() when success != null:
+return success(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( Coach coach)?  loadedCoach,TResult Function( List<Coach> coaches,  int currentPage,  int limit,  bool hasMore)?  loadedCoaches,TResult Function( String message)?  error,TResult Function( String message)?  success,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case Coach_Initial() when initial != null:
+return initial();case Coach_Loading() when loading != null:
+return loading();case LoadedCoach() when loadedCoach != null:
+return loadedCoach(_that.coach);case LoadedCoaches() when loadedCoaches != null:
+return loadedCoaches(_that.coaches,_that.currentPage,_that.limit,_that.hasMore);case Coach_Error() when error != null:
+return error(_that.message);case Coach_Success() when success != null:
+return success(_that.message);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( Coach coach)  loadedCoach,required TResult Function( List<Coach> coaches,  int currentPage,  int limit,  bool hasMore)  loadedCoaches,required TResult Function( String message)  error,required TResult Function( String message)  success,}) {final _that = this;
+switch (_that) {
+case Coach_Initial():
+return initial();case Coach_Loading():
+return loading();case LoadedCoach():
+return loadedCoach(_that.coach);case LoadedCoaches():
+return loadedCoaches(_that.coaches,_that.currentPage,_that.limit,_that.hasMore);case Coach_Error():
+return error(_that.message);case Coach_Success():
+return success(_that.message);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( Coach coach)?  loadedCoach,TResult? Function( List<Coach> coaches,  int currentPage,  int limit,  bool hasMore)?  loadedCoaches,TResult? Function( String message)?  error,TResult? Function( String message)?  success,}) {final _that = this;
+switch (_that) {
+case Coach_Initial() when initial != null:
+return initial();case Coach_Loading() when loading != null:
+return loading();case LoadedCoach() when loadedCoach != null:
+return loadedCoach(_that.coach);case LoadedCoaches() when loadedCoaches != null:
+return loadedCoaches(_that.coaches,_that.currentPage,_that.limit,_that.hasMore);case Coach_Error() when error != null:
+return error(_that.message);case Coach_Success() when success != null:
+return success(_that.message);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 

@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -41,6 +40,160 @@ class $UserMatchEventCopyWith<$Res>  {
 $UserMatchEventCopyWith(UserMatchEvent _, $Res Function(UserMatchEvent) __);
 }
 
+
+/// Adds pattern-matching-related methods to [UserMatchEvent].
+extension UserMatchEventPatterns on UserMatchEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _CreateUserMatch value)?  createUserMatch,TResult Function( _GetUserMatchById value)?  getUserMatchById,TResult Function( _GetUserMatchByUserId value)?  getUserMatchByUserId,TResult Function( _GetAllUserMatches value)?  getAllUserMatches,TResult Function( _UpdateUserMatch value)?  updateUserMatch,TResult Function( _DeleteUserMatch value)?  deleteUserMatch,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _CreateUserMatch() when createUserMatch != null:
+return createUserMatch(_that);case _GetUserMatchById() when getUserMatchById != null:
+return getUserMatchById(_that);case _GetUserMatchByUserId() when getUserMatchByUserId != null:
+return getUserMatchByUserId(_that);case _GetAllUserMatches() when getAllUserMatches != null:
+return getAllUserMatches(_that);case _UpdateUserMatch() when updateUserMatch != null:
+return updateUserMatch(_that);case _DeleteUserMatch() when deleteUserMatch != null:
+return deleteUserMatch(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _CreateUserMatch value)  createUserMatch,required TResult Function( _GetUserMatchById value)  getUserMatchById,required TResult Function( _GetUserMatchByUserId value)  getUserMatchByUserId,required TResult Function( _GetAllUserMatches value)  getAllUserMatches,required TResult Function( _UpdateUserMatch value)  updateUserMatch,required TResult Function( _DeleteUserMatch value)  deleteUserMatch,}){
+final _that = this;
+switch (_that) {
+case _CreateUserMatch():
+return createUserMatch(_that);case _GetUserMatchById():
+return getUserMatchById(_that);case _GetUserMatchByUserId():
+return getUserMatchByUserId(_that);case _GetAllUserMatches():
+return getAllUserMatches(_that);case _UpdateUserMatch():
+return updateUserMatch(_that);case _DeleteUserMatch():
+return deleteUserMatch(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _CreateUserMatch value)?  createUserMatch,TResult? Function( _GetUserMatchById value)?  getUserMatchById,TResult? Function( _GetUserMatchByUserId value)?  getUserMatchByUserId,TResult? Function( _GetAllUserMatches value)?  getAllUserMatches,TResult? Function( _UpdateUserMatch value)?  updateUserMatch,TResult? Function( _DeleteUserMatch value)?  deleteUserMatch,}){
+final _that = this;
+switch (_that) {
+case _CreateUserMatch() when createUserMatch != null:
+return createUserMatch(_that);case _GetUserMatchById() when getUserMatchById != null:
+return getUserMatchById(_that);case _GetUserMatchByUserId() when getUserMatchByUserId != null:
+return getUserMatchByUserId(_that);case _GetAllUserMatches() when getAllUserMatches != null:
+return getAllUserMatches(_that);case _UpdateUserMatch() when updateUserMatch != null:
+return updateUserMatch(_that);case _DeleteUserMatch() when deleteUserMatch != null:
+return deleteUserMatch(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( UserMatch userMatch)?  createUserMatch,TResult Function( String id)?  getUserMatchById,TResult Function( String userId)?  getUserMatchByUserId,TResult Function( int page,  int limit)?  getAllUserMatches,TResult Function( String id,  UserMatch userMatch)?  updateUserMatch,TResult Function( String id)?  deleteUserMatch,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _CreateUserMatch() when createUserMatch != null:
+return createUserMatch(_that.userMatch);case _GetUserMatchById() when getUserMatchById != null:
+return getUserMatchById(_that.id);case _GetUserMatchByUserId() when getUserMatchByUserId != null:
+return getUserMatchByUserId(_that.userId);case _GetAllUserMatches() when getAllUserMatches != null:
+return getAllUserMatches(_that.page,_that.limit);case _UpdateUserMatch() when updateUserMatch != null:
+return updateUserMatch(_that.id,_that.userMatch);case _DeleteUserMatch() when deleteUserMatch != null:
+return deleteUserMatch(_that.id);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( UserMatch userMatch)  createUserMatch,required TResult Function( String id)  getUserMatchById,required TResult Function( String userId)  getUserMatchByUserId,required TResult Function( int page,  int limit)  getAllUserMatches,required TResult Function( String id,  UserMatch userMatch)  updateUserMatch,required TResult Function( String id)  deleteUserMatch,}) {final _that = this;
+switch (_that) {
+case _CreateUserMatch():
+return createUserMatch(_that.userMatch);case _GetUserMatchById():
+return getUserMatchById(_that.id);case _GetUserMatchByUserId():
+return getUserMatchByUserId(_that.userId);case _GetAllUserMatches():
+return getAllUserMatches(_that.page,_that.limit);case _UpdateUserMatch():
+return updateUserMatch(_that.id,_that.userMatch);case _DeleteUserMatch():
+return deleteUserMatch(_that.id);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( UserMatch userMatch)?  createUserMatch,TResult? Function( String id)?  getUserMatchById,TResult? Function( String userId)?  getUserMatchByUserId,TResult? Function( int page,  int limit)?  getAllUserMatches,TResult? Function( String id,  UserMatch userMatch)?  updateUserMatch,TResult? Function( String id)?  deleteUserMatch,}) {final _that = this;
+switch (_that) {
+case _CreateUserMatch() when createUserMatch != null:
+return createUserMatch(_that.userMatch);case _GetUserMatchById() when getUserMatchById != null:
+return getUserMatchById(_that.id);case _GetUserMatchByUserId() when getUserMatchByUserId != null:
+return getUserMatchByUserId(_that.userId);case _GetAllUserMatches() when getAllUserMatches != null:
+return getAllUserMatches(_that.page,_that.limit);case _UpdateUserMatch() when updateUserMatch != null:
+return updateUserMatch(_that.id,_that.userMatch);case _DeleteUserMatch() when deleteUserMatch != null:
+return deleteUserMatch(_that.id);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
@@ -489,6 +642,160 @@ class $UserMatchStateCopyWith<$Res>  {
 $UserMatchStateCopyWith(UserMatchState _, $Res Function(UserMatchState) __);
 }
 
+
+/// Adds pattern-matching-related methods to [UserMatchState].
+extension UserMatchStatePatterns on UserMatchState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( UserMatch_Initial value)?  initial,TResult Function( UserMatch_Loading value)?  loading,TResult Function( LoadedUserMatch value)?  loadedUserMatch,TResult Function( LoadedUserMatches value)?  loadedUserMatches,TResult Function( UserMatch_Error value)?  error,TResult Function( UserMatch_Success value)?  success,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case UserMatch_Initial() when initial != null:
+return initial(_that);case UserMatch_Loading() when loading != null:
+return loading(_that);case LoadedUserMatch() when loadedUserMatch != null:
+return loadedUserMatch(_that);case LoadedUserMatches() when loadedUserMatches != null:
+return loadedUserMatches(_that);case UserMatch_Error() when error != null:
+return error(_that);case UserMatch_Success() when success != null:
+return success(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( UserMatch_Initial value)  initial,required TResult Function( UserMatch_Loading value)  loading,required TResult Function( LoadedUserMatch value)  loadedUserMatch,required TResult Function( LoadedUserMatches value)  loadedUserMatches,required TResult Function( UserMatch_Error value)  error,required TResult Function( UserMatch_Success value)  success,}){
+final _that = this;
+switch (_that) {
+case UserMatch_Initial():
+return initial(_that);case UserMatch_Loading():
+return loading(_that);case LoadedUserMatch():
+return loadedUserMatch(_that);case LoadedUserMatches():
+return loadedUserMatches(_that);case UserMatch_Error():
+return error(_that);case UserMatch_Success():
+return success(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( UserMatch_Initial value)?  initial,TResult? Function( UserMatch_Loading value)?  loading,TResult? Function( LoadedUserMatch value)?  loadedUserMatch,TResult? Function( LoadedUserMatches value)?  loadedUserMatches,TResult? Function( UserMatch_Error value)?  error,TResult? Function( UserMatch_Success value)?  success,}){
+final _that = this;
+switch (_that) {
+case UserMatch_Initial() when initial != null:
+return initial(_that);case UserMatch_Loading() when loading != null:
+return loading(_that);case LoadedUserMatch() when loadedUserMatch != null:
+return loadedUserMatch(_that);case LoadedUserMatches() when loadedUserMatches != null:
+return loadedUserMatches(_that);case UserMatch_Error() when error != null:
+return error(_that);case UserMatch_Success() when success != null:
+return success(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( UserMatch userMatch)?  loadedUserMatch,TResult Function( List<UserMatch> userMatches,  int currentPage,  int limit,  bool hasMore,  Map<String, MatchSchedule>? matchSchedules,  Map<String, Tournament>? tournaments)?  loadedUserMatches,TResult Function( String message)?  error,TResult Function( String message)?  success,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case UserMatch_Initial() when initial != null:
+return initial();case UserMatch_Loading() when loading != null:
+return loading();case LoadedUserMatch() when loadedUserMatch != null:
+return loadedUserMatch(_that.userMatch);case LoadedUserMatches() when loadedUserMatches != null:
+return loadedUserMatches(_that.userMatches,_that.currentPage,_that.limit,_that.hasMore,_that.matchSchedules,_that.tournaments);case UserMatch_Error() when error != null:
+return error(_that.message);case UserMatch_Success() when success != null:
+return success(_that.message);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( UserMatch userMatch)  loadedUserMatch,required TResult Function( List<UserMatch> userMatches,  int currentPage,  int limit,  bool hasMore,  Map<String, MatchSchedule>? matchSchedules,  Map<String, Tournament>? tournaments)  loadedUserMatches,required TResult Function( String message)  error,required TResult Function( String message)  success,}) {final _that = this;
+switch (_that) {
+case UserMatch_Initial():
+return initial();case UserMatch_Loading():
+return loading();case LoadedUserMatch():
+return loadedUserMatch(_that.userMatch);case LoadedUserMatches():
+return loadedUserMatches(_that.userMatches,_that.currentPage,_that.limit,_that.hasMore,_that.matchSchedules,_that.tournaments);case UserMatch_Error():
+return error(_that.message);case UserMatch_Success():
+return success(_that.message);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( UserMatch userMatch)?  loadedUserMatch,TResult? Function( List<UserMatch> userMatches,  int currentPage,  int limit,  bool hasMore,  Map<String, MatchSchedule>? matchSchedules,  Map<String, Tournament>? tournaments)?  loadedUserMatches,TResult? Function( String message)?  error,TResult? Function( String message)?  success,}) {final _that = this;
+switch (_that) {
+case UserMatch_Initial() when initial != null:
+return initial();case UserMatch_Loading() when loading != null:
+return loading();case LoadedUserMatch() when loadedUserMatch != null:
+return loadedUserMatch(_that.userMatch);case LoadedUserMatches() when loadedUserMatches != null:
+return loadedUserMatches(_that.userMatches,_that.currentPage,_that.limit,_that.hasMore,_that.matchSchedules,_that.tournaments);case UserMatch_Error() when error != null:
+return error(_that.message);case UserMatch_Success() when success != null:
+return success(_that.message);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 

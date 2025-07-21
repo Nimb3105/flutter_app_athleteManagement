@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -41,6 +40,178 @@ class $ExerciseEventCopyWith<$Res>  {
 $ExerciseEventCopyWith(ExerciseEvent _, $Res Function(ExerciseEvent) __);
 }
 
+
+/// Adds pattern-matching-related methods to [ExerciseEvent].
+extension ExerciseEventPatterns on ExerciseEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( CreateExercise value)?  createExercise,TResult Function( GetExerciseById value)?  getExerciseById,TResult Function( GetAllExercisesByBodyPart value)?  getAllExercisesByBodyPart,TResult Function( GetAllExercisesBySportName value)?  getAllExercisesBySportName,TResult Function( GetAllExercises value)?  getAllExercises,TResult Function( UpdateExercise value)?  updateExercise,TResult Function( DeleteExercise value)?  deleteExercise,TResult Function( GetAllExercisesBySportId value)?  getAllExxerciseBySportId,TResult Function( ClearExerciseError value)?  clearError,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case CreateExercise() when createExercise != null:
+return createExercise(_that);case GetExerciseById() when getExerciseById != null:
+return getExerciseById(_that);case GetAllExercisesByBodyPart() when getAllExercisesByBodyPart != null:
+return getAllExercisesByBodyPart(_that);case GetAllExercisesBySportName() when getAllExercisesBySportName != null:
+return getAllExercisesBySportName(_that);case GetAllExercises() when getAllExercises != null:
+return getAllExercises(_that);case UpdateExercise() when updateExercise != null:
+return updateExercise(_that);case DeleteExercise() when deleteExercise != null:
+return deleteExercise(_that);case GetAllExercisesBySportId() when getAllExxerciseBySportId != null:
+return getAllExxerciseBySportId(_that);case ClearExerciseError() when clearError != null:
+return clearError(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( CreateExercise value)  createExercise,required TResult Function( GetExerciseById value)  getExerciseById,required TResult Function( GetAllExercisesByBodyPart value)  getAllExercisesByBodyPart,required TResult Function( GetAllExercisesBySportName value)  getAllExercisesBySportName,required TResult Function( GetAllExercises value)  getAllExercises,required TResult Function( UpdateExercise value)  updateExercise,required TResult Function( DeleteExercise value)  deleteExercise,required TResult Function( GetAllExercisesBySportId value)  getAllExxerciseBySportId,required TResult Function( ClearExerciseError value)  clearError,}){
+final _that = this;
+switch (_that) {
+case CreateExercise():
+return createExercise(_that);case GetExerciseById():
+return getExerciseById(_that);case GetAllExercisesByBodyPart():
+return getAllExercisesByBodyPart(_that);case GetAllExercisesBySportName():
+return getAllExercisesBySportName(_that);case GetAllExercises():
+return getAllExercises(_that);case UpdateExercise():
+return updateExercise(_that);case DeleteExercise():
+return deleteExercise(_that);case GetAllExercisesBySportId():
+return getAllExxerciseBySportId(_that);case ClearExerciseError():
+return clearError(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( CreateExercise value)?  createExercise,TResult? Function( GetExerciseById value)?  getExerciseById,TResult? Function( GetAllExercisesByBodyPart value)?  getAllExercisesByBodyPart,TResult? Function( GetAllExercisesBySportName value)?  getAllExercisesBySportName,TResult? Function( GetAllExercises value)?  getAllExercises,TResult? Function( UpdateExercise value)?  updateExercise,TResult? Function( DeleteExercise value)?  deleteExercise,TResult? Function( GetAllExercisesBySportId value)?  getAllExxerciseBySportId,TResult? Function( ClearExerciseError value)?  clearError,}){
+final _that = this;
+switch (_that) {
+case CreateExercise() when createExercise != null:
+return createExercise(_that);case GetExerciseById() when getExerciseById != null:
+return getExerciseById(_that);case GetAllExercisesByBodyPart() when getAllExercisesByBodyPart != null:
+return getAllExercisesByBodyPart(_that);case GetAllExercisesBySportName() when getAllExercisesBySportName != null:
+return getAllExercisesBySportName(_that);case GetAllExercises() when getAllExercises != null:
+return getAllExercises(_that);case UpdateExercise() when updateExercise != null:
+return updateExercise(_that);case DeleteExercise() when deleteExercise != null:
+return deleteExercise(_that);case GetAllExercisesBySportId() when getAllExxerciseBySportId != null:
+return getAllExxerciseBySportId(_that);case ClearExerciseError() when clearError != null:
+return clearError(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Exercise exercise)?  createExercise,TResult Function( String id)?  getExerciseById,TResult Function( String bodyPart,  int page,  int limit)?  getAllExercisesByBodyPart,TResult Function( String sportName,  int page,  int limit)?  getAllExercisesBySportName,TResult Function( int page,  int limit)?  getAllExercises,TResult Function( String id,  Exercise exercise)?  updateExercise,TResult Function( String id)?  deleteExercise,TResult Function( String sportId)?  getAllExxerciseBySportId,TResult Function()?  clearError,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case CreateExercise() when createExercise != null:
+return createExercise(_that.exercise);case GetExerciseById() when getExerciseById != null:
+return getExerciseById(_that.id);case GetAllExercisesByBodyPart() when getAllExercisesByBodyPart != null:
+return getAllExercisesByBodyPart(_that.bodyPart,_that.page,_that.limit);case GetAllExercisesBySportName() when getAllExercisesBySportName != null:
+return getAllExercisesBySportName(_that.sportName,_that.page,_that.limit);case GetAllExercises() when getAllExercises != null:
+return getAllExercises(_that.page,_that.limit);case UpdateExercise() when updateExercise != null:
+return updateExercise(_that.id,_that.exercise);case DeleteExercise() when deleteExercise != null:
+return deleteExercise(_that.id);case GetAllExercisesBySportId() when getAllExxerciseBySportId != null:
+return getAllExxerciseBySportId(_that.sportId);case ClearExerciseError() when clearError != null:
+return clearError();case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Exercise exercise)  createExercise,required TResult Function( String id)  getExerciseById,required TResult Function( String bodyPart,  int page,  int limit)  getAllExercisesByBodyPart,required TResult Function( String sportName,  int page,  int limit)  getAllExercisesBySportName,required TResult Function( int page,  int limit)  getAllExercises,required TResult Function( String id,  Exercise exercise)  updateExercise,required TResult Function( String id)  deleteExercise,required TResult Function( String sportId)  getAllExxerciseBySportId,required TResult Function()  clearError,}) {final _that = this;
+switch (_that) {
+case CreateExercise():
+return createExercise(_that.exercise);case GetExerciseById():
+return getExerciseById(_that.id);case GetAllExercisesByBodyPart():
+return getAllExercisesByBodyPart(_that.bodyPart,_that.page,_that.limit);case GetAllExercisesBySportName():
+return getAllExercisesBySportName(_that.sportName,_that.page,_that.limit);case GetAllExercises():
+return getAllExercises(_that.page,_that.limit);case UpdateExercise():
+return updateExercise(_that.id,_that.exercise);case DeleteExercise():
+return deleteExercise(_that.id);case GetAllExercisesBySportId():
+return getAllExxerciseBySportId(_that.sportId);case ClearExerciseError():
+return clearError();}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Exercise exercise)?  createExercise,TResult? Function( String id)?  getExerciseById,TResult? Function( String bodyPart,  int page,  int limit)?  getAllExercisesByBodyPart,TResult? Function( String sportName,  int page,  int limit)?  getAllExercisesBySportName,TResult? Function( int page,  int limit)?  getAllExercises,TResult? Function( String id,  Exercise exercise)?  updateExercise,TResult? Function( String id)?  deleteExercise,TResult? Function( String sportId)?  getAllExxerciseBySportId,TResult? Function()?  clearError,}) {final _that = this;
+switch (_that) {
+case CreateExercise() when createExercise != null:
+return createExercise(_that.exercise);case GetExerciseById() when getExerciseById != null:
+return getExerciseById(_that.id);case GetAllExercisesByBodyPart() when getAllExercisesByBodyPart != null:
+return getAllExercisesByBodyPart(_that.bodyPart,_that.page,_that.limit);case GetAllExercisesBySportName() when getAllExercisesBySportName != null:
+return getAllExercisesBySportName(_that.sportName,_that.page,_that.limit);case GetAllExercises() when getAllExercises != null:
+return getAllExercises(_that.page,_that.limit);case UpdateExercise() when updateExercise != null:
+return updateExercise(_that.id,_that.exercise);case DeleteExercise() when deleteExercise != null:
+return deleteExercise(_that.id);case GetAllExercisesBySportId() when getAllExxerciseBySportId != null:
+return getAllExxerciseBySportId(_that.sportId);case ClearExerciseError() when clearError != null:
+return clearError();case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
@@ -661,6 +832,172 @@ class $ExerciseStateCopyWith<$Res>  {
 $ExerciseStateCopyWith(ExerciseState _, $Res Function(ExerciseState) __);
 }
 
+
+/// Adds pattern-matching-related methods to [ExerciseState].
+extension ExerciseStatePatterns on ExerciseState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( Exercise_Initial value)?  initial,TResult Function( Exercise_Loading value)?  loading,TResult Function( Exercise_LoadingMore value)?  loadingMore,TResult Function( LoadedExercise value)?  loadedExercise,TResult Function( LoadedExercises value)?  loadedExercises,TResult Function( Exercise_Error value)?  error,TResult Function( Exercise_Success value)?  success,TResult Function( LoadedExercisesBySportId value)?  loadedExercisesBySportId,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case Exercise_Initial() when initial != null:
+return initial(_that);case Exercise_Loading() when loading != null:
+return loading(_that);case Exercise_LoadingMore() when loadingMore != null:
+return loadingMore(_that);case LoadedExercise() when loadedExercise != null:
+return loadedExercise(_that);case LoadedExercises() when loadedExercises != null:
+return loadedExercises(_that);case Exercise_Error() when error != null:
+return error(_that);case Exercise_Success() when success != null:
+return success(_that);case LoadedExercisesBySportId() when loadedExercisesBySportId != null:
+return loadedExercisesBySportId(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( Exercise_Initial value)  initial,required TResult Function( Exercise_Loading value)  loading,required TResult Function( Exercise_LoadingMore value)  loadingMore,required TResult Function( LoadedExercise value)  loadedExercise,required TResult Function( LoadedExercises value)  loadedExercises,required TResult Function( Exercise_Error value)  error,required TResult Function( Exercise_Success value)  success,required TResult Function( LoadedExercisesBySportId value)  loadedExercisesBySportId,}){
+final _that = this;
+switch (_that) {
+case Exercise_Initial():
+return initial(_that);case Exercise_Loading():
+return loading(_that);case Exercise_LoadingMore():
+return loadingMore(_that);case LoadedExercise():
+return loadedExercise(_that);case LoadedExercises():
+return loadedExercises(_that);case Exercise_Error():
+return error(_that);case Exercise_Success():
+return success(_that);case LoadedExercisesBySportId():
+return loadedExercisesBySportId(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( Exercise_Initial value)?  initial,TResult? Function( Exercise_Loading value)?  loading,TResult? Function( Exercise_LoadingMore value)?  loadingMore,TResult? Function( LoadedExercise value)?  loadedExercise,TResult? Function( LoadedExercises value)?  loadedExercises,TResult? Function( Exercise_Error value)?  error,TResult? Function( Exercise_Success value)?  success,TResult? Function( LoadedExercisesBySportId value)?  loadedExercisesBySportId,}){
+final _that = this;
+switch (_that) {
+case Exercise_Initial() when initial != null:
+return initial(_that);case Exercise_Loading() when loading != null:
+return loading(_that);case Exercise_LoadingMore() when loadingMore != null:
+return loadingMore(_that);case LoadedExercise() when loadedExercise != null:
+return loadedExercise(_that);case LoadedExercises() when loadedExercises != null:
+return loadedExercises(_that);case Exercise_Error() when error != null:
+return error(_that);case Exercise_Success() when success != null:
+return success(_that);case LoadedExercisesBySportId() when loadedExercisesBySportId != null:
+return loadedExercisesBySportId(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function()?  loadingMore,TResult Function( Exercise exercise)?  loadedExercise,TResult Function( List<Exercise> exercises,  int currentPage,  int limit,  bool hasMore)?  loadedExercises,TResult Function( String message)?  error,TResult Function( String message)?  success,TResult Function( List<Exercise> exercises)?  loadedExercisesBySportId,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case Exercise_Initial() when initial != null:
+return initial();case Exercise_Loading() when loading != null:
+return loading();case Exercise_LoadingMore() when loadingMore != null:
+return loadingMore();case LoadedExercise() when loadedExercise != null:
+return loadedExercise(_that.exercise);case LoadedExercises() when loadedExercises != null:
+return loadedExercises(_that.exercises,_that.currentPage,_that.limit,_that.hasMore);case Exercise_Error() when error != null:
+return error(_that.message);case Exercise_Success() when success != null:
+return success(_that.message);case LoadedExercisesBySportId() when loadedExercisesBySportId != null:
+return loadedExercisesBySportId(_that.exercises);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function()  loadingMore,required TResult Function( Exercise exercise)  loadedExercise,required TResult Function( List<Exercise> exercises,  int currentPage,  int limit,  bool hasMore)  loadedExercises,required TResult Function( String message)  error,required TResult Function( String message)  success,required TResult Function( List<Exercise> exercises)  loadedExercisesBySportId,}) {final _that = this;
+switch (_that) {
+case Exercise_Initial():
+return initial();case Exercise_Loading():
+return loading();case Exercise_LoadingMore():
+return loadingMore();case LoadedExercise():
+return loadedExercise(_that.exercise);case LoadedExercises():
+return loadedExercises(_that.exercises,_that.currentPage,_that.limit,_that.hasMore);case Exercise_Error():
+return error(_that.message);case Exercise_Success():
+return success(_that.message);case LoadedExercisesBySportId():
+return loadedExercisesBySportId(_that.exercises);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function()?  loadingMore,TResult? Function( Exercise exercise)?  loadedExercise,TResult? Function( List<Exercise> exercises,  int currentPage,  int limit,  bool hasMore)?  loadedExercises,TResult? Function( String message)?  error,TResult? Function( String message)?  success,TResult? Function( List<Exercise> exercises)?  loadedExercisesBySportId,}) {final _that = this;
+switch (_that) {
+case Exercise_Initial() when initial != null:
+return initial();case Exercise_Loading() when loading != null:
+return loading();case Exercise_LoadingMore() when loadingMore != null:
+return loadingMore();case LoadedExercise() when loadedExercise != null:
+return loadedExercise(_that.exercise);case LoadedExercises() when loadedExercises != null:
+return loadedExercises(_that.exercises,_that.currentPage,_that.limit,_that.hasMore);case Exercise_Error() when error != null:
+return error(_that.message);case Exercise_Success() when success != null:
+return success(_that.message);case LoadedExercisesBySportId() when loadedExercisesBySportId != null:
+return loadedExercisesBySportId(_that.exercises);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 

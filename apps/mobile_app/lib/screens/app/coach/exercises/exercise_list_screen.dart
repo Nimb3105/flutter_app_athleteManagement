@@ -8,7 +8,9 @@ import 'package:mobile_app/screens/app/coach/exercises/exercise_detail.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'dart:async'; 
+import 'dart:async';
+
+import 'other_sports_exercises_screen.dart';
 
 class Debouncer {
   final int milliseconds;
@@ -52,11 +54,16 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
   @override
   void initState() {
     super.initState();
-    // Initial load
-    _fetchExercises();
+    context.read<ExerciseBloc>().add(
+      ExerciseEvent.getAllExxerciseBySportId(widget.sportId),
+    );
+
+    // Lắng nghe thay đổi để rebuild UI thay vì fetch lại
     _searchController.addListener(() {
       _debouncer.run(() {
-        _fetchExercises();
+        if (mounted) {
+          setState(() {}); // Chỉ cần rebuild lại widget
+        }
       });
     });
   }
@@ -131,7 +138,9 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
                       const SizedBox(width: 12),
                       ElevatedButton(
                         onPressed: () {
-                          _fetchExercises();
+                          setState(
+                            () {},
+                          ); // Cập nhật state để rebuild UI với bộ lọc mới
                           Navigator.pop(context);
                         },
                         child: const Text('Áp dụng'),
@@ -178,6 +187,39 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
             icon: const Icon(Icons.filter_list),
             tooltip: 'Lọc bài tập',
           ),
+          // --- THAY ĐỔI Ở ĐÂY ---
+          IconButton(
+            icon: const Icon(Icons.sports),
+            tooltip: 'Môn thể thao khác',
+            onPressed: () async {
+              // Thêm async
+              // Đợi màn hình mới đóng lại
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (_) => MultiBlocProvider(
+                        providers: [
+                          BlocProvider.value(value: context.read<SportBloc>()),
+                          BlocProvider.value(
+                            value: context.read<ExerciseBloc>(),
+                          ),
+                        ],
+                        child: OtherSportsExercisesScreen(
+                          currentSportId: widget.sportId,
+                          coachId: widget.coachId,
+                        ),
+                      ),
+                ),
+              );
+
+              // Sau khi quay lại, gọi lại hàm fetch dữ liệu ban đầu
+              if (mounted) {
+                _fetchExercises();
+              }
+            },
+          ),
+          // --- KẾT THÚC THAY ĐỔI ---
         ],
       ),
       body: BlocConsumer<ExerciseBloc, ExerciseState>(
@@ -189,7 +231,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
                 backgroundColor: Colors.green,
               ),
             );
-            _fetchExercises(); 
+            _fetchExercises();
           } else if (state is Exercise_Error) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -211,9 +253,22 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
             if (exercises.isEmpty) return _buildEmptyState(context);
             return _buildExerciseList(context, exercises);
           } else if (state is LoadedExercisesBySportId) {
-            final exercises = state.exercises;
-            if (exercises.isEmpty) return _buildEmptyState(context);
-            return _buildExerciseList(context, exercises);
+            // Lấy danh sách gốc
+            final allExercises = state.exercises;
+
+            // Áp dụng bộ lọc và tìm kiếm
+            final filteredExercises =
+                allExercises.where((exercise) {
+                  final matchesSearch = exercise.name.toLowerCase().contains(
+                    _searchController.text.toLowerCase(),
+                  );
+                  final matchesBodyPart =
+                      _selectedBodyPart == null ||
+                      exercise.bodyPart == _selectedBodyPart;
+                  return matchesSearch && matchesBodyPart;
+                }).toList();
+            if (filteredExercises.isEmpty) return _buildEmptyState(context);
+            return _buildExerciseList(context, filteredExercises);
           } else if (state is Exercise_Error) {
             return Center(child: Text('Lỗi: ${state.message}'));
           }
@@ -236,7 +291,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
             ),
           );
           if (result == true) {
-            _fetchExercises(); 
+            _fetchExercises();
           }
         },
         child: const Icon(Icons.add),

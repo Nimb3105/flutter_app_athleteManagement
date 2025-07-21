@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -41,6 +40,160 @@ class $MessageEventCopyWith<$Res>  {
 $MessageEventCopyWith(MessageEvent _, $Res Function(MessageEvent) __);
 }
 
+
+/// Adds pattern-matching-related methods to [MessageEvent].
+extension MessageEventPatterns on MessageEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _CreateMessage value)?  createMessage,TResult Function( _GetMessageById value)?  getMessageById,TResult Function( _GetMessagesByGroupId value)?  getMessagesByGroupId,TResult Function( _GetAllMessages value)?  getAllMessages,TResult Function( _UpdateMessage value)?  updateMessage,TResult Function( _DeleteMessage value)?  deleteMessage,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _CreateMessage() when createMessage != null:
+return createMessage(_that);case _GetMessageById() when getMessageById != null:
+return getMessageById(_that);case _GetMessagesByGroupId() when getMessagesByGroupId != null:
+return getMessagesByGroupId(_that);case _GetAllMessages() when getAllMessages != null:
+return getAllMessages(_that);case _UpdateMessage() when updateMessage != null:
+return updateMessage(_that);case _DeleteMessage() when deleteMessage != null:
+return deleteMessage(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _CreateMessage value)  createMessage,required TResult Function( _GetMessageById value)  getMessageById,required TResult Function( _GetMessagesByGroupId value)  getMessagesByGroupId,required TResult Function( _GetAllMessages value)  getAllMessages,required TResult Function( _UpdateMessage value)  updateMessage,required TResult Function( _DeleteMessage value)  deleteMessage,}){
+final _that = this;
+switch (_that) {
+case _CreateMessage():
+return createMessage(_that);case _GetMessageById():
+return getMessageById(_that);case _GetMessagesByGroupId():
+return getMessagesByGroupId(_that);case _GetAllMessages():
+return getAllMessages(_that);case _UpdateMessage():
+return updateMessage(_that);case _DeleteMessage():
+return deleteMessage(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _CreateMessage value)?  createMessage,TResult? Function( _GetMessageById value)?  getMessageById,TResult? Function( _GetMessagesByGroupId value)?  getMessagesByGroupId,TResult? Function( _GetAllMessages value)?  getAllMessages,TResult? Function( _UpdateMessage value)?  updateMessage,TResult? Function( _DeleteMessage value)?  deleteMessage,}){
+final _that = this;
+switch (_that) {
+case _CreateMessage() when createMessage != null:
+return createMessage(_that);case _GetMessageById() when getMessageById != null:
+return getMessageById(_that);case _GetMessagesByGroupId() when getMessagesByGroupId != null:
+return getMessagesByGroupId(_that);case _GetAllMessages() when getAllMessages != null:
+return getAllMessages(_that);case _UpdateMessage() when updateMessage != null:
+return updateMessage(_that);case _DeleteMessage() when deleteMessage != null:
+return deleteMessage(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Message message)?  createMessage,TResult Function( String id)?  getMessageById,TResult Function( String groupId)?  getMessagesByGroupId,TResult Function( int page,  int limit)?  getAllMessages,TResult Function( String id,  Message message)?  updateMessage,TResult Function( String id)?  deleteMessage,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _CreateMessage() when createMessage != null:
+return createMessage(_that.message);case _GetMessageById() when getMessageById != null:
+return getMessageById(_that.id);case _GetMessagesByGroupId() when getMessagesByGroupId != null:
+return getMessagesByGroupId(_that.groupId);case _GetAllMessages() when getAllMessages != null:
+return getAllMessages(_that.page,_that.limit);case _UpdateMessage() when updateMessage != null:
+return updateMessage(_that.id,_that.message);case _DeleteMessage() when deleteMessage != null:
+return deleteMessage(_that.id);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Message message)  createMessage,required TResult Function( String id)  getMessageById,required TResult Function( String groupId)  getMessagesByGroupId,required TResult Function( int page,  int limit)  getAllMessages,required TResult Function( String id,  Message message)  updateMessage,required TResult Function( String id)  deleteMessage,}) {final _that = this;
+switch (_that) {
+case _CreateMessage():
+return createMessage(_that.message);case _GetMessageById():
+return getMessageById(_that.id);case _GetMessagesByGroupId():
+return getMessagesByGroupId(_that.groupId);case _GetAllMessages():
+return getAllMessages(_that.page,_that.limit);case _UpdateMessage():
+return updateMessage(_that.id,_that.message);case _DeleteMessage():
+return deleteMessage(_that.id);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Message message)?  createMessage,TResult? Function( String id)?  getMessageById,TResult? Function( String groupId)?  getMessagesByGroupId,TResult? Function( int page,  int limit)?  getAllMessages,TResult? Function( String id,  Message message)?  updateMessage,TResult? Function( String id)?  deleteMessage,}) {final _that = this;
+switch (_that) {
+case _CreateMessage() when createMessage != null:
+return createMessage(_that.message);case _GetMessageById() when getMessageById != null:
+return getMessageById(_that.id);case _GetMessagesByGroupId() when getMessagesByGroupId != null:
+return getMessagesByGroupId(_that.groupId);case _GetAllMessages() when getAllMessages != null:
+return getAllMessages(_that.page,_that.limit);case _UpdateMessage() when updateMessage != null:
+return updateMessage(_that.id,_that.message);case _DeleteMessage() when deleteMessage != null:
+return deleteMessage(_that.id);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
@@ -489,6 +642,160 @@ class $MessageStateCopyWith<$Res>  {
 $MessageStateCopyWith(MessageState _, $Res Function(MessageState) __);
 }
 
+
+/// Adds pattern-matching-related methods to [MessageState].
+extension MessageStatePatterns on MessageState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( Message_Initial value)?  initial,TResult Function( Message_Loading value)?  loading,TResult Function( LoadedMessage value)?  loadedMessage,TResult Function( LoadedMessages value)?  loadedMessages,TResult Function( Message_Error value)?  error,TResult Function( Message_Success value)?  success,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case Message_Initial() when initial != null:
+return initial(_that);case Message_Loading() when loading != null:
+return loading(_that);case LoadedMessage() when loadedMessage != null:
+return loadedMessage(_that);case LoadedMessages() when loadedMessages != null:
+return loadedMessages(_that);case Message_Error() when error != null:
+return error(_that);case Message_Success() when success != null:
+return success(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( Message_Initial value)  initial,required TResult Function( Message_Loading value)  loading,required TResult Function( LoadedMessage value)  loadedMessage,required TResult Function( LoadedMessages value)  loadedMessages,required TResult Function( Message_Error value)  error,required TResult Function( Message_Success value)  success,}){
+final _that = this;
+switch (_that) {
+case Message_Initial():
+return initial(_that);case Message_Loading():
+return loading(_that);case LoadedMessage():
+return loadedMessage(_that);case LoadedMessages():
+return loadedMessages(_that);case Message_Error():
+return error(_that);case Message_Success():
+return success(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( Message_Initial value)?  initial,TResult? Function( Message_Loading value)?  loading,TResult? Function( LoadedMessage value)?  loadedMessage,TResult? Function( LoadedMessages value)?  loadedMessages,TResult? Function( Message_Error value)?  error,TResult? Function( Message_Success value)?  success,}){
+final _that = this;
+switch (_that) {
+case Message_Initial() when initial != null:
+return initial(_that);case Message_Loading() when loading != null:
+return loading(_that);case LoadedMessage() when loadedMessage != null:
+return loadedMessage(_that);case LoadedMessages() when loadedMessages != null:
+return loadedMessages(_that);case Message_Error() when error != null:
+return error(_that);case Message_Success() when success != null:
+return success(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( Message message)?  loadedMessage,TResult Function( List<Message> messages,  int currentPage,  int limit,  bool hasMore)?  loadedMessages,TResult Function( String message)?  error,TResult Function( String message)?  success,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case Message_Initial() when initial != null:
+return initial();case Message_Loading() when loading != null:
+return loading();case LoadedMessage() when loadedMessage != null:
+return loadedMessage(_that.message);case LoadedMessages() when loadedMessages != null:
+return loadedMessages(_that.messages,_that.currentPage,_that.limit,_that.hasMore);case Message_Error() when error != null:
+return error(_that.message);case Message_Success() when success != null:
+return success(_that.message);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( Message message)  loadedMessage,required TResult Function( List<Message> messages,  int currentPage,  int limit,  bool hasMore)  loadedMessages,required TResult Function( String message)  error,required TResult Function( String message)  success,}) {final _that = this;
+switch (_that) {
+case Message_Initial():
+return initial();case Message_Loading():
+return loading();case LoadedMessage():
+return loadedMessage(_that.message);case LoadedMessages():
+return loadedMessages(_that.messages,_that.currentPage,_that.limit,_that.hasMore);case Message_Error():
+return error(_that.message);case Message_Success():
+return success(_that.message);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( Message message)?  loadedMessage,TResult? Function( List<Message> messages,  int currentPage,  int limit,  bool hasMore)?  loadedMessages,TResult? Function( String message)?  error,TResult? Function( String message)?  success,}) {final _that = this;
+switch (_that) {
+case Message_Initial() when initial != null:
+return initial();case Message_Loading() when loading != null:
+return loading();case LoadedMessage() when loadedMessage != null:
+return loadedMessage(_that.message);case LoadedMessages() when loadedMessages != null:
+return loadedMessages(_that.messages,_that.currentPage,_that.limit,_that.hasMore);case Message_Error() when error != null:
+return error(_that.message);case Message_Success() when success != null:
+return success(_that.message);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 

@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -41,6 +40,160 @@ class $ReminderEventCopyWith<$Res>  {
 $ReminderEventCopyWith(ReminderEvent _, $Res Function(ReminderEvent) __);
 }
 
+
+/// Adds pattern-matching-related methods to [ReminderEvent].
+extension ReminderEventPatterns on ReminderEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( CreateReminder value)?  createReminder,TResult Function( GetReminderById value)?  getReminderById,TResult Function( GetRemindersByUserId value)?  getRemindersByUserId,TResult Function( UpdateReminder value)?  updateReminder,TResult Function( DeleteReminder value)?  deleteReminder,TResult Function( GetAllReminders value)?  getAllReminders,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case CreateReminder() when createReminder != null:
+return createReminder(_that);case GetReminderById() when getReminderById != null:
+return getReminderById(_that);case GetRemindersByUserId() when getRemindersByUserId != null:
+return getRemindersByUserId(_that);case UpdateReminder() when updateReminder != null:
+return updateReminder(_that);case DeleteReminder() when deleteReminder != null:
+return deleteReminder(_that);case GetAllReminders() when getAllReminders != null:
+return getAllReminders(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( CreateReminder value)  createReminder,required TResult Function( GetReminderById value)  getReminderById,required TResult Function( GetRemindersByUserId value)  getRemindersByUserId,required TResult Function( UpdateReminder value)  updateReminder,required TResult Function( DeleteReminder value)  deleteReminder,required TResult Function( GetAllReminders value)  getAllReminders,}){
+final _that = this;
+switch (_that) {
+case CreateReminder():
+return createReminder(_that);case GetReminderById():
+return getReminderById(_that);case GetRemindersByUserId():
+return getRemindersByUserId(_that);case UpdateReminder():
+return updateReminder(_that);case DeleteReminder():
+return deleteReminder(_that);case GetAllReminders():
+return getAllReminders(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( CreateReminder value)?  createReminder,TResult? Function( GetReminderById value)?  getReminderById,TResult? Function( GetRemindersByUserId value)?  getRemindersByUserId,TResult? Function( UpdateReminder value)?  updateReminder,TResult? Function( DeleteReminder value)?  deleteReminder,TResult? Function( GetAllReminders value)?  getAllReminders,}){
+final _that = this;
+switch (_that) {
+case CreateReminder() when createReminder != null:
+return createReminder(_that);case GetReminderById() when getReminderById != null:
+return getReminderById(_that);case GetRemindersByUserId() when getRemindersByUserId != null:
+return getRemindersByUserId(_that);case UpdateReminder() when updateReminder != null:
+return updateReminder(_that);case DeleteReminder() when deleteReminder != null:
+return deleteReminder(_that);case GetAllReminders() when getAllReminders != null:
+return getAllReminders(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Reminder reminder)?  createReminder,TResult Function( String id)?  getReminderById,TResult Function( String userId)?  getRemindersByUserId,TResult Function( String id,  Reminder reminder)?  updateReminder,TResult Function( String id)?  deleteReminder,TResult Function( int page,  int limit)?  getAllReminders,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case CreateReminder() when createReminder != null:
+return createReminder(_that.reminder);case GetReminderById() when getReminderById != null:
+return getReminderById(_that.id);case GetRemindersByUserId() when getRemindersByUserId != null:
+return getRemindersByUserId(_that.userId);case UpdateReminder() when updateReminder != null:
+return updateReminder(_that.id,_that.reminder);case DeleteReminder() when deleteReminder != null:
+return deleteReminder(_that.id);case GetAllReminders() when getAllReminders != null:
+return getAllReminders(_that.page,_that.limit);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Reminder reminder)  createReminder,required TResult Function( String id)  getReminderById,required TResult Function( String userId)  getRemindersByUserId,required TResult Function( String id,  Reminder reminder)  updateReminder,required TResult Function( String id)  deleteReminder,required TResult Function( int page,  int limit)  getAllReminders,}) {final _that = this;
+switch (_that) {
+case CreateReminder():
+return createReminder(_that.reminder);case GetReminderById():
+return getReminderById(_that.id);case GetRemindersByUserId():
+return getRemindersByUserId(_that.userId);case UpdateReminder():
+return updateReminder(_that.id,_that.reminder);case DeleteReminder():
+return deleteReminder(_that.id);case GetAllReminders():
+return getAllReminders(_that.page,_that.limit);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Reminder reminder)?  createReminder,TResult? Function( String id)?  getReminderById,TResult? Function( String userId)?  getRemindersByUserId,TResult? Function( String id,  Reminder reminder)?  updateReminder,TResult? Function( String id)?  deleteReminder,TResult? Function( int page,  int limit)?  getAllReminders,}) {final _that = this;
+switch (_that) {
+case CreateReminder() when createReminder != null:
+return createReminder(_that.reminder);case GetReminderById() when getReminderById != null:
+return getReminderById(_that.id);case GetRemindersByUserId() when getRemindersByUserId != null:
+return getRemindersByUserId(_that.userId);case UpdateReminder() when updateReminder != null:
+return updateReminder(_that.id,_that.reminder);case DeleteReminder() when deleteReminder != null:
+return deleteReminder(_that.id);case GetAllReminders() when getAllReminders != null:
+return getAllReminders(_that.page,_that.limit);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
@@ -489,6 +642,166 @@ class $ReminderStateCopyWith<$Res>  {
 $ReminderStateCopyWith(ReminderState _, $Res Function(ReminderState) __);
 }
 
+
+/// Adds pattern-matching-related methods to [ReminderState].
+extension ReminderStatePatterns on ReminderState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( Reminder_Initial value)?  initial,TResult Function( Reminder_Loading value)?  loading,TResult Function( LoadedReminder value)?  loadedReminder,TResult Function( LoadedReminders value)?  loadedReminders,TResult Function( Reminder_Success value)?  success,TResult Function( Reminder_Error value)?  error,TResult Function( LoadedAllReminders value)?  loadedAllReminders,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case Reminder_Initial() when initial != null:
+return initial(_that);case Reminder_Loading() when loading != null:
+return loading(_that);case LoadedReminder() when loadedReminder != null:
+return loadedReminder(_that);case LoadedReminders() when loadedReminders != null:
+return loadedReminders(_that);case Reminder_Success() when success != null:
+return success(_that);case Reminder_Error() when error != null:
+return error(_that);case LoadedAllReminders() when loadedAllReminders != null:
+return loadedAllReminders(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( Reminder_Initial value)  initial,required TResult Function( Reminder_Loading value)  loading,required TResult Function( LoadedReminder value)  loadedReminder,required TResult Function( LoadedReminders value)  loadedReminders,required TResult Function( Reminder_Success value)  success,required TResult Function( Reminder_Error value)  error,required TResult Function( LoadedAllReminders value)  loadedAllReminders,}){
+final _that = this;
+switch (_that) {
+case Reminder_Initial():
+return initial(_that);case Reminder_Loading():
+return loading(_that);case LoadedReminder():
+return loadedReminder(_that);case LoadedReminders():
+return loadedReminders(_that);case Reminder_Success():
+return success(_that);case Reminder_Error():
+return error(_that);case LoadedAllReminders():
+return loadedAllReminders(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( Reminder_Initial value)?  initial,TResult? Function( Reminder_Loading value)?  loading,TResult? Function( LoadedReminder value)?  loadedReminder,TResult? Function( LoadedReminders value)?  loadedReminders,TResult? Function( Reminder_Success value)?  success,TResult? Function( Reminder_Error value)?  error,TResult? Function( LoadedAllReminders value)?  loadedAllReminders,}){
+final _that = this;
+switch (_that) {
+case Reminder_Initial() when initial != null:
+return initial(_that);case Reminder_Loading() when loading != null:
+return loading(_that);case LoadedReminder() when loadedReminder != null:
+return loadedReminder(_that);case LoadedReminders() when loadedReminders != null:
+return loadedReminders(_that);case Reminder_Success() when success != null:
+return success(_that);case Reminder_Error() when error != null:
+return error(_that);case LoadedAllReminders() when loadedAllReminders != null:
+return loadedAllReminders(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( Reminder reminder)?  loadedReminder,TResult Function( List<Reminder> reminders)?  loadedReminders,TResult Function( String message)?  success,TResult Function( String message)?  error,TResult Function( List<Reminder> reminders,  int currentPage,  int limit,  bool hasMore)?  loadedAllReminders,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case Reminder_Initial() when initial != null:
+return initial();case Reminder_Loading() when loading != null:
+return loading();case LoadedReminder() when loadedReminder != null:
+return loadedReminder(_that.reminder);case LoadedReminders() when loadedReminders != null:
+return loadedReminders(_that.reminders);case Reminder_Success() when success != null:
+return success(_that.message);case Reminder_Error() when error != null:
+return error(_that.message);case LoadedAllReminders() when loadedAllReminders != null:
+return loadedAllReminders(_that.reminders,_that.currentPage,_that.limit,_that.hasMore);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( Reminder reminder)  loadedReminder,required TResult Function( List<Reminder> reminders)  loadedReminders,required TResult Function( String message)  success,required TResult Function( String message)  error,required TResult Function( List<Reminder> reminders,  int currentPage,  int limit,  bool hasMore)  loadedAllReminders,}) {final _that = this;
+switch (_that) {
+case Reminder_Initial():
+return initial();case Reminder_Loading():
+return loading();case LoadedReminder():
+return loadedReminder(_that.reminder);case LoadedReminders():
+return loadedReminders(_that.reminders);case Reminder_Success():
+return success(_that.message);case Reminder_Error():
+return error(_that.message);case LoadedAllReminders():
+return loadedAllReminders(_that.reminders,_that.currentPage,_that.limit,_that.hasMore);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( Reminder reminder)?  loadedReminder,TResult? Function( List<Reminder> reminders)?  loadedReminders,TResult? Function( String message)?  success,TResult? Function( String message)?  error,TResult? Function( List<Reminder> reminders,  int currentPage,  int limit,  bool hasMore)?  loadedAllReminders,}) {final _that = this;
+switch (_that) {
+case Reminder_Initial() when initial != null:
+return initial();case Reminder_Loading() when loading != null:
+return loading();case LoadedReminder() when loadedReminder != null:
+return loadedReminder(_that.reminder);case LoadedReminders() when loadedReminders != null:
+return loadedReminders(_that.reminders);case Reminder_Success() when success != null:
+return success(_that.message);case Reminder_Error() when error != null:
+return error(_that.message);case LoadedAllReminders() when loadedAllReminders != null:
+return loadedAllReminders(_that.reminders,_that.currentPage,_that.limit,_that.hasMore);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 

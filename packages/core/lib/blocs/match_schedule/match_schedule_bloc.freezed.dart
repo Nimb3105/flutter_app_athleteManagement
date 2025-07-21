@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -41,6 +40,160 @@ class $MatchScheduleEventCopyWith<$Res>  {
 $MatchScheduleEventCopyWith(MatchScheduleEvent _, $Res Function(MatchScheduleEvent) __);
 }
 
+
+/// Adds pattern-matching-related methods to [MatchScheduleEvent].
+extension MatchScheduleEventPatterns on MatchScheduleEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _CreateMatchSchedule value)?  createMatchSchedule,TResult Function( _GetMatchScheduleById value)?  getMatchScheduleById,TResult Function( _GetMatchScheduleByTournamentId value)?  getMatchScheduleByTournamentId,TResult Function( _GetAllMatchSchedules value)?  getAllMatchSchedules,TResult Function( _UpdateMatchSchedule value)?  updateMatchSchedule,TResult Function( _DeleteMatchSchedule value)?  deleteMatchSchedule,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _CreateMatchSchedule() when createMatchSchedule != null:
+return createMatchSchedule(_that);case _GetMatchScheduleById() when getMatchScheduleById != null:
+return getMatchScheduleById(_that);case _GetMatchScheduleByTournamentId() when getMatchScheduleByTournamentId != null:
+return getMatchScheduleByTournamentId(_that);case _GetAllMatchSchedules() when getAllMatchSchedules != null:
+return getAllMatchSchedules(_that);case _UpdateMatchSchedule() when updateMatchSchedule != null:
+return updateMatchSchedule(_that);case _DeleteMatchSchedule() when deleteMatchSchedule != null:
+return deleteMatchSchedule(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _CreateMatchSchedule value)  createMatchSchedule,required TResult Function( _GetMatchScheduleById value)  getMatchScheduleById,required TResult Function( _GetMatchScheduleByTournamentId value)  getMatchScheduleByTournamentId,required TResult Function( _GetAllMatchSchedules value)  getAllMatchSchedules,required TResult Function( _UpdateMatchSchedule value)  updateMatchSchedule,required TResult Function( _DeleteMatchSchedule value)  deleteMatchSchedule,}){
+final _that = this;
+switch (_that) {
+case _CreateMatchSchedule():
+return createMatchSchedule(_that);case _GetMatchScheduleById():
+return getMatchScheduleById(_that);case _GetMatchScheduleByTournamentId():
+return getMatchScheduleByTournamentId(_that);case _GetAllMatchSchedules():
+return getAllMatchSchedules(_that);case _UpdateMatchSchedule():
+return updateMatchSchedule(_that);case _DeleteMatchSchedule():
+return deleteMatchSchedule(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _CreateMatchSchedule value)?  createMatchSchedule,TResult? Function( _GetMatchScheduleById value)?  getMatchScheduleById,TResult? Function( _GetMatchScheduleByTournamentId value)?  getMatchScheduleByTournamentId,TResult? Function( _GetAllMatchSchedules value)?  getAllMatchSchedules,TResult? Function( _UpdateMatchSchedule value)?  updateMatchSchedule,TResult? Function( _DeleteMatchSchedule value)?  deleteMatchSchedule,}){
+final _that = this;
+switch (_that) {
+case _CreateMatchSchedule() when createMatchSchedule != null:
+return createMatchSchedule(_that);case _GetMatchScheduleById() when getMatchScheduleById != null:
+return getMatchScheduleById(_that);case _GetMatchScheduleByTournamentId() when getMatchScheduleByTournamentId != null:
+return getMatchScheduleByTournamentId(_that);case _GetAllMatchSchedules() when getAllMatchSchedules != null:
+return getAllMatchSchedules(_that);case _UpdateMatchSchedule() when updateMatchSchedule != null:
+return updateMatchSchedule(_that);case _DeleteMatchSchedule() when deleteMatchSchedule != null:
+return deleteMatchSchedule(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( MatchSchedule matchSchedule)?  createMatchSchedule,TResult Function( String id)?  getMatchScheduleById,TResult Function( String tournamentId)?  getMatchScheduleByTournamentId,TResult Function( int page,  int limit)?  getAllMatchSchedules,TResult Function( String id,  MatchSchedule matchSchedule)?  updateMatchSchedule,TResult Function( String id)?  deleteMatchSchedule,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _CreateMatchSchedule() when createMatchSchedule != null:
+return createMatchSchedule(_that.matchSchedule);case _GetMatchScheduleById() when getMatchScheduleById != null:
+return getMatchScheduleById(_that.id);case _GetMatchScheduleByTournamentId() when getMatchScheduleByTournamentId != null:
+return getMatchScheduleByTournamentId(_that.tournamentId);case _GetAllMatchSchedules() when getAllMatchSchedules != null:
+return getAllMatchSchedules(_that.page,_that.limit);case _UpdateMatchSchedule() when updateMatchSchedule != null:
+return updateMatchSchedule(_that.id,_that.matchSchedule);case _DeleteMatchSchedule() when deleteMatchSchedule != null:
+return deleteMatchSchedule(_that.id);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( MatchSchedule matchSchedule)  createMatchSchedule,required TResult Function( String id)  getMatchScheduleById,required TResult Function( String tournamentId)  getMatchScheduleByTournamentId,required TResult Function( int page,  int limit)  getAllMatchSchedules,required TResult Function( String id,  MatchSchedule matchSchedule)  updateMatchSchedule,required TResult Function( String id)  deleteMatchSchedule,}) {final _that = this;
+switch (_that) {
+case _CreateMatchSchedule():
+return createMatchSchedule(_that.matchSchedule);case _GetMatchScheduleById():
+return getMatchScheduleById(_that.id);case _GetMatchScheduleByTournamentId():
+return getMatchScheduleByTournamentId(_that.tournamentId);case _GetAllMatchSchedules():
+return getAllMatchSchedules(_that.page,_that.limit);case _UpdateMatchSchedule():
+return updateMatchSchedule(_that.id,_that.matchSchedule);case _DeleteMatchSchedule():
+return deleteMatchSchedule(_that.id);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( MatchSchedule matchSchedule)?  createMatchSchedule,TResult? Function( String id)?  getMatchScheduleById,TResult? Function( String tournamentId)?  getMatchScheduleByTournamentId,TResult? Function( int page,  int limit)?  getAllMatchSchedules,TResult? Function( String id,  MatchSchedule matchSchedule)?  updateMatchSchedule,TResult? Function( String id)?  deleteMatchSchedule,}) {final _that = this;
+switch (_that) {
+case _CreateMatchSchedule() when createMatchSchedule != null:
+return createMatchSchedule(_that.matchSchedule);case _GetMatchScheduleById() when getMatchScheduleById != null:
+return getMatchScheduleById(_that.id);case _GetMatchScheduleByTournamentId() when getMatchScheduleByTournamentId != null:
+return getMatchScheduleByTournamentId(_that.tournamentId);case _GetAllMatchSchedules() when getAllMatchSchedules != null:
+return getAllMatchSchedules(_that.page,_that.limit);case _UpdateMatchSchedule() when updateMatchSchedule != null:
+return updateMatchSchedule(_that.id,_that.matchSchedule);case _DeleteMatchSchedule() when deleteMatchSchedule != null:
+return deleteMatchSchedule(_that.id);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
@@ -489,6 +642,160 @@ class $MatchScheduleStateCopyWith<$Res>  {
 $MatchScheduleStateCopyWith(MatchScheduleState _, $Res Function(MatchScheduleState) __);
 }
 
+
+/// Adds pattern-matching-related methods to [MatchScheduleState].
+extension MatchScheduleStatePatterns on MatchScheduleState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( MatchSchedule_Initial value)?  initial,TResult Function( MatchSchedule_Loading value)?  loading,TResult Function( LoadedMatchSchedule value)?  loadedMatchSchedule,TResult Function( LoadedMatchSchedules value)?  loadedMatchSchedules,TResult Function( MatchSchedule_Error value)?  error,TResult Function( MatchSchedule_Success value)?  success,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case MatchSchedule_Initial() when initial != null:
+return initial(_that);case MatchSchedule_Loading() when loading != null:
+return loading(_that);case LoadedMatchSchedule() when loadedMatchSchedule != null:
+return loadedMatchSchedule(_that);case LoadedMatchSchedules() when loadedMatchSchedules != null:
+return loadedMatchSchedules(_that);case MatchSchedule_Error() when error != null:
+return error(_that);case MatchSchedule_Success() when success != null:
+return success(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( MatchSchedule_Initial value)  initial,required TResult Function( MatchSchedule_Loading value)  loading,required TResult Function( LoadedMatchSchedule value)  loadedMatchSchedule,required TResult Function( LoadedMatchSchedules value)  loadedMatchSchedules,required TResult Function( MatchSchedule_Error value)  error,required TResult Function( MatchSchedule_Success value)  success,}){
+final _that = this;
+switch (_that) {
+case MatchSchedule_Initial():
+return initial(_that);case MatchSchedule_Loading():
+return loading(_that);case LoadedMatchSchedule():
+return loadedMatchSchedule(_that);case LoadedMatchSchedules():
+return loadedMatchSchedules(_that);case MatchSchedule_Error():
+return error(_that);case MatchSchedule_Success():
+return success(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( MatchSchedule_Initial value)?  initial,TResult? Function( MatchSchedule_Loading value)?  loading,TResult? Function( LoadedMatchSchedule value)?  loadedMatchSchedule,TResult? Function( LoadedMatchSchedules value)?  loadedMatchSchedules,TResult? Function( MatchSchedule_Error value)?  error,TResult? Function( MatchSchedule_Success value)?  success,}){
+final _that = this;
+switch (_that) {
+case MatchSchedule_Initial() when initial != null:
+return initial(_that);case MatchSchedule_Loading() when loading != null:
+return loading(_that);case LoadedMatchSchedule() when loadedMatchSchedule != null:
+return loadedMatchSchedule(_that);case LoadedMatchSchedules() when loadedMatchSchedules != null:
+return loadedMatchSchedules(_that);case MatchSchedule_Error() when error != null:
+return error(_that);case MatchSchedule_Success() when success != null:
+return success(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( MatchSchedule matchSchedule)?  loadedMatchSchedule,TResult Function( List<MatchSchedule> matchSchedules,  int currentPage,  int limit,  bool hasMore)?  loadedMatchSchedules,TResult Function( String message)?  error,TResult Function( String message)?  success,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case MatchSchedule_Initial() when initial != null:
+return initial();case MatchSchedule_Loading() when loading != null:
+return loading();case LoadedMatchSchedule() when loadedMatchSchedule != null:
+return loadedMatchSchedule(_that.matchSchedule);case LoadedMatchSchedules() when loadedMatchSchedules != null:
+return loadedMatchSchedules(_that.matchSchedules,_that.currentPage,_that.limit,_that.hasMore);case MatchSchedule_Error() when error != null:
+return error(_that.message);case MatchSchedule_Success() when success != null:
+return success(_that.message);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( MatchSchedule matchSchedule)  loadedMatchSchedule,required TResult Function( List<MatchSchedule> matchSchedules,  int currentPage,  int limit,  bool hasMore)  loadedMatchSchedules,required TResult Function( String message)  error,required TResult Function( String message)  success,}) {final _that = this;
+switch (_that) {
+case MatchSchedule_Initial():
+return initial();case MatchSchedule_Loading():
+return loading();case LoadedMatchSchedule():
+return loadedMatchSchedule(_that.matchSchedule);case LoadedMatchSchedules():
+return loadedMatchSchedules(_that.matchSchedules,_that.currentPage,_that.limit,_that.hasMore);case MatchSchedule_Error():
+return error(_that.message);case MatchSchedule_Success():
+return success(_that.message);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( MatchSchedule matchSchedule)?  loadedMatchSchedule,TResult? Function( List<MatchSchedule> matchSchedules,  int currentPage,  int limit,  bool hasMore)?  loadedMatchSchedules,TResult? Function( String message)?  error,TResult? Function( String message)?  success,}) {final _that = this;
+switch (_that) {
+case MatchSchedule_Initial() when initial != null:
+return initial();case MatchSchedule_Loading() when loading != null:
+return loading();case LoadedMatchSchedule() when loadedMatchSchedule != null:
+return loadedMatchSchedule(_that.matchSchedule);case LoadedMatchSchedules() when loadedMatchSchedules != null:
+return loadedMatchSchedules(_that.matchSchedules,_that.currentPage,_that.limit,_that.hasMore);case MatchSchedule_Error() when error != null:
+return error(_that.message);case MatchSchedule_Success() when success != null:
+return success(_that.message);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 

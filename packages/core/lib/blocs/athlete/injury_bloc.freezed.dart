@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -41,6 +40,160 @@ class $InjuryEventCopyWith<$Res>  {
 $InjuryEventCopyWith(InjuryEvent _, $Res Function(InjuryEvent) __);
 }
 
+
+/// Adds pattern-matching-related methods to [InjuryEvent].
+extension InjuryEventPatterns on InjuryEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _CreateInjury value)?  createInjury,TResult Function( _GetInjuryById value)?  getInjuryById,TResult Function( _GetInjuryByUserId value)?  getInjuryByUserId,TResult Function( _GetAllInjuries value)?  getAllInjuries,TResult Function( _UpdateInjury value)?  updateInjury,TResult Function( _DeleteInjury value)?  deleteInjury,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _CreateInjury() when createInjury != null:
+return createInjury(_that);case _GetInjuryById() when getInjuryById != null:
+return getInjuryById(_that);case _GetInjuryByUserId() when getInjuryByUserId != null:
+return getInjuryByUserId(_that);case _GetAllInjuries() when getAllInjuries != null:
+return getAllInjuries(_that);case _UpdateInjury() when updateInjury != null:
+return updateInjury(_that);case _DeleteInjury() when deleteInjury != null:
+return deleteInjury(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _CreateInjury value)  createInjury,required TResult Function( _GetInjuryById value)  getInjuryById,required TResult Function( _GetInjuryByUserId value)  getInjuryByUserId,required TResult Function( _GetAllInjuries value)  getAllInjuries,required TResult Function( _UpdateInjury value)  updateInjury,required TResult Function( _DeleteInjury value)  deleteInjury,}){
+final _that = this;
+switch (_that) {
+case _CreateInjury():
+return createInjury(_that);case _GetInjuryById():
+return getInjuryById(_that);case _GetInjuryByUserId():
+return getInjuryByUserId(_that);case _GetAllInjuries():
+return getAllInjuries(_that);case _UpdateInjury():
+return updateInjury(_that);case _DeleteInjury():
+return deleteInjury(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _CreateInjury value)?  createInjury,TResult? Function( _GetInjuryById value)?  getInjuryById,TResult? Function( _GetInjuryByUserId value)?  getInjuryByUserId,TResult? Function( _GetAllInjuries value)?  getAllInjuries,TResult? Function( _UpdateInjury value)?  updateInjury,TResult? Function( _DeleteInjury value)?  deleteInjury,}){
+final _that = this;
+switch (_that) {
+case _CreateInjury() when createInjury != null:
+return createInjury(_that);case _GetInjuryById() when getInjuryById != null:
+return getInjuryById(_that);case _GetInjuryByUserId() when getInjuryByUserId != null:
+return getInjuryByUserId(_that);case _GetAllInjuries() when getAllInjuries != null:
+return getAllInjuries(_that);case _UpdateInjury() when updateInjury != null:
+return updateInjury(_that);case _DeleteInjury() when deleteInjury != null:
+return deleteInjury(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Injury injury)?  createInjury,TResult Function( String id)?  getInjuryById,TResult Function( String userId)?  getInjuryByUserId,TResult Function( int page,  int limit)?  getAllInjuries,TResult Function( String id,  Injury injury)?  updateInjury,TResult Function( String id)?  deleteInjury,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _CreateInjury() when createInjury != null:
+return createInjury(_that.injury);case _GetInjuryById() when getInjuryById != null:
+return getInjuryById(_that.id);case _GetInjuryByUserId() when getInjuryByUserId != null:
+return getInjuryByUserId(_that.userId);case _GetAllInjuries() when getAllInjuries != null:
+return getAllInjuries(_that.page,_that.limit);case _UpdateInjury() when updateInjury != null:
+return updateInjury(_that.id,_that.injury);case _DeleteInjury() when deleteInjury != null:
+return deleteInjury(_that.id);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Injury injury)  createInjury,required TResult Function( String id)  getInjuryById,required TResult Function( String userId)  getInjuryByUserId,required TResult Function( int page,  int limit)  getAllInjuries,required TResult Function( String id,  Injury injury)  updateInjury,required TResult Function( String id)  deleteInjury,}) {final _that = this;
+switch (_that) {
+case _CreateInjury():
+return createInjury(_that.injury);case _GetInjuryById():
+return getInjuryById(_that.id);case _GetInjuryByUserId():
+return getInjuryByUserId(_that.userId);case _GetAllInjuries():
+return getAllInjuries(_that.page,_that.limit);case _UpdateInjury():
+return updateInjury(_that.id,_that.injury);case _DeleteInjury():
+return deleteInjury(_that.id);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Injury injury)?  createInjury,TResult? Function( String id)?  getInjuryById,TResult? Function( String userId)?  getInjuryByUserId,TResult? Function( int page,  int limit)?  getAllInjuries,TResult? Function( String id,  Injury injury)?  updateInjury,TResult? Function( String id)?  deleteInjury,}) {final _that = this;
+switch (_that) {
+case _CreateInjury() when createInjury != null:
+return createInjury(_that.injury);case _GetInjuryById() when getInjuryById != null:
+return getInjuryById(_that.id);case _GetInjuryByUserId() when getInjuryByUserId != null:
+return getInjuryByUserId(_that.userId);case _GetAllInjuries() when getAllInjuries != null:
+return getAllInjuries(_that.page,_that.limit);case _UpdateInjury() when updateInjury != null:
+return updateInjury(_that.id,_that.injury);case _DeleteInjury() when deleteInjury != null:
+return deleteInjury(_that.id);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
@@ -489,6 +642,160 @@ class $InjuryStateCopyWith<$Res>  {
 $InjuryStateCopyWith(InjuryState _, $Res Function(InjuryState) __);
 }
 
+
+/// Adds pattern-matching-related methods to [InjuryState].
+extension InjuryStatePatterns on InjuryState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( Injury_Initial value)?  initial,TResult Function( Injury_Loading value)?  loading,TResult Function( LoadedInjury value)?  loadedInjury,TResult Function( LoadedInjuries value)?  loadedInjuries,TResult Function( Injury_Error value)?  error,TResult Function( Injury_Success value)?  success,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case Injury_Initial() when initial != null:
+return initial(_that);case Injury_Loading() when loading != null:
+return loading(_that);case LoadedInjury() when loadedInjury != null:
+return loadedInjury(_that);case LoadedInjuries() when loadedInjuries != null:
+return loadedInjuries(_that);case Injury_Error() when error != null:
+return error(_that);case Injury_Success() when success != null:
+return success(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( Injury_Initial value)  initial,required TResult Function( Injury_Loading value)  loading,required TResult Function( LoadedInjury value)  loadedInjury,required TResult Function( LoadedInjuries value)  loadedInjuries,required TResult Function( Injury_Error value)  error,required TResult Function( Injury_Success value)  success,}){
+final _that = this;
+switch (_that) {
+case Injury_Initial():
+return initial(_that);case Injury_Loading():
+return loading(_that);case LoadedInjury():
+return loadedInjury(_that);case LoadedInjuries():
+return loadedInjuries(_that);case Injury_Error():
+return error(_that);case Injury_Success():
+return success(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( Injury_Initial value)?  initial,TResult? Function( Injury_Loading value)?  loading,TResult? Function( LoadedInjury value)?  loadedInjury,TResult? Function( LoadedInjuries value)?  loadedInjuries,TResult? Function( Injury_Error value)?  error,TResult? Function( Injury_Success value)?  success,}){
+final _that = this;
+switch (_that) {
+case Injury_Initial() when initial != null:
+return initial(_that);case Injury_Loading() when loading != null:
+return loading(_that);case LoadedInjury() when loadedInjury != null:
+return loadedInjury(_that);case LoadedInjuries() when loadedInjuries != null:
+return loadedInjuries(_that);case Injury_Error() when error != null:
+return error(_that);case Injury_Success() when success != null:
+return success(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( Injury injury)?  loadedInjury,TResult Function( List<Injury> injuries,  int currentPage,  int limit,  bool hasMore)?  loadedInjuries,TResult Function( String message)?  error,TResult Function( String message)?  success,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case Injury_Initial() when initial != null:
+return initial();case Injury_Loading() when loading != null:
+return loading();case LoadedInjury() when loadedInjury != null:
+return loadedInjury(_that.injury);case LoadedInjuries() when loadedInjuries != null:
+return loadedInjuries(_that.injuries,_that.currentPage,_that.limit,_that.hasMore);case Injury_Error() when error != null:
+return error(_that.message);case Injury_Success() when success != null:
+return success(_that.message);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( Injury injury)  loadedInjury,required TResult Function( List<Injury> injuries,  int currentPage,  int limit,  bool hasMore)  loadedInjuries,required TResult Function( String message)  error,required TResult Function( String message)  success,}) {final _that = this;
+switch (_that) {
+case Injury_Initial():
+return initial();case Injury_Loading():
+return loading();case LoadedInjury():
+return loadedInjury(_that.injury);case LoadedInjuries():
+return loadedInjuries(_that.injuries,_that.currentPage,_that.limit,_that.hasMore);case Injury_Error():
+return error(_that.message);case Injury_Success():
+return success(_that.message);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( Injury injury)?  loadedInjury,TResult? Function( List<Injury> injuries,  int currentPage,  int limit,  bool hasMore)?  loadedInjuries,TResult? Function( String message)?  error,TResult? Function( String message)?  success,}) {final _that = this;
+switch (_that) {
+case Injury_Initial() when initial != null:
+return initial();case Injury_Loading() when loading != null:
+return loading();case LoadedInjury() when loadedInjury != null:
+return loadedInjury(_that.injury);case LoadedInjuries() when loadedInjuries != null:
+return loadedInjuries(_that.injuries,_that.currentPage,_that.limit,_that.hasMore);case Injury_Error() when error != null:
+return error(_that.message);case Injury_Success() when success != null:
+return success(_that.message);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 

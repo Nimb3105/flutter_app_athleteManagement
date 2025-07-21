@@ -1,0 +1,14 @@
+dart_code_metrics:
+  extends:
+    - package:dart_code_metrics/presets/recommended.yaml
+
+  rules:
+    - newline-before-return
+    - prefer-trailing-comma
+    - avoid-nested-conditional-expressions
+    - avoid-long-functions
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"

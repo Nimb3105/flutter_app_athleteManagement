@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -41,6 +40,160 @@ class $FeedbackEventCopyWith<$Res>  {
 $FeedbackEventCopyWith(FeedbackEvent _, $Res Function(FeedbackEvent) __);
 }
 
+
+/// Adds pattern-matching-related methods to [FeedbackEvent].
+extension FeedbackEventPatterns on FeedbackEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _CreateFeedback value)?  createFeedback,TResult Function( _GetFeedbackById value)?  getFeedbackById,TResult Function( _GetFeedbackByUserId value)?  getFeedbackByUserId,TResult Function( _GetAllFeedbacks value)?  getAllFeedbacks,TResult Function( _UpdateFeedback value)?  updateFeedback,TResult Function( _DeleteFeedback value)?  deleteFeedback,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _CreateFeedback() when createFeedback != null:
+return createFeedback(_that);case _GetFeedbackById() when getFeedbackById != null:
+return getFeedbackById(_that);case _GetFeedbackByUserId() when getFeedbackByUserId != null:
+return getFeedbackByUserId(_that);case _GetAllFeedbacks() when getAllFeedbacks != null:
+return getAllFeedbacks(_that);case _UpdateFeedback() when updateFeedback != null:
+return updateFeedback(_that);case _DeleteFeedback() when deleteFeedback != null:
+return deleteFeedback(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _CreateFeedback value)  createFeedback,required TResult Function( _GetFeedbackById value)  getFeedbackById,required TResult Function( _GetFeedbackByUserId value)  getFeedbackByUserId,required TResult Function( _GetAllFeedbacks value)  getAllFeedbacks,required TResult Function( _UpdateFeedback value)  updateFeedback,required TResult Function( _DeleteFeedback value)  deleteFeedback,}){
+final _that = this;
+switch (_that) {
+case _CreateFeedback():
+return createFeedback(_that);case _GetFeedbackById():
+return getFeedbackById(_that);case _GetFeedbackByUserId():
+return getFeedbackByUserId(_that);case _GetAllFeedbacks():
+return getAllFeedbacks(_that);case _UpdateFeedback():
+return updateFeedback(_that);case _DeleteFeedback():
+return deleteFeedback(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _CreateFeedback value)?  createFeedback,TResult? Function( _GetFeedbackById value)?  getFeedbackById,TResult? Function( _GetFeedbackByUserId value)?  getFeedbackByUserId,TResult? Function( _GetAllFeedbacks value)?  getAllFeedbacks,TResult? Function( _UpdateFeedback value)?  updateFeedback,TResult? Function( _DeleteFeedback value)?  deleteFeedback,}){
+final _that = this;
+switch (_that) {
+case _CreateFeedback() when createFeedback != null:
+return createFeedback(_that);case _GetFeedbackById() when getFeedbackById != null:
+return getFeedbackById(_that);case _GetFeedbackByUserId() when getFeedbackByUserId != null:
+return getFeedbackByUserId(_that);case _GetAllFeedbacks() when getAllFeedbacks != null:
+return getAllFeedbacks(_that);case _UpdateFeedback() when updateFeedback != null:
+return updateFeedback(_that);case _DeleteFeedback() when deleteFeedback != null:
+return deleteFeedback(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Feedback feedback)?  createFeedback,TResult Function( String id)?  getFeedbackById,TResult Function( String userId)?  getFeedbackByUserId,TResult Function( int page,  int limit)?  getAllFeedbacks,TResult Function( String id,  Feedback feedback)?  updateFeedback,TResult Function( String id)?  deleteFeedback,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _CreateFeedback() when createFeedback != null:
+return createFeedback(_that.feedback);case _GetFeedbackById() when getFeedbackById != null:
+return getFeedbackById(_that.id);case _GetFeedbackByUserId() when getFeedbackByUserId != null:
+return getFeedbackByUserId(_that.userId);case _GetAllFeedbacks() when getAllFeedbacks != null:
+return getAllFeedbacks(_that.page,_that.limit);case _UpdateFeedback() when updateFeedback != null:
+return updateFeedback(_that.id,_that.feedback);case _DeleteFeedback() when deleteFeedback != null:
+return deleteFeedback(_that.id);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Feedback feedback)  createFeedback,required TResult Function( String id)  getFeedbackById,required TResult Function( String userId)  getFeedbackByUserId,required TResult Function( int page,  int limit)  getAllFeedbacks,required TResult Function( String id,  Feedback feedback)  updateFeedback,required TResult Function( String id)  deleteFeedback,}) {final _that = this;
+switch (_that) {
+case _CreateFeedback():
+return createFeedback(_that.feedback);case _GetFeedbackById():
+return getFeedbackById(_that.id);case _GetFeedbackByUserId():
+return getFeedbackByUserId(_that.userId);case _GetAllFeedbacks():
+return getAllFeedbacks(_that.page,_that.limit);case _UpdateFeedback():
+return updateFeedback(_that.id,_that.feedback);case _DeleteFeedback():
+return deleteFeedback(_that.id);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Feedback feedback)?  createFeedback,TResult? Function( String id)?  getFeedbackById,TResult? Function( String userId)?  getFeedbackByUserId,TResult? Function( int page,  int limit)?  getAllFeedbacks,TResult? Function( String id,  Feedback feedback)?  updateFeedback,TResult? Function( String id)?  deleteFeedback,}) {final _that = this;
+switch (_that) {
+case _CreateFeedback() when createFeedback != null:
+return createFeedback(_that.feedback);case _GetFeedbackById() when getFeedbackById != null:
+return getFeedbackById(_that.id);case _GetFeedbackByUserId() when getFeedbackByUserId != null:
+return getFeedbackByUserId(_that.userId);case _GetAllFeedbacks() when getAllFeedbacks != null:
+return getAllFeedbacks(_that.page,_that.limit);case _UpdateFeedback() when updateFeedback != null:
+return updateFeedback(_that.id,_that.feedback);case _DeleteFeedback() when deleteFeedback != null:
+return deleteFeedback(_that.id);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
@@ -489,6 +642,160 @@ class $FeedbackStateCopyWith<$Res>  {
 $FeedbackStateCopyWith(FeedbackState _, $Res Function(FeedbackState) __);
 }
 
+
+/// Adds pattern-matching-related methods to [FeedbackState].
+extension FeedbackStatePatterns on FeedbackState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( Feedback_Initial value)?  initial,TResult Function( Feedback_Loading value)?  loading,TResult Function( LoadedFeedback value)?  loadedFeedback,TResult Function( LoadedFeedbacks value)?  loadedFeedbacks,TResult Function( Feedback_Error value)?  error,TResult Function( Feedback_Success value)?  success,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case Feedback_Initial() when initial != null:
+return initial(_that);case Feedback_Loading() when loading != null:
+return loading(_that);case LoadedFeedback() when loadedFeedback != null:
+return loadedFeedback(_that);case LoadedFeedbacks() when loadedFeedbacks != null:
+return loadedFeedbacks(_that);case Feedback_Error() when error != null:
+return error(_that);case Feedback_Success() when success != null:
+return success(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( Feedback_Initial value)  initial,required TResult Function( Feedback_Loading value)  loading,required TResult Function( LoadedFeedback value)  loadedFeedback,required TResult Function( LoadedFeedbacks value)  loadedFeedbacks,required TResult Function( Feedback_Error value)  error,required TResult Function( Feedback_Success value)  success,}){
+final _that = this;
+switch (_that) {
+case Feedback_Initial():
+return initial(_that);case Feedback_Loading():
+return loading(_that);case LoadedFeedback():
+return loadedFeedback(_that);case LoadedFeedbacks():
+return loadedFeedbacks(_that);case Feedback_Error():
+return error(_that);case Feedback_Success():
+return success(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( Feedback_Initial value)?  initial,TResult? Function( Feedback_Loading value)?  loading,TResult? Function( LoadedFeedback value)?  loadedFeedback,TResult? Function( LoadedFeedbacks value)?  loadedFeedbacks,TResult? Function( Feedback_Error value)?  error,TResult? Function( Feedback_Success value)?  success,}){
+final _that = this;
+switch (_that) {
+case Feedback_Initial() when initial != null:
+return initial(_that);case Feedback_Loading() when loading != null:
+return loading(_that);case LoadedFeedback() when loadedFeedback != null:
+return loadedFeedback(_that);case LoadedFeedbacks() when loadedFeedbacks != null:
+return loadedFeedbacks(_that);case Feedback_Error() when error != null:
+return error(_that);case Feedback_Success() when success != null:
+return success(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( Feedback feedback)?  loadedFeedback,TResult Function( List<Feedback> feedbacks,  int currentPage,  int limit,  bool hasMore)?  loadedFeedbacks,TResult Function( String message)?  error,TResult Function( String message)?  success,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case Feedback_Initial() when initial != null:
+return initial();case Feedback_Loading() when loading != null:
+return loading();case LoadedFeedback() when loadedFeedback != null:
+return loadedFeedback(_that.feedback);case LoadedFeedbacks() when loadedFeedbacks != null:
+return loadedFeedbacks(_that.feedbacks,_that.currentPage,_that.limit,_that.hasMore);case Feedback_Error() when error != null:
+return error(_that.message);case Feedback_Success() when success != null:
+return success(_that.message);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( Feedback feedback)  loadedFeedback,required TResult Function( List<Feedback> feedbacks,  int currentPage,  int limit,  bool hasMore)  loadedFeedbacks,required TResult Function( String message)  error,required TResult Function( String message)  success,}) {final _that = this;
+switch (_that) {
+case Feedback_Initial():
+return initial();case Feedback_Loading():
+return loading();case LoadedFeedback():
+return loadedFeedback(_that.feedback);case LoadedFeedbacks():
+return loadedFeedbacks(_that.feedbacks,_that.currentPage,_that.limit,_that.hasMore);case Feedback_Error():
+return error(_that.message);case Feedback_Success():
+return success(_that.message);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( Feedback feedback)?  loadedFeedback,TResult? Function( List<Feedback> feedbacks,  int currentPage,  int limit,  bool hasMore)?  loadedFeedbacks,TResult? Function( String message)?  error,TResult? Function( String message)?  success,}) {final _that = this;
+switch (_that) {
+case Feedback_Initial() when initial != null:
+return initial();case Feedback_Loading() when loading != null:
+return loading();case LoadedFeedback() when loadedFeedback != null:
+return loadedFeedback(_that.feedback);case LoadedFeedbacks() when loadedFeedbacks != null:
+return loadedFeedbacks(_that.feedbacks,_that.currentPage,_that.limit,_that.hasMore);case Feedback_Error() when error != null:
+return error(_that.message);case Feedback_Success() when success != null:
+return success(_that.message);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 

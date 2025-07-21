@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -41,6 +40,172 @@ class $DailyScheduleEventCopyWith<$Res>  {
 $DailyScheduleEventCopyWith(DailyScheduleEvent _, $Res Function(DailyScheduleEvent) __);
 }
 
+
+/// Adds pattern-matching-related methods to [DailyScheduleEvent].
+extension DailyScheduleEventPatterns on DailyScheduleEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( CreateDailySchedule value)?  createDailySchedule,TResult Function( GetDailyScheduleById value)?  getDailyScheduleById,TResult Function( GetDailyScheduleByUserId value)?  getDailyScheduleByUserId,TResult Function( GetAllDailySchedule value)?  getAllDailySchedule,TResult Function( UpdateDailySchedule value)?  updateDailySchedule,TResult Function( DeleteDailySchedule value)?  deleteDailySchedule,TResult Function( GetAllDailySchedulesByCreatorId value)?  getAllDailySchedulesByCreatorId,TResult Function( GetAllDailySchedulesByUserId value)?  getAllDailySchedulesByUserId,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case CreateDailySchedule() when createDailySchedule != null:
+return createDailySchedule(_that);case GetDailyScheduleById() when getDailyScheduleById != null:
+return getDailyScheduleById(_that);case GetDailyScheduleByUserId() when getDailyScheduleByUserId != null:
+return getDailyScheduleByUserId(_that);case GetAllDailySchedule() when getAllDailySchedule != null:
+return getAllDailySchedule(_that);case UpdateDailySchedule() when updateDailySchedule != null:
+return updateDailySchedule(_that);case DeleteDailySchedule() when deleteDailySchedule != null:
+return deleteDailySchedule(_that);case GetAllDailySchedulesByCreatorId() when getAllDailySchedulesByCreatorId != null:
+return getAllDailySchedulesByCreatorId(_that);case GetAllDailySchedulesByUserId() when getAllDailySchedulesByUserId != null:
+return getAllDailySchedulesByUserId(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( CreateDailySchedule value)  createDailySchedule,required TResult Function( GetDailyScheduleById value)  getDailyScheduleById,required TResult Function( GetDailyScheduleByUserId value)  getDailyScheduleByUserId,required TResult Function( GetAllDailySchedule value)  getAllDailySchedule,required TResult Function( UpdateDailySchedule value)  updateDailySchedule,required TResult Function( DeleteDailySchedule value)  deleteDailySchedule,required TResult Function( GetAllDailySchedulesByCreatorId value)  getAllDailySchedulesByCreatorId,required TResult Function( GetAllDailySchedulesByUserId value)  getAllDailySchedulesByUserId,}){
+final _that = this;
+switch (_that) {
+case CreateDailySchedule():
+return createDailySchedule(_that);case GetDailyScheduleById():
+return getDailyScheduleById(_that);case GetDailyScheduleByUserId():
+return getDailyScheduleByUserId(_that);case GetAllDailySchedule():
+return getAllDailySchedule(_that);case UpdateDailySchedule():
+return updateDailySchedule(_that);case DeleteDailySchedule():
+return deleteDailySchedule(_that);case GetAllDailySchedulesByCreatorId():
+return getAllDailySchedulesByCreatorId(_that);case GetAllDailySchedulesByUserId():
+return getAllDailySchedulesByUserId(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( CreateDailySchedule value)?  createDailySchedule,TResult? Function( GetDailyScheduleById value)?  getDailyScheduleById,TResult? Function( GetDailyScheduleByUserId value)?  getDailyScheduleByUserId,TResult? Function( GetAllDailySchedule value)?  getAllDailySchedule,TResult? Function( UpdateDailySchedule value)?  updateDailySchedule,TResult? Function( DeleteDailySchedule value)?  deleteDailySchedule,TResult? Function( GetAllDailySchedulesByCreatorId value)?  getAllDailySchedulesByCreatorId,TResult? Function( GetAllDailySchedulesByUserId value)?  getAllDailySchedulesByUserId,}){
+final _that = this;
+switch (_that) {
+case CreateDailySchedule() when createDailySchedule != null:
+return createDailySchedule(_that);case GetDailyScheduleById() when getDailyScheduleById != null:
+return getDailyScheduleById(_that);case GetDailyScheduleByUserId() when getDailyScheduleByUserId != null:
+return getDailyScheduleByUserId(_that);case GetAllDailySchedule() when getAllDailySchedule != null:
+return getAllDailySchedule(_that);case UpdateDailySchedule() when updateDailySchedule != null:
+return updateDailySchedule(_that);case DeleteDailySchedule() when deleteDailySchedule != null:
+return deleteDailySchedule(_that);case GetAllDailySchedulesByCreatorId() when getAllDailySchedulesByCreatorId != null:
+return getAllDailySchedulesByCreatorId(_that);case GetAllDailySchedulesByUserId() when getAllDailySchedulesByUserId != null:
+return getAllDailySchedulesByUserId(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( DailySchedule dailySchedule)?  createDailySchedule,TResult Function( String id)?  getDailyScheduleById,TResult Function( String userId,  String day)?  getDailyScheduleByUserId,TResult Function( int page,  int limit)?  getAllDailySchedule,TResult Function( String id,  DailySchedule dailySchedule)?  updateDailySchedule,TResult Function( String id)?  deleteDailySchedule,TResult Function( String creatorId)?  getAllDailySchedulesByCreatorId,TResult Function( String userId)?  getAllDailySchedulesByUserId,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case CreateDailySchedule() when createDailySchedule != null:
+return createDailySchedule(_that.dailySchedule);case GetDailyScheduleById() when getDailyScheduleById != null:
+return getDailyScheduleById(_that.id);case GetDailyScheduleByUserId() when getDailyScheduleByUserId != null:
+return getDailyScheduleByUserId(_that.userId,_that.day);case GetAllDailySchedule() when getAllDailySchedule != null:
+return getAllDailySchedule(_that.page,_that.limit);case UpdateDailySchedule() when updateDailySchedule != null:
+return updateDailySchedule(_that.id,_that.dailySchedule);case DeleteDailySchedule() when deleteDailySchedule != null:
+return deleteDailySchedule(_that.id);case GetAllDailySchedulesByCreatorId() when getAllDailySchedulesByCreatorId != null:
+return getAllDailySchedulesByCreatorId(_that.creatorId);case GetAllDailySchedulesByUserId() when getAllDailySchedulesByUserId != null:
+return getAllDailySchedulesByUserId(_that.userId);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( DailySchedule dailySchedule)  createDailySchedule,required TResult Function( String id)  getDailyScheduleById,required TResult Function( String userId,  String day)  getDailyScheduleByUserId,required TResult Function( int page,  int limit)  getAllDailySchedule,required TResult Function( String id,  DailySchedule dailySchedule)  updateDailySchedule,required TResult Function( String id)  deleteDailySchedule,required TResult Function( String creatorId)  getAllDailySchedulesByCreatorId,required TResult Function( String userId)  getAllDailySchedulesByUserId,}) {final _that = this;
+switch (_that) {
+case CreateDailySchedule():
+return createDailySchedule(_that.dailySchedule);case GetDailyScheduleById():
+return getDailyScheduleById(_that.id);case GetDailyScheduleByUserId():
+return getDailyScheduleByUserId(_that.userId,_that.day);case GetAllDailySchedule():
+return getAllDailySchedule(_that.page,_that.limit);case UpdateDailySchedule():
+return updateDailySchedule(_that.id,_that.dailySchedule);case DeleteDailySchedule():
+return deleteDailySchedule(_that.id);case GetAllDailySchedulesByCreatorId():
+return getAllDailySchedulesByCreatorId(_that.creatorId);case GetAllDailySchedulesByUserId():
+return getAllDailySchedulesByUserId(_that.userId);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( DailySchedule dailySchedule)?  createDailySchedule,TResult? Function( String id)?  getDailyScheduleById,TResult? Function( String userId,  String day)?  getDailyScheduleByUserId,TResult? Function( int page,  int limit)?  getAllDailySchedule,TResult? Function( String id,  DailySchedule dailySchedule)?  updateDailySchedule,TResult? Function( String id)?  deleteDailySchedule,TResult? Function( String creatorId)?  getAllDailySchedulesByCreatorId,TResult? Function( String userId)?  getAllDailySchedulesByUserId,}) {final _that = this;
+switch (_that) {
+case CreateDailySchedule() when createDailySchedule != null:
+return createDailySchedule(_that.dailySchedule);case GetDailyScheduleById() when getDailyScheduleById != null:
+return getDailyScheduleById(_that.id);case GetDailyScheduleByUserId() when getDailyScheduleByUserId != null:
+return getDailyScheduleByUserId(_that.userId,_that.day);case GetAllDailySchedule() when getAllDailySchedule != null:
+return getAllDailySchedule(_that.page,_that.limit);case UpdateDailySchedule() when updateDailySchedule != null:
+return updateDailySchedule(_that.id,_that.dailySchedule);case DeleteDailySchedule() when deleteDailySchedule != null:
+return deleteDailySchedule(_that.id);case GetAllDailySchedulesByCreatorId() when getAllDailySchedulesByCreatorId != null:
+return getAllDailySchedulesByCreatorId(_that.creatorId);case GetAllDailySchedulesByUserId() when getAllDailySchedulesByUserId != null:
+return getAllDailySchedulesByUserId(_that.userId);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
@@ -623,6 +788,178 @@ class $DailyScheduleStateCopyWith<$Res>  {
 $DailyScheduleStateCopyWith(DailyScheduleState _, $Res Function(DailyScheduleState) __);
 }
 
+
+/// Adds pattern-matching-related methods to [DailyScheduleState].
+extension DailyScheduleStatePatterns on DailyScheduleState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( DailySchedule_Initial value)?  initial,TResult Function( DailySchedule_Loading value)?  loading,TResult Function( LoadedDailySchedule value)?  loadedDailySchedule,TResult Function( DailySchedule_LoadingMore value)?  loadingMore,TResult Function( LoadedDailySchedules value)?  loadedDailySchedules,TResult Function( LoadedAllDailySchedulesByCreatorId value)?  loadedAllDailySchedulesByCreatorId,TResult Function( DailySchedule_Error value)?  error,TResult Function( DailySchedule_Success value)?  success,TResult Function( LoadedAllDailySchedulesByUserId value)?  loadedAllDailySchedulesByUserId,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case DailySchedule_Initial() when initial != null:
+return initial(_that);case DailySchedule_Loading() when loading != null:
+return loading(_that);case LoadedDailySchedule() when loadedDailySchedule != null:
+return loadedDailySchedule(_that);case DailySchedule_LoadingMore() when loadingMore != null:
+return loadingMore(_that);case LoadedDailySchedules() when loadedDailySchedules != null:
+return loadedDailySchedules(_that);case LoadedAllDailySchedulesByCreatorId() when loadedAllDailySchedulesByCreatorId != null:
+return loadedAllDailySchedulesByCreatorId(_that);case DailySchedule_Error() when error != null:
+return error(_that);case DailySchedule_Success() when success != null:
+return success(_that);case LoadedAllDailySchedulesByUserId() when loadedAllDailySchedulesByUserId != null:
+return loadedAllDailySchedulesByUserId(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( DailySchedule_Initial value)  initial,required TResult Function( DailySchedule_Loading value)  loading,required TResult Function( LoadedDailySchedule value)  loadedDailySchedule,required TResult Function( DailySchedule_LoadingMore value)  loadingMore,required TResult Function( LoadedDailySchedules value)  loadedDailySchedules,required TResult Function( LoadedAllDailySchedulesByCreatorId value)  loadedAllDailySchedulesByCreatorId,required TResult Function( DailySchedule_Error value)  error,required TResult Function( DailySchedule_Success value)  success,required TResult Function( LoadedAllDailySchedulesByUserId value)  loadedAllDailySchedulesByUserId,}){
+final _that = this;
+switch (_that) {
+case DailySchedule_Initial():
+return initial(_that);case DailySchedule_Loading():
+return loading(_that);case LoadedDailySchedule():
+return loadedDailySchedule(_that);case DailySchedule_LoadingMore():
+return loadingMore(_that);case LoadedDailySchedules():
+return loadedDailySchedules(_that);case LoadedAllDailySchedulesByCreatorId():
+return loadedAllDailySchedulesByCreatorId(_that);case DailySchedule_Error():
+return error(_that);case DailySchedule_Success():
+return success(_that);case LoadedAllDailySchedulesByUserId():
+return loadedAllDailySchedulesByUserId(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( DailySchedule_Initial value)?  initial,TResult? Function( DailySchedule_Loading value)?  loading,TResult? Function( LoadedDailySchedule value)?  loadedDailySchedule,TResult? Function( DailySchedule_LoadingMore value)?  loadingMore,TResult? Function( LoadedDailySchedules value)?  loadedDailySchedules,TResult? Function( LoadedAllDailySchedulesByCreatorId value)?  loadedAllDailySchedulesByCreatorId,TResult? Function( DailySchedule_Error value)?  error,TResult? Function( DailySchedule_Success value)?  success,TResult? Function( LoadedAllDailySchedulesByUserId value)?  loadedAllDailySchedulesByUserId,}){
+final _that = this;
+switch (_that) {
+case DailySchedule_Initial() when initial != null:
+return initial(_that);case DailySchedule_Loading() when loading != null:
+return loading(_that);case LoadedDailySchedule() when loadedDailySchedule != null:
+return loadedDailySchedule(_that);case DailySchedule_LoadingMore() when loadingMore != null:
+return loadingMore(_that);case LoadedDailySchedules() when loadedDailySchedules != null:
+return loadedDailySchedules(_that);case LoadedAllDailySchedulesByCreatorId() when loadedAllDailySchedulesByCreatorId != null:
+return loadedAllDailySchedulesByCreatorId(_that);case DailySchedule_Error() when error != null:
+return error(_that);case DailySchedule_Success() when success != null:
+return success(_that);case LoadedAllDailySchedulesByUserId() when loadedAllDailySchedulesByUserId != null:
+return loadedAllDailySchedulesByUserId(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( DailySchedule dailySchedule)?  loadedDailySchedule,TResult Function()?  loadingMore,TResult Function( List<DailySchedule> dailySchedules,  int currentPage,  int limit,  bool hasMore)?  loadedDailySchedules,TResult Function( List<DailySchedule> schedules,  Map<String, User> userMap)?  loadedAllDailySchedulesByCreatorId,TResult Function( String message)?  error,TResult Function( String message)?  success,TResult Function( List<DailySchedule> schedules,  Map<String, User> userMap)?  loadedAllDailySchedulesByUserId,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case DailySchedule_Initial() when initial != null:
+return initial();case DailySchedule_Loading() when loading != null:
+return loading();case LoadedDailySchedule() when loadedDailySchedule != null:
+return loadedDailySchedule(_that.dailySchedule);case DailySchedule_LoadingMore() when loadingMore != null:
+return loadingMore();case LoadedDailySchedules() when loadedDailySchedules != null:
+return loadedDailySchedules(_that.dailySchedules,_that.currentPage,_that.limit,_that.hasMore);case LoadedAllDailySchedulesByCreatorId() when loadedAllDailySchedulesByCreatorId != null:
+return loadedAllDailySchedulesByCreatorId(_that.schedules,_that.userMap);case DailySchedule_Error() when error != null:
+return error(_that.message);case DailySchedule_Success() when success != null:
+return success(_that.message);case LoadedAllDailySchedulesByUserId() when loadedAllDailySchedulesByUserId != null:
+return loadedAllDailySchedulesByUserId(_that.schedules,_that.userMap);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( DailySchedule dailySchedule)  loadedDailySchedule,required TResult Function()  loadingMore,required TResult Function( List<DailySchedule> dailySchedules,  int currentPage,  int limit,  bool hasMore)  loadedDailySchedules,required TResult Function( List<DailySchedule> schedules,  Map<String, User> userMap)  loadedAllDailySchedulesByCreatorId,required TResult Function( String message)  error,required TResult Function( String message)  success,required TResult Function( List<DailySchedule> schedules,  Map<String, User> userMap)  loadedAllDailySchedulesByUserId,}) {final _that = this;
+switch (_that) {
+case DailySchedule_Initial():
+return initial();case DailySchedule_Loading():
+return loading();case LoadedDailySchedule():
+return loadedDailySchedule(_that.dailySchedule);case DailySchedule_LoadingMore():
+return loadingMore();case LoadedDailySchedules():
+return loadedDailySchedules(_that.dailySchedules,_that.currentPage,_that.limit,_that.hasMore);case LoadedAllDailySchedulesByCreatorId():
+return loadedAllDailySchedulesByCreatorId(_that.schedules,_that.userMap);case DailySchedule_Error():
+return error(_that.message);case DailySchedule_Success():
+return success(_that.message);case LoadedAllDailySchedulesByUserId():
+return loadedAllDailySchedulesByUserId(_that.schedules,_that.userMap);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( DailySchedule dailySchedule)?  loadedDailySchedule,TResult? Function()?  loadingMore,TResult? Function( List<DailySchedule> dailySchedules,  int currentPage,  int limit,  bool hasMore)?  loadedDailySchedules,TResult? Function( List<DailySchedule> schedules,  Map<String, User> userMap)?  loadedAllDailySchedulesByCreatorId,TResult? Function( String message)?  error,TResult? Function( String message)?  success,TResult? Function( List<DailySchedule> schedules,  Map<String, User> userMap)?  loadedAllDailySchedulesByUserId,}) {final _that = this;
+switch (_that) {
+case DailySchedule_Initial() when initial != null:
+return initial();case DailySchedule_Loading() when loading != null:
+return loading();case LoadedDailySchedule() when loadedDailySchedule != null:
+return loadedDailySchedule(_that.dailySchedule);case DailySchedule_LoadingMore() when loadingMore != null:
+return loadingMore();case LoadedDailySchedules() when loadedDailySchedules != null:
+return loadedDailySchedules(_that.dailySchedules,_that.currentPage,_that.limit,_that.hasMore);case LoadedAllDailySchedulesByCreatorId() when loadedAllDailySchedulesByCreatorId != null:
+return loadedAllDailySchedulesByCreatorId(_that.schedules,_that.userMap);case DailySchedule_Error() when error != null:
+return error(_that.message);case DailySchedule_Success() when success != null:
+return success(_that.message);case LoadedAllDailySchedulesByUserId() when loadedAllDailySchedulesByUserId != null:
+return loadedAllDailySchedulesByUserId(_that.schedules,_that.userMap);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 

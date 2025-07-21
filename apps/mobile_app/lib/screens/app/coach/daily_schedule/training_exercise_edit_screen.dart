@@ -124,7 +124,11 @@ class _TrainingExerciseEditScreenState
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ExerciseSelectScreen(sportId: widget.sportId,coachId: widget.coachId,),
+        builder:
+            (context) => ExerciseSelectScreen(
+              sportId: widget.sportId,
+              coachId: widget.coachId,
+            ),
       ),
     );
     if (result != null && result is List && result.length == 3) {
@@ -225,7 +229,7 @@ class _TrainingExerciseEditScreenState
                     ),
                     const SizedBox(height: 16),
                     if (unitType == 'Hiệp') _buildRepsAndSets(),
-                    if (unitType == 'Thời gian') _buildDurationAndDistance(),
+                    if (unitType == 'thời gian') _buildDurationAndDistance(),
                     const SizedBox(height: 16),
                     TextFormField(
                       controller: weightController,

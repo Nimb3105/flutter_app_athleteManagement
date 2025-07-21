@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -41,6 +40,160 @@ class $GroupEventCopyWith<$Res>  {
 $GroupEventCopyWith(GroupEvent _, $Res Function(GroupEvent) __);
 }
 
+
+/// Adds pattern-matching-related methods to [GroupEvent].
+extension GroupEventPatterns on GroupEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _CreateGroup value)?  createGroup,TResult Function( _GetGroupById value)?  getGroupById,TResult Function( _GetGroupByCreatedBy value)?  getGroupByCreatedBy,TResult Function( _GetAllGroups value)?  getAllGroups,TResult Function( _UpdateGroup value)?  updateGroup,TResult Function( _DeleteGroup value)?  deleteGroup,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _CreateGroup() when createGroup != null:
+return createGroup(_that);case _GetGroupById() when getGroupById != null:
+return getGroupById(_that);case _GetGroupByCreatedBy() when getGroupByCreatedBy != null:
+return getGroupByCreatedBy(_that);case _GetAllGroups() when getAllGroups != null:
+return getAllGroups(_that);case _UpdateGroup() when updateGroup != null:
+return updateGroup(_that);case _DeleteGroup() when deleteGroup != null:
+return deleteGroup(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _CreateGroup value)  createGroup,required TResult Function( _GetGroupById value)  getGroupById,required TResult Function( _GetGroupByCreatedBy value)  getGroupByCreatedBy,required TResult Function( _GetAllGroups value)  getAllGroups,required TResult Function( _UpdateGroup value)  updateGroup,required TResult Function( _DeleteGroup value)  deleteGroup,}){
+final _that = this;
+switch (_that) {
+case _CreateGroup():
+return createGroup(_that);case _GetGroupById():
+return getGroupById(_that);case _GetGroupByCreatedBy():
+return getGroupByCreatedBy(_that);case _GetAllGroups():
+return getAllGroups(_that);case _UpdateGroup():
+return updateGroup(_that);case _DeleteGroup():
+return deleteGroup(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _CreateGroup value)?  createGroup,TResult? Function( _GetGroupById value)?  getGroupById,TResult? Function( _GetGroupByCreatedBy value)?  getGroupByCreatedBy,TResult? Function( _GetAllGroups value)?  getAllGroups,TResult? Function( _UpdateGroup value)?  updateGroup,TResult? Function( _DeleteGroup value)?  deleteGroup,}){
+final _that = this;
+switch (_that) {
+case _CreateGroup() when createGroup != null:
+return createGroup(_that);case _GetGroupById() when getGroupById != null:
+return getGroupById(_that);case _GetGroupByCreatedBy() when getGroupByCreatedBy != null:
+return getGroupByCreatedBy(_that);case _GetAllGroups() when getAllGroups != null:
+return getAllGroups(_that);case _UpdateGroup() when updateGroup != null:
+return updateGroup(_that);case _DeleteGroup() when deleteGroup != null:
+return deleteGroup(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Group group)?  createGroup,TResult Function( String id)?  getGroupById,TResult Function( String createdBy)?  getGroupByCreatedBy,TResult Function( int page,  int limit)?  getAllGroups,TResult Function( String id,  Group group)?  updateGroup,TResult Function( String id)?  deleteGroup,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _CreateGroup() when createGroup != null:
+return createGroup(_that.group);case _GetGroupById() when getGroupById != null:
+return getGroupById(_that.id);case _GetGroupByCreatedBy() when getGroupByCreatedBy != null:
+return getGroupByCreatedBy(_that.createdBy);case _GetAllGroups() when getAllGroups != null:
+return getAllGroups(_that.page,_that.limit);case _UpdateGroup() when updateGroup != null:
+return updateGroup(_that.id,_that.group);case _DeleteGroup() when deleteGroup != null:
+return deleteGroup(_that.id);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Group group)  createGroup,required TResult Function( String id)  getGroupById,required TResult Function( String createdBy)  getGroupByCreatedBy,required TResult Function( int page,  int limit)  getAllGroups,required TResult Function( String id,  Group group)  updateGroup,required TResult Function( String id)  deleteGroup,}) {final _that = this;
+switch (_that) {
+case _CreateGroup():
+return createGroup(_that.group);case _GetGroupById():
+return getGroupById(_that.id);case _GetGroupByCreatedBy():
+return getGroupByCreatedBy(_that.createdBy);case _GetAllGroups():
+return getAllGroups(_that.page,_that.limit);case _UpdateGroup():
+return updateGroup(_that.id,_that.group);case _DeleteGroup():
+return deleteGroup(_that.id);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Group group)?  createGroup,TResult? Function( String id)?  getGroupById,TResult? Function( String createdBy)?  getGroupByCreatedBy,TResult? Function( int page,  int limit)?  getAllGroups,TResult? Function( String id,  Group group)?  updateGroup,TResult? Function( String id)?  deleteGroup,}) {final _that = this;
+switch (_that) {
+case _CreateGroup() when createGroup != null:
+return createGroup(_that.group);case _GetGroupById() when getGroupById != null:
+return getGroupById(_that.id);case _GetGroupByCreatedBy() when getGroupByCreatedBy != null:
+return getGroupByCreatedBy(_that.createdBy);case _GetAllGroups() when getAllGroups != null:
+return getAllGroups(_that.page,_that.limit);case _UpdateGroup() when updateGroup != null:
+return updateGroup(_that.id,_that.group);case _DeleteGroup() when deleteGroup != null:
+return deleteGroup(_that.id);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
@@ -489,6 +642,160 @@ class $GroupStateCopyWith<$Res>  {
 $GroupStateCopyWith(GroupState _, $Res Function(GroupState) __);
 }
 
+
+/// Adds pattern-matching-related methods to [GroupState].
+extension GroupStatePatterns on GroupState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( Group_Initial value)?  initial,TResult Function( Group_Loading value)?  loading,TResult Function( LoadedGroup value)?  loadedGroup,TResult Function( LoadedGroups value)?  loadedGroups,TResult Function( Group_Error value)?  error,TResult Function( Group_Success value)?  success,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case Group_Initial() when initial != null:
+return initial(_that);case Group_Loading() when loading != null:
+return loading(_that);case LoadedGroup() when loadedGroup != null:
+return loadedGroup(_that);case LoadedGroups() when loadedGroups != null:
+return loadedGroups(_that);case Group_Error() when error != null:
+return error(_that);case Group_Success() when success != null:
+return success(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( Group_Initial value)  initial,required TResult Function( Group_Loading value)  loading,required TResult Function( LoadedGroup value)  loadedGroup,required TResult Function( LoadedGroups value)  loadedGroups,required TResult Function( Group_Error value)  error,required TResult Function( Group_Success value)  success,}){
+final _that = this;
+switch (_that) {
+case Group_Initial():
+return initial(_that);case Group_Loading():
+return loading(_that);case LoadedGroup():
+return loadedGroup(_that);case LoadedGroups():
+return loadedGroups(_that);case Group_Error():
+return error(_that);case Group_Success():
+return success(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( Group_Initial value)?  initial,TResult? Function( Group_Loading value)?  loading,TResult? Function( LoadedGroup value)?  loadedGroup,TResult? Function( LoadedGroups value)?  loadedGroups,TResult? Function( Group_Error value)?  error,TResult? Function( Group_Success value)?  success,}){
+final _that = this;
+switch (_that) {
+case Group_Initial() when initial != null:
+return initial(_that);case Group_Loading() when loading != null:
+return loading(_that);case LoadedGroup() when loadedGroup != null:
+return loadedGroup(_that);case LoadedGroups() when loadedGroups != null:
+return loadedGroups(_that);case Group_Error() when error != null:
+return error(_that);case Group_Success() when success != null:
+return success(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( Group group)?  loadedGroup,TResult Function( List<Group> groups,  int currentPage,  int limit,  bool hasMore)?  loadedGroups,TResult Function( String message)?  error,TResult Function( String message)?  success,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case Group_Initial() when initial != null:
+return initial();case Group_Loading() when loading != null:
+return loading();case LoadedGroup() when loadedGroup != null:
+return loadedGroup(_that.group);case LoadedGroups() when loadedGroups != null:
+return loadedGroups(_that.groups,_that.currentPage,_that.limit,_that.hasMore);case Group_Error() when error != null:
+return error(_that.message);case Group_Success() when success != null:
+return success(_that.message);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( Group group)  loadedGroup,required TResult Function( List<Group> groups,  int currentPage,  int limit,  bool hasMore)  loadedGroups,required TResult Function( String message)  error,required TResult Function( String message)  success,}) {final _that = this;
+switch (_that) {
+case Group_Initial():
+return initial();case Group_Loading():
+return loading();case LoadedGroup():
+return loadedGroup(_that.group);case LoadedGroups():
+return loadedGroups(_that.groups,_that.currentPage,_that.limit,_that.hasMore);case Group_Error():
+return error(_that.message);case Group_Success():
+return success(_that.message);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( Group group)?  loadedGroup,TResult? Function( List<Group> groups,  int currentPage,  int limit,  bool hasMore)?  loadedGroups,TResult? Function( String message)?  error,TResult? Function( String message)?  success,}) {final _that = this;
+switch (_that) {
+case Group_Initial() when initial != null:
+return initial();case Group_Loading() when loading != null:
+return loading();case LoadedGroup() when loadedGroup != null:
+return loadedGroup(_that.group);case LoadedGroups() when loadedGroups != null:
+return loadedGroups(_that.groups,_that.currentPage,_that.limit,_that.hasMore);case Group_Error() when error != null:
+return error(_that.message);case Group_Success() when success != null:
+return success(_that.message);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 

@@ -1,5 +1,31 @@
 name: flutter_modular
+publish_to: none
 environment:
   sdk: ">=3.7.2 <4.0.0"
+workspace:
+  - packages/core
+  - apps/admin_dashboard
+  - apps/mobile_app
+
 dev_dependencies:
-  melos: ^6.3.2
+  melos: ^7.0.0-dev.8
+
+melos:
+  scripts:
+    build:
+      run: dart run build_runner build --delete-conflicting-outputs
+      exec:
+        concurrency: 4
+      packagesfilter:
+        dependsOn: build_runner
+    analyze:
+      run: dart analyze
+      exec:
+        concurrency: 4
+      packagesfilter:
+        dependsOn: analyzer
+    metrics:
+      description: Phân tích mã nguồn với dart_code_metrics từ tools/analysis
+      run: dart run dart_code_metrics:metrics analyze packages/**/lib apps/**/lib
+dependencies:
+  flutter_lints: ^6.0.0

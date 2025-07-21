@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -41,6 +40,160 @@ class $HealthEventCopyWith<$Res>  {
 $HealthEventCopyWith(HealthEvent _, $Res Function(HealthEvent) __);
 }
 
+
+/// Adds pattern-matching-related methods to [HealthEvent].
+extension HealthEventPatterns on HealthEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _CreateHealth value)?  createHealth,TResult Function( _GetHealthById value)?  getHealthById,TResult Function( _GetHealthByUserId value)?  getHealthByUserId,TResult Function( _GetAllHealthRecords value)?  getAllHealthRecords,TResult Function( _UpdateHealth value)?  updateHealth,TResult Function( _DeleteHealth value)?  deleteHealth,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _CreateHealth() when createHealth != null:
+return createHealth(_that);case _GetHealthById() when getHealthById != null:
+return getHealthById(_that);case _GetHealthByUserId() when getHealthByUserId != null:
+return getHealthByUserId(_that);case _GetAllHealthRecords() when getAllHealthRecords != null:
+return getAllHealthRecords(_that);case _UpdateHealth() when updateHealth != null:
+return updateHealth(_that);case _DeleteHealth() when deleteHealth != null:
+return deleteHealth(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _CreateHealth value)  createHealth,required TResult Function( _GetHealthById value)  getHealthById,required TResult Function( _GetHealthByUserId value)  getHealthByUserId,required TResult Function( _GetAllHealthRecords value)  getAllHealthRecords,required TResult Function( _UpdateHealth value)  updateHealth,required TResult Function( _DeleteHealth value)  deleteHealth,}){
+final _that = this;
+switch (_that) {
+case _CreateHealth():
+return createHealth(_that);case _GetHealthById():
+return getHealthById(_that);case _GetHealthByUserId():
+return getHealthByUserId(_that);case _GetAllHealthRecords():
+return getAllHealthRecords(_that);case _UpdateHealth():
+return updateHealth(_that);case _DeleteHealth():
+return deleteHealth(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _CreateHealth value)?  createHealth,TResult? Function( _GetHealthById value)?  getHealthById,TResult? Function( _GetHealthByUserId value)?  getHealthByUserId,TResult? Function( _GetAllHealthRecords value)?  getAllHealthRecords,TResult? Function( _UpdateHealth value)?  updateHealth,TResult? Function( _DeleteHealth value)?  deleteHealth,}){
+final _that = this;
+switch (_that) {
+case _CreateHealth() when createHealth != null:
+return createHealth(_that);case _GetHealthById() when getHealthById != null:
+return getHealthById(_that);case _GetHealthByUserId() when getHealthByUserId != null:
+return getHealthByUserId(_that);case _GetAllHealthRecords() when getAllHealthRecords != null:
+return getAllHealthRecords(_that);case _UpdateHealth() when updateHealth != null:
+return updateHealth(_that);case _DeleteHealth() when deleteHealth != null:
+return deleteHealth(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Health health)?  createHealth,TResult Function( String id)?  getHealthById,TResult Function( String userId)?  getHealthByUserId,TResult Function( int page,  int limit)?  getAllHealthRecords,TResult Function( String id,  Health health)?  updateHealth,TResult Function( String id)?  deleteHealth,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _CreateHealth() when createHealth != null:
+return createHealth(_that.health);case _GetHealthById() when getHealthById != null:
+return getHealthById(_that.id);case _GetHealthByUserId() when getHealthByUserId != null:
+return getHealthByUserId(_that.userId);case _GetAllHealthRecords() when getAllHealthRecords != null:
+return getAllHealthRecords(_that.page,_that.limit);case _UpdateHealth() when updateHealth != null:
+return updateHealth(_that.id,_that.health);case _DeleteHealth() when deleteHealth != null:
+return deleteHealth(_that.id);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Health health)  createHealth,required TResult Function( String id)  getHealthById,required TResult Function( String userId)  getHealthByUserId,required TResult Function( int page,  int limit)  getAllHealthRecords,required TResult Function( String id,  Health health)  updateHealth,required TResult Function( String id)  deleteHealth,}) {final _that = this;
+switch (_that) {
+case _CreateHealth():
+return createHealth(_that.health);case _GetHealthById():
+return getHealthById(_that.id);case _GetHealthByUserId():
+return getHealthByUserId(_that.userId);case _GetAllHealthRecords():
+return getAllHealthRecords(_that.page,_that.limit);case _UpdateHealth():
+return updateHealth(_that.id,_that.health);case _DeleteHealth():
+return deleteHealth(_that.id);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Health health)?  createHealth,TResult? Function( String id)?  getHealthById,TResult? Function( String userId)?  getHealthByUserId,TResult? Function( int page,  int limit)?  getAllHealthRecords,TResult? Function( String id,  Health health)?  updateHealth,TResult? Function( String id)?  deleteHealth,}) {final _that = this;
+switch (_that) {
+case _CreateHealth() when createHealth != null:
+return createHealth(_that.health);case _GetHealthById() when getHealthById != null:
+return getHealthById(_that.id);case _GetHealthByUserId() when getHealthByUserId != null:
+return getHealthByUserId(_that.userId);case _GetAllHealthRecords() when getAllHealthRecords != null:
+return getAllHealthRecords(_that.page,_that.limit);case _UpdateHealth() when updateHealth != null:
+return updateHealth(_that.id,_that.health);case _DeleteHealth() when deleteHealth != null:
+return deleteHealth(_that.id);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
@@ -489,6 +642,160 @@ class $HealthStateCopyWith<$Res>  {
 $HealthStateCopyWith(HealthState _, $Res Function(HealthState) __);
 }
 
+
+/// Adds pattern-matching-related methods to [HealthState].
+extension HealthStatePatterns on HealthState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( Health_Initial value)?  initial,TResult Function( Health_Loading value)?  loading,TResult Function( LoadedHealth value)?  loadedHealth,TResult Function( LoadedHealthRecords value)?  loadedHealthRecords,TResult Function( Health_Error value)?  error,TResult Function( Health_Success value)?  success,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case Health_Initial() when initial != null:
+return initial(_that);case Health_Loading() when loading != null:
+return loading(_that);case LoadedHealth() when loadedHealth != null:
+return loadedHealth(_that);case LoadedHealthRecords() when loadedHealthRecords != null:
+return loadedHealthRecords(_that);case Health_Error() when error != null:
+return error(_that);case Health_Success() when success != null:
+return success(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( Health_Initial value)  initial,required TResult Function( Health_Loading value)  loading,required TResult Function( LoadedHealth value)  loadedHealth,required TResult Function( LoadedHealthRecords value)  loadedHealthRecords,required TResult Function( Health_Error value)  error,required TResult Function( Health_Success value)  success,}){
+final _that = this;
+switch (_that) {
+case Health_Initial():
+return initial(_that);case Health_Loading():
+return loading(_that);case LoadedHealth():
+return loadedHealth(_that);case LoadedHealthRecords():
+return loadedHealthRecords(_that);case Health_Error():
+return error(_that);case Health_Success():
+return success(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( Health_Initial value)?  initial,TResult? Function( Health_Loading value)?  loading,TResult? Function( LoadedHealth value)?  loadedHealth,TResult? Function( LoadedHealthRecords value)?  loadedHealthRecords,TResult? Function( Health_Error value)?  error,TResult? Function( Health_Success value)?  success,}){
+final _that = this;
+switch (_that) {
+case Health_Initial() when initial != null:
+return initial(_that);case Health_Loading() when loading != null:
+return loading(_that);case LoadedHealth() when loadedHealth != null:
+return loadedHealth(_that);case LoadedHealthRecords() when loadedHealthRecords != null:
+return loadedHealthRecords(_that);case Health_Error() when error != null:
+return error(_that);case Health_Success() when success != null:
+return success(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( Health health)?  loadedHealth,TResult Function( List<Health> healthRecords,  int currentPage,  int limit,  bool hasMore)?  loadedHealthRecords,TResult Function( String message)?  error,TResult Function( String message)?  success,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case Health_Initial() when initial != null:
+return initial();case Health_Loading() when loading != null:
+return loading();case LoadedHealth() when loadedHealth != null:
+return loadedHealth(_that.health);case LoadedHealthRecords() when loadedHealthRecords != null:
+return loadedHealthRecords(_that.healthRecords,_that.currentPage,_that.limit,_that.hasMore);case Health_Error() when error != null:
+return error(_that.message);case Health_Success() when success != null:
+return success(_that.message);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( Health health)  loadedHealth,required TResult Function( List<Health> healthRecords,  int currentPage,  int limit,  bool hasMore)  loadedHealthRecords,required TResult Function( String message)  error,required TResult Function( String message)  success,}) {final _that = this;
+switch (_that) {
+case Health_Initial():
+return initial();case Health_Loading():
+return loading();case LoadedHealth():
+return loadedHealth(_that.health);case LoadedHealthRecords():
+return loadedHealthRecords(_that.healthRecords,_that.currentPage,_that.limit,_that.hasMore);case Health_Error():
+return error(_that.message);case Health_Success():
+return success(_that.message);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( Health health)?  loadedHealth,TResult? Function( List<Health> healthRecords,  int currentPage,  int limit,  bool hasMore)?  loadedHealthRecords,TResult? Function( String message)?  error,TResult? Function( String message)?  success,}) {final _that = this;
+switch (_that) {
+case Health_Initial() when initial != null:
+return initial();case Health_Loading() when loading != null:
+return loading();case LoadedHealth() when loadedHealth != null:
+return loadedHealth(_that.health);case LoadedHealthRecords() when loadedHealthRecords != null:
+return loadedHealthRecords(_that.healthRecords,_that.currentPage,_that.limit,_that.hasMore);case Health_Error() when error != null:
+return error(_that.message);case Health_Success() when success != null:
+return success(_that.message);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 

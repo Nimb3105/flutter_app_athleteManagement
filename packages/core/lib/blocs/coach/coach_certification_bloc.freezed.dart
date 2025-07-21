@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -41,6 +40,160 @@ class $CoachCertificationEventCopyWith<$Res>  {
 $CoachCertificationEventCopyWith(CoachCertificationEvent _, $Res Function(CoachCertificationEvent) __);
 }
 
+
+/// Adds pattern-matching-related methods to [CoachCertificationEvent].
+extension CoachCertificationEventPatterns on CoachCertificationEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _CreateCoachCertification value)?  createCoachCertification,TResult Function( _GetCoachCertificationById value)?  getCoachCertificationById,TResult Function( _GetCoachCertificationByUserId value)?  getCoachCertificationByUserId,TResult Function( _GetAllCoachCertifications value)?  getAllCoachCertifications,TResult Function( _UpdateCoachCertification value)?  updateCoachCertification,TResult Function( _DeleteCoachCertification value)?  deleteCoachCertification,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _CreateCoachCertification() when createCoachCertification != null:
+return createCoachCertification(_that);case _GetCoachCertificationById() when getCoachCertificationById != null:
+return getCoachCertificationById(_that);case _GetCoachCertificationByUserId() when getCoachCertificationByUserId != null:
+return getCoachCertificationByUserId(_that);case _GetAllCoachCertifications() when getAllCoachCertifications != null:
+return getAllCoachCertifications(_that);case _UpdateCoachCertification() when updateCoachCertification != null:
+return updateCoachCertification(_that);case _DeleteCoachCertification() when deleteCoachCertification != null:
+return deleteCoachCertification(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _CreateCoachCertification value)  createCoachCertification,required TResult Function( _GetCoachCertificationById value)  getCoachCertificationById,required TResult Function( _GetCoachCertificationByUserId value)  getCoachCertificationByUserId,required TResult Function( _GetAllCoachCertifications value)  getAllCoachCertifications,required TResult Function( _UpdateCoachCertification value)  updateCoachCertification,required TResult Function( _DeleteCoachCertification value)  deleteCoachCertification,}){
+final _that = this;
+switch (_that) {
+case _CreateCoachCertification():
+return createCoachCertification(_that);case _GetCoachCertificationById():
+return getCoachCertificationById(_that);case _GetCoachCertificationByUserId():
+return getCoachCertificationByUserId(_that);case _GetAllCoachCertifications():
+return getAllCoachCertifications(_that);case _UpdateCoachCertification():
+return updateCoachCertification(_that);case _DeleteCoachCertification():
+return deleteCoachCertification(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _CreateCoachCertification value)?  createCoachCertification,TResult? Function( _GetCoachCertificationById value)?  getCoachCertificationById,TResult? Function( _GetCoachCertificationByUserId value)?  getCoachCertificationByUserId,TResult? Function( _GetAllCoachCertifications value)?  getAllCoachCertifications,TResult? Function( _UpdateCoachCertification value)?  updateCoachCertification,TResult? Function( _DeleteCoachCertification value)?  deleteCoachCertification,}){
+final _that = this;
+switch (_that) {
+case _CreateCoachCertification() when createCoachCertification != null:
+return createCoachCertification(_that);case _GetCoachCertificationById() when getCoachCertificationById != null:
+return getCoachCertificationById(_that);case _GetCoachCertificationByUserId() when getCoachCertificationByUserId != null:
+return getCoachCertificationByUserId(_that);case _GetAllCoachCertifications() when getAllCoachCertifications != null:
+return getAllCoachCertifications(_that);case _UpdateCoachCertification() when updateCoachCertification != null:
+return updateCoachCertification(_that);case _DeleteCoachCertification() when deleteCoachCertification != null:
+return deleteCoachCertification(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( CoachCertification certification)?  createCoachCertification,TResult Function( String id)?  getCoachCertificationById,TResult Function( String userId)?  getCoachCertificationByUserId,TResult Function( int page,  int limit)?  getAllCoachCertifications,TResult Function( String id,  CoachCertification certification)?  updateCoachCertification,TResult Function( String id)?  deleteCoachCertification,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _CreateCoachCertification() when createCoachCertification != null:
+return createCoachCertification(_that.certification);case _GetCoachCertificationById() when getCoachCertificationById != null:
+return getCoachCertificationById(_that.id);case _GetCoachCertificationByUserId() when getCoachCertificationByUserId != null:
+return getCoachCertificationByUserId(_that.userId);case _GetAllCoachCertifications() when getAllCoachCertifications != null:
+return getAllCoachCertifications(_that.page,_that.limit);case _UpdateCoachCertification() when updateCoachCertification != null:
+return updateCoachCertification(_that.id,_that.certification);case _DeleteCoachCertification() when deleteCoachCertification != null:
+return deleteCoachCertification(_that.id);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( CoachCertification certification)  createCoachCertification,required TResult Function( String id)  getCoachCertificationById,required TResult Function( String userId)  getCoachCertificationByUserId,required TResult Function( int page,  int limit)  getAllCoachCertifications,required TResult Function( String id,  CoachCertification certification)  updateCoachCertification,required TResult Function( String id)  deleteCoachCertification,}) {final _that = this;
+switch (_that) {
+case _CreateCoachCertification():
+return createCoachCertification(_that.certification);case _GetCoachCertificationById():
+return getCoachCertificationById(_that.id);case _GetCoachCertificationByUserId():
+return getCoachCertificationByUserId(_that.userId);case _GetAllCoachCertifications():
+return getAllCoachCertifications(_that.page,_that.limit);case _UpdateCoachCertification():
+return updateCoachCertification(_that.id,_that.certification);case _DeleteCoachCertification():
+return deleteCoachCertification(_that.id);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( CoachCertification certification)?  createCoachCertification,TResult? Function( String id)?  getCoachCertificationById,TResult? Function( String userId)?  getCoachCertificationByUserId,TResult? Function( int page,  int limit)?  getAllCoachCertifications,TResult? Function( String id,  CoachCertification certification)?  updateCoachCertification,TResult? Function( String id)?  deleteCoachCertification,}) {final _that = this;
+switch (_that) {
+case _CreateCoachCertification() when createCoachCertification != null:
+return createCoachCertification(_that.certification);case _GetCoachCertificationById() when getCoachCertificationById != null:
+return getCoachCertificationById(_that.id);case _GetCoachCertificationByUserId() when getCoachCertificationByUserId != null:
+return getCoachCertificationByUserId(_that.userId);case _GetAllCoachCertifications() when getAllCoachCertifications != null:
+return getAllCoachCertifications(_that.page,_that.limit);case _UpdateCoachCertification() when updateCoachCertification != null:
+return updateCoachCertification(_that.id,_that.certification);case _DeleteCoachCertification() when deleteCoachCertification != null:
+return deleteCoachCertification(_that.id);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
@@ -489,6 +642,160 @@ class $CoachCertificationStateCopyWith<$Res>  {
 $CoachCertificationStateCopyWith(CoachCertificationState _, $Res Function(CoachCertificationState) __);
 }
 
+
+/// Adds pattern-matching-related methods to [CoachCertificationState].
+extension CoachCertificationStatePatterns on CoachCertificationState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( CoachCertification_Initial value)?  initial,TResult Function( CoachCertification_Loading value)?  loading,TResult Function( LoadedCoachCertification value)?  loadedCoachCertification,TResult Function( LoadedCoachCertifications value)?  loadedCoachCertifications,TResult Function( CoachCertification_Error value)?  error,TResult Function( CoachCertification_Success value)?  success,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case CoachCertification_Initial() when initial != null:
+return initial(_that);case CoachCertification_Loading() when loading != null:
+return loading(_that);case LoadedCoachCertification() when loadedCoachCertification != null:
+return loadedCoachCertification(_that);case LoadedCoachCertifications() when loadedCoachCertifications != null:
+return loadedCoachCertifications(_that);case CoachCertification_Error() when error != null:
+return error(_that);case CoachCertification_Success() when success != null:
+return success(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( CoachCertification_Initial value)  initial,required TResult Function( CoachCertification_Loading value)  loading,required TResult Function( LoadedCoachCertification value)  loadedCoachCertification,required TResult Function( LoadedCoachCertifications value)  loadedCoachCertifications,required TResult Function( CoachCertification_Error value)  error,required TResult Function( CoachCertification_Success value)  success,}){
+final _that = this;
+switch (_that) {
+case CoachCertification_Initial():
+return initial(_that);case CoachCertification_Loading():
+return loading(_that);case LoadedCoachCertification():
+return loadedCoachCertification(_that);case LoadedCoachCertifications():
+return loadedCoachCertifications(_that);case CoachCertification_Error():
+return error(_that);case CoachCertification_Success():
+return success(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( CoachCertification_Initial value)?  initial,TResult? Function( CoachCertification_Loading value)?  loading,TResult? Function( LoadedCoachCertification value)?  loadedCoachCertification,TResult? Function( LoadedCoachCertifications value)?  loadedCoachCertifications,TResult? Function( CoachCertification_Error value)?  error,TResult? Function( CoachCertification_Success value)?  success,}){
+final _that = this;
+switch (_that) {
+case CoachCertification_Initial() when initial != null:
+return initial(_that);case CoachCertification_Loading() when loading != null:
+return loading(_that);case LoadedCoachCertification() when loadedCoachCertification != null:
+return loadedCoachCertification(_that);case LoadedCoachCertifications() when loadedCoachCertifications != null:
+return loadedCoachCertifications(_that);case CoachCertification_Error() when error != null:
+return error(_that);case CoachCertification_Success() when success != null:
+return success(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( CoachCertification certification)?  loadedCoachCertification,TResult Function( List<CoachCertification> certifications,  int currentPage,  int limit,  bool hasMore)?  loadedCoachCertifications,TResult Function( String message)?  error,TResult Function( String message)?  success,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case CoachCertification_Initial() when initial != null:
+return initial();case CoachCertification_Loading() when loading != null:
+return loading();case LoadedCoachCertification() when loadedCoachCertification != null:
+return loadedCoachCertification(_that.certification);case LoadedCoachCertifications() when loadedCoachCertifications != null:
+return loadedCoachCertifications(_that.certifications,_that.currentPage,_that.limit,_that.hasMore);case CoachCertification_Error() when error != null:
+return error(_that.message);case CoachCertification_Success() when success != null:
+return success(_that.message);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( CoachCertification certification)  loadedCoachCertification,required TResult Function( List<CoachCertification> certifications,  int currentPage,  int limit,  bool hasMore)  loadedCoachCertifications,required TResult Function( String message)  error,required TResult Function( String message)  success,}) {final _that = this;
+switch (_that) {
+case CoachCertification_Initial():
+return initial();case CoachCertification_Loading():
+return loading();case LoadedCoachCertification():
+return loadedCoachCertification(_that.certification);case LoadedCoachCertifications():
+return loadedCoachCertifications(_that.certifications,_that.currentPage,_that.limit,_that.hasMore);case CoachCertification_Error():
+return error(_that.message);case CoachCertification_Success():
+return success(_that.message);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( CoachCertification certification)?  loadedCoachCertification,TResult? Function( List<CoachCertification> certifications,  int currentPage,  int limit,  bool hasMore)?  loadedCoachCertifications,TResult? Function( String message)?  error,TResult? Function( String message)?  success,}) {final _that = this;
+switch (_that) {
+case CoachCertification_Initial() when initial != null:
+return initial();case CoachCertification_Loading() when loading != null:
+return loading();case LoadedCoachCertification() when loadedCoachCertification != null:
+return loadedCoachCertification(_that.certification);case LoadedCoachCertifications() when loadedCoachCertifications != null:
+return loadedCoachCertifications(_that.certifications,_that.currentPage,_that.limit,_that.hasMore);case CoachCertification_Error() when error != null:
+return error(_that.message);case CoachCertification_Success() when success != null:
+return success(_that.message);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 

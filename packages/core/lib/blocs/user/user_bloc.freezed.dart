@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -47,6 +46,190 @@ class $UserEventCopyWith<$Res>  {
 $UserEventCopyWith(UserEvent _, $Res Function(UserEvent) __);
 }
 
+
+/// Adds pattern-matching-related methods to [UserEvent].
+extension UserEventPatterns on UserEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( CreateUser value)?  createUser,TResult Function( GetUserById value)?  getUserById,TResult Function( GetUserByEmail value)?  getUserByEmail,TResult Function( Logout value)?  logout,TResult Function( GetAllUsers value)?  getAllUsers,TResult Function( UpdateUser value)?  updateUser,TResult Function( DeleteUser value)?  deleteUser,TResult Function( Login value)?  login,TResult Function( GetAllUserCoachBySportId value)?  getAllUserCoachBySportId,TResult Function( GetUsersByRoleWithPagination value)?  getUsersByRoleWithPagination,TResult Function( GetUnassignedAthletes value)?  getUnassignedAthletes,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case CreateUser() when createUser != null:
+return createUser(_that);case GetUserById() when getUserById != null:
+return getUserById(_that);case GetUserByEmail() when getUserByEmail != null:
+return getUserByEmail(_that);case Logout() when logout != null:
+return logout(_that);case GetAllUsers() when getAllUsers != null:
+return getAllUsers(_that);case UpdateUser() when updateUser != null:
+return updateUser(_that);case DeleteUser() when deleteUser != null:
+return deleteUser(_that);case Login() when login != null:
+return login(_that);case GetAllUserCoachBySportId() when getAllUserCoachBySportId != null:
+return getAllUserCoachBySportId(_that);case GetUsersByRoleWithPagination() when getUsersByRoleWithPagination != null:
+return getUsersByRoleWithPagination(_that);case GetUnassignedAthletes() when getUnassignedAthletes != null:
+return getUnassignedAthletes(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( CreateUser value)  createUser,required TResult Function( GetUserById value)  getUserById,required TResult Function( GetUserByEmail value)  getUserByEmail,required TResult Function( Logout value)  logout,required TResult Function( GetAllUsers value)  getAllUsers,required TResult Function( UpdateUser value)  updateUser,required TResult Function( DeleteUser value)  deleteUser,required TResult Function( Login value)  login,required TResult Function( GetAllUserCoachBySportId value)  getAllUserCoachBySportId,required TResult Function( GetUsersByRoleWithPagination value)  getUsersByRoleWithPagination,required TResult Function( GetUnassignedAthletes value)  getUnassignedAthletes,}){
+final _that = this;
+switch (_that) {
+case CreateUser():
+return createUser(_that);case GetUserById():
+return getUserById(_that);case GetUserByEmail():
+return getUserByEmail(_that);case Logout():
+return logout(_that);case GetAllUsers():
+return getAllUsers(_that);case UpdateUser():
+return updateUser(_that);case DeleteUser():
+return deleteUser(_that);case Login():
+return login(_that);case GetAllUserCoachBySportId():
+return getAllUserCoachBySportId(_that);case GetUsersByRoleWithPagination():
+return getUsersByRoleWithPagination(_that);case GetUnassignedAthletes():
+return getUnassignedAthletes(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( CreateUser value)?  createUser,TResult? Function( GetUserById value)?  getUserById,TResult? Function( GetUserByEmail value)?  getUserByEmail,TResult? Function( Logout value)?  logout,TResult? Function( GetAllUsers value)?  getAllUsers,TResult? Function( UpdateUser value)?  updateUser,TResult? Function( DeleteUser value)?  deleteUser,TResult? Function( Login value)?  login,TResult? Function( GetAllUserCoachBySportId value)?  getAllUserCoachBySportId,TResult? Function( GetUsersByRoleWithPagination value)?  getUsersByRoleWithPagination,TResult? Function( GetUnassignedAthletes value)?  getUnassignedAthletes,}){
+final _that = this;
+switch (_that) {
+case CreateUser() when createUser != null:
+return createUser(_that);case GetUserById() when getUserById != null:
+return getUserById(_that);case GetUserByEmail() when getUserByEmail != null:
+return getUserByEmail(_that);case Logout() when logout != null:
+return logout(_that);case GetAllUsers() when getAllUsers != null:
+return getAllUsers(_that);case UpdateUser() when updateUser != null:
+return updateUser(_that);case DeleteUser() when deleteUser != null:
+return deleteUser(_that);case Login() when login != null:
+return login(_that);case GetAllUserCoachBySportId() when getAllUserCoachBySportId != null:
+return getAllUserCoachBySportId(_that);case GetUsersByRoleWithPagination() when getUsersByRoleWithPagination != null:
+return getUsersByRoleWithPagination(_that);case GetUnassignedAthletes() when getUnassignedAthletes != null:
+return getUnassignedAthletes(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( User user)?  createUser,TResult Function( String id)?  getUserById,TResult Function( String email)?  getUserByEmail,TResult Function()?  logout,TResult Function( int page,  int limit)?  getAllUsers,TResult Function( String id,  User user)?  updateUser,TResult Function( String id)?  deleteUser,TResult Function( String email,  String password)?  login,TResult Function( String sportId,  int page,  int limit)?  getAllUserCoachBySportId,TResult Function( String role,  int page,  int limit)?  getUsersByRoleWithPagination,TResult Function( String sportId)?  getUnassignedAthletes,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case CreateUser() when createUser != null:
+return createUser(_that.user);case GetUserById() when getUserById != null:
+return getUserById(_that.id);case GetUserByEmail() when getUserByEmail != null:
+return getUserByEmail(_that.email);case Logout() when logout != null:
+return logout();case GetAllUsers() when getAllUsers != null:
+return getAllUsers(_that.page,_that.limit);case UpdateUser() when updateUser != null:
+return updateUser(_that.id,_that.user);case DeleteUser() when deleteUser != null:
+return deleteUser(_that.id);case Login() when login != null:
+return login(_that.email,_that.password);case GetAllUserCoachBySportId() when getAllUserCoachBySportId != null:
+return getAllUserCoachBySportId(_that.sportId,_that.page,_that.limit);case GetUsersByRoleWithPagination() when getUsersByRoleWithPagination != null:
+return getUsersByRoleWithPagination(_that.role,_that.page,_that.limit);case GetUnassignedAthletes() when getUnassignedAthletes != null:
+return getUnassignedAthletes(_that.sportId);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( User user)  createUser,required TResult Function( String id)  getUserById,required TResult Function( String email)  getUserByEmail,required TResult Function()  logout,required TResult Function( int page,  int limit)  getAllUsers,required TResult Function( String id,  User user)  updateUser,required TResult Function( String id)  deleteUser,required TResult Function( String email,  String password)  login,required TResult Function( String sportId,  int page,  int limit)  getAllUserCoachBySportId,required TResult Function( String role,  int page,  int limit)  getUsersByRoleWithPagination,required TResult Function( String sportId)  getUnassignedAthletes,}) {final _that = this;
+switch (_that) {
+case CreateUser():
+return createUser(_that.user);case GetUserById():
+return getUserById(_that.id);case GetUserByEmail():
+return getUserByEmail(_that.email);case Logout():
+return logout();case GetAllUsers():
+return getAllUsers(_that.page,_that.limit);case UpdateUser():
+return updateUser(_that.id,_that.user);case DeleteUser():
+return deleteUser(_that.id);case Login():
+return login(_that.email,_that.password);case GetAllUserCoachBySportId():
+return getAllUserCoachBySportId(_that.sportId,_that.page,_that.limit);case GetUsersByRoleWithPagination():
+return getUsersByRoleWithPagination(_that.role,_that.page,_that.limit);case GetUnassignedAthletes():
+return getUnassignedAthletes(_that.sportId);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( User user)?  createUser,TResult? Function( String id)?  getUserById,TResult? Function( String email)?  getUserByEmail,TResult? Function()?  logout,TResult? Function( int page,  int limit)?  getAllUsers,TResult? Function( String id,  User user)?  updateUser,TResult? Function( String id)?  deleteUser,TResult? Function( String email,  String password)?  login,TResult? Function( String sportId,  int page,  int limit)?  getAllUserCoachBySportId,TResult? Function( String role,  int page,  int limit)?  getUsersByRoleWithPagination,TResult? Function( String sportId)?  getUnassignedAthletes,}) {final _that = this;
+switch (_that) {
+case CreateUser() when createUser != null:
+return createUser(_that.user);case GetUserById() when getUserById != null:
+return getUserById(_that.id);case GetUserByEmail() when getUserByEmail != null:
+return getUserByEmail(_that.email);case Logout() when logout != null:
+return logout();case GetAllUsers() when getAllUsers != null:
+return getAllUsers(_that.page,_that.limit);case UpdateUser() when updateUser != null:
+return updateUser(_that.id,_that.user);case DeleteUser() when deleteUser != null:
+return deleteUser(_that.id);case Login() when login != null:
+return login(_that.email,_that.password);case GetAllUserCoachBySportId() when getAllUserCoachBySportId != null:
+return getAllUserCoachBySportId(_that.sportId,_that.page,_that.limit);case GetUsersByRoleWithPagination() when getUsersByRoleWithPagination != null:
+return getUsersByRoleWithPagination(_that.role,_that.page,_that.limit);case GetUnassignedAthletes() when getUnassignedAthletes != null:
+return getUnassignedAthletes(_that.sportId);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
@@ -873,6 +1056,178 @@ class $UserStateCopyWith<$Res>  {
 $UserStateCopyWith(UserState _, $Res Function(UserState) __);
 }
 
+
+/// Adds pattern-matching-related methods to [UserState].
+extension UserStatePatterns on UserState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( User_Initial value)?  initial,TResult Function( User_Loading value)?  loading,TResult Function( LoadedUser value)?  loadedUser,TResult Function( LoadedUsers value)?  loadedUsers,TResult Function( User_Error value)?  error,TResult Function( User_Success value)?  success,TResult Function( LoggedIn value)?  loggedIn,TResult Function( LoadedMultipleUsers value)?  loadedMultipleUsers,TResult Function( LoginSuccess value)?  loginSuccess,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case User_Initial() when initial != null:
+return initial(_that);case User_Loading() when loading != null:
+return loading(_that);case LoadedUser() when loadedUser != null:
+return loadedUser(_that);case LoadedUsers() when loadedUsers != null:
+return loadedUsers(_that);case User_Error() when error != null:
+return error(_that);case User_Success() when success != null:
+return success(_that);case LoggedIn() when loggedIn != null:
+return loggedIn(_that);case LoadedMultipleUsers() when loadedMultipleUsers != null:
+return loadedMultipleUsers(_that);case LoginSuccess() when loginSuccess != null:
+return loginSuccess(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( User_Initial value)  initial,required TResult Function( User_Loading value)  loading,required TResult Function( LoadedUser value)  loadedUser,required TResult Function( LoadedUsers value)  loadedUsers,required TResult Function( User_Error value)  error,required TResult Function( User_Success value)  success,required TResult Function( LoggedIn value)  loggedIn,required TResult Function( LoadedMultipleUsers value)  loadedMultipleUsers,required TResult Function( LoginSuccess value)  loginSuccess,}){
+final _that = this;
+switch (_that) {
+case User_Initial():
+return initial(_that);case User_Loading():
+return loading(_that);case LoadedUser():
+return loadedUser(_that);case LoadedUsers():
+return loadedUsers(_that);case User_Error():
+return error(_that);case User_Success():
+return success(_that);case LoggedIn():
+return loggedIn(_that);case LoadedMultipleUsers():
+return loadedMultipleUsers(_that);case LoginSuccess():
+return loginSuccess(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( User_Initial value)?  initial,TResult? Function( User_Loading value)?  loading,TResult? Function( LoadedUser value)?  loadedUser,TResult? Function( LoadedUsers value)?  loadedUsers,TResult? Function( User_Error value)?  error,TResult? Function( User_Success value)?  success,TResult? Function( LoggedIn value)?  loggedIn,TResult? Function( LoadedMultipleUsers value)?  loadedMultipleUsers,TResult? Function( LoginSuccess value)?  loginSuccess,}){
+final _that = this;
+switch (_that) {
+case User_Initial() when initial != null:
+return initial(_that);case User_Loading() when loading != null:
+return loading(_that);case LoadedUser() when loadedUser != null:
+return loadedUser(_that);case LoadedUsers() when loadedUsers != null:
+return loadedUsers(_that);case User_Error() when error != null:
+return error(_that);case User_Success() when success != null:
+return success(_that);case LoggedIn() when loggedIn != null:
+return loggedIn(_that);case LoadedMultipleUsers() when loadedMultipleUsers != null:
+return loadedMultipleUsers(_that);case LoginSuccess() when loginSuccess != null:
+return loginSuccess(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( User user)?  loadedUser,TResult Function( List<User> users,  int currentPage,  int limit,  bool hasMore)?  loadedUsers,TResult Function( String message)?  error,TResult Function( String message)?  success,TResult Function( String token)?  loggedIn,TResult Function( Map<String, User> users,  Map<String, String> errors)?  loadedMultipleUsers,TResult Function( User user,  String token)?  loginSuccess,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case User_Initial() when initial != null:
+return initial();case User_Loading() when loading != null:
+return loading();case LoadedUser() when loadedUser != null:
+return loadedUser(_that.user);case LoadedUsers() when loadedUsers != null:
+return loadedUsers(_that.users,_that.currentPage,_that.limit,_that.hasMore);case User_Error() when error != null:
+return error(_that.message);case User_Success() when success != null:
+return success(_that.message);case LoggedIn() when loggedIn != null:
+return loggedIn(_that.token);case LoadedMultipleUsers() when loadedMultipleUsers != null:
+return loadedMultipleUsers(_that.users,_that.errors);case LoginSuccess() when loginSuccess != null:
+return loginSuccess(_that.user,_that.token);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( User user)  loadedUser,required TResult Function( List<User> users,  int currentPage,  int limit,  bool hasMore)  loadedUsers,required TResult Function( String message)  error,required TResult Function( String message)  success,required TResult Function( String token)  loggedIn,required TResult Function( Map<String, User> users,  Map<String, String> errors)  loadedMultipleUsers,required TResult Function( User user,  String token)  loginSuccess,}) {final _that = this;
+switch (_that) {
+case User_Initial():
+return initial();case User_Loading():
+return loading();case LoadedUser():
+return loadedUser(_that.user);case LoadedUsers():
+return loadedUsers(_that.users,_that.currentPage,_that.limit,_that.hasMore);case User_Error():
+return error(_that.message);case User_Success():
+return success(_that.message);case LoggedIn():
+return loggedIn(_that.token);case LoadedMultipleUsers():
+return loadedMultipleUsers(_that.users,_that.errors);case LoginSuccess():
+return loginSuccess(_that.user,_that.token);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( User user)?  loadedUser,TResult? Function( List<User> users,  int currentPage,  int limit,  bool hasMore)?  loadedUsers,TResult? Function( String message)?  error,TResult? Function( String message)?  success,TResult? Function( String token)?  loggedIn,TResult? Function( Map<String, User> users,  Map<String, String> errors)?  loadedMultipleUsers,TResult? Function( User user,  String token)?  loginSuccess,}) {final _that = this;
+switch (_that) {
+case User_Initial() when initial != null:
+return initial();case User_Loading() when loading != null:
+return loading();case LoadedUser() when loadedUser != null:
+return loadedUser(_that.user);case LoadedUsers() when loadedUsers != null:
+return loadedUsers(_that.users,_that.currentPage,_that.limit,_that.hasMore);case User_Error() when error != null:
+return error(_that.message);case User_Success() when success != null:
+return success(_that.message);case LoggedIn() when loggedIn != null:
+return loggedIn(_that.token);case LoadedMultipleUsers() when loadedMultipleUsers != null:
+return loadedMultipleUsers(_that.users,_that.errors);case LoginSuccess() when loginSuccess != null:
+return loginSuccess(_that.user,_that.token);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 

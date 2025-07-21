@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -41,6 +40,160 @@ class $NutritionPlanEventCopyWith<$Res>  {
 $NutritionPlanEventCopyWith(NutritionPlanEvent _, $Res Function(NutritionPlanEvent) __);
 }
 
+
+/// Adds pattern-matching-related methods to [NutritionPlanEvent].
+extension NutritionPlanEventPatterns on NutritionPlanEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( CreateNutritionPlan value)?  createNutritionPlan,TResult Function( GetNutritionPlanById value)?  getNutritionPlanById,TResult Function( GetNutritionPlansByUserId value)?  getNutritionPlansByUserId,TResult Function( GetAllNutritionPlans value)?  getAllNutritionPlans,TResult Function( UpdateNutritionPlan value)?  updateNutritionPlan,TResult Function( DeleteNutritionPlan value)?  deleteNutritionPlan,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case CreateNutritionPlan() when createNutritionPlan != null:
+return createNutritionPlan(_that);case GetNutritionPlanById() when getNutritionPlanById != null:
+return getNutritionPlanById(_that);case GetNutritionPlansByUserId() when getNutritionPlansByUserId != null:
+return getNutritionPlansByUserId(_that);case GetAllNutritionPlans() when getAllNutritionPlans != null:
+return getAllNutritionPlans(_that);case UpdateNutritionPlan() when updateNutritionPlan != null:
+return updateNutritionPlan(_that);case DeleteNutritionPlan() when deleteNutritionPlan != null:
+return deleteNutritionPlan(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( CreateNutritionPlan value)  createNutritionPlan,required TResult Function( GetNutritionPlanById value)  getNutritionPlanById,required TResult Function( GetNutritionPlansByUserId value)  getNutritionPlansByUserId,required TResult Function( GetAllNutritionPlans value)  getAllNutritionPlans,required TResult Function( UpdateNutritionPlan value)  updateNutritionPlan,required TResult Function( DeleteNutritionPlan value)  deleteNutritionPlan,}){
+final _that = this;
+switch (_that) {
+case CreateNutritionPlan():
+return createNutritionPlan(_that);case GetNutritionPlanById():
+return getNutritionPlanById(_that);case GetNutritionPlansByUserId():
+return getNutritionPlansByUserId(_that);case GetAllNutritionPlans():
+return getAllNutritionPlans(_that);case UpdateNutritionPlan():
+return updateNutritionPlan(_that);case DeleteNutritionPlan():
+return deleteNutritionPlan(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( CreateNutritionPlan value)?  createNutritionPlan,TResult? Function( GetNutritionPlanById value)?  getNutritionPlanById,TResult? Function( GetNutritionPlansByUserId value)?  getNutritionPlansByUserId,TResult? Function( GetAllNutritionPlans value)?  getAllNutritionPlans,TResult? Function( UpdateNutritionPlan value)?  updateNutritionPlan,TResult? Function( DeleteNutritionPlan value)?  deleteNutritionPlan,}){
+final _that = this;
+switch (_that) {
+case CreateNutritionPlan() when createNutritionPlan != null:
+return createNutritionPlan(_that);case GetNutritionPlanById() when getNutritionPlanById != null:
+return getNutritionPlanById(_that);case GetNutritionPlansByUserId() when getNutritionPlansByUserId != null:
+return getNutritionPlansByUserId(_that);case GetAllNutritionPlans() when getAllNutritionPlans != null:
+return getAllNutritionPlans(_that);case UpdateNutritionPlan() when updateNutritionPlan != null:
+return updateNutritionPlan(_that);case DeleteNutritionPlan() when deleteNutritionPlan != null:
+return deleteNutritionPlan(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( NutritionPlan nutritionPlan)?  createNutritionPlan,TResult Function( String id)?  getNutritionPlanById,TResult Function( String userId)?  getNutritionPlansByUserId,TResult Function( int page,  int limit)?  getAllNutritionPlans,TResult Function( String id,  NutritionPlan nutritionPlan)?  updateNutritionPlan,TResult Function( String id)?  deleteNutritionPlan,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case CreateNutritionPlan() when createNutritionPlan != null:
+return createNutritionPlan(_that.nutritionPlan);case GetNutritionPlanById() when getNutritionPlanById != null:
+return getNutritionPlanById(_that.id);case GetNutritionPlansByUserId() when getNutritionPlansByUserId != null:
+return getNutritionPlansByUserId(_that.userId);case GetAllNutritionPlans() when getAllNutritionPlans != null:
+return getAllNutritionPlans(_that.page,_that.limit);case UpdateNutritionPlan() when updateNutritionPlan != null:
+return updateNutritionPlan(_that.id,_that.nutritionPlan);case DeleteNutritionPlan() when deleteNutritionPlan != null:
+return deleteNutritionPlan(_that.id);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( NutritionPlan nutritionPlan)  createNutritionPlan,required TResult Function( String id)  getNutritionPlanById,required TResult Function( String userId)  getNutritionPlansByUserId,required TResult Function( int page,  int limit)  getAllNutritionPlans,required TResult Function( String id,  NutritionPlan nutritionPlan)  updateNutritionPlan,required TResult Function( String id)  deleteNutritionPlan,}) {final _that = this;
+switch (_that) {
+case CreateNutritionPlan():
+return createNutritionPlan(_that.nutritionPlan);case GetNutritionPlanById():
+return getNutritionPlanById(_that.id);case GetNutritionPlansByUserId():
+return getNutritionPlansByUserId(_that.userId);case GetAllNutritionPlans():
+return getAllNutritionPlans(_that.page,_that.limit);case UpdateNutritionPlan():
+return updateNutritionPlan(_that.id,_that.nutritionPlan);case DeleteNutritionPlan():
+return deleteNutritionPlan(_that.id);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( NutritionPlan nutritionPlan)?  createNutritionPlan,TResult? Function( String id)?  getNutritionPlanById,TResult? Function( String userId)?  getNutritionPlansByUserId,TResult? Function( int page,  int limit)?  getAllNutritionPlans,TResult? Function( String id,  NutritionPlan nutritionPlan)?  updateNutritionPlan,TResult? Function( String id)?  deleteNutritionPlan,}) {final _that = this;
+switch (_that) {
+case CreateNutritionPlan() when createNutritionPlan != null:
+return createNutritionPlan(_that.nutritionPlan);case GetNutritionPlanById() when getNutritionPlanById != null:
+return getNutritionPlanById(_that.id);case GetNutritionPlansByUserId() when getNutritionPlansByUserId != null:
+return getNutritionPlansByUserId(_that.userId);case GetAllNutritionPlans() when getAllNutritionPlans != null:
+return getAllNutritionPlans(_that.page,_that.limit);case UpdateNutritionPlan() when updateNutritionPlan != null:
+return updateNutritionPlan(_that.id,_that.nutritionPlan);case DeleteNutritionPlan() when deleteNutritionPlan != null:
+return deleteNutritionPlan(_that.id);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
@@ -489,6 +642,160 @@ class $NutritionPlanStateCopyWith<$Res>  {
 $NutritionPlanStateCopyWith(NutritionPlanState _, $Res Function(NutritionPlanState) __);
 }
 
+
+/// Adds pattern-matching-related methods to [NutritionPlanState].
+extension NutritionPlanStatePatterns on NutritionPlanState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( NutritionPlan_Initial value)?  initial,TResult Function( NutritionPlan_Loading value)?  loading,TResult Function( LoadedNutritionPlan value)?  loadedNutritionPlan,TResult Function( LoadedNutritionPlans value)?  loadedNutritionPlans,TResult Function( NutritionPlan_Error value)?  error,TResult Function( NutritionPlan_Success value)?  success,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case NutritionPlan_Initial() when initial != null:
+return initial(_that);case NutritionPlan_Loading() when loading != null:
+return loading(_that);case LoadedNutritionPlan() when loadedNutritionPlan != null:
+return loadedNutritionPlan(_that);case LoadedNutritionPlans() when loadedNutritionPlans != null:
+return loadedNutritionPlans(_that);case NutritionPlan_Error() when error != null:
+return error(_that);case NutritionPlan_Success() when success != null:
+return success(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( NutritionPlan_Initial value)  initial,required TResult Function( NutritionPlan_Loading value)  loading,required TResult Function( LoadedNutritionPlan value)  loadedNutritionPlan,required TResult Function( LoadedNutritionPlans value)  loadedNutritionPlans,required TResult Function( NutritionPlan_Error value)  error,required TResult Function( NutritionPlan_Success value)  success,}){
+final _that = this;
+switch (_that) {
+case NutritionPlan_Initial():
+return initial(_that);case NutritionPlan_Loading():
+return loading(_that);case LoadedNutritionPlan():
+return loadedNutritionPlan(_that);case LoadedNutritionPlans():
+return loadedNutritionPlans(_that);case NutritionPlan_Error():
+return error(_that);case NutritionPlan_Success():
+return success(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( NutritionPlan_Initial value)?  initial,TResult? Function( NutritionPlan_Loading value)?  loading,TResult? Function( LoadedNutritionPlan value)?  loadedNutritionPlan,TResult? Function( LoadedNutritionPlans value)?  loadedNutritionPlans,TResult? Function( NutritionPlan_Error value)?  error,TResult? Function( NutritionPlan_Success value)?  success,}){
+final _that = this;
+switch (_that) {
+case NutritionPlan_Initial() when initial != null:
+return initial(_that);case NutritionPlan_Loading() when loading != null:
+return loading(_that);case LoadedNutritionPlan() when loadedNutritionPlan != null:
+return loadedNutritionPlan(_that);case LoadedNutritionPlans() when loadedNutritionPlans != null:
+return loadedNutritionPlans(_that);case NutritionPlan_Error() when error != null:
+return error(_that);case NutritionPlan_Success() when success != null:
+return success(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( NutritionPlan nutritionPlan)?  loadedNutritionPlan,TResult Function( List<NutritionPlan> nutritionPlans,  int currentPage,  int limit,  bool hasMore)?  loadedNutritionPlans,TResult Function( String message)?  error,TResult Function( String message)?  success,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case NutritionPlan_Initial() when initial != null:
+return initial();case NutritionPlan_Loading() when loading != null:
+return loading();case LoadedNutritionPlan() when loadedNutritionPlan != null:
+return loadedNutritionPlan(_that.nutritionPlan);case LoadedNutritionPlans() when loadedNutritionPlans != null:
+return loadedNutritionPlans(_that.nutritionPlans,_that.currentPage,_that.limit,_that.hasMore);case NutritionPlan_Error() when error != null:
+return error(_that.message);case NutritionPlan_Success() when success != null:
+return success(_that.message);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( NutritionPlan nutritionPlan)  loadedNutritionPlan,required TResult Function( List<NutritionPlan> nutritionPlans,  int currentPage,  int limit,  bool hasMore)  loadedNutritionPlans,required TResult Function( String message)  error,required TResult Function( String message)  success,}) {final _that = this;
+switch (_that) {
+case NutritionPlan_Initial():
+return initial();case NutritionPlan_Loading():
+return loading();case LoadedNutritionPlan():
+return loadedNutritionPlan(_that.nutritionPlan);case LoadedNutritionPlans():
+return loadedNutritionPlans(_that.nutritionPlans,_that.currentPage,_that.limit,_that.hasMore);case NutritionPlan_Error():
+return error(_that.message);case NutritionPlan_Success():
+return success(_that.message);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( NutritionPlan nutritionPlan)?  loadedNutritionPlan,TResult? Function( List<NutritionPlan> nutritionPlans,  int currentPage,  int limit,  bool hasMore)?  loadedNutritionPlans,TResult? Function( String message)?  error,TResult? Function( String message)?  success,}) {final _that = this;
+switch (_that) {
+case NutritionPlan_Initial() when initial != null:
+return initial();case NutritionPlan_Loading() when loading != null:
+return loading();case LoadedNutritionPlan() when loadedNutritionPlan != null:
+return loadedNutritionPlan(_that.nutritionPlan);case LoadedNutritionPlans() when loadedNutritionPlans != null:
+return loadedNutritionPlans(_that.nutritionPlans,_that.currentPage,_that.limit,_that.hasMore);case NutritionPlan_Error() when error != null:
+return error(_that.message);case NutritionPlan_Success() when success != null:
+return success(_that.message);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
