@@ -85,8 +85,6 @@ class ListTrainingScheduleScreen extends StatelessWidget {
     );
   }
 
-  // --- GIAO DIỆN MỚI ---
-
   @override
   Widget build(BuildContext context) {
     final formattedDate = DateFormat(
@@ -141,7 +139,7 @@ class ListTrainingScheduleScreen extends StatelessWidget {
                               ],
                               child: AddTrainingScheduleScreen(
                                 dailyScheduleId: dailyScheduleId,
-                                date: DateTime.parse(date),
+                                trainingDate: DateTime.parse(date),
                                 createBy: createdBy,
                                 sportId: sportId,
                                 latestEndTime: latestEndTime,
@@ -155,7 +153,7 @@ class ListTrainingScheduleScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: BlocListener<TrainingScheduleBloc, TrainingScheduleState>(
+        body: BlocConsumer<TrainingScheduleBloc, TrainingScheduleState>(
           listener: (context, state) {
             if (state is TrainingSchedule_Success) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -164,6 +162,7 @@ class ListTrainingScheduleScreen extends StatelessWidget {
                   backgroundColor: Colors.green,
                 ),
               );
+              // Tải lại dữ liệu sau khi có thông báo thành công
               context.read<TrainingScheduleBloc>().add(
                 GetAllTrainingSchedulesByDailyScheduleId(dailyScheduleId, date),
               );
@@ -176,29 +175,33 @@ class ListTrainingScheduleScreen extends StatelessWidget {
               );
             }
           },
-          child: BlocBuilder<TrainingScheduleBloc, TrainingScheduleState>(
-            builder: (context, state) {
-              if (state is TrainingSchedule_Loading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is LoadedTrainingSchedulesByDailyScheduleId) {
-                if (state.trainingSchedules.isEmpty) {
-                  return _buildEmptyState();
-                }
-                // TẠO MỘT DANH SÁCH MỚI CÓ THỂ THAY ĐỔI VÀ SẮP XẾP NÓ
-                final sortedSchedules = List<TrainingSchedule>.from(
-                  state.trainingSchedules,
-                );
-                sortedSchedules.sort(
-                  (a, b) => a.startTime.compareTo(b.startTime),
-                );
-
-                return _buildTimelineView(context, sortedSchedules);
-              } else if (state is TrainingSchedule_Error) {
-                return Center(child: Text('Lỗi: ${state.message}'));
+          // buildWhen giúp UI không hiển thị loading khi đang refresh
+          buildWhen: (previous, current) {
+            // Không rebuild khi đang tải lại dữ liệu mà trước đó đã có dữ liệu
+            if (current is TrainingSchedule_Loading &&
+                previous is LoadedTrainingSchedulesByDailyScheduleId) {
+              return false;
+            }
+            return true;
+          },
+          builder: (context, state) {
+            if (state is LoadedTrainingSchedulesByDailyScheduleId) {
+              if (state.trainingSchedules.isEmpty) {
+                return _buildEmptyState();
               }
-              return const Center(child: Text('Không có dữ liệu'));
-            },
-          ),
+              final sortedSchedules = List<TrainingSchedule>.from(
+                state.trainingSchedules,
+              );
+              sortedSchedules.sort(
+                (a, b) => a.startTime.compareTo(b.startTime),
+              );
+              return _buildTimelineView(context, sortedSchedules);
+            } else if (state is TrainingSchedule_Error) {
+              return Center(child: Text('Lỗi: ${state.message}'));
+            }
+            // Chỉ hiển thị loading ở lần tải đầu tiên
+            return const Center(child: CircularProgressIndicator());
+          },
         ),
       ),
     );
@@ -356,6 +359,7 @@ class ListTrainingScheduleScreen extends StatelessWidget {
                     child: ListTrainingExerciseScreen(
                       trainingSchedule: schedule,
                       sportId: sportId,
+                      coachId: createdBy,
                     ),
                   ),
             ),

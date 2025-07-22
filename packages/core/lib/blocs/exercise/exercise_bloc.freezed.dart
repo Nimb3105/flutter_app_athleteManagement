@@ -55,7 +55,7 @@ extension ExerciseEventPatterns on ExerciseEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( CreateExercise value)?  createExercise,TResult Function( GetExerciseById value)?  getExerciseById,TResult Function( GetAllExercisesByBodyPart value)?  getAllExercisesByBodyPart,TResult Function( GetAllExercisesBySportName value)?  getAllExercisesBySportName,TResult Function( GetAllExercises value)?  getAllExercises,TResult Function( UpdateExercise value)?  updateExercise,TResult Function( DeleteExercise value)?  deleteExercise,TResult Function( GetAllExercisesBySportId value)?  getAllExxerciseBySportId,TResult Function( ClearExerciseError value)?  clearError,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( CreateExercise value)?  createExercise,TResult Function( GetExerciseById value)?  getExerciseById,TResult Function( GetAllExercisesByBodyPart value)?  getAllExercisesByBodyPart,TResult Function( GetAllExercisesBySportName value)?  getAllExercisesBySportName,TResult Function( GetAllExercises value)?  getAllExercises,TResult Function( UpdateExercise value)?  updateExercise,TResult Function( DeleteExercise value)?  deleteExercise,TResult Function( GetAllExercisesBySportId value)?  getAllExxerciseBySportId,TResult Function( ClearExerciseError value)?  clearError,TResult Function( CreateAndGetExercise value)?  createAndGetExercise,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case CreateExercise() when createExercise != null:
@@ -67,7 +67,8 @@ return getAllExercises(_that);case UpdateExercise() when updateExercise != null:
 return updateExercise(_that);case DeleteExercise() when deleteExercise != null:
 return deleteExercise(_that);case GetAllExercisesBySportId() when getAllExxerciseBySportId != null:
 return getAllExxerciseBySportId(_that);case ClearExerciseError() when clearError != null:
-return clearError(_that);case _:
+return clearError(_that);case CreateAndGetExercise() when createAndGetExercise != null:
+return createAndGetExercise(_that);case _:
   return orElse();
 
 }
@@ -85,7 +86,7 @@ return clearError(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( CreateExercise value)  createExercise,required TResult Function( GetExerciseById value)  getExerciseById,required TResult Function( GetAllExercisesByBodyPart value)  getAllExercisesByBodyPart,required TResult Function( GetAllExercisesBySportName value)  getAllExercisesBySportName,required TResult Function( GetAllExercises value)  getAllExercises,required TResult Function( UpdateExercise value)  updateExercise,required TResult Function( DeleteExercise value)  deleteExercise,required TResult Function( GetAllExercisesBySportId value)  getAllExxerciseBySportId,required TResult Function( ClearExerciseError value)  clearError,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( CreateExercise value)  createExercise,required TResult Function( GetExerciseById value)  getExerciseById,required TResult Function( GetAllExercisesByBodyPart value)  getAllExercisesByBodyPart,required TResult Function( GetAllExercisesBySportName value)  getAllExercisesBySportName,required TResult Function( GetAllExercises value)  getAllExercises,required TResult Function( UpdateExercise value)  updateExercise,required TResult Function( DeleteExercise value)  deleteExercise,required TResult Function( GetAllExercisesBySportId value)  getAllExxerciseBySportId,required TResult Function( ClearExerciseError value)  clearError,required TResult Function( CreateAndGetExercise value)  createAndGetExercise,}){
 final _that = this;
 switch (_that) {
 case CreateExercise():
@@ -97,7 +98,8 @@ return getAllExercises(_that);case UpdateExercise():
 return updateExercise(_that);case DeleteExercise():
 return deleteExercise(_that);case GetAllExercisesBySportId():
 return getAllExxerciseBySportId(_that);case ClearExerciseError():
-return clearError(_that);}
+return clearError(_that);case CreateAndGetExercise():
+return createAndGetExercise(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -111,7 +113,7 @@ return clearError(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( CreateExercise value)?  createExercise,TResult? Function( GetExerciseById value)?  getExerciseById,TResult? Function( GetAllExercisesByBodyPart value)?  getAllExercisesByBodyPart,TResult? Function( GetAllExercisesBySportName value)?  getAllExercisesBySportName,TResult? Function( GetAllExercises value)?  getAllExercises,TResult? Function( UpdateExercise value)?  updateExercise,TResult? Function( DeleteExercise value)?  deleteExercise,TResult? Function( GetAllExercisesBySportId value)?  getAllExxerciseBySportId,TResult? Function( ClearExerciseError value)?  clearError,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( CreateExercise value)?  createExercise,TResult? Function( GetExerciseById value)?  getExerciseById,TResult? Function( GetAllExercisesByBodyPart value)?  getAllExercisesByBodyPart,TResult? Function( GetAllExercisesBySportName value)?  getAllExercisesBySportName,TResult? Function( GetAllExercises value)?  getAllExercises,TResult? Function( UpdateExercise value)?  updateExercise,TResult? Function( DeleteExercise value)?  deleteExercise,TResult? Function( GetAllExercisesBySportId value)?  getAllExxerciseBySportId,TResult? Function( ClearExerciseError value)?  clearError,TResult? Function( CreateAndGetExercise value)?  createAndGetExercise,}){
 final _that = this;
 switch (_that) {
 case CreateExercise() when createExercise != null:
@@ -123,7 +125,8 @@ return getAllExercises(_that);case UpdateExercise() when updateExercise != null:
 return updateExercise(_that);case DeleteExercise() when deleteExercise != null:
 return deleteExercise(_that);case GetAllExercisesBySportId() when getAllExxerciseBySportId != null:
 return getAllExxerciseBySportId(_that);case ClearExerciseError() when clearError != null:
-return clearError(_that);case _:
+return clearError(_that);case CreateAndGetExercise() when createAndGetExercise != null:
+return createAndGetExercise(_that);case _:
   return null;
 
 }
@@ -140,7 +143,7 @@ return clearError(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Exercise exercise)?  createExercise,TResult Function( String id)?  getExerciseById,TResult Function( String bodyPart,  int page,  int limit)?  getAllExercisesByBodyPart,TResult Function( String sportName,  int page,  int limit)?  getAllExercisesBySportName,TResult Function( int page,  int limit)?  getAllExercises,TResult Function( String id,  Exercise exercise)?  updateExercise,TResult Function( String id)?  deleteExercise,TResult Function( String sportId)?  getAllExxerciseBySportId,TResult Function()?  clearError,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Exercise exercise)?  createExercise,TResult Function( String id)?  getExerciseById,TResult Function( String bodyPart,  int page,  int limit)?  getAllExercisesByBodyPart,TResult Function( String sportName,  int page,  int limit)?  getAllExercisesBySportName,TResult Function( int page,  int limit)?  getAllExercises,TResult Function( String id,  Exercise exercise)?  updateExercise,TResult Function( String id)?  deleteExercise,TResult Function( String sportId)?  getAllExxerciseBySportId,TResult Function()?  clearError,TResult Function( Exercise exercise)?  createAndGetExercise,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case CreateExercise() when createExercise != null:
 return createExercise(_that.exercise);case GetExerciseById() when getExerciseById != null:
@@ -151,7 +154,8 @@ return getAllExercises(_that.page,_that.limit);case UpdateExercise() when update
 return updateExercise(_that.id,_that.exercise);case DeleteExercise() when deleteExercise != null:
 return deleteExercise(_that.id);case GetAllExercisesBySportId() when getAllExxerciseBySportId != null:
 return getAllExxerciseBySportId(_that.sportId);case ClearExerciseError() when clearError != null:
-return clearError();case _:
+return clearError();case CreateAndGetExercise() when createAndGetExercise != null:
+return createAndGetExercise(_that.exercise);case _:
   return orElse();
 
 }
@@ -169,7 +173,7 @@ return clearError();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Exercise exercise)  createExercise,required TResult Function( String id)  getExerciseById,required TResult Function( String bodyPart,  int page,  int limit)  getAllExercisesByBodyPart,required TResult Function( String sportName,  int page,  int limit)  getAllExercisesBySportName,required TResult Function( int page,  int limit)  getAllExercises,required TResult Function( String id,  Exercise exercise)  updateExercise,required TResult Function( String id)  deleteExercise,required TResult Function( String sportId)  getAllExxerciseBySportId,required TResult Function()  clearError,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Exercise exercise)  createExercise,required TResult Function( String id)  getExerciseById,required TResult Function( String bodyPart,  int page,  int limit)  getAllExercisesByBodyPart,required TResult Function( String sportName,  int page,  int limit)  getAllExercisesBySportName,required TResult Function( int page,  int limit)  getAllExercises,required TResult Function( String id,  Exercise exercise)  updateExercise,required TResult Function( String id)  deleteExercise,required TResult Function( String sportId)  getAllExxerciseBySportId,required TResult Function()  clearError,required TResult Function( Exercise exercise)  createAndGetExercise,}) {final _that = this;
 switch (_that) {
 case CreateExercise():
 return createExercise(_that.exercise);case GetExerciseById():
@@ -180,7 +184,8 @@ return getAllExercises(_that.page,_that.limit);case UpdateExercise():
 return updateExercise(_that.id,_that.exercise);case DeleteExercise():
 return deleteExercise(_that.id);case GetAllExercisesBySportId():
 return getAllExxerciseBySportId(_that.sportId);case ClearExerciseError():
-return clearError();}
+return clearError();case CreateAndGetExercise():
+return createAndGetExercise(_that.exercise);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -194,7 +199,7 @@ return clearError();}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Exercise exercise)?  createExercise,TResult? Function( String id)?  getExerciseById,TResult? Function( String bodyPart,  int page,  int limit)?  getAllExercisesByBodyPart,TResult? Function( String sportName,  int page,  int limit)?  getAllExercisesBySportName,TResult? Function( int page,  int limit)?  getAllExercises,TResult? Function( String id,  Exercise exercise)?  updateExercise,TResult? Function( String id)?  deleteExercise,TResult? Function( String sportId)?  getAllExxerciseBySportId,TResult? Function()?  clearError,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Exercise exercise)?  createExercise,TResult? Function( String id)?  getExerciseById,TResult? Function( String bodyPart,  int page,  int limit)?  getAllExercisesByBodyPart,TResult? Function( String sportName,  int page,  int limit)?  getAllExercisesBySportName,TResult? Function( int page,  int limit)?  getAllExercises,TResult? Function( String id,  Exercise exercise)?  updateExercise,TResult? Function( String id)?  deleteExercise,TResult? Function( String sportId)?  getAllExxerciseBySportId,TResult? Function()?  clearError,TResult? Function( Exercise exercise)?  createAndGetExercise,}) {final _that = this;
 switch (_that) {
 case CreateExercise() when createExercise != null:
 return createExercise(_that.exercise);case GetExerciseById() when getExerciseById != null:
@@ -205,7 +210,8 @@ return getAllExercises(_that.page,_that.limit);case UpdateExercise() when update
 return updateExercise(_that.id,_that.exercise);case DeleteExercise() when deleteExercise != null:
 return deleteExercise(_that.id);case GetAllExercisesBySportId() when getAllExxerciseBySportId != null:
 return getAllExxerciseBySportId(_that.sportId);case ClearExerciseError() when clearError != null:
-return clearError();case _:
+return clearError();case CreateAndGetExercise() when createAndGetExercise != null:
+return createAndGetExercise(_that.exercise);case _:
   return null;
 
 }
@@ -804,6 +810,81 @@ String toString() {
 
 
 /// @nodoc
+
+
+class CreateAndGetExercise implements ExerciseEvent {
+  const CreateAndGetExercise(this.exercise);
+  
+
+ final  Exercise exercise;
+
+/// Create a copy of ExerciseEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$CreateAndGetExerciseCopyWith<CreateAndGetExercise> get copyWith => _$CreateAndGetExerciseCopyWithImpl<CreateAndGetExercise>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateAndGetExercise&&(identical(other.exercise, exercise) || other.exercise == exercise));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,exercise);
+
+@override
+String toString() {
+  return 'ExerciseEvent.createAndGetExercise(exercise: $exercise)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $CreateAndGetExerciseCopyWith<$Res> implements $ExerciseEventCopyWith<$Res> {
+  factory $CreateAndGetExerciseCopyWith(CreateAndGetExercise value, $Res Function(CreateAndGetExercise) _then) = _$CreateAndGetExerciseCopyWithImpl;
+@useResult
+$Res call({
+ Exercise exercise
+});
+
+
+$ExerciseCopyWith<$Res> get exercise;
+
+}
+/// @nodoc
+class _$CreateAndGetExerciseCopyWithImpl<$Res>
+    implements $CreateAndGetExerciseCopyWith<$Res> {
+  _$CreateAndGetExerciseCopyWithImpl(this._self, this._then);
+
+  final CreateAndGetExercise _self;
+  final $Res Function(CreateAndGetExercise) _then;
+
+/// Create a copy of ExerciseEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? exercise = null,}) {
+  return _then(CreateAndGetExercise(
+null == exercise ? _self.exercise : exercise // ignore: cast_nullable_to_non_nullable
+as Exercise,
+  ));
+}
+
+/// Create a copy of ExerciseEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ExerciseCopyWith<$Res> get exercise {
+  
+  return $ExerciseCopyWith<$Res>(_self.exercise, (value) {
+    return _then(_self.copyWith(exercise: value));
+  });
+}
+}
+
+/// @nodoc
 mixin _$ExerciseState {
 
 
@@ -847,7 +928,7 @@ extension ExerciseStatePatterns on ExerciseState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( Exercise_Initial value)?  initial,TResult Function( Exercise_Loading value)?  loading,TResult Function( Exercise_LoadingMore value)?  loadingMore,TResult Function( LoadedExercise value)?  loadedExercise,TResult Function( LoadedExercises value)?  loadedExercises,TResult Function( Exercise_Error value)?  error,TResult Function( Exercise_Success value)?  success,TResult Function( LoadedExercisesBySportId value)?  loadedExercisesBySportId,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( Exercise_Initial value)?  initial,TResult Function( Exercise_Loading value)?  loading,TResult Function( Exercise_LoadingMore value)?  loadingMore,TResult Function( LoadedExercise value)?  loadedExercise,TResult Function( LoadedExercises value)?  loadedExercises,TResult Function( Exercise_Error value)?  error,TResult Function( Exercise_Success value)?  success,TResult Function( LoadedExercisesBySportId value)?  loadedExercisesBySportId,TResult Function( CreatedExercise value)?  createdExercise,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case Exercise_Initial() when initial != null:
@@ -858,7 +939,8 @@ return loadedExercise(_that);case LoadedExercises() when loadedExercises != null
 return loadedExercises(_that);case Exercise_Error() when error != null:
 return error(_that);case Exercise_Success() when success != null:
 return success(_that);case LoadedExercisesBySportId() when loadedExercisesBySportId != null:
-return loadedExercisesBySportId(_that);case _:
+return loadedExercisesBySportId(_that);case CreatedExercise() when createdExercise != null:
+return createdExercise(_that);case _:
   return orElse();
 
 }
@@ -876,7 +958,7 @@ return loadedExercisesBySportId(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( Exercise_Initial value)  initial,required TResult Function( Exercise_Loading value)  loading,required TResult Function( Exercise_LoadingMore value)  loadingMore,required TResult Function( LoadedExercise value)  loadedExercise,required TResult Function( LoadedExercises value)  loadedExercises,required TResult Function( Exercise_Error value)  error,required TResult Function( Exercise_Success value)  success,required TResult Function( LoadedExercisesBySportId value)  loadedExercisesBySportId,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( Exercise_Initial value)  initial,required TResult Function( Exercise_Loading value)  loading,required TResult Function( Exercise_LoadingMore value)  loadingMore,required TResult Function( LoadedExercise value)  loadedExercise,required TResult Function( LoadedExercises value)  loadedExercises,required TResult Function( Exercise_Error value)  error,required TResult Function( Exercise_Success value)  success,required TResult Function( LoadedExercisesBySportId value)  loadedExercisesBySportId,required TResult Function( CreatedExercise value)  createdExercise,}){
 final _that = this;
 switch (_that) {
 case Exercise_Initial():
@@ -887,7 +969,8 @@ return loadedExercise(_that);case LoadedExercises():
 return loadedExercises(_that);case Exercise_Error():
 return error(_that);case Exercise_Success():
 return success(_that);case LoadedExercisesBySportId():
-return loadedExercisesBySportId(_that);}
+return loadedExercisesBySportId(_that);case CreatedExercise():
+return createdExercise(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -901,7 +984,7 @@ return loadedExercisesBySportId(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( Exercise_Initial value)?  initial,TResult? Function( Exercise_Loading value)?  loading,TResult? Function( Exercise_LoadingMore value)?  loadingMore,TResult? Function( LoadedExercise value)?  loadedExercise,TResult? Function( LoadedExercises value)?  loadedExercises,TResult? Function( Exercise_Error value)?  error,TResult? Function( Exercise_Success value)?  success,TResult? Function( LoadedExercisesBySportId value)?  loadedExercisesBySportId,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( Exercise_Initial value)?  initial,TResult? Function( Exercise_Loading value)?  loading,TResult? Function( Exercise_LoadingMore value)?  loadingMore,TResult? Function( LoadedExercise value)?  loadedExercise,TResult? Function( LoadedExercises value)?  loadedExercises,TResult? Function( Exercise_Error value)?  error,TResult? Function( Exercise_Success value)?  success,TResult? Function( LoadedExercisesBySportId value)?  loadedExercisesBySportId,TResult? Function( CreatedExercise value)?  createdExercise,}){
 final _that = this;
 switch (_that) {
 case Exercise_Initial() when initial != null:
@@ -912,7 +995,8 @@ return loadedExercise(_that);case LoadedExercises() when loadedExercises != null
 return loadedExercises(_that);case Exercise_Error() when error != null:
 return error(_that);case Exercise_Success() when success != null:
 return success(_that);case LoadedExercisesBySportId() when loadedExercisesBySportId != null:
-return loadedExercisesBySportId(_that);case _:
+return loadedExercisesBySportId(_that);case CreatedExercise() when createdExercise != null:
+return createdExercise(_that);case _:
   return null;
 
 }
@@ -929,7 +1013,7 @@ return loadedExercisesBySportId(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function()?  loadingMore,TResult Function( Exercise exercise)?  loadedExercise,TResult Function( List<Exercise> exercises,  int currentPage,  int limit,  bool hasMore)?  loadedExercises,TResult Function( String message)?  error,TResult Function( String message)?  success,TResult Function( List<Exercise> exercises)?  loadedExercisesBySportId,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function()?  loadingMore,TResult Function( Exercise exercise)?  loadedExercise,TResult Function( List<Exercise> exercises,  int currentPage,  int limit,  bool hasMore)?  loadedExercises,TResult Function( String message)?  error,TResult Function( String message)?  success,TResult Function( List<Exercise> exercises)?  loadedExercisesBySportId,TResult Function( Exercise exercise)?  createdExercise,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case Exercise_Initial() when initial != null:
 return initial();case Exercise_Loading() when loading != null:
@@ -939,7 +1023,8 @@ return loadedExercise(_that.exercise);case LoadedExercises() when loadedExercise
 return loadedExercises(_that.exercises,_that.currentPage,_that.limit,_that.hasMore);case Exercise_Error() when error != null:
 return error(_that.message);case Exercise_Success() when success != null:
 return success(_that.message);case LoadedExercisesBySportId() when loadedExercisesBySportId != null:
-return loadedExercisesBySportId(_that.exercises);case _:
+return loadedExercisesBySportId(_that.exercises);case CreatedExercise() when createdExercise != null:
+return createdExercise(_that.exercise);case _:
   return orElse();
 
 }
@@ -957,7 +1042,7 @@ return loadedExercisesBySportId(_that.exercises);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function()  loadingMore,required TResult Function( Exercise exercise)  loadedExercise,required TResult Function( List<Exercise> exercises,  int currentPage,  int limit,  bool hasMore)  loadedExercises,required TResult Function( String message)  error,required TResult Function( String message)  success,required TResult Function( List<Exercise> exercises)  loadedExercisesBySportId,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function()  loadingMore,required TResult Function( Exercise exercise)  loadedExercise,required TResult Function( List<Exercise> exercises,  int currentPage,  int limit,  bool hasMore)  loadedExercises,required TResult Function( String message)  error,required TResult Function( String message)  success,required TResult Function( List<Exercise> exercises)  loadedExercisesBySportId,required TResult Function( Exercise exercise)  createdExercise,}) {final _that = this;
 switch (_that) {
 case Exercise_Initial():
 return initial();case Exercise_Loading():
@@ -967,7 +1052,8 @@ return loadedExercise(_that.exercise);case LoadedExercises():
 return loadedExercises(_that.exercises,_that.currentPage,_that.limit,_that.hasMore);case Exercise_Error():
 return error(_that.message);case Exercise_Success():
 return success(_that.message);case LoadedExercisesBySportId():
-return loadedExercisesBySportId(_that.exercises);}
+return loadedExercisesBySportId(_that.exercises);case CreatedExercise():
+return createdExercise(_that.exercise);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -981,7 +1067,7 @@ return loadedExercisesBySportId(_that.exercises);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function()?  loadingMore,TResult? Function( Exercise exercise)?  loadedExercise,TResult? Function( List<Exercise> exercises,  int currentPage,  int limit,  bool hasMore)?  loadedExercises,TResult? Function( String message)?  error,TResult? Function( String message)?  success,TResult? Function( List<Exercise> exercises)?  loadedExercisesBySportId,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function()?  loadingMore,TResult? Function( Exercise exercise)?  loadedExercise,TResult? Function( List<Exercise> exercises,  int currentPage,  int limit,  bool hasMore)?  loadedExercises,TResult? Function( String message)?  error,TResult? Function( String message)?  success,TResult? Function( List<Exercise> exercises)?  loadedExercisesBySportId,TResult? Function( Exercise exercise)?  createdExercise,}) {final _that = this;
 switch (_that) {
 case Exercise_Initial() when initial != null:
 return initial();case Exercise_Loading() when loading != null:
@@ -991,7 +1077,8 @@ return loadedExercise(_that.exercise);case LoadedExercises() when loadedExercise
 return loadedExercises(_that.exercises,_that.currentPage,_that.limit,_that.hasMore);case Exercise_Error() when error != null:
 return error(_that.message);case Exercise_Success() when success != null:
 return success(_that.message);case LoadedExercisesBySportId() when loadedExercisesBySportId != null:
-return loadedExercisesBySportId(_that.exercises);case _:
+return loadedExercisesBySportId(_that.exercises);case CreatedExercise() when createdExercise != null:
+return createdExercise(_that.exercise);case _:
   return null;
 
 }
@@ -1450,6 +1537,81 @@ as List<Exercise>,
 }
 
 
+}
+
+/// @nodoc
+
+
+class CreatedExercise implements ExerciseState {
+  const CreatedExercise(this.exercise);
+  
+
+ final  Exercise exercise;
+
+/// Create a copy of ExerciseState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$CreatedExerciseCopyWith<CreatedExercise> get copyWith => _$CreatedExerciseCopyWithImpl<CreatedExercise>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreatedExercise&&(identical(other.exercise, exercise) || other.exercise == exercise));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,exercise);
+
+@override
+String toString() {
+  return 'ExerciseState.createdExercise(exercise: $exercise)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $CreatedExerciseCopyWith<$Res> implements $ExerciseStateCopyWith<$Res> {
+  factory $CreatedExerciseCopyWith(CreatedExercise value, $Res Function(CreatedExercise) _then) = _$CreatedExerciseCopyWithImpl;
+@useResult
+$Res call({
+ Exercise exercise
+});
+
+
+$ExerciseCopyWith<$Res> get exercise;
+
+}
+/// @nodoc
+class _$CreatedExerciseCopyWithImpl<$Res>
+    implements $CreatedExerciseCopyWith<$Res> {
+  _$CreatedExerciseCopyWithImpl(this._self, this._then);
+
+  final CreatedExercise _self;
+  final $Res Function(CreatedExercise) _then;
+
+/// Create a copy of ExerciseState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? exercise = null,}) {
+  return _then(CreatedExercise(
+null == exercise ? _self.exercise : exercise // ignore: cast_nullable_to_non_nullable
+as Exercise,
+  ));
+}
+
+/// Create a copy of ExerciseState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ExerciseCopyWith<$Res> get exercise {
+  
+  return $ExerciseCopyWith<$Res>(_self.exercise, (value) {
+    return _then(_self.copyWith(exercise: value));
+  });
+}
 }
 
 // dart format on

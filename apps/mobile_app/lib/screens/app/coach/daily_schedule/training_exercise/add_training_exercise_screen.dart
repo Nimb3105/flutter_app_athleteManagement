@@ -9,6 +9,8 @@ import 'package:google_fonts/google_fonts.dart';
 class AddTrainingExerciseScreen extends StatefulWidget {
   final String scheduleId;
   final String? sportId;
+  final String coachId;
+  // Thêm biến order để xác định thứ tự bài tập trong lịch tập
   final int order;
 
   const AddTrainingExerciseScreen({
@@ -16,6 +18,7 @@ class AddTrainingExerciseScreen extends StatefulWidget {
     required this.scheduleId,
     this.sportId,
     required this.order,
+    required this.coachId,
   });
 
   @override
@@ -243,6 +246,7 @@ class _AddTrainingExerciseScreenState extends State<AddTrainingExerciseScreen> {
                       builder:
                           (_) => ExerciseSelectForTrainingScreen(
                             sportId: widget.sportId,
+                            coachId: widget.coachId, // Pass the coachId if needed
                           ),
                     ),
                   );

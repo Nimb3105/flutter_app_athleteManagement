@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
-import 'package:mobile_app/screens/app/coach/athleteFromCoach/athlete_list_screen.dart';
+import 'package:mobile_app/screens/app/coach/athlete/athlete_list_screen.dart';
 import 'package:mobile_app/screens/app/coach/coach_detail_screen.dart';
 import 'package:mobile_app/screens/app/coach/coach_home_screen.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';

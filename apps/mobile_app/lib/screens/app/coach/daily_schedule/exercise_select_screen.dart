@@ -9,7 +9,11 @@ class ExerciseSelectScreen extends StatelessWidget {
   final String? sportId;
   final String coachId;
 
-  const ExerciseSelectScreen({required this.sportId, super.key,required this.coachId});
+  const ExerciseSelectScreen({
+    required this.sportId,
+    super.key,
+    required this.coachId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +111,10 @@ class ExerciseSelectScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder:
-                        (context) => ExerciseDetailScreen(exercise: exercise,coachId:coachId,),
+                        (context) => ExerciseDetailScreen(
+                          exercise: exercise,
+                          coachId: coachId,
+                        ),
                   ),
                 );
               },

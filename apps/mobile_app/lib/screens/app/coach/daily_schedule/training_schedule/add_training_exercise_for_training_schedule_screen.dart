@@ -5,10 +5,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AddTrainingExerciseForTrainingScheduleScreen extends StatefulWidget {
   final String? sportId;
+  final String coachId;
 
   const AddTrainingExerciseForTrainingScheduleScreen({
     super.key,
     required this.sportId,
+    required this.coachId,
   });
 
   @override
@@ -148,6 +150,7 @@ class _AddTrainingExerciseForTrainingScheduleScreenState
                       builder:
                           (_) => ExerciseSelectForTrainingScreen(
                             sportId: widget.sportId,
+                            coachId: widget.coachId, // Pass the coachId if needed  
                           ),
                     ),
                   );

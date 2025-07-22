@@ -21,22 +21,15 @@ class ApplyScheduleDialog extends StatefulWidget {
 }
 
 class _ApplyScheduleDialogState extends State<ApplyScheduleDialog> {
-  late final List<DateTime> _availableDays;
   final Set<DateTime> _selectedDays = {};
+  late final Set<DateTime> _scheduledDays;
 
   @override
   void initState() {
     super.initState();
-    _availableDays = _getAvailableDays();
-  }
-
-  List<DateTime> _getAvailableDays() {
-    final scheduledDays =
+    // Xác định những ngày đã có lịch để hiển thị cảnh báo
+    _scheduledDays =
         widget.existingSchedules.map((s) => DateUtils.dateOnly(s.date)).toSet();
-
-    return widget.allDaysInPlan
-        .where((day) => !scheduledDays.contains(DateUtils.dateOnly(day)))
-        .toList();
   }
 
   void _submit() {
@@ -86,17 +79,39 @@ class _ApplyScheduleDialogState extends State<ApplyScheduleDialog> {
       content: SizedBox(
         width: double.maxFinite,
         child:
-            _availableDays.isEmpty
-                ? const Text("Tất cả các ngày khác đã có lịch tập.")
+            widget.allDaysInPlan.isEmpty
+                ? const Text("Không có ngày nào trong kế hoạch để áp dụng.")
                 : ListView.builder(
                   shrinkWrap: true,
-                  itemCount: _availableDays.length,
+                  itemCount: widget.allDaysInPlan.length,
                   itemBuilder: (context, index) {
-                    final day = _availableDays[index];
+                    final day = widget.allDaysInPlan[index];
                     final isSelected = _selectedDays.contains(day);
+                    final alreadyScheduled = _scheduledDays.contains(
+                      DateUtils.dateOnly(day),
+                    );
+
                     return CheckboxListTile(
-                      title: Text(
-                        DateFormat('EEEE, dd/MM/yyyy', 'vi_VN').format(day),
+                      title: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              DateFormat(
+                                'EEEE, dd/MM/yyyy',
+                                'vi_VN',
+                              ).format(day),
+                            ),
+                          ),
+                          if (alreadyScheduled)
+                            const Tooltip(
+                              message: 'Ngày này đã có lịch tập',
+                              child: Icon(
+                                Icons.warning_amber_rounded,
+                                color: Colors.orange,
+                                size: 20,
+                              ),
+                            ),
+                        ],
                       ),
                       value: isSelected,
                       onChanged: (bool? value) {

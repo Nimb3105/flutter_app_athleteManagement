@@ -39,7 +39,6 @@ export 'models/training_schedule/daily_schedule.dart';
 //Repositories
 export 'repositories/user/user_repository.dart';
 export 'repositories/athlete/athlete_repository.dart';
-export 'repositories/athlete/progress_repository.dart';
 export 'repositories/athlete/achievement_repository.dart';
 export 'repositories/athlete/health_repository.dart';
 export 'repositories/athlete/injury_repository.dart';
@@ -59,8 +58,6 @@ export 'repositories/notification_reminder/custom_notification_repository.dart';
 export 'repositories/notification_reminder/reminder_repository.dart';
 export 'repositories/nutrition_plan/nutrition_plan_repository.dart';
 export 'repositories/nutrition_plan/plan_food_repository.dart';
-export 'repositories/performance/performance_repository.dart';
-export 'repositories/sport/sport_athlete_repository.dart';
 export 'repositories/sport/sport_repository.dart';
 export 'repositories/team/team_member_repository.dart';
 export 'repositories/team/team_repository.dart';
@@ -69,6 +66,7 @@ export 'repositories/training_schedule/training_schedule_repository.dart';
 export 'repositories/training_schedule/training_exercise_repository.dart';
 export 'repositories/images/images_repository.dart';
 export 'repositories/training_schedule/daily_schedule_repository.dart';
+export 'repositories/suggestion/suggestion_repository.dart';
 
 //Blocs
 export 'blocs/user/user_bloc.dart';
@@ -92,7 +90,6 @@ export 'blocs/notification_reminder/custom_notification_bloc.dart';
 export 'blocs/notification_reminder/reminder_bloc.dart';
 export 'blocs/nutrition_plan/nutrition_plan_bloc.dart';
 export 'blocs/nutrition_plan/plan_food_bloc.dart';
-export 'blocs/sport/sport_user_bloc.dart';
 export 'blocs/sport/sport_bloc.dart';
 export 'blocs/team/team_bloc.dart';
 export 'blocs/team/team_member_bloc.dart';
@@ -101,4 +98,4 @@ export 'blocs/training/training_schedule_bloc.dart';
 export 'blocs/training/training_exercise_bloc.dart';
 export 'blocs/images/image_bloc.dart';
 export 'blocs/training/daily_schedule_bloc.dart';
-
+export 'blocs/suggestion/suggestion_bloc.dart';

@@ -31,6 +31,8 @@ sealed class ExerciseEvent with _$ExerciseEvent {
       GetAllExercisesBySportId;
 
   const factory ExerciseEvent.clearError() = ClearExerciseError;
+  const factory ExerciseEvent.createAndGetExercise(Exercise exercise) =
+      CreateAndGetExercise; // Thêm event mới
 }
 
 @freezed
@@ -51,6 +53,8 @@ sealed class ExerciseState with _$ExerciseState {
   const factory ExerciseState.loadedExercisesBySportId(
     List<Exercise> exercises,
   ) = LoadedExercisesBySportId; // Thêm state mới
+  const factory ExerciseState.createdExercise(Exercise exercise) =
+      CreatedExercise; // Thêm state mới để chứa bài tập vừa tạo
 }
 
 class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
@@ -74,6 +78,7 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
     on<GetAllExercisesByBodyPart>(_onGetAllExercisesByBodyPart);
     on<GetAllExercisesBySportId>(_onGetAllExercisesBySportId);
     on<ClearExerciseError>(_onClearError);
+    on<CreateAndGetExercise>(_onCreateAndGetExercise); // Thêm handler
   }
 
   void _onClearError(ClearExerciseError event, Emitter<ExerciseState> emit) {
@@ -83,6 +88,23 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
     } else {
       // Nếu không, quay về trạng thái ban đầu
       emit(const ExerciseState.initial());
+    }
+  }
+
+  Future<void> _onCreateAndGetExercise(
+    CreateAndGetExercise event,
+    Emitter<ExerciseState> emit,
+  ) async {
+    emit(const ExerciseState.loading());
+    try {
+      final createdExercise = await exerciseRepository.createExercise(
+        event.exercise,
+      );
+      // Phát ra state mới chứa bài tập đã được tạo (bao gồm cả ID)
+      emit(ExerciseState.success('Thêm bài tập thành công'));
+      emit(ExerciseState.createdExercise(createdExercise));
+    } catch (e) {
+      emit(ExerciseState.error(e.toString()));
     }
   }
 
@@ -118,7 +140,7 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
       final createdExercise = await exerciseRepository.createExercise(
         event.exercise,
       );
-      
+
       emit(ExerciseState.success('Thêm bài tập thành công'));
       emit(ExerciseState.loadedExercise(createdExercise));
     } catch (e) {

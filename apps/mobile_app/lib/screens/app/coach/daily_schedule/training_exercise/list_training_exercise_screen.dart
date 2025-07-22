@@ -259,11 +259,13 @@ class __UpdateStatusDialogState extends State<_UpdateStatusDialog> {
 class ListTrainingExerciseScreen extends StatefulWidget {
   final TrainingSchedule trainingSchedule;
   final String sportId;
+  final String coachId;
 
   const ListTrainingExerciseScreen({
     super.key,
     required this.trainingSchedule,
     required this.sportId,
+    required this.coachId,
   });
 
   @override
@@ -495,6 +497,7 @@ class _ListTrainingExerciseScreenState
                                 scheduleId: widget.trainingSchedule.id!,
                                 sportId: widget.sportId,
                                 order: order,
+                                coachId: widget.coachId,
                               ),
                             ),
                       ),

@@ -17,7 +17,7 @@ class CoachHomeScreen extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(24.0),
           children: [
-            _buildHeader(context, 'Coach'),
+            _buildHeader(context, 'Huấn luyện viên'),
             const SizedBox(height: 32),
             _buildSectionTitle('Bảng điều khiển'),
             const SizedBox(height: 16),

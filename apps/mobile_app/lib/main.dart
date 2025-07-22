@@ -38,6 +38,10 @@ class MyApp extends StatelessWidget {
               (context) => AchievementRepository(baseUrl: ApiConstants.baseUrl),
         ),
         RepositoryProvider(
+          create:
+              (context) => SuggestionRepository(),
+        ),
+        RepositoryProvider(
           create: (context) => AthleteRepository(baseUrl: ApiConstants.baseUrl),
         ),
         RepositoryProvider(
@@ -148,6 +152,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(create: (context) => SuggestionBloc(suggestionRepository: context.read<SuggestionRepository>(), sportRepository: context.read<SportRepository>())),
           BlocProvider(
             create:
                 (context) => AchievementBloc(
